@@ -1,0 +1,11 @@
+obj/
+bin/
+packages/
+.vs/
+TestResults/
+CoverageReports/
+*.user
+*.suo
+*.vspx
+*.psess
+*.nupkg
