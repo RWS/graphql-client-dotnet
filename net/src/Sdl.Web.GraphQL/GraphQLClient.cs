@@ -44,6 +44,10 @@ namespace DxaContentApiClient.GraphQL
             {
                 return _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
             }
+            catch (GraphQLClientException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new GraphQLClientException(e.Message, e);
@@ -59,7 +63,11 @@ namespace DxaContentApiClient.GraphQL
                 {
                     return response.Data.ToObject<T>();
                 }
-                throw new GraphQLClientException();
+                throw new GraphQLClientException(response);
+            }
+            catch (GraphQLClientException)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -77,6 +85,10 @@ namespace DxaContentApiClient.GraphQL
                         _httpClient.ExecuteAsync<IGraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
                 return response.ResponseData;
             }
+            catch (GraphQLClientException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new GraphQLClientException(e.Message, e);
@@ -91,12 +103,16 @@ namespace DxaContentApiClient.GraphQL
                 var response =
                     await
                         _httpClient.ExecuteAsync<IGraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
-                if (response.ResponseData != null)
+                if (response.ResponseData != null && response.ResponseData.Data != null)
                 {
                     return response.ResponseData.Data.ToObject<T>();
                 }
 
-                throw new GraphQLClientException();
+                throw new GraphQLClientException(response.ResponseData);
+            }
+            catch (GraphQLClientException)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -117,6 +133,10 @@ namespace DxaContentApiClient.GraphQL
                         OperationName = "IntrospectionQuery"
                     }).Data.__schema.ToObject<GraphQLSchema>();
                 }
+                catch (GraphQLClientException)
+                {
+                    throw;
+                }
                 catch (Exception e)
                 {
                     throw new GraphQLClientException(e.Message, e);
@@ -134,6 +154,10 @@ namespace DxaContentApiClient.GraphQL
                     Query = Queries.IntrospectionQuery,
                     OperationName = "IntrospectionQuery"
                 }).Result.Data.__schema.ToObject<GraphQLSchema>();
+            }
+            catch (GraphQLClientException)
+            {
+                throw;
             }
             catch (Exception e)
             {

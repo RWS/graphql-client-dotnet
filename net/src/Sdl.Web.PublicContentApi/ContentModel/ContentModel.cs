@@ -24,7 +24,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public int ItemType { get; set; }
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public int PublicationId { get; set; }
 		public int SchemaId { get; set; }
 		public List<ITaxonomyItem> Taxonomies { get; set; }
@@ -134,7 +134,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		int ItemType { get; set; }
 		string LastPublishDate { get; set; }
 		int NamespaceId { get; set; }
-		int OwningPublicationId { get; set; }
+		int? OwningPublicationId { get; set; }
 		int PublicationId { get; set; }
 		string Title { get; set; }
 		string UpdatedDate { get; set; }
@@ -167,7 +167,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public string LastPublishDate { get; set; }
 		public string Name { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public ITaxonomyItem Parent { get; set; }
 		public int PublicationId { get; set; }
 		public int TaxonomyId { get; set; }
@@ -192,7 +192,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public int ItemType { get; set; }
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public int PublicationId { get; set; }
 		public RawContent RawContent { get; set; }
 		public string Title { get; set; }
@@ -208,7 +208,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
 		public string OutputFormat { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public int Priority { get; set; }
 		public int PublicationId { get; set; }
 		public string Title { get; set; }
@@ -251,7 +251,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public int ItemType { get; set; }
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public Template PageTemplate { get; set; }
 		public int PublicationId { get; set; }
 		public RawContent RawContent { get; set; }
@@ -287,7 +287,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public string MultimediaPath { get; set; }
 		public string MultimediaUrl { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public int PublicationId { get; set; }
 		public string PublicationKey { get; set; }
 		public string PublicationPath { get; set; }
@@ -318,7 +318,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public string Key { get; set; }
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public ITaxonomyItem Parent { get; set; }
 		public int PublicationId { get; set; }
 		public int TaxonomyId { get; set; }
@@ -345,7 +345,7 @@ namespace Sdl.Web.PublicContentApi.ContentModel
 		public int ItemType { get; set; }
 		public string LastPublishDate { get; set; }
 		public int NamespaceId { get; set; }
-		public int OwningPublicationId { get; set; }
+		public int? OwningPublicationId { get; set; }
 		public int PublicationId { get; set; }
 		public int SchemaId { get; set; }
 		public List<ITaxonomyItem> Taxonomies { get; set; }
