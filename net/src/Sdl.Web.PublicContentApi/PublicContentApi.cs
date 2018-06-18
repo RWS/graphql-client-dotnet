@@ -62,7 +62,29 @@ namespace Sdl.Web.PublicContentApi
 
         public List<Keyword> GetKeywords(ContentNamespace ns, int publicationId, IPagination pagination, IContextData contextData)
         {
-            throw new NotImplementedException();
+            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = @"query categories($namespaceId: Int! $publicationId: Int! $first: Int $after: String) {
+                            categories(namespaceId: $namespaceId, publicationId: $publicationId, first: $first, after: $after) {
+                              edges {
+                                node {
+                                   key
+                                   description
+                                   name
+                                   lastPublishDate
+                                }
+                            }
+                        }
+                      }",
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"first", pagination.First},
+                    {"after", pagination.After}
+                }
+            });
+            return contenQuery.Categories.Edges.Select(x => x.Node).ToList();
         }
 
         public Keyword GetKeyword(ContentNamespace ns, int publicationId, int categoryId, int keywordId, IContextData contextData)
