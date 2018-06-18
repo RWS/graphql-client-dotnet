@@ -14,6 +14,7 @@ namespace BuildGraphQLModel.Extensions
             switch (type.Kind)
             {
                 case "OBJECT":
+                case "INPUT_OBJECT":
                     return $"{type.Name.PascalCase()}";
                 case "INTERFACE":
                     return $"I{type.Name.PascalCase()}";
@@ -34,12 +35,14 @@ namespace BuildGraphQLModel.Extensions
                     return $"interface {TypeName(type)}";
                 case "ENUM":
                     return $"enum {TypeName(type)}";
+                case "INPUT_OBJECT":
+                    return $"class {TypeName(type)}";
                 default:
                     return null;
             }
         }
 
-        public static string TypeName(this GraphQLSchemaTypeInfo typeInfo)
+        public static string TypeName(this GraphQLSchemaTypeInfo typeInfo, bool nullable = true)
         {
             if (typeInfo.Name == null && typeInfo.OfType != null)
             {
@@ -49,21 +52,28 @@ namespace BuildGraphQLModel.Extensions
                         return $"List<{TypeName(typeInfo.OfType)}>";
                     case "Map":
                         return $"IDictionary<{TypeName(typeInfo.OfType)}>";
+                    case "String":
+                        return $"{TypeName(typeInfo.OfType)}";
                     default:
-                        return $"{TypeName(typeInfo.OfType)}{(typeInfo.Kind.Equals("NON_NULL") ? "" : "?")}";
+                        return $"{TypeName(typeInfo.OfType, false)}{(typeInfo.Kind.Equals("NON_NULL") ? "" : "?")}";
                 }
             }
             switch (typeInfo.Kind)
             {
                 case "SCALAR":
+                    string type = "";
                     switch (typeInfo.Name)
                     {
                         case "ID":
                             return "string";
                         case "Map":
-                            return $"IDictionary";
+                            return "IDictionary";
+                        case "String":
+                            return "string";
                         case "Boolean":
-                            return "bool";
+                            return "bool" + (nullable ? "?" : "");
+                        case "Int":
+                            return "int" + (nullable ? "?" : "");
                         default:
                             return typeInfo.Name.ToLower();
                     }

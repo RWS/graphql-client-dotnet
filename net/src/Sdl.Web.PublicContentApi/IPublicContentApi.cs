@@ -18,11 +18,11 @@ namespace Sdl.Web.PublicContentApi
             int templateId, IContextData contextData);
 
         // Items
-        List<IItem> GetItems(IItemFilter itemFiter, IPagination pagination, IContextData contextData);
+        List<IItem> GetItems(IPagination pagination, IContextData contextData);
 
         // Publications
         Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData);
-        List<Publication> GetPublications(ContentNamespace ns, IPagination pagination, IPublicationFilter publicationFilter, IContextData contextData);
+        List<Publication> GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter publicationFilter, IContextData contextData);
         object GetPublicationMapping(ContentNamespace ns, string uri, IContextData contextData);
 
         // Pages

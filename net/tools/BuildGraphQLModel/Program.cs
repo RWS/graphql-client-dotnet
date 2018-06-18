@@ -22,8 +22,7 @@ namespace BuildGraphQLModel
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
         {
             if (type.Name.StartsWith("__")) return;
-            if (type.Kind.Equals("SCALAR")) return;
-            if (type.Kind.Equals("INPUT_OBJECT")) return;
+            if (type.Kind.Equals("SCALAR")) return;          
             sb.Append($"{Indent(indent)}public {type.EmitTypeDecl()}");
             if (type.Interfaces != null && type.Interfaces.Count > 0)
             {
@@ -37,15 +36,31 @@ namespace BuildGraphQLModel
             sb.AppendLine($"{Indent(indent)}{{");
             switch (type.Kind)
             {
-                case "OBJECT":
+                case "OBJECT":                
                     if (type.Fields != null)
                     {
                         foreach (var field in type.Fields)
                         {
+                            if (field.Name.Equals("owningPublicationId"))
+                            {
+                                sb.AppendLine(
+                              $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
+                                continue;
+                            }
                             sb.AppendLine(
                                 $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
                         }
                     }                   
+                    break;
+                case "INPUT_OBJECT":
+                    if (type.InputFields != null)
+                    {
+                        foreach (var field in type.InputFields)
+                        {
+                            sb.AppendLine(
+                                $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
+                        }
+                    }
                     break;
                 case "INTERFACE":
                     if (type.PossibleTypes != null)

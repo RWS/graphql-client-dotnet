@@ -44,9 +44,7 @@
     <Compile Include="ContentModel\ContentNamespace.cs" />
     <Compile Include="ContentModel\ContextData.cs" />
     <Compile Include="ContentModel\IContextData.cs" />
-    <Compile Include="ContentModel\IItemFilter.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
-    <Compile Include="ContentModel\IPublicationFilter.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
     <Compile Include="IPublicContentApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

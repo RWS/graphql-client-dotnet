@@ -10,5 +10,6 @@ namespace Sdl.Web.GraphQL.Schema
         public List<GraphQLSchemaEnum> EnumValues { get; set; }
         public List<GraphQLSchemaInterface> Interfaces { get; set; }
         public List<GraphQLSchemaTypeInfo> PossibleTypes { get; set; }
+        public List<GraphQLSchemaField> InputFields { get; set; }
     }
 }

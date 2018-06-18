@@ -75,7 +75,7 @@ namespace Sdl.Web.PublicContentApi
             throw new NotImplementedException();
         }
 
-        public List<IItem> GetItems(IItemFilter itemFiter, IPagination pagination, IContextData contextData)
+        public List<IItem> GetItems(IPagination pagination, IContextData contextData)
         {
             throw new NotImplementedException();
         }
@@ -86,19 +86,19 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public List<Publication> GetPublications(ContentNamespace ns, IPagination pagination,
-            IPublicationFilter publicationFilter, IContextData contextData)
+            InputPublicationFilter publicationFilter, IContextData contextData)
         {
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = @"query publications($namespaceId: Int! $first: Int $after: String) {
+                Query = @"query publications($namespaceId: Int! $first: Int $after: String $filterCustomMeta: String) {
                             publications(namespaceId: $namespaceId, first: $first, after: $after) {
                               edges {
                                 node {
                                   id
                                   creationDate
                                   initialPublishDate
-                                  itemId
-                                   customMetas(filter: ""requiredMeta:publicationtitle.generated.value,FISHPRODUCTFAMILYNAME.logical.value"") {
+                                  itemId                                 
+                                   customMetas(filter: $filterCustomMeta) {
                                     edges {
                                             node {
                                                 id
@@ -110,7 +110,7 @@ namespace Sdl.Web.PublicContentApi
                                               valueType
                                             }
                                         }
-                                    }
+                                      }
                                   itemId
                                   itemType
                                   lastPublishDate
@@ -127,7 +127,8 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"first", pagination.First},
-                    {"after", pagination.After}
+                    {"after", pagination.After},
+                    {"filterCustomMeta", publicationFilter.Value}
                 }
             });
             return contenQuery.Publications.Edges.Select(x => x.Node).ToList();
