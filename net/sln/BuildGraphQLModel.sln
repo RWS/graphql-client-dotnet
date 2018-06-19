@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.GraphQLClient", "..\src\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj", "{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.HttpClient", "..\src\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj", "{9A31AA66-01F4-4BDE-9038-682AD23926FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildGraphQLModel", "..\tools\BuildGraphQLModel\BuildGraphQLModel.csproj", "{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

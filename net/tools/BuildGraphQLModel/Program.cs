@@ -22,7 +22,7 @@ namespace BuildGraphQLModel
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
         {
             if (type.Name.StartsWith("__")) return;
-            if (type.Kind.Equals("SCALAR")) return;          
+            if (type.Kind.Equals("SCALAR")) return;           
             sb.Append($"{Indent(indent)}public {type.EmitTypeDecl()}");
             if (type.Interfaces != null && type.Interfaces.Count > 0)
             {

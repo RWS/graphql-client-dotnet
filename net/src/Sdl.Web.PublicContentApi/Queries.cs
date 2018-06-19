@@ -75,7 +75,7 @@
                     }
                 }
             }
-        }";
+        ";
 
         public static readonly string GetPublicationMapping = @"
             TODO

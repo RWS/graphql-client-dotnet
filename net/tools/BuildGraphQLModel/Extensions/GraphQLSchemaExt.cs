@@ -82,7 +82,8 @@ namespace BuildGraphQLModel.Extensions
                 case "Map":
                     return $"IDictionary<{TypeName(typeInfo.OfType)}>";
                 case "OBJECT":
-                    return $"{typeInfo.Name}";
+                case "INPUT_OBJECT":
+                    return $"{typeInfo.Name}";                
                 case "INTERFACE":
                     return $"I{typeInfo.Name.PascalCase()}";
                 case "ENUM":
