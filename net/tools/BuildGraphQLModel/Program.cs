@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using Sdl.Web.GraphQL.Schema;
 using BuildGraphQLModel.Extensions;
@@ -9,7 +8,10 @@ using System.IO;
 namespace BuildGraphQLModel
 {
     /// <summary>
-    /// Generates model from graphQL schema
+    /// Generates model from graphQL schema.
+    /// 
+    /// This tool is just to make life easier/quicker so you can quickly generate a strongly typed model
+    /// from a graphQL schema.
     /// </summary>
     class Program
     {       
@@ -18,7 +20,13 @@ namespace BuildGraphQLModel
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
         {
             if (type.Name.StartsWith("__")) return;
-            if (type.Kind.Equals("SCALAR")) return;           
+            if (type.Kind.Equals("SCALAR")) return;            
+            if (!string.IsNullOrEmpty(type.Description))
+            {
+                sb.AppendLine($"{Indent(indent)}/// <summary>");
+                sb.AppendLine($"{Indent(indent)}/// {type.Description}");
+                sb.AppendLine($"{Indent(indent)}/// </summary>");
+            }
             sb.Append($"{Indent(indent)}public {type.EmitTypeDecl()}");
             if (type.Interfaces != null && type.Interfaces.Count > 0)
             {
@@ -37,11 +45,11 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.Fields)
                         {
-                            if (field.Name.Equals("owningPublicationId"))
+                            if (!string.IsNullOrEmpty(field.Description))
                             {
-                                sb.AppendLine(
-                              $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
-                                continue;
+                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
+                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
+                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
                             }
                             sb.AppendLine(
                                 $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
@@ -53,6 +61,12 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.InputFields)
                         {
+                            if (!string.IsNullOrEmpty(field.Description))
+                            {
+                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
+                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
+                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
+                            }
                             sb.AppendLine(
                                 $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
                         }
@@ -63,6 +77,12 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.Fields)
                         {
+                            if (!string.IsNullOrEmpty(field.Description))
+                            {
+                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
+                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
+                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
+                            }
                             sb.AppendLine(
                                 $"{Indent(indent + 1)}{field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
                         }
@@ -74,6 +94,12 @@ namespace BuildGraphQLModel
                         sb.AppendLine($"{Indent(indent + 1)}None,");
                         for (int i = 0; i < type.EnumValues.Count - 1; i++)
                         {
+                            if (!string.IsNullOrEmpty(type.EnumValues[i].Description))
+                            {
+                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
+                                sb.AppendLine($"{Indent(indent + 1)}/// {type.EnumValues[i].Description}");
+                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
+                            }
                             sb.AppendLine($"{Indent(indent + 1)}{type.EnumValues[i].Name.PascalCase()},");
                         }
                         sb.AppendLine(
@@ -105,7 +131,7 @@ namespace BuildGraphQLModel
             File.AppendAllText(outputFile, output);
         }
 
-        // gen -e http://localhost:8081 -o model.cs
+        // gen -e http://localhost:8081 -ns sdl.web -o model.cs
         static int Main(string[] args)
         {
             try
@@ -137,6 +163,11 @@ namespace BuildGraphQLModel
                 if (string.IsNullOrEmpty(outputFile))
                 {
                     Console.WriteLine("Specify output file.");
+                    return -1;
+                }
+                if (string.IsNullOrEmpty(ns))
+                {
+                    Console.WriteLine("Specify namespace.");
                     return -1;
                 }
                 GraphQLClient client = new GraphQLClient(endpoint);
