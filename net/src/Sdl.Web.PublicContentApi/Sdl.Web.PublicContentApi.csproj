@@ -50,8 +50,10 @@
     <Compile Include="ContentModel\IContextData.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
+    <Compile Include="IPublicContentApiAsync.cs" />
     <Compile Include="ItemConvertor.cs" />
     <Compile Include="ModelServicePlugin\Enums.cs" />
+    <Compile Include="ModelServicePlugin\IModelServicePluginApiAsync.cs" />
     <Compile Include="ModelServicePlugin\IModelServicePluginApi.cs" />
     <Compile Include="IPublicContentApi.cs" />
     <Compile Include="ModelServicePlugin\ModelServiceClaimUris.cs" />

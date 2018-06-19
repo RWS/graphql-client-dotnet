@@ -11,11 +11,12 @@ using Newtonsoft.Json;
 using Sdl.Web.PublicContentApi.ModelServicePlugin;
 
 namespace Sdl.Web.PublicContentApi
-{  
+{
     /// <summary>
     /// Public Content Api
     /// </summary>
-    public class PublicContentApi : IGraphQLClient, IPublicContentApi, IModelServicePluginApi
+    public class PublicContentApi : IGraphQLClient, IPublicContentApi, IPublicContentApiAsync, IModelServicePluginApi,
+        IModelServicePluginApiAsync
     {
         private readonly IGraphQLClient _client;
 
@@ -150,7 +151,7 @@ namespace Sdl.Web.PublicContentApi
                     {"after", pagination.After},
                     {"contextData", contextData}
                 },
-                Convertors = new List<JsonConverter> { new ItemConvertor() }
+                Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
             return contenQuery.Items;
         }
@@ -247,6 +248,222 @@ namespace Sdl.Web.PublicContentApi
 
         #endregion
 
+        #region IPublicContentApiAsync
+
+        public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetBinaryComponentById,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"binaryId", binaryId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+
+            return contenQuery.BinaryComponent;
+        }
+
+        public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetBinaryComponentByUrl,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"url", url},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+
+            return contenQuery.BinaryComponent;
+        }
+
+        public async Task<KeywordConnection> GetKeywordsAsync(ContentNamespace ns, int publicationId,
+            IPagination pagination, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetKeywords,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Categories;
+        }
+
+        public async Task<Keyword> GetKeywordAsync(ContentNamespace ns, int publicationId, int categoryId, int keywordId,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetKeyword,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"categoryId", categoryId},
+                    {"keywordId", keywordId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Keyword;
+        }
+
+        public async Task<ComponentPresentation> GetComponentPresentationAsync(ContentNamespace ns, int publicationId,
+            int componentId, int templateId,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetComponentPresentation,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"componentId", componentId},
+                    {"templateId", templateId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.ComponentPresentation;
+        }
+
+        public async Task<ItemConnection> GetItemsAsync(InputItemFilter filter, IPagination pagination,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetItems,
+                Variables = new Dictionary<string, object>
+                {
+                    {"filter", filter},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"contextData", contextData}
+                },
+                Convertors = new List<JsonConverter> {new ItemConvertor()}
+            }, cancellationToken);
+            return contenQuery.Items;
+        }
+
+        public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetPublication,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Publication;
+        }
+
+        public async Task<PublicationConnection> GetPublicationsAsync(ContentNamespace ns, IPagination pagination,
+            InputPublicationFilter publicationFilter,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetPublications,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"filterCustomMeta", publicationFilter.Value},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Publications;
+        }
+
+        public async Task<object> GetPublicationMappingAsync(ContentNamespace ns, string uri, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PageConnection> GetPagesAsync(ContentNamespace ns, string url, IPagination pagination,
+            IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetPages,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"url", url},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Pages;
+        }
+
+        public async Task<StructureGroupConnection> GetStructureGroupsAsync(ContentNamespace ns, int publicationId,
+            IPagination pagination, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetStructureGroups,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.StructureGroups;
+        }
+
+        public async Task<StructureGroup> GetStructureGroupAsync(ContentNamespace ns, int publicationId,
+            int structureGroupId, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetStructureGroup,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"structureGroupId", structureGroupId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.StructureGroup;
+        }
+
+        #endregion
+
         #region IModelServicePluginApi
 
         protected ClaimValue CreateClaim(ContentType contentType) => new ClaimValue
@@ -274,7 +491,7 @@ namespace Sdl.Web.PublicContentApi
         {
             Uri = ModelServiceClaimUris.PageIncludeRegions,
             Type = ClaimValueType.STRING,
-            Value = Enum.GetName(typeof(DcpType), dcpType)
+            Value = Enum.GetName(typeof (DcpType), dcpType)
         };
 
         protected void UpdateContextData(ref IContextData contextData, ContentType contentType,
@@ -291,7 +508,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         protected void UpdateContextData(ref IContextData contextData, ContentType contentType,
-           DataModelType dataModelType, DcpType dcpType)
+            DataModelType dataModelType, DcpType dcpType)
         {
             if (contextData == null)
             {
@@ -388,6 +605,46 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IModelServicePluginApiAsync
+
+        public Task<object> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
+            ContentType contentType,
+            DataModelType modelType, DcpType dcpType, IContextData contextData, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData,
+            CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+            bool includeAncestors,
+            IContextData contextData, CancellationToken cancellationToken)
+        {
             throw new NotImplementedException();
         }
 
