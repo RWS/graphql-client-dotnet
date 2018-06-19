@@ -27,5 +27,13 @@ namespace Sdl.Web.GraphQL.Request
         /// Authentication used for request
         /// </summary>
         IAuthentication Authenticaton { get; set; }
+
+        /// <summary>
+        /// Add Variable
+        /// </summary>
+        /// <param name="name">Variable name</param>
+        /// <param name="value">Variable value</param>
+        /// <returns>The request</returns>
+        IGraphQLRequest AddVariable(string name, object value);
     }
 }
