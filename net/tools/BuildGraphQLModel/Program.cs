@@ -12,11 +12,7 @@ namespace BuildGraphQLModel
     /// Generates model from graphQL schema
     /// </summary>
     class Program
-    {
-        static GraphQLSchemaType FindType(GraphQLSchema schema, string typeName) 
-            => schema.Types.FirstOrDefault(type => type.TypeName() != null && 
-            type.TypeName().Equals(typeName));
-
+    {       
         static string Indent(int level) => new string('\t', level);
 
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
@@ -75,6 +71,7 @@ namespace BuildGraphQLModel
                 case "ENUM":
                     if (type.EnumValues != null)
                     {
+                        sb.AppendLine($"{Indent(indent + 1)}None,");
                         for (int i = 0; i < type.EnumValues.Count - 1; i++)
                         {
                             sb.AppendLine($"{Indent(indent + 1)}{type.EnumValues[i].Name.PascalCase()},");

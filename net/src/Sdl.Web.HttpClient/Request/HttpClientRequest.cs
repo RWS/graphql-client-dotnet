@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Sdl.Web.HttpClient.Auth;
 using Sdl.Web.HttpClient.Utils;
+using System.Collections.Generic;
 
 namespace Sdl.Web.HttpClient.Request
 {
@@ -16,6 +19,9 @@ namespace Sdl.Web.HttpClient.Request
         public HttpQueryParams QueryParameters { get; } = new HttpQueryParams();
         public HttpHeaders Headers { get; set; } = new HttpHeaders();
         public IAuthentication Authenticaton { get; set; }
+        public SerializationBinder Binder { get; set; }
+        public List<JsonConverter> Convertors { get; set; }
+
         public virtual Uri BuildRequestUri(IHttpClient httpClient) => UriCreator.FromUri(httpClient.BaseUri)
             .WithPath(Path)
             .WithQueryParams(QueryParameters)
@@ -34,6 +40,8 @@ namespace Sdl.Web.HttpClient.Request
             QueryParameters = new HttpQueryParams(request.QueryParameters);
             Headers = new HttpHeaders(request.Headers);
             Authenticaton = request.Authenticaton;
+            Binder = request.Binder;
+            Convertors = request.Convertors;
         }
 
         public object Clone() => new HttpClientRequest(this);

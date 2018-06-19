@@ -36,6 +36,32 @@
             TODO
         ";
 
+        public static readonly string GetItems = @"
+            query items($filter: InputItemFilter!) {
+                items(filter: $filter) {
+                    edges {
+                        cursor
+                        node {
+                            id
+                            itemId
+                            itemType
+                            ... on Publication {
+                                title
+                                publicationUrl
+                        }
+                        ... on Page {
+                                url
+                                content {                                    
+                                    id
+                                    type
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ";
+
         public static readonly string GetPublication = @"
             TODO
         ";

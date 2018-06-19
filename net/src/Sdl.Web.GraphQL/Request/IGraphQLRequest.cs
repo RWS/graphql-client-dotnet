@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Sdl.Web.HttpClient.Auth;
 
 namespace Sdl.Web.GraphQL.Request
@@ -35,5 +37,15 @@ namespace Sdl.Web.GraphQL.Request
         /// <param name="value">Variable value</param>
         /// <returns>The request</returns>
         IGraphQLRequest AddVariable(string name, object value);
+
+        /// <summary>
+        /// Serialization binder used when deserializing the request.
+        /// </summary>
+        SerializationBinder Binder { get; set; }
+
+        /// <summary>
+        /// Convertor used when deserialzing the request
+        /// </summary>
+        List<JsonConverter> Convertors { get; set; }
     }
 }

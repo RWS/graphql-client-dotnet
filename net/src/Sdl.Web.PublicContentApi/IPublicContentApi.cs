@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Sdl.Web.PublicContentApi.ContentModel;
+﻿using Sdl.Web.PublicContentApi.ContentModel;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -26,7 +25,7 @@ namespace Sdl.Web.PublicContentApi
             int templateId, IContextData contextData);
 
         // Items
-        List<IItem> GetItems(IPagination pagination, IContextData contextData);
+        ItemConnection GetItems(InputItemFilter filter, IPagination pagination, IContextData contextData);
 
         // Publications
         Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData);

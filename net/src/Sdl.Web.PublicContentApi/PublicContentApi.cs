@@ -7,10 +7,11 @@ using Sdl.Web.GraphQL.Request;
 using Sdl.Web.GraphQL.Response;
 using Sdl.Web.GraphQL.Schema;
 using System.Threading;
+using Newtonsoft.Json;
 using Sdl.Web.PublicContentApi.ModelServicePlugin;
 
 namespace Sdl.Web.PublicContentApi
-{
+{  
     /// <summary>
     /// Public Content Api
     /// </summary>
@@ -137,9 +138,21 @@ namespace Sdl.Web.PublicContentApi
             return contenQuery.ComponentPresentation;
         }
 
-        public List<IItem> GetItems(IPagination pagination, IContextData contextData)
+        public ItemConnection GetItems(InputItemFilter filter, IPagination pagination, IContextData contextData)
         {
-            throw new NotImplementedException();
+            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.GetItems,
+                Variables = new Dictionary<string, object>
+                {
+                    {"filter", filter},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"contextData", contextData}
+                },
+                Convertors = new List<JsonConverter> { new ItemConvertor() }
+            });
+            return contenQuery.Items;
         }
 
         public Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData)

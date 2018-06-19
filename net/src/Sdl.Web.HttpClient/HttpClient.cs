@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,7 +49,7 @@ namespace Sdl.Web.HttpClient
                         if (responseStream != null)
                         {
                             byte[] data = ReadStream(responseStream);
-                            T deserialized = Deserialize<T>(data, httpWebResponse.ContentType);
+                            T deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors);
                             return new HttpClientResponse<T>
                             {
                                 StatusCode = (int)httpWebResponse.StatusCode,
@@ -93,7 +95,7 @@ namespace Sdl.Web.HttpClient
                         if (responseStream != null)
                         {
                             byte[] data = await ReadStreamAsync(responseStream, cancellationToken);
-                            T deserialized = await Task.Factory.StartNew(() => Deserialize<T>(data, httpWebResponse.ContentType), cancellationToken);
+                            T deserialized = await Task.Factory.StartNew(() => Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors), cancellationToken);
                             return new HttpClientResponse<T>
                             {
                                 StatusCode = (int)httpWebResponse.StatusCode,
@@ -189,7 +191,7 @@ namespace Sdl.Web.HttpClient
             throw new Exception($"{contentType} not supported.");
         }
 
-        protected virtual T Deserialize<T>(byte[] data, string contentType)
+        protected virtual T Deserialize<T>(byte[] data, string contentType, SerializationBinder binder, List<JsonConverter> convertors)
         {
             if (data == null)
                 return default(T);
@@ -207,8 +209,16 @@ namespace Sdl.Web.HttpClient
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Binder = binder
             };
+            if (convertors != null)
+            {
+                foreach (var x in convertors)
+                {
+                    settings.Converters.Add(x);
+                }
+            }
             return JsonConvert.DeserializeObject<T>(json, settings);
         }
     }

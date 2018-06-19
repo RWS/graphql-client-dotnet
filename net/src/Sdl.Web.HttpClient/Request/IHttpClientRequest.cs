@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Sdl.Web.HttpClient.Auth;
 
 namespace Sdl.Web.HttpClient.Request
@@ -49,5 +52,15 @@ namespace Sdl.Web.HttpClient.Request
         /// <param name="httpClient">Http Client</param>
         /// <returns>Full Uri of request</returns>
         Uri BuildRequestUri(IHttpClient httpClient);
+
+        /// <summary>
+        /// Serialization binder used when deserializing the request.
+        /// </summary>
+        SerializationBinder Binder { get; set; }
+
+        /// <summary>
+        /// Convertor used when deserialzing the request
+        /// </summary>
+        List<JsonConverter> Convertors { get; set; }
     }
 }

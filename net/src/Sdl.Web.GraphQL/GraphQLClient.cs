@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.GraphQL.Exceptions;
@@ -14,7 +15,7 @@ using Sdl.Web.GraphQL;
 using Sdl.Web.GraphQL.Queries;
 
 namespace DxaContentApiClient.GraphQL
-{
+{   
     public class GraphQLClient : IGraphQLClient
     {
         protected readonly IHttpClient _httpClient;
@@ -61,6 +62,15 @@ namespace DxaContentApiClient.GraphQL
                 var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
                 if (response.Data != null)
                 {
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    if (graphQLrequest.Convertors != null && graphQLrequest.Convertors.Count > 0)
+                    {
+                        foreach (var x in graphQLrequest.Convertors)
+                        {
+                            settings.Converters.Add(x);
+                        }
+                        return JsonConvert.DeserializeObject<T>(response.Data.ToString(), settings);
+                    }
                     return response.Data.ToObject<T>();
                 }
                 throw new GraphQLClientException(response);
@@ -105,6 +115,15 @@ namespace DxaContentApiClient.GraphQL
                         _httpClient.ExecuteAsync<IGraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
                 if (response.ResponseData != null && response.ResponseData.Data != null)
                 {
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    if (graphQLrequest.Convertors != null && graphQLrequest.Convertors.Count > 0)
+                    {
+                        foreach (var x in graphQLrequest.Convertors)
+                        {
+                            settings.Converters.Add(x);
+                        }
+                        return JsonConvert.DeserializeObject<T>(response.ResponseData.Data.ToString(), settings);
+                    }
                     return response.ResponseData.Data.ToObject<T>();
                 }
 
@@ -179,7 +198,9 @@ namespace DxaContentApiClient.GraphQL
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }).Replace("\\t", "").Replace("\\n", "").Replace("\\r", ""),
                     Authenticaton = graphQLrequest.Authenticaton,
-                    Path = "/udp/content"
+                    Path = "/udp/content",
+                    Binder = graphQLrequest.Binder,
+                    Convertors = graphQLrequest.Convertors
                 };
     }
 }
