@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.GraphQL;
@@ -520,11 +521,11 @@ namespace Sdl.Web.PublicContentApi
             contextData.ClaimValues.Add(CreateClaim(dcpType));
         }
 
-        public object GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            var response = _client.Execute(new GraphQLRequest
             {
                 Query = ModelServicePlugin.Queries.GetPageModelDataByPageId,
                 Variables = new Dictionary<string, object>
@@ -535,14 +536,14 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            throw new NotImplementedException();
+            return response.Data.page.rawContent.data;
         }
 
-        public object GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
+        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            var response = _client.Execute(new GraphQLRequest
             {
                 Query = ModelServicePlugin.Queries.GetPageModelDataByUrl,
                 Variables = new Dictionary<string, object>
@@ -553,15 +554,15 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            throw new NotImplementedException();
+            return response.Data.data;
         }
 
-        public object GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
+        public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
             DataModelType modelType, DcpType dcpType, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, dcpType);
 
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            var response = _client.Execute(new GraphQLRequest
             {
                 Query = ModelServicePlugin.Queries.GetEntityModelData,
                 Variables = new Dictionary<string, object>
@@ -572,7 +573,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            throw new NotImplementedException();
+            return response.Data.rawContent.data;
         }
 
         public object GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData)

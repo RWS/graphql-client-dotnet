@@ -11,7 +11,7 @@
 
         public static readonly string GetPageModelDataByPageId = @"
             query page($pageId: Int! $namespaceId: Int! $publicationId: Int!) {
-                page(pageId: 6437, namespaceId: 1, publicationId: 178) {
+                page(pageId: $pageId, namespaceId: $namespaceId, publicationId: $publicationId) {
                     itemId                
                     rawContent(renderContent: false) {
                       content
