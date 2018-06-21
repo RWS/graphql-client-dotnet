@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.GraphQL;
@@ -162,7 +161,7 @@ namespace Sdl.Web.PublicContentApi
         /// <param name="pagination">Paging</param>
         /// <param name="contextData">Context Claims</param>
         /// <returns></returns>
-        public ItemConnection ExecuteQueryBody(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData)
+        public ItemConnection ExecuteItemQueryBody(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData)
         {
             if(contextData == null)
                 contextData = new List<InputClaimValue>();
@@ -392,7 +391,7 @@ namespace Sdl.Web.PublicContentApi
         /// <param name="pagination">Paging</param>
         /// <param name="contextData">Context Claims</param>
         /// <returns></returns>
-        public async Task<ItemConnection> ExecuteQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<ItemConnection> ExecuteItemQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
                 contextData = new List<InputClaimValue>();

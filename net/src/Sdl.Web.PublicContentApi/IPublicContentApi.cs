@@ -47,7 +47,7 @@ namespace Sdl.Web.PublicContentApi
         /// <param name="pagination">Paging</param>
         /// <param name="contextData">Context Claims</param>
         /// <returns></returns>
-        ItemConnection ExecuteQueryBody(string queryBody, InputItemFilter filter, IPagination pagination,
+        ItemConnection ExecuteItemQueryBody(string queryBody, InputItemFilter filter, IPagination pagination,
             List<InputClaimValue> contextData);
 
         // Publications

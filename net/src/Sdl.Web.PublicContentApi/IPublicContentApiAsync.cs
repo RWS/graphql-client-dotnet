@@ -47,8 +47,9 @@ namespace Sdl.Web.PublicContentApi
         /// <param name="filter">Filter</param>
         /// <param name="pagination">Paging</param>
         /// <param name="contextData">Context Claims</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        Task<ItemConnection> ExecuteQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination,
+        Task<ItemConnection> ExecuteItemQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination,
             List<InputClaimValue> contextData, CancellationToken cancellationToken);
 
         Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, IContextData contextData,
