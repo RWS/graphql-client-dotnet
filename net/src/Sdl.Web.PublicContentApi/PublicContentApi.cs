@@ -140,19 +140,43 @@ namespace Sdl.Web.PublicContentApi
             return contenQuery.ComponentPresentation;
         }
 
-        public ItemConnection GetItems(InputItemFilter filter, IPagination pagination, IContextData contextData)
+        /// <summary>
+        /// Execute query given a filter, paging and context information
+        /// 
+        /// <example>
+        ///    var itemQuery = client.ExecuteQueryBody(@"
+        ///             ... on Page {
+        ///                 title
+        ///             }
+        ///             ... on Publication {
+        ///                 title
+        ///             }", new InputItemFilter {
+        ///                 NamespaceIds = new List<int?> {1, 2},
+        ///                 ItemTypes = new List<ItemTypes> { ItemTypes.Publication, ItemTypes.Page
+        ///                 }
+        ///             }, new Pagination {First = 100}, null);
+        /// </example>
+        /// </summary>
+        /// <param name="queryBody">Query body to use for populating fields for various items</param>
+        /// <param name="filter">Filter</param>
+        /// <param name="pagination">Paging</param>
+        /// <param name="contextData">Context Claims</param>
+        /// <returns></returns>
+        public ItemConnection ExecuteQueryBody(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData)
         {
+            if(contextData == null)
+                contextData = new List<InputClaimValue>();
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.GetItems,
+                Query = string.Format(Queries.ItemsQuery, queryBody),
                 Variables = new Dictionary<string, object>
                 {
-                    {"filter", filter},
                     {"first", pagination.First},
                     {"after", pagination.After},
+                    {"filter", filter},
                     {"contextData", contextData}
                 },
-                Convertors = new List<JsonConverter> {new ItemConvertor()}
+                Convertors = new List<JsonConverter> { new ItemConvertor() }
             });
             return contenQuery.Items;
         }
@@ -346,21 +370,43 @@ namespace Sdl.Web.PublicContentApi
             return contenQuery.ComponentPresentation;
         }
 
-        public async Task<ItemConnection> GetItemsAsync(InputItemFilter filter, IPagination pagination,
-            IContextData contextData,
-            CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Execute query given a filter, paging and context information
+        /// 
+        /// <example>
+        ///    var itemQuery = client.ExecuteQueryBody(@"
+        ///             ... on Page {
+        ///                 title
+        ///             }
+        ///             ... on Publication {
+        ///                 title
+        ///             }", new InputItemFilter {
+        ///                 NamespaceIds = new List<int?> {1, 2},
+        ///                 ItemTypes = new List<ItemTypes> { ItemTypes.Publication, ItemTypes.Page
+        ///                 }
+        ///             }, new Pagination {First = 100}, null);
+        /// </example>
+        /// </summary>
+        /// <param name="queryBody">Query body to use for populating fields for various items</param>
+        /// <param name="filter">Filter</param>
+        /// <param name="pagination">Paging</param>
+        /// <param name="contextData">Context Claims</param>
+        /// <returns></returns>
+        public async Task<ItemConnection> ExecuteQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination, List<InputClaimValue> contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (contextData == null)
+                contextData = new List<InputClaimValue>();
             var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.GetItems,
+                Query = string.Format(Queries.ItemsQuery, queryBody),
                 Variables = new Dictionary<string, object>
                 {
-                    {"filter", filter},
                     {"first", pagination.First},
                     {"after", pagination.After},
+                    {"filter", filter},
                     {"contextData", contextData}
                 },
-                Convertors = new List<JsonConverter> {new ItemConvertor()}
+                Convertors = new List<JsonConverter> { new ItemConvertor() }
             }, cancellationToken);
             return contenQuery.Items;
         }

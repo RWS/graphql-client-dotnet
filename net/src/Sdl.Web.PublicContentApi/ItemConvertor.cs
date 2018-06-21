@@ -21,17 +21,17 @@ namespace Sdl.Web.PublicContentApi
                 int itemType = (int)r.itemType;
                 switch (itemType)
                 {
-                    case (int)ItemTypes.Publication:
+                    case (int)ItemType.Publication:
                         return JsonConvert.DeserializeObject<Publication>(JsonConvert.SerializeObject(r));
-                    case (int)ItemTypes.Component:
+                    case (int)ItemType.Component:
                         return JsonConvert.DeserializeObject<Component>(JsonConvert.SerializeObject(r));
-                    case (int)ItemTypes.Keyword:
+                    case (int)ItemType.Keyword:
                         return JsonConvert.DeserializeObject<Keyword>(JsonConvert.SerializeObject(r));
-                    case (int)ItemTypes.Page:
+                    case (int)ItemType.Page:
                         return JsonConvert.DeserializeObject<Page>(JsonConvert.SerializeObject(r));
-                    case (int)ItemTypes.StructureGroup:
+                    case (int)ItemType.StructureGroup:
                         return JsonConvert.DeserializeObject<StructureGroup>(JsonConvert.SerializeObject(r));
-                    case (int)ItemTypes.Template:
+                    case (int)ItemType.ComponentTemplate:
                         return JsonConvert.DeserializeObject<Template>(JsonConvert.SerializeObject(r));
                 }
             }

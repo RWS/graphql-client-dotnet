@@ -36,30 +36,20 @@
             TODO
         ";
 
-        public static readonly string GetItems = @"
-            query items($filter: InputItemFilter!) {
-                items(filter: $filter) {
-                    edges {
+        public static readonly string ItemsQuery = @"
+            query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!]) {{
+                items(first: $first, after: $after, filter: $filter, contextData: $contextData) {{
+                    edges {{
                         cursor
-                        node {
+                        node {{
                             id
-                            itemId
                             itemType
-                            ... on Publication {
-                                title
-                                publicationUrl
-                        }
-                        ... on Page {
-                                url
-                                content {                                    
-                                    id
-                                    type
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                            itemId
+                            {0}
+                        }}
+                    }}
+                }}
+            }}
         ";
 
         public static readonly string GetPublication = @"

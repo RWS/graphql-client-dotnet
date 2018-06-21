@@ -28,6 +28,7 @@ namespace Sdl.Web.GraphQL.Request
         /// <summary>
         /// Authentication used for request
         /// </summary>
+        [JsonIgnore]
         IAuthentication Authenticaton { get; set; }
 
         /// <summary>
@@ -41,11 +42,13 @@ namespace Sdl.Web.GraphQL.Request
         /// <summary>
         /// Serialization binder used when deserializing the request.
         /// </summary>
+        [JsonIgnore]
         SerializationBinder Binder { get; set; }
 
         /// <summary>
         /// Convertor used when deserialzing the request
         /// </summary>
+        [JsonIgnore]
         List<JsonConverter> Convertors { get; set; }
     }
 }

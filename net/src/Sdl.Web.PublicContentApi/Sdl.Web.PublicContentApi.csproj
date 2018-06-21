@@ -52,6 +52,7 @@
     <Compile Include="ContentModel\Pagination.cs" />
     <Compile Include="IPublicContentApiAsync.cs" />
     <Compile Include="ItemConvertor.cs" />
+    <Compile Include="ItemTypes.cs" />
     <Compile Include="ModelServicePlugin\Enums.cs" />
     <Compile Include="ModelServicePlugin\IModelServicePluginApiAsync.cs" />
     <Compile Include="ModelServicePlugin\IModelServicePluginApi.cs" />

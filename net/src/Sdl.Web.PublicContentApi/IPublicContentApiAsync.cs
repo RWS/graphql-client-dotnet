@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
+using System.Collections.Generic;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -25,8 +26,30 @@ namespace Sdl.Web.PublicContentApi
             int componentId,
             int templateId, IContextData contextData, CancellationToken cancellationToken);
 
-        Task<ItemConnection> GetItemsAsync(InputItemFilter filter, IPagination pagination, IContextData contextData,
-            CancellationToken cancellationToken);
+        /// <summary>
+        /// Execute query given a filter, paging and context information
+        /// 
+        /// <example>
+        ///    var itemQuery = client.ExecuteQueryBody(@"
+        ///             ... on Page {
+        ///                 title
+        ///             }
+        ///             ... on Publication {
+        ///                 title
+        ///             }", new InputItemFilter {
+        ///                 NamespaceIds = new List<int?> {1, 2},
+        ///                 ItemTypes = new List<ItemTypes> { ItemTypes.Publication, ItemTypes.Page
+        ///                 }
+        ///             }, new Pagination {First = 100}, null);
+        /// </example>
+        /// </summary>
+        /// <param name="queryBody">Query body to use for populating fields for various items</param>
+        /// <param name="filter">Filter</param>
+        /// <param name="pagination">Paging</param>
+        /// <param name="contextData">Context Claims</param>
+        /// <returns></returns>
+        Task<ItemConnection> ExecuteQueryBodyAsync(string queryBody, InputItemFilter filter, IPagination pagination,
+            List<InputClaimValue> contextData, CancellationToken cancellationToken);
 
         Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, IContextData contextData,
             CancellationToken cancellationToken);

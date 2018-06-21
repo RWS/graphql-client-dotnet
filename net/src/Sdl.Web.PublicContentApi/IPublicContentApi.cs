@@ -1,4 +1,5 @@
-﻿using Sdl.Web.PublicContentApi.ContentModel;
+﻿using System.Collections.Generic;
+using Sdl.Web.PublicContentApi.ContentModel;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -24,8 +25,30 @@ namespace Sdl.Web.PublicContentApi
         ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
             int templateId, IContextData contextData);
 
-        // Items
-        ItemConnection GetItems(InputItemFilter filter, IPagination pagination, IContextData contextData);
+        /// <summary>
+        /// Execute query given a filter, paging and context information
+        /// 
+        /// <example>
+        ///    var itemQuery = client.ExecuteQueryBody(@"
+        ///             ... on Page {
+        ///                 title
+        ///             }
+        ///             ... on Publication {
+        ///                 title
+        ///             }", new InputItemFilter {
+        ///                 NamespaceIds = new List<int?> {1, 2},
+        ///                 ItemTypes = new List<ItemTypes> { ItemTypes.Publication, ItemTypes.Page
+        ///                 }
+        ///             }, new Pagination {First = 100}, null);
+        /// </example>
+        /// </summary>
+        /// <param name="queryBody">Query body to use for populating fields for various items</param>
+        /// <param name="filter">Filter</param>
+        /// <param name="pagination">Paging</param>
+        /// <param name="contextData">Context Claims</param>
+        /// <returns></returns>
+        ItemConnection ExecuteQueryBody(string queryBody, InputItemFilter filter, IPagination pagination,
+            List<InputClaimValue> contextData);
 
         // Publications
         Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.GraphQL.Exceptions;
@@ -43,7 +42,9 @@ namespace DxaContentApiClient.GraphQL
         {
             try
             {
-                return _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
+                var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
+                if (response?.Errors == null || response.Errors.Count <= 0) return response;
+                throw new GraphQLClientException(response);
             }
             catch (GraphQLClientException)
             {
@@ -60,18 +61,17 @@ namespace DxaContentApiClient.GraphQL
             try
             {
                 var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
-                if (response.Data != null)
+                if (response?.Errors == null || response.Errors.Count <= 0)
                 {
+                    if (response.Data == null) throw new GraphQLClientException(response);
                     JsonSerializerSettings settings = new JsonSerializerSettings();
-                    if (graphQLrequest.Convertors != null && graphQLrequest.Convertors.Count > 0)
+                    if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
+                        return response.Data.ToObject<T>();
+                    foreach (var x in graphQLrequest.Convertors)
                     {
-                        foreach (var x in graphQLrequest.Convertors)
-                        {
-                            settings.Converters.Add(x);
-                        }
-                        return JsonConvert.DeserializeObject<T>(response.Data.ToString(), settings);
+                        settings.Converters.Add(x);
                     }
-                    return response.Data.ToObject<T>();
+                    return JsonConvert.DeserializeObject<T>(response.Data.ToString(), settings);
                 }
                 throw new GraphQLClientException(response);
             }
@@ -90,43 +90,13 @@ namespace DxaContentApiClient.GraphQL
         {
             try
             {
-                var response =
-                    await
-                        _httpClient.ExecuteAsync<IGraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
-                return response.ResponseData;
-            }
-            catch (GraphQLClientException)
-            {
-                throw;
-            }
-            catch (Exception e)
-            {
-                throw new GraphQLClientException(e.Message, e);
-            }
-        }
-
-        public async Task<T> ExecuteAsync<T>(IGraphQLRequest graphQLrequest,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            try
-            {
-                var response =
-                    await
-                        _httpClient.ExecuteAsync<IGraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
-                if (response.ResponseData != null && response.ResponseData.Data != null)
+                var response = await _httpClient.ExecuteAsync<GraphQLResponse>(
+                    CreateHttpRequest(graphQLrequest),
+                    cancellationToken);
+                if (response.ResponseData?.Errors == null || response.ResponseData.Errors.Count <= 0)
                 {
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    if (graphQLrequest.Convertors != null && graphQLrequest.Convertors.Count > 0)
-                    {
-                        foreach (var x in graphQLrequest.Convertors)
-                        {
-                            settings.Converters.Add(x);
-                        }
-                        return JsonConvert.DeserializeObject<T>(response.ResponseData.Data.ToString(), settings);
-                    }
-                    return response.ResponseData.Data.ToObject<T>();
+                    return response.ResponseData;
                 }
-
                 throw new GraphQLClientException(response.ResponseData);
             }
             catch (GraphQLClientException)
@@ -139,6 +109,36 @@ namespace DxaContentApiClient.GraphQL
             }
         }
 
+        public async Task<T> ExecuteAsync<T>(IGraphQLRequest graphQLrequest, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            try
+            {
+                var response = await _httpClient.ExecuteAsync<GraphQLResponse>(
+                    CreateHttpRequest(graphQLrequest), cancellationToken);
+                if (response.ResponseData?.Errors == null || response.ResponseData.Errors.Count <= 0)
+                {
+                    if (response.ResponseData.Data == null) throw new GraphQLClientException(response.ResponseData);
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
+                        return response.ResponseData.Data.ToObject<T>();
+                    foreach (var x in graphQLrequest.Convertors)
+                    {
+                        settings.Converters.Add(x);
+                    }
+                    return JsonConvert.DeserializeObject<T>(response.ResponseData.Data.ToString(), settings);
+                }              
+                throw new GraphQLClientException(response.ResponseData);
+            }
+            catch (GraphQLClientException)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new GraphQLClientException(e.Message, e);
+            }
+        }
+      
         public GraphQLSchema Schema
         {
             get
