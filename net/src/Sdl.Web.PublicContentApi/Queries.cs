@@ -5,34 +5,23 @@
     /// </summary>
     public static class Queries
     {
+        public static readonly string CustomMetaField = @"
+            customMetas(filter: {0}) {{
+                edges {{
+                    node {{
+                        key
+                        value
+                        valueType
+                    }}
+                }}     
+            }}
+        ";
+
         public static readonly string GetBinaryComponentByUrl = @"
             TODO
         ";
 
         public static readonly string GetBinaryComponentById = @"
-            TODO
-        ";
-
-        public static readonly string GetKeywords = @"
-            query categories($namespaceId: Int! $publicationId: Int! $first: Int $after: String) {
-                categories(namespaceId: $namespaceId, publicationId: $publicationId, first: $first, after: $after) {
-                    edges {
-                        cursor
-                        node {
-                            key
-                            description
-                            name
-                            lastPublishDate
-                        }
-                    }
-                }
-            }";
-
-        public static readonly string GetKeyword = @"
-            TODO
-        ";
-
-        public static readonly string GetComponentPresentation = @"
             TODO
         ";
 
@@ -43,70 +32,54 @@
                         cursor
                         node {{
                             id
-                            itemType
                             itemId
-                            {0}
-                        }}
-                    }}
-                }}
-            }}
-        ";
-
-        public static readonly string GetPublication = @"
-            TODO
-        ";
-
-        public static readonly string GetPublications = @"
-            query publications($namespaceId: Int! $first: Int $after: String $filterCustomMeta: String) {
-                publications(namespaceId: $namespaceId, first: $first, after: $after) {
-                    edges {
-                        cursor
-                        node {
-                            id
+                            itemType
                             creationDate
                             initialPublishDate
-                            itemId
-                            customMetas(filter: $filterCustomMeta) {
-                                edges {
-                                    node {
-                                        id
-                                        itemId
-                                        key
-                                        namespaceId
-                                        publicationId
-                                        value
-                                        valueType
-                                     }
-                                }
-                            }
-                            itemId
-                            itemType
                             lastPublishDate
                             namespaceId
                             owningPublicationId
                             publicationId
                             title
-                            updatedDate
-                         }
-                    }
-                }
-            }
-        ";
+                            updatedDate                                 
+                            {0}
+                            ... on Publication {{
+                                publicationUrl
+                                publicationPath
+                                multimediaPath
+                                multimediaUrl          
+                            }}
+                            ... on Component {{
+                                schemaId
+                                multiMedia                            
+                            }}
+                        }}
+                    }}
+                }}
+            }}
+        ";     
 
-        public static readonly string GetPublicationMapping = @"
-            TODO
-        ";
-
-        public static readonly string GetPages = @"
-            TODO
-        ";
-
-        public static readonly string GetStructureGroups = @"
-            TODO
-        ";
-
-        public static readonly string GetStructureGroup = @"
-            TODO
-        ";
+        public static readonly string GetPublication = @"
+            query publication($namespaceId: Int! $publicationId: Int! $contextData: [InputClaimValue!]) {{
+                publication(namespaceId: $namespaceId, publicationId: $publicationId, contextData: $contextData) {{
+                    id
+                    itemId
+                    itemType
+                    creationDate
+                    initialPublishDate
+                    lastPublishDate
+                    namespaceId
+                    owningPublicationId
+                    publicationId
+                    title
+                    updatedDate     
+                    publicationUrl
+                    publicationPath
+                    multimediaPath
+                    multimediaUrl
+                    {0}             
+                }}
+            }}
+        ";    
     }
 }

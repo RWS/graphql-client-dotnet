@@ -20,7 +20,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="pageInclusion"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        Task<object> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url, ContentType contentType,
+        Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="pageInclusion"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        Task<object> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+        Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken);
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="dcpType"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        Task<object> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
+        Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
             DataModelType modelType, DcpType dcpType, IContextData contextData, CancellationToken cancellationToken);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="publicationId"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        Task<object> GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData, CancellationToken cancellationToken);
+        Task<dynamic> GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData, CancellationToken cancellationToken);
 
         /// <summary>
         /// Get Sitemap
@@ -70,7 +70,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="contextData"></param>
         /// <returns></returns>
         //Taxonomy Node ID in format: t<taxonomy ID>-k<keyword ID>, e.g. ‘t222-k1038'
-        Task<object> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors,
+        Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken);
     }
 }
