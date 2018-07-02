@@ -39,51 +39,65 @@
         ";
 
         public static readonly string GetSitemap = @"
-            query sitemap($namespaceId: Int! $publicationId: Int) {          
+            query sitemap($namespaceId: Int! $publicationId: Int!) {          
               sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {
+                ...taxonomyItemFields               
+                ...recurseItems
+              }
+            }
+        ";
+
+        public static readonly string GetSitemapSubtree = @"
+            query sitemapSubtree($namespaceId: Int! $publicationId: Int! $taxonomyNodeId: String!) {          
+              sitemapSubtree(namespaceId: $namespaceId, publicationId: $publicationId, taxonomyNodeId: $taxonomyNodeId) {
+                ...taxonomyItemFields               
+                ...recurseItems
+              }
+            }
+        ";
+
+        public static readonly string GetSitemapFragments = @"            
+            fragment recurseItems on TaxonomySitemapItem {  
+              items {
+                ...taxonomyItemFields  
+                ...on TaxonomySitemapItem {
+                  items {
+                    ...taxonomyItemFields
+                    ...taxonomyPageFields
+                    ...on TaxonomySitemapItem {
+                      items {
+                        ...taxonomyItemFields
+                        ...taxonomyPageFields
+                      }      
+                    }
+                  }
+                }
+              }
+            }
+
+            fragment taxonomyItemFields on TaxonomySitemapItem {
                 id
                 title
                 originalTitle
                 url
                 type
-                visible
                 publishedDate
+                visible
+                description
+                key
+                abstract
                 hasChildNodes
-                items {
-                  id
-                  title
-                  originalTitle
-                    url
-                  visible
-                  type
-                  ... on TaxonomySitemapItem {
-                    hasChildNodes
-                    items {
-                      id
-                      title
-                      originalTitle
-                      url
-                      visible
-                      type
-                      ... on TaxonomySitemapItem {
-                        hasChildNodes
-                        items {
-                          id
-                          title
-                          url
-                          visible
-                          type
-                          publishedDate
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-        ";
-
-        public static readonly string GetSitemapSubtree = @"
-            TODO
-        ";
+            }
+            
+            fragment taxonomyPageFields on PageSitemapItem {
+                id
+                title
+                originalTitle
+                url
+                type
+                publishedDate
+                visible  
+            }
+        ";       
     }
 }

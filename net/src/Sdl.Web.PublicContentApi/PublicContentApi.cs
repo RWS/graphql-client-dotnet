@@ -254,9 +254,13 @@ namespace Sdl.Web.PublicContentApi
 
         public dynamic GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData)
         {
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            if (contextData == null)
             {
-                Query = ModelServicePlugin.Queries.GetSitemap,
+                contextData = new ContextData();
+            }
+            var response = _client.Execute(new GraphQLRequest
+            {
+                Query = ModelServicePlugin.Queries.GetSitemap + ModelServicePlugin.Queries.GetSitemapFragments,
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -264,25 +268,28 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            throw new NotImplementedException();
+            return response.Data.sitemap;
         }
 
         public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors,
             IContextData contextData)
         {
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            if (contextData == null)
             {
-                Query = ModelServicePlugin.Queries.GetSitemapSubtree,
+                contextData = new ContextData();
+            }
+            var response = _client.Execute(new GraphQLRequest
+            {
+                Query = ModelServicePlugin.Queries.GetSitemapSubtree + ModelServicePlugin.Queries.GetSitemapFragments,
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"taxonomyNodeId", taxonomyNodeId},
-                    {"includeAncestors", includeAncestors},
                     {"contextData", contextData}
                 }
             });
-            throw new NotImplementedException();
+            return response.Data.sitemapSubtree;
         }
 
         #endregion
