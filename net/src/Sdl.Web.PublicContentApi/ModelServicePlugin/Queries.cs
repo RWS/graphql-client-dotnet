@@ -6,7 +6,14 @@
     public static class Queries
     {
         public static readonly string GetPageModelDataByUrl = @"
-            TODO
+            query page($namespaceId: Int! $publicationId: Int! $url: String) {
+                page(namespaceId: $namespaceId, publicationId: $publicationId, url: $url) {
+                    itemId                
+                    rawContent(renderContent: false) {
+                      data 
+                    }
+                }
+            }
         ";
 
         public static readonly string GetPageModelDataByPageId = @"
@@ -14,8 +21,6 @@
                 page(pageId: $pageId, namespaceId: $namespaceId, publicationId: $publicationId) {
                     itemId                
                     rawContent(renderContent: false) {
-                      content
-                      charSet
                       data 
                     }
                 }
@@ -27,8 +32,6 @@
                 componentPresentation(namespaceId: $namespaceId, publicationId: $publicationId, componentId: $componentId) {
                     itemId            
                     rawContent(renderContent: false) {
-                        content
-                        charSet
                         data
                     }
                 }

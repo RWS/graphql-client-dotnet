@@ -230,7 +230,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            return response.Data.data;
+            return response.Data.page.rawContent.data;
         }
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
@@ -249,7 +249,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            return response.Data.rawContent.data;
+            return response.Data.entity.rawContent.data;
         }
 
         public dynamic GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData)
