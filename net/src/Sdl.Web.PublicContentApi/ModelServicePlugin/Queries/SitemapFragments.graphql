@@ -1,4 +1,5 @@
 ﻿rfragment recurseItems on TaxonomySitemapItem {  
+	...taxonomyItemFields
     items {		  
 		...on TaxonomySitemapItem {
 			...taxonomyItemFields		

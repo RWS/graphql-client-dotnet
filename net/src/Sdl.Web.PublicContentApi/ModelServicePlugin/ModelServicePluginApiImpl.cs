@@ -153,7 +153,6 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             return response.Data.page.rawContent.data;
         }
 
-
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
             DataModelType modelType, DcpType dcpType, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -270,6 +269,6 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             contextData.ClaimValues.Add(CreateClaim(contentType));
             contextData.ClaimValues.Add(CreateClaim(dataModelType));
             contextData.ClaimValues.Add(CreateClaim(dcpType));
-        }       
+        }
     }
 }
