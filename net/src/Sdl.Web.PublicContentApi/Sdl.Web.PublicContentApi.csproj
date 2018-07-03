@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicContentApi.cs" />
     <Compile Include="Queries.cs" />
+    <Compile Include="Utils\QueryHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj">

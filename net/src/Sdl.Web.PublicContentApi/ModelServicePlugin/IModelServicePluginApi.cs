@@ -54,21 +54,21 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// </summary>
         /// <param name="ns"></param>
         /// <param name="publicationId"></param>
+        /// <param name="descendantLevels"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        dynamic GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData);
+        dynamic GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData);
 
         /// <summary>
         /// Get Sitemap
         /// </summary>
         /// <param name="ns"></param>
         /// <param name="publicationId"></param>
-        /// <param name="taxonomyNodeId"></param>
-        /// <param name="includeAncestors"></param>
+        /// <param name="taxonomyNodeId">Taxonomy Node ID in format: t[taxonomyID]-k[keywordID], e.g. ‘t222-k1038'</param>
+        /// <param name="descendantLevels"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        //Taxonomy Node ID in format: t<taxonomy ID>-k<keyword ID>, e.g. ‘t222-k1038'
-        dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors,
+        dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData);
     }
 }

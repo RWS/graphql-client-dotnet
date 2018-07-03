@@ -138,6 +138,8 @@ namespace Sdl.Web.PublicContentApi
 
         #endregion
 
+        #region IModelServicePluginApi
+
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData) 
             => _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion, contextData);
@@ -154,11 +156,13 @@ namespace Sdl.Web.PublicContentApi
                 _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType,
                     contextData);
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData)
-            => _modelserviceApi.GetSitemap(ns, publicationId, contextData);
+        public dynamic GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
+            => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, contextData);
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors,
+        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemap(ns, publicationId, taxonomyNodeId, includeAncestors, contextData);
+            => _modelserviceApi.GetSitemap(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);
+
+        #endregion
     }
 }

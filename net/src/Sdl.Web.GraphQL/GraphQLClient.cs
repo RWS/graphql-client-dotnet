@@ -14,7 +14,7 @@ using Sdl.Web.GraphQL;
 using Sdl.Web.GraphQL.Queries;
 
 namespace DxaContentApiClient.GraphQL
-{   
+{
     public class GraphQLClient : IGraphQLClient
     {
         protected readonly IHttpClient _httpClient;
@@ -109,7 +109,8 @@ namespace DxaContentApiClient.GraphQL
             }
         }
 
-        public async Task<T> ExecuteAsync<T>(IGraphQLRequest graphQLrequest, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> ExecuteAsync<T>(IGraphQLRequest graphQLrequest,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -126,7 +127,7 @@ namespace DxaContentApiClient.GraphQL
                         settings.Converters.Add(x);
                     }
                     return JsonConvert.DeserializeObject<T>(response.ResponseData.Data.ToString(), settings);
-                }              
+                }
                 throw new GraphQLClientException(response.ResponseData);
             }
             catch (GraphQLClientException)
@@ -138,7 +139,7 @@ namespace DxaContentApiClient.GraphQL
                 throw new GraphQLClientException(e.Message, e);
             }
         }
-      
+
         public GraphQLSchema Schema
         {
             get
@@ -190,6 +191,15 @@ namespace DxaContentApiClient.GraphQL
                 {
                     ContentType = "application/json",
                     Method = "POST",
+#if DEBUG
+                    Body = JsonConvert.SerializeObject(graphQLrequest,
+                        Formatting.None,
+                        new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore,
+                            ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        }),
+#else
                     Body = JsonConvert.SerializeObject(graphQLrequest,
                         Formatting.None,
                         new JsonSerializerSettings
@@ -197,6 +207,7 @@ namespace DxaContentApiClient.GraphQL
                             NullValueHandling = NullValueHandling.Ignore,
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }).Replace("\\t", "").Replace("\\n", "").Replace("\\r", ""),
+#endif
                     Authenticaton = graphQLrequest.Authenticaton,
                     Path = "/udp/content",
                     Binder = graphQLrequest.Binder,

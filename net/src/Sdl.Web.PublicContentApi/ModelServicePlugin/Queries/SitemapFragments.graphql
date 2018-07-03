@@ -1,17 +1,11 @@
-﻿fragment recurseItems on TaxonomySitemapItem {  
-    items {
-		...taxonomyItemFields  
+﻿rfragment recurseItems on TaxonomySitemapItem {  
+    items {		  
 		...on TaxonomySitemapItem {
-			items {
-				...taxonomyItemFields
-				...taxonomyPageFields
-				...on TaxonomySitemapItem {
-					items {
-						...taxonomyItemFields
-						...taxonomyPageFields
-					}      
-				}
-			}
+			...taxonomyItemFields		
+			...recurseItems
+		}
+		...on PageSitemapItem {
+			...taxonomyPageFields
 		}
     }
 }

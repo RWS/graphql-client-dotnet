@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Sdl.Web.GraphQL;
 using Sdl.Web.GraphQL.Request;
 using Sdl.Web.PublicContentApi.ContentModel;
+using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 {
-    public class ModelServicePluginApiImpl : IModelServicePluginApi
+    public class ModelServicePluginApiImpl : IModelServicePluginApi, IModelServicePluginApiAsync
     {
         private readonly IGraphQLClient _client;
 
@@ -69,16 +72,18 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             });
             return response.Data.entity.rawContent.data;
         }
-
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, IContextData contextData)
+       
+        public dynamic GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
         {
             if (contextData == null)
             {
                 contextData = new ContextData();
             }
+            string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
+            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments"),
+                Query = query,
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -89,16 +94,18 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             return response.Data.sitemap;
         }
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors, int descendantLevels,
+        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData)
         {
             if (contextData == null)
             {
                 contextData = new ContextData();
             }
+            string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
+            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments"),
+                Query = query,
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -107,6 +114,107 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"contextData", contextData}
                 }
             });
+            return response.Data.sitemapSubtree;
+        }
+       
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
+            var response = await _client.ExecuteAsync(new GraphQLRequest
+            {
+                Query = Queries.Load("PageModelById"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"pageId", pageId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return response.Data.page.rawContent.data;
+        }
+
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url, ContentType contentType,
+          DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
+            var response = await _client.ExecuteAsync(new GraphQLRequest
+            {
+                Query = Queries.Load("PageModelByUrl"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"url", url},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return response.Data.page.rawContent.data;
+        }
+
+
+        public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
+            DataModelType modelType, DcpType dcpType, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateContextData(ref contextData, contentType, modelType, dcpType);
+
+            var response = await _client.ExecuteAsync(new GraphQLRequest
+            {
+                Query = Queries.Load("EntityModelById"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"entityId", entityId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return response.Data.entity.rawContent.data;
+        }
+
+        public async Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (contextData == null)
+            {
+                contextData = new ContextData();
+            }
+            string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
+            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            var response = await _client.ExecuteAsync(new GraphQLRequest
+            {
+                Query = query,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return response.Data.sitemap;
+        }
+
+        public async Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (contextData == null)
+            {
+                contextData = new ContextData();
+            }
+            string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
+            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            var response = await _client.ExecuteAsync(new GraphQLRequest
+            {
+                Query = query,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"taxonomyNodeId", taxonomyNodeId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
             return response.Data.sitemapSubtree;
         }
 
@@ -162,11 +270,6 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             contextData.ClaimValues.Add(CreateClaim(contentType));
             contextData.ClaimValues.Add(CreateClaim(dataModelType));
             contextData.ClaimValues.Add(CreateClaim(dcpType));
-        }
-
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, bool includeAncestors, IContextData contextData)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }
