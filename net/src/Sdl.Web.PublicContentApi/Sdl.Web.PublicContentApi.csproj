@@ -58,6 +58,7 @@
     <Compile Include="ModelServicePlugin\IModelServicePluginApi.cs" />
     <Compile Include="IPublicContentApi.cs" />
     <Compile Include="ModelServicePlugin\ModelServiceClaimUris.cs" />
+    <Compile Include="ModelServicePlugin\ModelServicePluginApiImpl.cs" />
     <Compile Include="ModelServicePlugin\Queries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicContentApi.cs" />
@@ -74,7 +75,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ModelServicePlugin\Queries\PageModelByUrl.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\PageModelById.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\EntityModelById.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\Sitemap.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapSubtree.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapFragments.graphql" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Queries\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

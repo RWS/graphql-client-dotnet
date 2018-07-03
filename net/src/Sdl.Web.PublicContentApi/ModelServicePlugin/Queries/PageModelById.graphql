@@ -1,0 +1,8 @@
+﻿query page($pageId: Int! $namespaceId: Int! $publicationId: Int!) {
+	page(pageId: $pageId, namespaceId: $namespaceId, publicationId: $publicationId) {
+		itemId                
+		rawContent(renderContent: false) {
+			data 
+		}
+	}
+}
