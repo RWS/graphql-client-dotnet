@@ -156,12 +156,12 @@ namespace Sdl.Web.PublicContentApi
                 _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType,
                     contextData);
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
+        public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
             => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, contextData);
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemap(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);
+            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);
 
         #endregion
     }

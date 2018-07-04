@@ -60,6 +60,7 @@
     <Compile Include="ModelServicePlugin\ModelServiceClaimUris.cs" />
     <Compile Include="ModelServicePlugin\ModelServicePluginApiImpl.cs" />
     <Compile Include="ModelServicePlugin\Queries.cs" />
+    <Compile Include="ModelServicePlugin\TaxonomyItemConvertor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicContentApi.cs" />
     <Compile Include="Queries.cs" />

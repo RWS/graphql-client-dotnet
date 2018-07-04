@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Sdl.Web.GraphQL;
 using Sdl.Web.GraphQL.Request;
 using Sdl.Web.PublicContentApi.ContentModel;
@@ -73,7 +74,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             return response.Data.entity.rawContent.data;
         }
        
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
+        public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
         {
             if (contextData == null)
             {
@@ -81,7 +82,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             }
             string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
             QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
-            var response = _client.Execute(new GraphQLRequest
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -89,12 +90,13 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"contextData", contextData}
-                }
+                },
+                Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
-            return response.Data.sitemap;
+            return response.Sitemap;
         }
 
-        public dynamic GetSitemap(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData)
         {
             if (contextData == null)
@@ -103,7 +105,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             }
             string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
             QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
-            var response = _client.Execute(new GraphQLRequest
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -112,9 +114,10 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"publicationId", publicationId},
                     {"taxonomyNodeId", taxonomyNodeId},
                     {"contextData", contextData}
-                }
+                },
+                Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
-            return response.Data.sitemapSubtree;
+            return response.SitemapSubtree;
         }
        
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
@@ -172,7 +175,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             return response.Data.entity.rawContent.data;
         }
 
-        public async Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData,
+        public async Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
@@ -189,12 +192,13 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"contextData", contextData}
-                }
+                },
+                Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             }, cancellationToken);
             return response.Data.sitemap;
         }
 
-        public async Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
@@ -212,7 +216,8 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"publicationId", publicationId},
                     {"taxonomyNodeId", taxonomyNodeId},
                     {"contextData", contextData}
-                }
+                },
+                Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             }, cancellationToken);
             return response.Data.sitemapSubtree;
         }

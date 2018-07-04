@@ -59,10 +59,10 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="descendantLevels"></param>
         /// <param name="contextData"></param>
         /// <returns></returns>
-        Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData, CancellationToken cancellationToken);
+        Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get Sitemap
+        /// Get Sitemap Suntree
         /// </summary>
         /// <param name="ns"></param>
         /// <param name="publicationId"></param>
@@ -71,8 +71,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         /// <param name="contextData"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        //Taxonomy Node ID in format: t<taxonomy ID>-k<keyword ID>, e.g. ‘t222-k1038'
-        Task<dynamic> GetSitemapAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
             IContextData contextData, CancellationToken cancellationToken);
     }
 }
