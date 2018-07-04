@@ -1,0 +1,22 @@
+﻿ query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!]) {
+	items(first: $first, after: $after, filter: $filter, contextData: $contextData) {
+		edges {
+			cursor
+			node {
+				...itemFields
+        
+				... on Publication {
+					publicationUrl
+					publicationPath
+					multimediaPath
+					multimediaUrl         
+				}
+        
+				... on Component {
+					schemaId
+					multiMedia          
+				}                     
+			}		
+		}
+	}
+}

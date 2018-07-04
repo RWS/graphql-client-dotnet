@@ -1,0 +1,15 @@
+﻿fragment customMetaFields on Item {
+  customMetas(filter: {0}) {
+    edges {
+      node {
+          id
+          itemId
+          key
+          namespaceId
+          publicationId
+          value
+          valueType    
+      }
+    }
+  }
+}

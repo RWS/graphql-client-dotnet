@@ -15,14 +15,18 @@ namespace Sdl.Web.PublicContentApi
     /// <summary>
     /// Public Content Api
     /// </summary>
-    public class PublicContentApi : IGraphQLClient, IPublicContentApi, IPublicContentApiAsync, IModelServicePluginApi
+    public class PublicContentApi : IGraphQLClient, IPublicContentApi, IPublicContentApiAsync, IModelServicePluginApi,
+        IModelServicePluginApiAsync
     {
         private readonly IGraphQLClient _client;
         private readonly IModelServicePluginApi _modelserviceApi;
+        private readonly IModelServicePluginApiAsync _modelserviceApiAsync;
+
         public PublicContentApi(IGraphQLClient graphQLclient)
         {
             _client = graphQLclient;
             _modelserviceApi = new ModelServicePluginApiImpl(_client);
+            _modelserviceApiAsync = new ModelServicePluginApiImpl(_client);
         }
 
         #region IGraphQLClient
@@ -58,7 +62,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.GetBinaryComponentById,
+                Query = "",
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -74,7 +78,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.GetBinaryComponentByUrl,
+                Query = "",
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -85,21 +89,14 @@ namespace Sdl.Web.PublicContentApi
             }).BinaryComponent;
         }
 
-        private static string AddCustomMetaField(string query, string customMetaFilter)
-        {
-            return string.Format(query, customMetaFilter != null
-                ? string.Format(Queries.CustomMetaField, $"\"{customMetaFilter}\"")
-                : "");
-        }
-     
-        public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination, 
+        public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
             List<InputClaimValue> contextData, string customMetaFilter = null)
         {
             if (contextData == null)
                 contextData = new List<InputClaimValue>();
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = AddCustomMetaField(Queries.ItemsQuery, customMetaFilter),
+                Query = "",
                 Variables = new Dictionary<string, object>
                 {
                     {"first", pagination.First},
@@ -107,7 +104,7 @@ namespace Sdl.Web.PublicContentApi
                     {"filter", filter},
                     {"contextData", contextData}
                 },
-                Convertors = new List<JsonConverter> { new ItemConvertor() }
+                Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
             return contenQuery.Items;
         }
@@ -120,7 +117,7 @@ namespace Sdl.Web.PublicContentApi
 
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = AddCustomMetaField(Queries.GetPublication, customMetaFilter),
+                Query = "",
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -141,8 +138,10 @@ namespace Sdl.Web.PublicContentApi
         #region IModelServicePluginApi
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData) 
-            => _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion, contextData);
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            =>
+                _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion,
+                    contextData);
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
@@ -156,12 +155,50 @@ namespace Sdl.Web.PublicContentApi
                 _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType,
                     contextData);
 
-        public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData)
+        public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
+            IContextData contextData)
             => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, contextData);
 
-        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+            int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);
+            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);       
+
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+            =>
+                await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, url, contentType, modelType,
+                    pageInclusion, contextData, cancellationToken);
+
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+            => await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, pageId, contentType, modelType,
+                pageInclusion, contextData, cancellationToken);
+
+        public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
+            ContentType contentType,
+            DataModelType modelType, DcpType dcpType, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+            => await _modelserviceApiAsync.GetEntityModelDataAsync(ns, publicationId, entityId, contentType, modelType,
+                dcpType, contextData, cancellationToken);
+
+        public async Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId,
+            int descendantLevels, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+            =>
+                await _modelserviceApiAsync.GetSitemapAsync(ns, publicationId, descendantLevels, contextData,
+                    cancellationToken);
+
+        public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
+            string taxonomyNodeId, int descendantLevels,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+            =>
+                await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
+                    contextData, cancellationToken);
 
         #endregion
     }

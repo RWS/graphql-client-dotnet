@@ -84,10 +84,12 @@
     <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapSubtree.graphql" />
     <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapFragments.graphql" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Queries\ItemFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\CustomMetaFieldsFilterFragment.graphql" />
+    <EmbeddedResource Include="Queries\CustomMetaFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\ItemQuery.graphql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
