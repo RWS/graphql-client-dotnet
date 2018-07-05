@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sdl.Web.PublicContentApi.ContentModel;
+using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -12,10 +13,13 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData);
 
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url, IContextData contextData);
-      
+
+        BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData);
+
         ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
             List<InputClaimValue> contextData, string customMetaFilter);
-       
-        Publication GetPublication(ContentNamespace ns, int publicationId, List<InputClaimValue> contextData, string customMetaFilter);       
+
+        Publication GetPublication(ContentNamespace ns, int publicationId, List<InputClaimValue> contextData,
+            string customMetaFilter);
     }
 }

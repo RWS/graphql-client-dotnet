@@ -32,6 +32,8 @@ namespace DxaContentApiClient.GraphQL
             _auth = auth;
         }
 
+        public IHttpClient HttpClient => _httpClient;
+
         public int Timeout
         {
             get { return _httpClient.Timeout; }

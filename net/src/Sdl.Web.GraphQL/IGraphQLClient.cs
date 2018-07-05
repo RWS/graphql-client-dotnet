@@ -3,12 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.GraphQL.Request;
 using Sdl.Web.GraphQL.Schema;
+using Sdl.Web.HttpClient;
 
 namespace Sdl.Web.GraphQL
 {
     public interface IGraphQLClient
     {
         int Timeout { get; set; }
+        IHttpClient HttpClient { get; }
         IGraphQLResponse Execute(IGraphQLRequest request);
         T Execute<T>(IGraphQLRequest request);
         Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken);

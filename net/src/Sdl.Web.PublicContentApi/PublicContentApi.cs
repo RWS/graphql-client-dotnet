@@ -9,7 +9,9 @@ using Sdl.Web.GraphQL.Response;
 using Sdl.Web.GraphQL.Schema;
 using System.Threading;
 using Newtonsoft.Json;
+using Sdl.Web.HttpClient;
 using Sdl.Web.PublicContentApi.ModelServicePlugin;
+using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -41,6 +43,8 @@ namespace Sdl.Web.PublicContentApi
             get { return _client.Timeout; }
             set { _client.Timeout = value; }
         }
+
+        public IHttpClient HttpClient => _client.HttpClient;
 
         public IGraphQLResponse Execute(IGraphQLRequest request)
         {
@@ -75,7 +79,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryCompeonentsById"),
+                Query = Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -91,12 +95,28 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryCompeonentsByUrl"),
+                Query = Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
+                    {"contextData", contextData}
+                }
+            }).BinaryComponent;
+        }
+
+        public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, CmUri cmUri,
+          IContextData contextData)
+        {
+            return _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"cmUri", cmUri.ToString()},
                     {"contextData", contextData}
                 }
             }).BinaryComponent;
@@ -156,9 +176,19 @@ namespace Sdl.Web.PublicContentApi
             if (contextData == null)
                 contextData = new List<InputClaimValue>();
 
+            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
+            if (customMetaFilter != null)
+            {
+                query += Queries.Load("CustomMetaFieldsFilterFragment");
+            }
+            else
+            {
+                query += Queries.Load("CustomMetaFieldsFragment");
+            }
+
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = "",
+                Query = query,
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},

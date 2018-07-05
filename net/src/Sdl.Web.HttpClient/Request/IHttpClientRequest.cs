@@ -12,6 +12,11 @@ namespace Sdl.Web.HttpClient.Request
     public interface IHttpClientRequest : ICloneable
     {
         /// <summary>
+        /// Absolute Uri
+        /// </summary>
+        string AbsoluteUri { get; set; }
+
+        /// <summary>
         /// Path
         /// </summary>
         string Path { get; set; }

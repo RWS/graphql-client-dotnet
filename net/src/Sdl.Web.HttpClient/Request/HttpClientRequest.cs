@@ -12,6 +12,7 @@ namespace Sdl.Web.HttpClient.Request
     /// </summary>
     public class HttpClientRequest : IHttpClientRequest
     {
+        public string AbsoluteUri { get; set; }
         public string Path { get; set; }
         public string Method { get; set; } = "GET";
         public string ContentType { get; set; } = "application/json; charset=utf-8";
@@ -22,10 +23,16 @@ namespace Sdl.Web.HttpClient.Request
         public SerializationBinder Binder { get; set; }
         public List<JsonConverter> Convertors { get; set; }
 
-        public virtual Uri BuildRequestUri(IHttpClient httpClient) => UriCreator.FromUri(httpClient.BaseUri)
-            .WithPath(Path)
-            .WithQueryParams(QueryParameters)
-            .Build();
+        public virtual Uri BuildRequestUri(IHttpClient httpClient)
+        {
+            if(!string.IsNullOrEmpty(AbsoluteUri))
+                return new Uri(AbsoluteUri);
+
+            return UriCreator.FromUri(httpClient.BaseUri)
+                .WithPath(Path)
+                .WithQueryParams(QueryParameters)
+                .Build();
+        }
 
         public HttpClientRequest()
         {
@@ -33,6 +40,7 @@ namespace Sdl.Web.HttpClient.Request
 
         public HttpClientRequest(IHttpClientRequest request)
         {
+            AbsoluteUri = request.AbsoluteUri;
             Path = request.Path;
             Method = request.Method;
             ContentType = request.ContentType;

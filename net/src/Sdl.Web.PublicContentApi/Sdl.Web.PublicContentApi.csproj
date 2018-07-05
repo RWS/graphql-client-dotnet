@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicContentApi.cs" />
     <Compile Include="Queries.cs" />
+    <Compile Include="Utils\CmUri.cs" />
     <Compile Include="Utils\QueryHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +96,10 @@
     <EmbeddedResource Include="Queries\StructureGroupFieldsFragment.graphql" />
     <EmbeddedResource Include="Queries\KeywordFieldsFragment.graphql" />
     <EmbeddedResource Include="Queries\TemplateFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\BinaryComponentsById.graphql" />
+    <EmbeddedResource Include="Queries\BinaryComponentById.graphql" />
+    <EmbeddedResource Include="Queries\BinaryComponentByUrl.graphql" />
+    <EmbeddedResource Include="Queries\BinaryComponentByCmUri.graphql" />
+    <EmbeddedResource Include="Queries\Publication.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
