@@ -42,7 +42,7 @@ namespace BuildGraphQLModel
                 }
                 sb.Append($"{type.Interfaces[type.Interfaces.Count - 1].TypeName()}");
             }
-            sb.AppendLine($"{Indent(indent)}{{");
+            sb.Append($"\n{Indent(indent)}{{");
             switch (type.Kind)
             {
                 case "OBJECT":                
@@ -50,6 +50,7 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.Fields)
                         {
+                            sb.AppendLine("");
                             if (!string.IsNullOrEmpty(field.Description))
                             {
                                 sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
@@ -66,6 +67,7 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.InputFields)
                         {
+                            sb.AppendLine("");
                             if (!string.IsNullOrEmpty(field.Description))
                             {
                                 sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
@@ -82,6 +84,7 @@ namespace BuildGraphQLModel
                     {
                         foreach (var field in type.Fields)
                         {
+                            sb.AppendLine("");
                             if (!string.IsNullOrEmpty(field.Description))
                             {
                                 sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
@@ -98,6 +101,7 @@ namespace BuildGraphQLModel
                     {
                         for (int i = 0; i < type.EnumValues.Count - 1; i++)
                         {
+                            sb.AppendLine("");
                             if (!string.IsNullOrEmpty(type.EnumValues[i].Description))
                             {
                                 sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
@@ -107,14 +111,14 @@ namespace BuildGraphQLModel
                             sb.AppendLine($"{Indent(indent + 1)}{type.EnumValues[i].Name.PascalCase()},");
                         }
                         sb.AppendLine(
-                            $"{Indent(indent + 1)}{type.EnumValues[type.EnumValues.Count - 1].Name.PascalCase()}");
+                            $"\n{Indent(indent + 1)}{type.EnumValues[type.EnumValues.Count - 1].Name.PascalCase()}");
                     }
                     break;
                 default:
                     System.Diagnostics.Trace.WriteLine("oops");
                     break;
             }
-            sb.AppendLine($"{Indent(indent)}}}");
+            sb.AppendLine($"{Indent(indent)}}}\n");
         }
 
         static void GenerateSchemaClasses(GraphQLSchema schema, string ns, string outputFile)
@@ -124,7 +128,7 @@ namespace BuildGraphQLModel
             sb.AppendLine("using System.Collections;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using Newtonsoft.Json;");
-            sb.AppendLine("using Newtonsoft.Json.Converters;");            
+            sb.AppendLine("using Newtonsoft.Json.Converters;\n");
             sb.AppendLine($"namespace {ns}");
             sb.AppendLine("{");
             foreach (var type in schema.Types)
