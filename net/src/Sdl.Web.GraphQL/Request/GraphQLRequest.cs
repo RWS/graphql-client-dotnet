@@ -13,7 +13,7 @@ namespace Sdl.Web.GraphQL.Request
         public string Query { get; set; }
         public IDictionary<string, object> Variables { get; set; } = new Dictionary<string, object>();
         public SerializationBinder Binder { get; set; }
-        public List<JsonConverter> Convertors { get; set; }
+        public List<JsonConverter> Convertors { get; set; } = new List<JsonConverter>();
         public IGraphQLRequest AddVariable(string name, object value)
         {
             Variables.Add(name, value);

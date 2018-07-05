@@ -1,5 +1,5 @@
-﻿fragment customMetaFields on Item {
-  customMetas(filter: {0}) {
+﻿fragment CustomMetaFields on Item {
+  customMetas(filter: @customMetaFilter) {
     edges {
       node {
           id

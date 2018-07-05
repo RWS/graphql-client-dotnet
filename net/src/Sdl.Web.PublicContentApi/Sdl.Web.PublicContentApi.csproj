@@ -88,6 +88,14 @@
     <EmbeddedResource Include="Queries\CustomMetaFieldsFilterFragment.graphql" />
     <EmbeddedResource Include="Queries\CustomMetaFieldsFragment.graphql" />
     <EmbeddedResource Include="Queries\ItemQuery.graphql" />
+    <EmbeddedResource Include="Queries\PublicationFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\ComponentFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\BinaryComponentFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\PageFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\StructureGroupFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\KeywordFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\TemplateFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\BinaryComponentsById.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

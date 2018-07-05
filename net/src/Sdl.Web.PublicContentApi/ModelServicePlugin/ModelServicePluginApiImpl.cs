@@ -81,7 +81,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 contextData = new ContextData();
             }
             string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
-            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -104,7 +104,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 contextData = new ContextData();
             }
             string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
-            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -183,7 +183,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 contextData = new ContextData();
             }
             string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
-            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
                 Query = query,
@@ -206,7 +206,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 contextData = new ContextData();
             }
             string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
-            QueryHelpers.ExpandRecursiveFragment(ref query, "recurseItems", descendantLevels);
+            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
                 Query = query,

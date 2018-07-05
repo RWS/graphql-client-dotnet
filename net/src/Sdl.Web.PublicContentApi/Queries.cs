@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 
@@ -9,7 +10,7 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public static class Queries
     {
-        public static string Load(string resourceNamespace, string queryName)
+        public static string LoadFromResource(string resourceNamespace, string queryName)
         {
             string resourceName = $"{resourceNamespace}.Queries.{queryName}.graphql";
             using (Stream stm = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
@@ -22,6 +23,7 @@ namespace Sdl.Web.PublicContentApi
             throw new MissingManifestResourceException($"Resource {resourceName} not found");
         }
 
-        public static string Load(string queryName) => Load("Sdl.Web.PublicContentApi", queryName);     
+        public static string Load(params string[] queryNames) 
+            => queryNames.Aggregate(string.Empty, (current, q) => current + Queries.LoadFromResource("Sdl.Web.PublicContentApi", q));
     }
 }

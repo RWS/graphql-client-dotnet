@@ -1,4 +1,4 @@
-﻿fragment itemFields on Item {
+﻿fragment ItemFields on Item {
     id
     itemId
     itemType
@@ -10,5 +10,5 @@
     creationDate
     initialPublishDate
     updatedDate   
-    ...customMetaFields
+    ...CustomMetaFields
 }

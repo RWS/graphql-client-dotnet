@@ -6,6 +6,6 @@
     public static class Queries
     {
         public static string Load(string queryName) 
-            => Web.PublicContentApi.Queries.Load("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName);
+            => Web.PublicContentApi.Queries.LoadFromResource("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName);
     }
 }

@@ -12,7 +12,7 @@ namespace Sdl.Web.PublicContentApi.Utils
                 int s = query.IndexOf(" ", rFragIndex);
                 int e = query.IndexOf("on", s);
                 string fragmentName = query.Substring(s, e - s).Trim();
-                if (!fragmentName.Equals(fragmentToExpand)) continue;
+                if (fragmentToExpand != null && !fragmentName.Equals(fragmentToExpand)) continue;
                 int n = 1;
                 string fragmentBody = "";
                 int rFragBodyStartIndex = query.IndexOf("{", e) + 1;

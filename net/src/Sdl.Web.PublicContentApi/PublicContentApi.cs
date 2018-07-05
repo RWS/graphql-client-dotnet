@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.GraphQL;
@@ -33,7 +34,7 @@ namespace Sdl.Web.PublicContentApi
 
         public GraphQLSchema Schema => _client.Schema;
 
-        public Task<GraphQLSchema> SchemaAsync() => _client.SchemaAsync();
+        public async Task<GraphQLSchema> SchemaAsync() => await _client.SchemaAsync();
 
         public int Timeout
         {
@@ -42,16 +43,28 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public IGraphQLResponse Execute(IGraphQLRequest request)
-            => _client.Execute(request);
+        {
+            request.Convertors.Add(new ItemConvertor());
+            return _client.Execute(request);
+        }
 
         public T Execute<T>(IGraphQLRequest request)
-            => _client.Execute<T>(request);
+        {
+            request.Convertors.Add(new ItemConvertor());
+            return _client.Execute<T>(request);
+        }
 
-        public Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
-            => _client.ExecuteAsync(request, cancellationToken);
+        public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
+        {
+            request.Convertors.Add(new ItemConvertor());
+            return await _client.ExecuteAsync(request, cancellationToken);
+        }
 
-        public Task<T> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
-            => _client.ExecuteAsync<T>(request, cancellationToken);
+        public async Task<T> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
+        {
+            request.Convertors.Add(new ItemConvertor());
+            return await _client.ExecuteAsync<T>(request, cancellationToken);
+        }
 
         #endregion
 
@@ -62,7 +75,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = "",
+                Query = Queries.Load("BinaryCompeonentsById"),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -78,7 +91,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = "",
+                Query = Queries.Load("BinaryCompeonentsByUrl"),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -94,9 +107,37 @@ namespace Sdl.Web.PublicContentApi
         {
             if (contextData == null)
                 contextData = new List<InputClaimValue>();
+
+            // Dynamically build our item query based on the filter(s) being used.
+            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
+            if (customMetaFilter != null)
+            {
+                query += Queries.Load("CustomMetaFieldsFilterFragment");
+            }
+            else
+            {
+                query += Queries.Load("CustomMetaFieldsFragment");
+            }
+
+            // We only include the fragments that will be required based on the item types in the
+            // input item filter
+            if (filter.ItemTypes != null)
+            {
+                string fragmentList = string.Empty;
+                foreach (var itemType in filter.ItemTypes)
+                {
+                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemTypes), itemType)}Fields";
+                    query += Queries.Load(fragment + "Fragment");
+                    fragmentList += $"...{fragment}\n";
+                }
+                // Just a quick and easy way to replace markers in our queries with vars here.
+                query = query.Replace("@fragmentList", fragmentList);
+                query = query.Replace("@customMetaFilter", "\""+customMetaFilter+"\"");
+            }
+
             var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = "",
+                Query = query,
                 Variables = new Dictionary<string, object>
                 {
                     {"first", pagination.First},
@@ -135,7 +176,7 @@ namespace Sdl.Web.PublicContentApi
 
         #endregion
 
-        #region IModelServicePluginApi
+        #region IModelServicePluginApi & IModelServicePluginApiAsync
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)

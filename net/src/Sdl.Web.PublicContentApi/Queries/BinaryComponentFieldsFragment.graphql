@@ -1,0 +1,4 @@
+﻿fragment BinaryComponentFields on BinaryComponent {
+	schemaId
+    multiMedia  
+}

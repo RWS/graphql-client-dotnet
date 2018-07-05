@@ -3,19 +3,8 @@
 		edges {
 			cursor
 			node {
-				...itemFields
-        
-				... on Publication {
-					publicationUrl
-					publicationPath
-					multimediaPath
-					multimediaUrl         
-				}
-        
-				... on Component {
-					schemaId
-					multiMedia          
-				}                     
+				...ItemFields				
+				@fragmentList
 			}		
 		}
 	}
