@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Sdl.Web.PublicContentApi.ContentModel;
 
 namespace Sdl.Web.PublicContentApi.Utils
 {
+    /// <summary>
+    /// CmUri provides a handy way to deal with CM (Sites+Docs) uris
+    /// </summary>
     [Serializable]
     public class CmUri
     {
         private const string Regex = "^(?<namespace>[a-zA-z]+):(?<pubId>[0-9]+)-(?<itemId>[0-9]+)(-(?<itemType>[0-9]+))?(-v(?<version>[0-9]+))?$";
         private static readonly Regex UriRegEx = new Regex(Regex, RegexOptions.Compiled);
 
-        public CmUri(string uriNamespace, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType? itemType, int? version)
+        public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType? itemType, int? version)
         {
             Namespace = uriNamespace;
             PublicationId = publicationId;
@@ -19,7 +23,7 @@ namespace Sdl.Web.PublicContentApi.Utils
             Version = version;
         }
 
-        public CmUri(string uriNamespace, int publicationId, int itemId)
+        public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId)
         {
             Namespace = uriNamespace;
             PublicationId = publicationId;
@@ -28,7 +32,7 @@ namespace Sdl.Web.PublicContentApi.Utils
 
         public CmUri(string uri)
         {
-            Namespace = null;
+            Namespace = ContentNamespace.Sites;
             ItemType = 0;
             ItemId = -1;
             PublicationId = -1;
@@ -40,13 +44,13 @@ namespace Sdl.Web.PublicContentApi.Utils
             : this(uri.Namespace, uri.PublicationId, uri.ItemId, uri.ItemType, uri.Version)
         { }
 
-        public static CmUri Create(string namespaceId, int publicationId, int itemId)
+        public static CmUri Create(ContentNamespace namespaceId, int publicationId, int itemId)
             => new CmUri(namespaceId, publicationId, itemId);
 
-        public static CmUri Create(string namespaceId, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType itemType, int version) 
+        public static CmUri Create(ContentNamespace namespaceId, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType itemType, int version) 
             => new CmUri(namespaceId, publicationId, itemId, itemType, version);
 
-        public string Namespace { get; set; }
+        public ContentNamespace Namespace { get; set; }
         public int ItemId { get; set; }
         public Sdl.Web.PublicContentApi.ItemType? ItemType { get; set; }
         public int PublicationId { get; set; }
@@ -87,13 +91,35 @@ namespace Sdl.Web.PublicContentApi.Utils
                     version = int.Parse(match.Groups["version"].Value);
                 }
 
-                cmUri = new CmUri(ns, publicationId, itemId, itemType, version);
+                cmUri = new CmUri(NamespaceIdentiferToId(ns), publicationId, itemId, itemType, version);
             }
             catch
             {
                 return false;
             }
             return true;
+        }
+
+        public static ContentNamespace NamespaceIdentiferToId(string namespaceIdentifier)
+        {
+            switch (namespaceIdentifier.ToLower())
+            {
+                case "ish":
+                    return ContentNamespace.Docs;
+                default: // "tcm" should be 
+                    return ContentNamespace.Sites;
+            }
+        }
+
+        public static string NamespaceIdToIdentifer(ContentNamespace ns)
+        {
+            switch (ns)
+            {
+                case ContentNamespace.Docs:
+                    return "ish";              
+                default:
+                    return "tcm";
+            }
         }
 
         private void Parse(string uri)
@@ -105,7 +131,7 @@ namespace Sdl.Web.PublicContentApi.Utils
                 {
                     throw new FormatException("Invalid CmUri: " + uri);
                 }
-                Namespace = match.Groups["namespace"].Value;
+                Namespace = NamespaceIdentiferToId(match.Groups["namespace"].Value);
                 PublicationId = int.Parse(match.Groups["pubId"].Value);
                 ItemId = int.Parse(match.Groups["itemId"].Value);
                 if (match.Groups["itemType"].Captures.Count > 0)
@@ -133,7 +159,7 @@ namespace Sdl.Web.PublicContentApi.Utils
 
         public override string ToString()
         {
-            string uri = $"{Namespace}:{PublicationId}-{ItemId}";
+            string uri = $"{NamespaceIdToIdentifer(Namespace)}:{PublicationId}-{ItemId}";
             if (ItemType.HasValue)
             {
                 uri += $"-{(int) ItemType}";

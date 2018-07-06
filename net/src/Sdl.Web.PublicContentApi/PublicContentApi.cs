@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.GraphQL;
@@ -30,13 +29,13 @@ namespace Sdl.Web.PublicContentApi
             _client = graphQLclient;
             _modelserviceApi = new ModelServicePluginApiImpl(_client);
             _modelserviceApiAsync = new ModelServicePluginApiImpl(_client);
-        }
-
-        #region IGraphQLClient
+        }        
 
         public GraphQLSchema Schema => _client.Schema;
 
         public async Task<GraphQLSchema> SchemaAsync() => await _client.SchemaAsync();
+
+        #region IGraphQLClient
 
         public int Timeout
         {
@@ -106,7 +105,7 @@ namespace Sdl.Web.PublicContentApi
             }).BinaryComponent;
         }
 
-        public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, CmUri cmUri,
+        public BinaryComponent GetBinaryComponent(CmUri cmUri,
           IContextData contextData)
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
@@ -114,8 +113,8 @@ namespace Sdl.Web.PublicContentApi
                 Query = Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
                 Variables = new Dictionary<string, object>
                 {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
                     {"contextData", contextData}
                 }
@@ -206,6 +205,143 @@ namespace Sdl.Web.PublicContentApi
 
         #endregion
 
+        #region IPublicContentApiAsync
+
+        public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query =
+                    Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
+                        "CustomMetaFieldsFragment"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"binaryId", binaryId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken)).BinaryComponent;
+        }       
+
+        public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query =
+                    Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
+                        "CustomMetaFieldsFragment"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"url", url},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken)).BinaryComponent;
+        }
+
+        public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query =
+                    Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
+                        "CustomMetaFieldsFragment"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
+                    {"cmUri", cmUri.ToString()},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken)).BinaryComponent;
+        }
+
+        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
+            List<InputClaimValue> contextData, string customMetaFilter = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (contextData == null)
+                contextData = new List<InputClaimValue>();
+
+            // Dynamically build our item query based on the filter(s) being used.
+            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
+            if (customMetaFilter != null)
+            {
+                query += Queries.Load("CustomMetaFieldsFilterFragment");
+            }
+            else
+            {
+                query += Queries.Load("CustomMetaFieldsFragment");
+            }
+
+            // We only include the fragments that will be required based on the item types in the
+            // input item filter
+            if (filter.ItemTypes != null)
+            {
+                string fragmentList = string.Empty;
+                foreach (var itemType in filter.ItemTypes)
+                {
+                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemTypes), itemType)}Fields";
+                    query += Queries.Load(fragment + "Fragment");
+                    fragmentList += $"...{fragment}\n";
+                }
+                // Just a quick and easy way to replace markers in our queries with vars here.
+                query = query.Replace("@fragmentList", fragmentList);
+                query = query.Replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
+            }
+
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = query,
+                Variables = new Dictionary<string, object>
+                {
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"filter", filter},
+                    {"contextData", contextData}
+                },
+                Convertors = new List<JsonConverter> {new ItemConvertor()}
+            }, cancellationToken);
+            return contenQuery.Items;
+        }
+
+        public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
+            List<InputClaimValue> contextData, string customMetaFilter,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (contextData == null)
+                contextData = new List<InputClaimValue>();
+
+            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
+            if (customMetaFilter != null)
+            {
+                query += Queries.Load("CustomMetaFieldsFilterFragment");
+            }
+            else
+            {
+                query += Queries.Load("CustomMetaFieldsFragment");
+            }
+
+            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = query,
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"contextData", contextData}
+                }
+            }, cancellationToken);
+            return contenQuery.Publication;
+        }
+
+        #endregion
+
         #region IModelServicePluginApi & IModelServicePluginApiAsync
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
@@ -271,6 +407,6 @@ namespace Sdl.Web.PublicContentApi
                 await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
                     contextData, cancellationToken);
 
-        #endregion
+        #endregion      
     }
 }
