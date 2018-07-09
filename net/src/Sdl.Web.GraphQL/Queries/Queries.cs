@@ -1,95 +1,26 @@
-﻿namespace Sdl.Web.GraphQL.Queries
+﻿using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+
+namespace Sdl.Web.GraphQLClient.Queries
 {
-    public class Queries
+    /// <summary>
+    /// GraphQL Queries
+    /// </summary>
+    public static class Queries
     {
-        /// <summary>
-        /// Full introspection query to return schema
-        /// </summary>
-        public static readonly string IntrospectionQuery = @"
-		    query IntrospectionQuery {
-			    __schema {
-				    queryType {
-					    name
-				    },
-				    mutationType {
-					    name
-				    },
-				    subscriptionType {
-					    name
-				    },
-				    types {
-					    ...FullType
-				    },
-				    directives {
-					    name,
-					    description,
-					    args {
-						    ...InputValue
-					    },
-					    onOperation,
-					    onFragment,
-					    onField
-				    }
-			    }
-		    }
-
-		    fragment FullType on __Type {
-			    kind,
-			    name,
-			    description,
-			    fields(includeDeprecated: true) {
-				    name,
-				    description,
-				    args {
-					    ...InputValue
-				    },
-				    type {
-					    ...TypeRef
-				    },
-				    isDeprecated,
-				    deprecationReason
-			    },
-			    inputFields {
-				    ...InputValue
-			    },
-			    interfaces {
-				    ...TypeRef
-			    },
-			    enumValues(includeDeprecated: true) {
-				    name,
-				    description,
-				    isDeprecated,
-				    deprecationReason
-			    },
-			    possibleTypes {
-				    ...TypeRef
-			    }
-		    }
-
-		    fragment InputValue on __InputValue {
-			    name,
-			    description,
-			    type {
-				    ...TypeRef
-			    },
-			    defaultValue
-		    }
-
-		    fragment TypeRef on __Type {
-			    kind,
-			    name,
-			    ofType {
-				    kind,
-				    name,
-				    ofType {
-					    kind,
-					    name,
-					    ofType {
-						    kind,
-						    name
-					    }
-				    }
-			    }
-		    }";
+        public static string LoadFromResource(string resourceNamespace, string queryName)
+        {
+            string resourceName = $"{resourceNamespace}.Queries.{queryName}.graphql";
+            using (Stream stm = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName))
+            {
+                if (stm != null)
+                {
+                    return new StreamReader(stm).ReadToEnd();
+                }
+            }
+            throw new MissingManifestResourceException($"Resource {resourceName} not found");
+        }
     }
 }

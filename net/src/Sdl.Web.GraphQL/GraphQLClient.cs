@@ -11,7 +11,7 @@ using Sdl.Web.HttpClient.Request;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Sdl.Web.GraphQL;
-using Sdl.Web.GraphQL.Queries;
+using Sdl.Web.GraphQLClient.Queries;
 
 namespace DxaContentApiClient.GraphQL
 {
@@ -151,7 +151,7 @@ namespace DxaContentApiClient.GraphQL
                     return Execute(new GraphQLRequest
                     {
                         Authenticaton = _auth,
-                        Query = Queries.IntrospectionQuery,
+                        Query = Queries.LoadFromResource("Sdl.Web.GraphQLClient", "IntrospectionQuery"),
                         OperationName = "IntrospectionQuery"
                     }).Data.__schema.ToObject<GraphQLSchema>();
                 }
@@ -173,7 +173,7 @@ namespace DxaContentApiClient.GraphQL
                 return await ExecuteAsync(new GraphQLRequest
                 {
                     Authenticaton = _auth,
-                    Query = Queries.IntrospectionQuery,
+                    Query = Queries.LoadFromResource("Sdl.Web.GraphQLClient", "IntrospectionQuery"),
                     OperationName = "IntrospectionQuery"
                 }).Result.Data.__schema.ToObject<GraphQLSchema>();
             }
