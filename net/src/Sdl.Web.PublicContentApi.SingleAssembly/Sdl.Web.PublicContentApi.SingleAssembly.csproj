@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
+  <PropertyGroup>
+
+    <NuGet>NuGet.exe</NuGet>
+
+  </PropertyGroup>
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -59,11 +66,31 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+
+  <Target Name="PrepareBuild">
+        <Message Text="Preparing build..." Importance="high" />
+
+        <Message Text="Clearing NuGet cache..."/>
+        <Exec Command="$(NuGet) locals all -Clear" />
+
+        <Message Text="Restoring NuGet packages ..."/>
+        <Exec Command="$(NuGet) restore ..\..\sln\Sdl.Web.PublicContentApi.SingleAssembly.sln" WorkingDirectory="$(ProjectDirectory)" />
+
+        <ItemGroup>
+            <AssemblyInfo Include="[assembly: AssemblyVersion(&quot;$(VersionMajor).$(VersionMinor).$(VersionPatch).0&quot;)]" />
+            <AssemblyInfo Include="[assembly: AssemblyFileVersion(&quot;$(Version)&quot;)]" />
+            <AssemblyInfo Include="[assembly: AssemblyInformationalVersion(&quot;$(PackageVersion)&quot;)]" />
+            <AssemblyInfo Include="[assembly: AssemblyCopyright(&quot;Copyright © 2014-$([System.DateTime]::Now.ToString(&quot;yyyy&quot;)) SDL Group&quot;)]" />
+        </ItemGroup>
+
+        <Message Text="Updating CommonAssemblyInfo..."/>
+        <WriteLinesToFile File="$(ProjectDirectory)\CommonAssemblyInfo.cs" Overwrite="False" Lines="@(AssemblyInfo)" />
   </Target>
-  <Target Name="AfterBuild">
+
+  <Target Name="Build">
+    <Message Text="Start build..." Importance="high" />        
+    <CallTarget Targets="PrepareBuild"/>  
   </Target>
-  -->
+ 
 </Project>
