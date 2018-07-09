@@ -68,7 +68,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
 
-  <Target Name="PrepareBuild">
+  <Target Name="BeforeBuild">
         <Message Text="Preparing build..." Importance="high" />
 
         <Message Text="Clearing NuGet cache..."/>
@@ -87,10 +87,6 @@
         <Message Text="Updating CommonAssemblyInfo..."/>
         <WriteLinesToFile File="$(ProjectDirectory)\CommonAssemblyInfo.cs" Overwrite="False" Lines="@(AssemblyInfo)" />
   </Target>
-
-  <Target Name="Build">
-    <Message Text="Start build..." Importance="high" />        
-    <CallTarget Targets="PrepareBuild"/>  
-  </Target>
+ 
  
 </Project>
