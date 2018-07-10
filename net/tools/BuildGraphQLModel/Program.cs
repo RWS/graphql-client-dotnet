@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
-using Sdl.Web.GraphQL.Schema;
 using BuildGraphQLModel.Extensions;
-using DxaContentApiClient.GraphQL;
 using System.IO;
+using Sdl.Web.GraphQLClient;
+using Sdl.Web.GraphQLClient.Schema;
 
 namespace BuildGraphQLModel
 {
@@ -17,17 +18,44 @@ namespace BuildGraphQLModel
     {       
         static string Indent(int level) => new string('\t', level);
 
+        static void EmitComment(ref StringBuilder sb, string comment, int indent)
+        {
+            if (string.IsNullOrEmpty(comment)) return;
+            sb.AppendLine($"{Indent(indent)}/// <summary>");
+            sb.AppendLine($"{Indent(indent)}/// {comment}");
+            sb.AppendLine($"{Indent(indent)}/// </summary>");
+        }
+
+        static void EmitFields(ref StringBuilder sb, List<GraphQLSchemaField> fields, int indent, bool isPublic)
+        {
+            if (fields == null) return;
+            foreach (var field in fields)
+            {
+                sb.AppendLine("");
+                EmitComment(ref sb, field.Description, indent);
+                sb.AppendLine(
+                    $"{Indent(indent)}{(isPublic?"public ":"")}{field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
+            }
+        }
+
+        static void EmitFields(ref StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indent)
+        {
+            if (enumValues == null) return;
+            for (int i = 0; i < enumValues.Count - 1; i++)
+            {
+                sb.AppendLine("");
+                EmitComment(ref sb, enumValues[i].Description, indent);
+                sb.AppendLine($"{Indent(indent)}{enumValues[i].Name.PascalCase()},");
+            }
+            sb.AppendLine(
+                $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");
+        }
+
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
         {
             if (type.Name.StartsWith("__")) return;
-            if (type.Kind.Equals("SCALAR")) return;            
-            if (!string.IsNullOrEmpty(type.Description))
-            {
-                sb.AppendLine($"{Indent(indent)}/// <summary>");
-                sb.AppendLine($"{Indent(indent)}/// {type.Description}");
-                sb.AppendLine($"{Indent(indent)}/// </summary>");
-            }
-
+            if (type.Kind.Equals("SCALAR")) return;
+            EmitComment(ref sb, type.Description, indent);
             if (type.Kind.Equals("ENUM"))
             {
                 sb.AppendLine($"{Indent(indent)}[JsonConverter(typeof(StringEnumConverter))]");
@@ -45,74 +73,20 @@ namespace BuildGraphQLModel
             sb.Append($"\n{Indent(indent)}{{");
             switch (type.Kind)
             {
-                case "OBJECT":                
-                    if (type.Fields != null)
-                    {
-                        foreach (var field in type.Fields)
-                        {
-                            sb.AppendLine("");
-                            if (!string.IsNullOrEmpty(field.Description))
-                            {
-                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
-                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
-                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
-                            }
-                            sb.AppendLine(
-                                $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
-                        }
-                    }                   
+                case "OBJECT":        
+                    EmitFields(ref sb, type.Fields, indent + 1, true);
                     break;
                 case "INPUT_OBJECT":
-                    if (type.InputFields != null)
-                    {
-                        foreach (var field in type.InputFields)
-                        {
-                            sb.AppendLine("");
-                            if (!string.IsNullOrEmpty(field.Description))
-                            {
-                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
-                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
-                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
-                            }
-                            sb.AppendLine(
-                                $"{Indent(indent + 1)}public {field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
-                        }
-                    }
+                    EmitFields(ref sb, type.InputFields, indent + 1, true);                   
                     break;
                 case "INTERFACE":
                     if (type.PossibleTypes != null)
                     {
-                        foreach (var field in type.Fields)
-                        {
-                            sb.AppendLine("");
-                            if (!string.IsNullOrEmpty(field.Description))
-                            {
-                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
-                                sb.AppendLine($"{Indent(indent + 1)}/// {field.Description}");
-                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
-                            }
-                            sb.AppendLine(
-                                $"{Indent(indent + 1)}{field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
-                        }
+                        EmitFields(ref sb, type.Fields, indent + 1, false);                       
                     }
                     break;
-                case "ENUM":
-                    if (type.EnumValues != null)
-                    {
-                        for (int i = 0; i < type.EnumValues.Count - 1; i++)
-                        {
-                            sb.AppendLine("");
-                            if (!string.IsNullOrEmpty(type.EnumValues[i].Description))
-                            {
-                                sb.AppendLine($"{Indent(indent + 1)}/// <summary>");
-                                sb.AppendLine($"{Indent(indent + 1)}/// {type.EnumValues[i].Description}");
-                                sb.AppendLine($"{Indent(indent + 1)}/// </summary>");
-                            }
-                            sb.AppendLine($"{Indent(indent + 1)}{type.EnumValues[i].Name.PascalCase()},");
-                        }
-                        sb.AppendLine(
-                            $"\n{Indent(indent + 1)}{type.EnumValues[type.EnumValues.Count - 1].Name.PascalCase()}");
-                    }
+                case "ENUM":                   
+                    EmitFields(ref sb, type.EnumValues, indent + 1);
                     break;
                 default:
                     System.Diagnostics.Trace.WriteLine("oops");

@@ -1,13 +1,11 @@
-﻿using Sdl.Web.GraphQL.Schema;
+﻿using Sdl.Web.GraphQLClient.Schema;
 
 namespace BuildGraphQLModel.Extensions
 {
     public static class GraphQLSchemaExt
     {
-        public static string TypeName(this GraphQLSchemaInterface interfaceType)
-        {
-            return $"I{interfaceType.Name.PascalCase()}";
-        }
+        public static string TypeName(this GraphQLSchemaInterface interfaceType) 
+            => $"I{interfaceType.Name.PascalCase()}";
 
         public static string TypeName(this GraphQLSchemaType type)
         {
@@ -15,11 +13,10 @@ namespace BuildGraphQLModel.Extensions
             {
                 case "OBJECT":
                 case "INPUT_OBJECT":
+                case "ENUM":
                     return $"{type.Name.PascalCase()}";
                 case "INTERFACE":
                     return $"I{type.Name.PascalCase()}";
-                case "ENUM":
-                    return $"{type.Name.PascalCase()}";
                 default:
                     return null;
             }
@@ -30,13 +27,12 @@ namespace BuildGraphQLModel.Extensions
             switch (type.Kind)
             {
                 case "OBJECT":
+                case "INPUT_OBJECT":
                     return $"class {TypeName(type)}";
                 case "INTERFACE":
                     return $"interface {TypeName(type)}";
                 case "ENUM":
                     return $"enum {TypeName(type)}";
-                case "INPUT_OBJECT":
-                    return $"class {TypeName(type)}";
                 default:
                     return null;
             }
@@ -61,7 +57,6 @@ namespace BuildGraphQLModel.Extensions
             switch (typeInfo.Kind)
             {
                 case "SCALAR":
-                    string type = "";
                     switch (typeInfo.Name)
                     {
                         case "ID":
