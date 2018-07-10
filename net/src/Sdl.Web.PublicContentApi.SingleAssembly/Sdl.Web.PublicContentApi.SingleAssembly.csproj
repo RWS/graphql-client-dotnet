@@ -2,6 +2,16 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <Version Condition="'$(VERSION)' == ''">0.0.0.0</Version>
+    <Version Condition="'$(VERSION)' != ''">$(VERSION)</Version>
+    <BuildConfiguration>Release</BuildConfiguration>
+    <IsPreRelease>true</IsPreRelease>
+    <VersionMajor>$(Version.Split('.')[0])</VersionMajor>
+    <VersionMinor>$(Version.Split('.')[1])</VersionMinor>
+    <VersionPatch>$(Version.Split('.')[2])</VersionPatch>
+    <VersionBuild>$(Version.Split('.')[3])</VersionBuild>
+    <PreReleaseLabel Condition="'$(IsPreRelease)' == 'true'">-beta-$([System.DateTime]::Now.ToString("yyyyMMddHHmm"))</PreReleaseLabel>
+    <PackageVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)$(PreReleaseLabel)</PackageVersion>
     <NuGet>NuGet.exe</NuGet>
   </PropertyGroup>
   <PropertyGroup>
@@ -35,7 +45,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\sln\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,28 +66,15 @@
     <Compile Include="..\Sdl.Web.PublicContentApi\**\*.cs;" Exclude="..\Sdl.Web.PublicContentApi\**\Temp*;..\Sdl.Web.PublicContentApi\**\AssemblyInfo.cs*;..\Sdl.Web.PublicContentApi\**\Queries.cs">
       <LinkBase>PublicContentApi</LinkBase>
     </Compile>
+    <Compile Include="CommonAssemblyInfo.cs" />
     <Compile Include="Specific\Queries.cs" />
     <EmbeddedResource Include="..\Sdl.Web.GraphQL\**\*.graphql;..\Sdl.Web.PublicContentApi\**\*.graphql" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
-    <Message Text="Preparing build..." Importance="high" />
-    <Message Text="Clearing NuGet cache..." />
-    <Exec Command="$(NuGet) locals all -Clear" />
-    <Message Text="Restoring NuGet packages ..." />
-    <Exec Command="$(NuGet) restore ..\..\sln\Sdl.Web.PublicContentApi.SingleAssembly.sln" WorkingDirectory="$(ProjectDirectory)" />
-    <ItemGroup>
-      <AssemblyInfo Include="[assembly: AssemblyVersion(&quot;$(VersionMajor).$(VersionMinor).$(VersionPatch).0&quot;)]" />
-      <AssemblyInfo Include="[assembly: AssemblyFileVersion(&quot;$(Version)&quot;)]" />
-      <AssemblyInfo Include="[assembly: AssemblyInformationalVersion(&quot;$(PackageVersion)&quot;)]" />
-      <AssemblyInfo Include="[assembly: AssemblyCopyright(&quot;Copyright © 2014-$([System.DateTime]::Now.ToString(&quot;yyyy&quot;)) SDL Group&quot;)]" />
-    </ItemGroup>
-    <Message Text="Updating CommonAssemblyInfo..." />
-    <WriteLinesToFile File="$(ProjectDirectory)\CommonAssemblyInfo.cs" Overwrite="False" Lines="@(AssemblyInfo)" />
-  </Target>
 </Project>
