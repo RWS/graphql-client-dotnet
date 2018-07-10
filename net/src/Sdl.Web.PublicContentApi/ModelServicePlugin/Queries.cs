@@ -6,6 +6,6 @@
     public static class Queries
     {
         public static string Load(string queryName) 
-            => GraphQLClient.Queries.Queries.LoadFromResource("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName);
+            => GraphQLClient.QueryResources.LoadFromResource("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName);
     }
 }

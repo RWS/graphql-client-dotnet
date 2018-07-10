@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Sdl.Web.GraphQL;
-using Sdl.Web.GraphQL.Request;
+using Sdl.Web.GraphQLClient;
+using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.PublicContentApi.Utils;
 

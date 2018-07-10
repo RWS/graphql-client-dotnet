@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Sdl.Web.HttpClient.Auth;
 
-namespace Sdl.Web.GraphQL.Request
+namespace Sdl.Web.GraphQLClient.Request
 {
     /// <summary>
     /// GraphQL Request

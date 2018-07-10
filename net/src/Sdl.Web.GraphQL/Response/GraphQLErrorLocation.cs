@@ -1,4 +1,4 @@
-﻿namespace Sdl.Web.GraphQL.Response
+﻿namespace Sdl.Web.GraphQLClient.Response
 {
     public class GraphQLErrorLocation
     {

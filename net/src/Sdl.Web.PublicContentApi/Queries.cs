@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
+﻿using System.Linq;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -11,6 +8,6 @@ namespace Sdl.Web.PublicContentApi
     public static class Queries
     {      
         public static string Load(params string[] queryNames) 
-            => queryNames.Aggregate(string.Empty, (current, q) => current + GraphQLClient.Queries.Queries.LoadFromResource("Sdl.Web.PublicContentApi", q));
+            => queryNames.Aggregate(string.Empty, (current, q) => current + GraphQLClient.QueryResources.LoadFromResource("Sdl.Web.PublicContentApi", q));
     }
 }

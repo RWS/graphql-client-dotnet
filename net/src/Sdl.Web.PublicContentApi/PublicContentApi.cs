@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
-using Sdl.Web.GraphQL;
-using Sdl.Web.GraphQL.Request;
-using Sdl.Web.GraphQL.Response;
-using Sdl.Web.GraphQL.Schema;
 using System.Threading;
 using Newtonsoft.Json;
+using Sdl.Web.GraphQLClient;
+using Sdl.Web.GraphQLClient.Request;
+using Sdl.Web.GraphQLClient.Response;
+using Sdl.Web.GraphQLClient.Schema;
 using Sdl.Web.HttpClient;
 using Sdl.Web.PublicContentApi.ModelServicePlugin;
 using Sdl.Web.PublicContentApi.Utils;

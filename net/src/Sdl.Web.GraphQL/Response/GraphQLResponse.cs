@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sdl.Web.GraphQL.Response
+namespace Sdl.Web.GraphQLClient.Response
 {
     public class GraphQLResponse : IGraphQLResponse
     {

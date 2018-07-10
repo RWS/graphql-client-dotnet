@@ -1,4 +1,4 @@
-﻿namespace Sdl.Web.GraphQL.Schema
+﻿namespace Sdl.Web.GraphQLClient.Schema
 {
     public class GraphQLSchemaField
     {

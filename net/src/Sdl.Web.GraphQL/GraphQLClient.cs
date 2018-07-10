@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Sdl.Web.GraphQL.Exceptions;
-using Sdl.Web.GraphQL.Request;
-using Sdl.Web.GraphQL.Response;
-using Sdl.Web.GraphQL.Schema;
 using Sdl.Web.HttpClient;
 using Sdl.Web.HttpClient.Auth;
 using Sdl.Web.HttpClient.Request;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Sdl.Web.GraphQL;
-using Sdl.Web.GraphQLClient.Queries;
+using Sdl.Web.GraphQLClient.Exceptions;
+using Sdl.Web.GraphQLClient.Request;
+using Sdl.Web.GraphQLClient.Response;
+using Sdl.Web.GraphQLClient.Schema;
 
-namespace DxaContentApiClient.GraphQL
+namespace Sdl.Web.GraphQLClient
 {
     public class GraphQLClient : IGraphQLClient
     {
@@ -22,13 +20,13 @@ namespace DxaContentApiClient.GraphQL
 
         public GraphQLClient(string endpoint, IAuthentication auth = null)
         {
-            _httpClient = new HttpClient(endpoint);
+            _httpClient = new HttpClient.HttpClient(endpoint);
             _auth = auth;
         }
 
         public GraphQLClient(Uri endpoint, IAuthentication auth = null)
         {
-            _httpClient = new HttpClient(endpoint);
+            _httpClient = new HttpClient.HttpClient(endpoint);
             _auth = auth;
         }
 
@@ -151,7 +149,7 @@ namespace DxaContentApiClient.GraphQL
                     return Execute(new GraphQLRequest
                     {
                         Authenticaton = _auth,
-                        Query = Queries.LoadFromResource("Sdl.Web.GraphQLClient", "IntrospectionQuery"),
+                        Query = Queries.Load("IntrospectionQuery"),
                         OperationName = "IntrospectionQuery"
                     }).Data.__schema.ToObject<GraphQLSchema>();
                 }
@@ -173,7 +171,7 @@ namespace DxaContentApiClient.GraphQL
                 return await ExecuteAsync(new GraphQLRequest
                 {
                     Authenticaton = _auth,
-                    Query = Queries.LoadFromResource("Sdl.Web.GraphQLClient", "IntrospectionQuery"),
+                    Query = Queries.Load("IntrospectionQuery"),
                     OperationName = "IntrospectionQuery"
                 }).Result.Data.__schema.ToObject<GraphQLSchema>();
             }

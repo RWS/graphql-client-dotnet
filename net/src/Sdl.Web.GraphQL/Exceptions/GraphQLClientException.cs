@@ -1,7 +1,7 @@
 ﻿using System;
-using Sdl.Web.GraphQL.Response;
+using Sdl.Web.GraphQLClient.Response;
 
-namespace Sdl.Web.GraphQL.Exceptions
+namespace Sdl.Web.GraphQLClient.Exceptions
 {
     public class GraphQLClientException : Exception
     {

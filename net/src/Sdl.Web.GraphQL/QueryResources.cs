@@ -1,14 +1,13 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
 
-namespace Sdl.Web.GraphQLClient.Queries
+namespace Sdl.Web.GraphQLClient
 {
     /// <summary>
     /// GraphQL Queries
     /// </summary>
-    public static class Queries
+    public static class QueryResources
     {
         public static string LoadFromResource(string resourceNamespace, string queryName)
         {

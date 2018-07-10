@@ -1,11 +1,11 @@
-﻿using Sdl.Web.GraphQL.Response;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Sdl.Web.GraphQL.Request;
-using Sdl.Web.GraphQL.Schema;
+using Sdl.Web.GraphQLClient.Request;
+using Sdl.Web.GraphQLClient.Response;
+using Sdl.Web.GraphQLClient.Schema;
 using Sdl.Web.HttpClient;
 
-namespace Sdl.Web.GraphQL
+namespace Sdl.Web.GraphQLClient
 {
     public interface IGraphQLClient
     {
