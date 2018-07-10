@@ -14,7 +14,11 @@
     <VersionBuild>$(Version.Split('.')[3])</VersionBuild>
     <PreReleaseLabel Condition="'$(IsPreRelease)' == 'true'">-beta-$([System.DateTime]::Now.ToString("yyyyMMddHHmm"))</PreReleaseLabel>
     <PackageVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)$(PreReleaseLabel)</PackageVersion>
+    
+    <NuGetRepositoryUrl/>
+    <NugetSymbolServerUrl/>
     <NuGet>NuGet.exe</NuGet>
+    <NuGetPackageDirectory>$(ProjectDirectory)\_NuGet</NuGetPackageDirectory>
   </PropertyGroup>
   
   <Target Name="PrepareBuild">
@@ -49,5 +53,19 @@
     <CallTarget Targets="PrepareBuild"/>
     <CallTarget Targets="RunBuild"/>		
   </Target>
+
+  <Target Name="AfterBuild">
+    <CallTarget Targets="CreatePackages"/>  
+  </Target>
+
+   <Target Name="CreatePackages">
+        <Message Importance="high" Text="Creating NuGet packages in '$(NuGetPackageDirectory)' ..."/>
+        <Message Text="Package Version: $(PackageVersion)"/>
+       
+        <!-- Create nuget package  -->
+        <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.nuspec -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+        <!-- Create symbols nuget package. Note the use of .symbols in the filename! -->
+        <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.symbols.nuspec -Symbols -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+    </Target>
   
 </Project>
