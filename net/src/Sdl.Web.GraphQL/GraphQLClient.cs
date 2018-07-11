@@ -191,7 +191,6 @@ namespace Sdl.Web.GraphQLClient
                 {
                     ContentType = "application/json",
                     Method = "POST",
-#if DEBUG
                     Body = JsonConvert.SerializeObject(graphQLrequest,
                         Formatting.None,
                         new JsonSerializerSettings
@@ -199,15 +198,6 @@ namespace Sdl.Web.GraphQLClient
                             NullValueHandling = NullValueHandling.Ignore,
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }),
-#else
-                    Body = JsonConvert.SerializeObject(graphQLrequest,
-                        Formatting.None,
-                        new JsonSerializerSettings
-                        {
-                            NullValueHandling = NullValueHandling.Ignore,
-                            ContractResolver = new CamelCasePropertyNamesContractResolver()
-                        }).Replace("\\t", "").Replace("\\n", "").Replace("\\r", ""),
-#endif
                     Authenticaton = graphQLrequest.Authenticaton,
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors
