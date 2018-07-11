@@ -52,11 +52,10 @@
 	<Message Text="Start build..." Importance="high" />       
     <CallTarget Targets="PrepareBuild"/>
     <CallTarget Targets="RunBuild"/>		
+    <CallTarget Targets="CreatePackages"/>  
+    <CallTarget Targets="PublishPackages"/>  
   </Target>
 
-  <Target Name="AfterBuild">
-    <CallTarget Targets="CreatePackages"/>  
-  </Target>
 
    <Target Name="CreatePackages">
         <Message Importance="high" Text="Creating NuGet packages in '$(NuGetPackageDirectory)' ..."/>
@@ -66,6 +65,13 @@
         <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.nuspec -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
         <!-- Create symbols nuget package. Note the use of .symbols in the filename! -->
         <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.symbols.nuspec -Symbols -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+    </Target>
+
+    <Target Name="PublishPackages" Condition="'$(NuGetRepositoryUrl)' != ''">
+        <Message Importance="high" Text="Publishing NuGet packages to '$(NuGetRepositoryUrl)' ..."/>
+       
+        <Exec Command="$(NuGet) push Sdl.Web.PublicContentApi.$(PackageVersion).nupkg -Source $(NuGetRepositoryUrl)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+
     </Target>
   
 </Project>
