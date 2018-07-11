@@ -209,7 +209,6 @@ namespace Sdl.Web.GraphQLClient
                         }).Replace("\\t", "").Replace("\\n", "").Replace("\\r", ""),
 #endif
                     Authenticaton = graphQLrequest.Authenticaton,
-                    Path = "/udp/content",
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors
                 };
