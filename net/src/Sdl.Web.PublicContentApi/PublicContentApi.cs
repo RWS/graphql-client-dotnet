@@ -145,7 +145,7 @@ namespace Sdl.Web.PublicContentApi
                 string fragmentList = string.Empty;
                 foreach (var itemType in filter.ItemTypes)
                 {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemTypes), itemType)}Fields";
+                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
                     query += Queries.Load(fragment + "Fragment");
                     fragmentList += $"...{fragment}\n";
                 }
@@ -286,7 +286,7 @@ namespace Sdl.Web.PublicContentApi
                 string fragmentList = string.Empty;
                 foreach (var itemType in filter.ItemTypes)
                 {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemTypes), itemType)}Fields";
+                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
                     query += Queries.Load(fragment + "Fragment");
                     fragmentList += $"...{fragment}\n";
                 }
