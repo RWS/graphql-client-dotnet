@@ -21,6 +21,7 @@ namespace Sdl.Web.HttpClient
         public Uri BaseUri { get; set; }
         public int Timeout { get; set; } = 30000;
         public string UserAgent { get; set; } = "SDL.PCA.NET";
+        public HttpHeaders Headers { get; set; } = new HttpHeaders();
 
         public HttpClient()
         { }
@@ -133,16 +134,14 @@ namespace Sdl.Web.HttpClient
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             requestCopy.Authenticaton?.ApplyManualAuthentication(requestCopy);
             request.Credentials = requestCopy.Authenticaton;
+            foreach (var x in Headers)
+                request.Headers[x.Key] = x.Value.ToString();
             foreach (var x in requestCopy.Headers)
-            {
-                request.Headers.Add(x.Key, x.Value.ToString());
-            }
+                request.Headers[x.Key] = x.Value.ToString();
             if (requestCopy.Method != "POST") return request;
             byte[] serialized = Serialize(requestCopy.Body, requestCopy.ContentType);
             using (Stream requestStream = request.GetRequestStream())
-            {
                 requestStream.Write(serialized, 0, serialized.Length);
-            }            
             return request;
         }
 
@@ -153,9 +152,7 @@ namespace Sdl.Web.HttpClient
             {
                 int read;
                 while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
                     outputStream.Write(buffer, 0, read);
-                }
                 return outputStream.ToArray();
             }
         }
@@ -167,9 +164,7 @@ namespace Sdl.Web.HttpClient
             {
                 int read;
                 while ((read = await inputStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken)) > 0)
-                {
                     outputStream.Write(buffer, 0, read);
-                }
                 return outputStream.ToArray();
             }
         }
@@ -212,13 +207,9 @@ namespace Sdl.Web.HttpClient
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Binder = binder
             };
-            if (convertors != null)
-            {
-                foreach (var x in convertors)
-                {
-                    settings.Converters.Add(x);
-                }
-            }
+            if (convertors == null) return JsonConvert.DeserializeObject<T>(json, settings);
+            foreach (var x in convertors)
+                settings.Converters.Add(x);
             return JsonConvert.DeserializeObject<T>(json, settings);
         }
     }

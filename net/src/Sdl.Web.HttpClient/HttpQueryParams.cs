@@ -14,14 +14,10 @@ namespace Sdl.Web.HttpClient
         public HttpQueryParams(HttpQueryParams queryParams)
         {
             foreach (var x in queryParams)
-            {
                 Add(new KeyValuePair<string, object>(x.Key, x.Value));
-            }
         }
 
-        public void Add(string name, object value)
-        {
-            Add(new KeyValuePair<string, object>(name, value));
-        }
+        public void Add(string name, object value) 
+            => Add(new KeyValuePair<string, object>(name, value));
     }
 }
