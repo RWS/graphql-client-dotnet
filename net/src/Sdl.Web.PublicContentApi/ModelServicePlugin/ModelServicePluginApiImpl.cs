@@ -93,7 +93,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
-            return response.Sitemap;
+            return response.TypedResponseData.Sitemap;
         }
 
         public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
@@ -117,7 +117,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
-            return response.SitemapSubtree;
+            return response.TypedResponseData.SitemapSubtree;
         }
        
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,

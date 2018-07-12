@@ -59,8 +59,10 @@
     <Compile Include="Response\GraphQLError.cs" />
     <Compile Include="Response\GraphQLErrorLocation.cs" />
     <Compile Include="Response\GraphQLExtensions.cs" />
+    <Compile Include="Response\GraphQLTypedResponse.cs" />
     <Compile Include="Response\GraphQLResponse.cs" />
     <Compile Include="Response\IGraphQLResponse.cs" />
+    <Compile Include="Response\IGraphQLTypedResponse.cs" />
     <Compile Include="Schema\GraphQLSchema.cs" />
     <Compile Include="Schema\GraphQLSchemaEnum.cs" />
     <Compile Include="Schema\GraphQLSchemaField.cs" />

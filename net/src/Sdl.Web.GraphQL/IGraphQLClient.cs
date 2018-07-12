@@ -12,9 +12,9 @@ namespace Sdl.Web.GraphQLClient
         int Timeout { get; set; }
         IHttpClient HttpClient { get; }
         IGraphQLResponse Execute(IGraphQLRequest request);
-        T Execute<T>(IGraphQLRequest request);
+        IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request);
         Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken);
-        Task<T> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken);
+        Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken);
         GraphQLSchema Schema { get; }
         Task<GraphQLSchema> SchemaAsync();
     }

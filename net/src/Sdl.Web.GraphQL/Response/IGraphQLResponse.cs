@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sdl.Web.HttpClient;
 
 namespace Sdl.Web.GraphQLClient.Response
 {
@@ -6,5 +7,6 @@ namespace Sdl.Web.GraphQLClient.Response
     {
         dynamic Data { get; set; }
         List<GraphQLError> Errors { get; set; }
+        HttpHeaders Headers { get; set; }
     }
 }

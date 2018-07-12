@@ -51,7 +51,7 @@ namespace Sdl.Web.PublicContentApi
             return _client.Execute(request);
         }
 
-        public T Execute<T>(IGraphQLRequest request)
+        public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request)
         {
             request.Convertors.Add(new ItemConvertor());
             return _client.Execute<T>(request);
@@ -63,7 +63,7 @@ namespace Sdl.Web.PublicContentApi
             return await _client.ExecuteAsync(request, cancellationToken);
         }
 
-        public async Task<T> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
+        public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
         {
             request.Convertors.Add(new ItemConvertor());
             return await _client.ExecuteAsync<T>(request, cancellationToken);
@@ -86,7 +86,7 @@ namespace Sdl.Web.PublicContentApi
                     {"binaryId", binaryId},
                     {"contextData", contextData}
                 }
-            }).BinaryComponent;
+            }).TypedResponseData.BinaryComponent;
         }
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url,
@@ -102,7 +102,7 @@ namespace Sdl.Web.PublicContentApi
                     {"url", url},
                     {"contextData", contextData}
                 }
-            }).BinaryComponent;
+            }).TypedResponseData.BinaryComponent;
         }
 
         public BinaryComponent GetBinaryComponent(CmUri cmUri,
@@ -118,7 +118,7 @@ namespace Sdl.Web.PublicContentApi
                     {"cmUri", cmUri.ToString()},
                     {"contextData", contextData}
                 }
-            }).BinaryComponent;
+            }).TypedResponseData.BinaryComponent;
         }
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
@@ -154,7 +154,7 @@ namespace Sdl.Web.PublicContentApi
                 query = query.Replace("@customMetaFilter", "\""+customMetaFilter+"\"");
             }
 
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -166,7 +166,7 @@ namespace Sdl.Web.PublicContentApi
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
-            return contenQuery.Items;
+            return response.TypedResponseData.Items;
         }
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
@@ -185,7 +185,7 @@ namespace Sdl.Web.PublicContentApi
                 query += Queries.Load("CustomMetaFieldsFragment");
             }
 
-            var contenQuery = _client.Execute<ContentQuery>(new GraphQLRequest
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -195,7 +195,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             });
-            return contenQuery.Publication;
+            return response.TypedResponseData.Publication;
         }
 
         public object GetPublicationMapping(ContentNamespace ns, string uri, IContextData contextData)
@@ -222,7 +222,7 @@ namespace Sdl.Web.PublicContentApi
                     {"binaryId", binaryId},
                     {"contextData", contextData}
                 }
-            }, cancellationToken)).BinaryComponent;
+            }, cancellationToken)).TypedResponseData.BinaryComponent;
         }       
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
@@ -240,7 +240,7 @@ namespace Sdl.Web.PublicContentApi
                     {"url", url},
                     {"contextData", contextData}
                 }
-            }, cancellationToken)).BinaryComponent;
+            }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri,
@@ -258,7 +258,7 @@ namespace Sdl.Web.PublicContentApi
                     {"cmUri", cmUri.ToString()},
                     {"contextData", contextData}
                 }
-            }, cancellationToken)).BinaryComponent;
+            }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
@@ -295,7 +295,7 @@ namespace Sdl.Web.PublicContentApi
                 query = query.Replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
             }
 
-            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -307,7 +307,7 @@ namespace Sdl.Web.PublicContentApi
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
             }, cancellationToken);
-            return contenQuery.Items;
+            return response.TypedResponseData.Items;
         }
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
@@ -327,7 +327,7 @@ namespace Sdl.Web.PublicContentApi
                 query += Queries.Load("CustomMetaFieldsFragment");
             }
 
-            var contenQuery = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
@@ -337,7 +337,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", contextData}
                 }
             }, cancellationToken);
-            return contenQuery.Publication;
+            return response.TypedResponseData.Publication;
         }
 
         #endregion

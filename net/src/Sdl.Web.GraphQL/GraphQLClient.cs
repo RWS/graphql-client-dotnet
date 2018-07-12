@@ -42,9 +42,13 @@ namespace Sdl.Web.GraphQLClient
         {
             try
             {
-                var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
-                if (response?.Errors == null || response.Errors.Count <= 0) return response;
-                throw new GraphQLClientException(response);
+                var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest));
+                var responseData = response.ResponseData;
+                if (responseData == null) throw new GraphQLClientException(response);
+                responseData.Headers = response.Headers;
+                if (responseData.Errors != null && responseData.Errors.Count > 0)
+                    throw new GraphQLClientException(response);
+                return responseData;
             }
             catch (GraphQLClientException)
             {
@@ -56,24 +60,30 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
-        public T Execute<T>(IGraphQLRequest graphQLrequest)
+        public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest graphQLrequest)
         {
             try
             {
-                var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest)).ResponseData;
-                if (response?.Errors == null || response.Errors.Count <= 0)
+                var response = _httpClient.Execute<GraphQLTypedResponse<T>>(CreateHttpRequest(graphQLrequest));
+                var responseData = response.ResponseData;
+                if (responseData == null) throw new GraphQLClientException(response);
+                responseData.Headers = response.Headers;
+                if (responseData.Errors != null && responseData.Errors.Count > 0)
+                    throw new GraphQLClientException(response);
+                if (responseData.Data == null) throw new GraphQLClientException(response);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
+                    responseData.TypedResponseData = responseData.Data.ToObject<T>();
+                else
                 {
-                    if (response.Data == null) throw new GraphQLClientException(response);
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
-                        return response.Data.ToObject<T>();
                     foreach (var x in graphQLrequest.Convertors)
                     {
                         settings.Converters.Add(x);
                     }
-                    return JsonConvert.DeserializeObject<T>(response.Data.ToString(), settings);
+                    responseData.TypedResponseData = JsonConvert.DeserializeObject<T>(responseData.Data.ToString(),
+                        settings);
                 }
-                throw new GraphQLClientException(response);
+                return responseData;
             }
             catch (GraphQLClientException)
             {
@@ -90,14 +100,15 @@ namespace Sdl.Web.GraphQLClient
         {
             try
             {
-                var response = await _httpClient.ExecuteAsync<GraphQLResponse>(
-                    CreateHttpRequest(graphQLrequest),
-                    cancellationToken);
-                if (response.ResponseData?.Errors == null || response.ResponseData.Errors.Count <= 0)
-                {
-                    return response.ResponseData;
-                }
-                throw new GraphQLClientException(response.ResponseData);
+                var response =
+                    await
+                        _httpClient.ExecuteAsync<GraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
+                var responseData = response.ResponseData;
+                if (responseData == null) throw new GraphQLClientException(response);
+                responseData.Headers = response.Headers;
+                if (responseData.Errors != null && responseData.Errors.Count > 0)
+                    throw new GraphQLClientException(response);
+                return responseData;
             }
             catch (GraphQLClientException)
             {
@@ -109,26 +120,34 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
-        public async Task<T> ExecuteAsync<T>(IGraphQLRequest graphQLrequest,
+        public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest graphQLrequest,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
-                var response = await _httpClient.ExecuteAsync<GraphQLResponse>(
-                    CreateHttpRequest(graphQLrequest), cancellationToken);
-                if (response.ResponseData?.Errors == null || response.ResponseData.Errors.Count <= 0)
+                var response =
+                    await
+                        _httpClient.ExecuteAsync<GraphQLTypedResponse<T>>(CreateHttpRequest(graphQLrequest),
+                            cancellationToken);
+                var responseData = response.ResponseData;
+                if (responseData == null) throw new GraphQLClientException(response);
+                responseData.Headers = response.Headers;
+                if (responseData.Errors != null && responseData.Errors.Count > 0)
+                    throw new GraphQLClientException(response);
+                if (responseData.Data == null) throw new GraphQLClientException(response);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
+                    responseData.TypedResponseData = responseData.Data.ToObject<T>();
+                else
                 {
-                    if (response.ResponseData.Data == null) throw new GraphQLClientException(response.ResponseData);
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
-                        return response.ResponseData.Data.ToObject<T>();
                     foreach (var x in graphQLrequest.Convertors)
                     {
                         settings.Converters.Add(x);
                     }
-                    return JsonConvert.DeserializeObject<T>(response.ResponseData.Data.ToString(), settings);
+                    responseData.TypedResponseData = JsonConvert.DeserializeObject<T>(responseData.Data.ToString(),
+                        settings);
                 }
-                throw new GraphQLClientException(response.ResponseData);
+                return responseData;
             }
             catch (GraphQLClientException)
             {
@@ -199,6 +218,7 @@ namespace Sdl.Web.GraphQLClient
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }),
                     Authenticaton = graphQLrequest.Authenticaton,
+                    Headers = graphQLrequest.Headers,
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors
                 };

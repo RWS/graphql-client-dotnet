@@ -26,7 +26,8 @@ namespace Sdl.Web.PublicContentApi
                 case (int) ItemType.Component:
                     item = new Component();
                     break;
-                case (int) ItemType.Keyword:
+                case (int) ItemType.Category:
+                case (int)ItemType.Keyword:
                     item = new Keyword();
                     break;
                 case (int) ItemType.Page:

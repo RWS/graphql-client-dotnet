@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Sdl.Web.HttpClient;
 using Sdl.Web.HttpClient.Auth;
 
 namespace Sdl.Web.GraphQLClient.Request
@@ -30,6 +31,12 @@ namespace Sdl.Web.GraphQLClient.Request
         /// </summary>
         [JsonIgnore]
         IAuthentication Authenticaton { get; set; }
+
+        /// <summary>
+        /// Request Headers
+        /// </summary>
+        [JsonIgnore]
+        HttpHeaders Headers { get; set; }
 
         /// <summary>
         /// Add Variable

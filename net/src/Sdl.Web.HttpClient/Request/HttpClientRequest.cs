@@ -46,7 +46,8 @@ namespace Sdl.Web.HttpClient.Request
             ContentType = request.ContentType;
             Body = request.Body;
             QueryParameters = new HttpQueryParams(request.QueryParameters);
-            Headers = new HttpHeaders(request.Headers);
+            if(request.Headers != null)
+                Headers = new HttpHeaders(request.Headers);
             Authenticaton = request.Authenticaton;
             Binder = request.Binder;
             Convertors = request.Convertors;
