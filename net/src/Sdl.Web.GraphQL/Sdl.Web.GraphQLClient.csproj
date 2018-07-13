@@ -67,6 +67,7 @@
     <Compile Include="Schema\GraphQLSchemaEnum.cs" />
     <Compile Include="Schema\GraphQLSchemaField.cs" />
     <Compile Include="Schema\GraphQLSchemaInterface.cs" />
+    <Compile Include="Schema\GraphQLQueryType.cs" />
     <Compile Include="Schema\GraphQLSchemaType.cs" />
     <Compile Include="Schema\GraphQLSchemaTypeInfo.cs" />
   </ItemGroup>

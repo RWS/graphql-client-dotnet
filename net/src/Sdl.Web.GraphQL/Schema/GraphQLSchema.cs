@@ -4,7 +4,7 @@ namespace Sdl.Web.GraphQLClient.Schema
 {
     public class GraphQLSchema
     {
-        public object QueryType { get; set; }
+        public GraphQLQueryType QueryType { get; set; }
         public object MutationType { get; set; }
         public object SubscriptionType { get; set; }
         public List<GraphQLSchemaType> Types { get; set; }

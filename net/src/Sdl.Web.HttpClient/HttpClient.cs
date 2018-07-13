@@ -64,14 +64,11 @@ namespace Sdl.Web.HttpClient
             }
             catch (WebException e)
             {
-                if (e.Response != null)
-                {
-                    byte[] data = ReadStream(e.Response.GetResponseStream());
-                    throw new HttpClientException(
-                        $"Failed to get http response from '{BaseUri}' with request: {clientRequest}",
-                        e, (int) e.Status, Encoding.UTF8.GetString(data));
-                }
-                throw new HttpClientException(e.Message, e);
+                if (e.Response == null) throw new HttpClientException(e.Message, e);
+                byte[] data = ReadStream(e.Response.GetResponseStream());
+                throw new HttpClientException(
+                    $"Failed to get http response from '{BaseUri}' with request: {clientRequest}",
+                    e, (int) e.Status, Encoding.UTF8.GetString(data));
             }
             catch (Exception e)
             {
