@@ -40,11 +40,11 @@ namespace BuildGraphQLModel
             sb.AppendLine($"{Indent(indent)}/// </summary>");
         }
 
-        static GraphQLSchemaTypeInfo RemapFieldType(GraphQLSchemaTypeInfo fieldType)
+        static GraphQLSchemaTypeInfo RemapFieldType(GraphQLSchemaField field)
         {
             // Just remap itemType and namespaceId(s) from int to use our enum 
             // to make things a little nicer to work with.
-            switch (fieldType.Name)
+            switch (field.Name)
             {
                 case "namespaceIds":
                     return new GraphQLSchemaTypeInfo
@@ -69,7 +69,7 @@ namespace BuildGraphQLModel
                         Name = "Sdl.Web.PublicContentApi.ItemType"
                     };
                 default:
-                    return fieldType;
+                    return field.Type;
             }
         }
 
@@ -80,7 +80,7 @@ namespace BuildGraphQLModel
             {
                 sb.AppendLine("");
                 EmitComment(ref sb, field.Description, indent);
-                field.Type = RemapFieldType(field.Type);
+                field.Type = RemapFieldType(field);
                 sb.AppendLine(
                     $"{Indent(indent)}{(isPublic?"public ":"")}{field.Type.TypeName()} {field.Name.PascalCase()} {{ get; set; }}");
             }
