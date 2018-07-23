@@ -3253,6 +3253,11 @@ import java.util.List;
 		private String key;
 		private String value;
 		private String valueType;
+		private String url;
+		private String publicationPath;
+		private String publicationUrl;
+		private String navigable;
+		private String usedForIdentification;
 
 		public String getId() {
 			return id;
@@ -3388,6 +3393,46 @@ import java.util.List;
 
 		public void setValueType(String valueType) {
 			this.valueType = valueType;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public String getPublicationPath() {
+			return publicationPath;
+		}
+
+		public void setPublicationPath(String publicationPath) {
+			this.publicationPath = publicationPath;
+		}
+
+		public String getPublicationUrl() {
+			return publicationUrl;
+		}
+
+		public void setPublicationUrl(String publicationUrl) {
+			this.publicationUrl = publicationUrl;
+		}
+
+		public String getNavigable() {
+			return navigable;
+		}
+
+		public void setNavigable(String navigable) {
+			this.navigable = navigable;
+		}
+
+		public String getUsedForIdentification() {
+			return usedForIdentification;
+		}
+
+		public void setUsedForIdentification(String usedForIdentification) {
+			this.usedForIdentification = usedForIdentification;
 		}
 	}
 

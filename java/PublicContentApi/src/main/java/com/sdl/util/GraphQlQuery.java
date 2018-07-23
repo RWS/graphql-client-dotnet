@@ -16,4 +16,17 @@ public class GraphQlQuery {
 
         return properties.getProperty("ItemType_Component");
     }
+
+    public static String getGraphQlItemTypeQuery(String subQueryName){
+
+        Properties itemTypeProperties = new Properties();
+        InputStream inputStream = null;
+        try {
+            String itemTypeFilename = "ItemTypeSubQuery.properties";
+            inputStream = GraphQlQuery.class.getClassLoader().getResourceAsStream(itemTypeFilename);
+            itemTypeProperties.load(inputStream);
+        }catch (Exception ex){ex.printStackTrace();}
+
+        return itemTypeProperties.getProperty(subQueryName);
+    }
 }

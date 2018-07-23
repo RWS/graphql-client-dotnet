@@ -31,7 +31,6 @@ public class Program {
         InputItemFilter inputItemFilter = new InputItemFilter();
         inputItemFilter.setItemTypes(new ArrayList<ItemType>(Arrays.asList(ItemType.COMPONENT)));
         inputItemFilter.setNamespaceIds(new ArrayList<Integer>(Arrays.asList(1)));
-        /*inputItemFilter.setPublicationIds(new ArrayList<Integer>(Arrays.asList(5)));*/
 
         Publication publication = new Publication();
         publication.setNamespaceId(1);
@@ -51,6 +50,11 @@ public class Program {
         variables.add("after", new Gson().toJsonTree(after));
         variables.add("filter", new Gson().toJsonTree(inputItemFilter));
 
+        String itemType = inputItemFilter.getItemTypes().toString();
+        itemType = itemType.substring(1, itemType.length()-1);
+        String subQuery = GraphQlQuery.getGraphQlItemTypeQuery(itemType);
+        query = query+subQuery;
+
         /**
          * Publication
          */
@@ -65,6 +69,7 @@ public class Program {
         /*variables.add("namespaceId", new Gson().toJsonTree(binaryComponent.getNamespaceId()));
         variables.add("publicationId", new Gson().toJsonTree(binaryComponent.getPublicationId()));
         variables.add("cmUri", new Gson().toJsonTree("tcm:5-168"));*/
+
 
        client.getComponent(query, variables);
     }
