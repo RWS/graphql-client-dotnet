@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="graphql-java-client-master" />
+        <module name="Sdl.Web.HttpClient" />
+        <module name="Sdl.Web.PublicContentApi" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dxa-pca-client" target="8" />
+      <module name="graphql-java-client-master" target="8" />
+      <module name="GraphQlClient" target="8" />
+      <module name="GraphQLClient" target="8" />
+      <module name="HttpClient (1)" target="1.5" />
+      <module name="Sdl.Web.GraphQLClient" target="8" />
+      <module name="Sdl.Web.HttpClient" target="8" />
+      <module name="Sdl.Web.PublicContentApi" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

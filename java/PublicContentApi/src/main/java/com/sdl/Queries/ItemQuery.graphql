@@ -1,0 +1,50 @@
+﻿query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!])
+  {items(first: $first, after: $after, filter: $filter, contextData: $contextData)
+    {
+      edges
+      {cursor node
+        {...ItemFields
+          ...ComponentFields
+        }
+      }
+    }
+  }
+  fragment ItemFields on Item
+  {
+    id
+    itemId
+    itemType
+    namespaceId
+    owningPublicationId
+    publicationId
+    title
+    lastPublishDate
+    creationDate
+    initialPublishDate
+    updatedDate
+    ...CustomMetaFields
+  }
+  fragment CustomMetaFields on Item
+  {
+    customMetas
+    {
+      edges
+      {
+        node
+        {
+          id
+          itemId
+          key
+          namespaceId
+          publicationId
+          value
+          valueType
+        }
+      }
+    }
+  }
+  fragment ComponentFields on Component
+  {
+    schemaId
+    multiMedia
+  }

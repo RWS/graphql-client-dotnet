@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GraphQlClient.iml" filepath="$PROJECT_DIR$/GraphQlClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../GraphLClient/Sdl.Web.GraphQLClient.iml" filepath="$PROJECT_DIR$/../GraphLClient/Sdl.Web.GraphQLClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../HttpClient/Sdl.Web.HttpClient.iml" filepath="$PROJECT_DIR$/../HttpClient/Sdl.Web.HttpClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PublicContentApi/Sdl.Web.PublicContentApi.iml" filepath="$PROJECT_DIR$/../PublicContentApi/Sdl.Web.PublicContentApi.iml" />
+    </modules>
+  </component>
+</project>
