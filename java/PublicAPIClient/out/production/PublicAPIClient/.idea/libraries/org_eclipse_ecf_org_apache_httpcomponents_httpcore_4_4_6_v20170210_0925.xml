@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.eclipse.ecf:org.apache.httpcomponents.httpcore:4.4.6.v20170210-0925" type="repository">
+    <properties maven-id="org.eclipse.ecf:org.apache.httpcomponents.httpcore:4.4.6.v20170210-0925" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.apache.httpcomponents.httpcore-4.4.6.v20170210-0925.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
