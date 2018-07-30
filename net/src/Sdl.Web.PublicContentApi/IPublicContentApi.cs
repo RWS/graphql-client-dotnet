@@ -21,5 +21,7 @@ namespace Sdl.Web.PublicContentApi
 
         Publication GetPublication(ContentNamespace ns, int publicationId, List<InputClaimValue> contextData,
             string customMetaFilter);
+
+        string ResolveLink(CmUri cmUri, bool resolveToBinary);
     }
 }

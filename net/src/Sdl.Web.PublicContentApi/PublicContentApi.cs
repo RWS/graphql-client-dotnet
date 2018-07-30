@@ -198,6 +198,22 @@ namespace Sdl.Web.PublicContentApi
             return response.TypedResponseData.Publication;
         }
 
+        public string ResolveLink(CmUri cmUri, bool resolveToBinary = false)
+        {
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveLink"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
+                    {"type", GetLinkType(cmUri, resolveToBinary)},
+                    {"itemId", cmUri.ItemId}
+                }
+            });
+            return response.TypedResponseData.Link.Url;
+        }     
+
         public object GetPublicationMapping(ContentNamespace ns, string uri, IContextData contextData)
         {
             throw new NotImplementedException();
@@ -340,6 +356,22 @@ namespace Sdl.Web.PublicContentApi
             return response.TypedResponseData.Publication;
         }
 
+        public async Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveLink"),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
+                    {"type", GetLinkType(cmUri, resolveToBinary)},
+                    {"itemId", cmUri.ItemId}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.Link.Url;
+        }
+
         #endregion
 
         #region IModelServicePluginApi & IModelServicePluginApiAsync
@@ -407,6 +439,15 @@ namespace Sdl.Web.PublicContentApi
                 await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
                     contextData, cancellationToken);
 
-        #endregion      
+        #endregion
+
+        #region Helpers
+        protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
+        {
+            if (cmUri.ItemType == ItemType.Page) return LinkType.PAGE;
+            if (cmUri.ItemType == ItemType.Component && resolveToBinary) return LinkType.BINARY;
+            return LinkType.COMPONENT;
+        }
+        #endregion
     }
 }
