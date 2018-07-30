@@ -48,25 +48,21 @@ namespace Sdl.Web.PublicContentApi
 
         public IGraphQLResponse Execute(IGraphQLRequest request)
         {
-            request.Convertors.Add(new ItemConvertor());
             return _client.Execute(request);
         }
 
         public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request)
         {
-            request.Convertors.Add(new ItemConvertor());
             return _client.Execute<T>(request);
         }
 
         public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
         {
-            request.Convertors.Add(new ItemConvertor());
             return await _client.ExecuteAsync(request, cancellationToken);
         }
 
         public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
         {
-            request.Convertors.Add(new ItemConvertor());
             return await _client.ExecuteAsync<T>(request, cancellationToken);
         }
 
