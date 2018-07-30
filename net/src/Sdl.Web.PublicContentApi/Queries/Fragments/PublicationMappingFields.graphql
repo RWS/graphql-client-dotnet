@@ -1,0 +1,7 @@
+﻿fragment PublicationMappingFields on PublicationMapping {
+    protocol
+    domain
+    port
+	path
+    pathScanDepth
+}

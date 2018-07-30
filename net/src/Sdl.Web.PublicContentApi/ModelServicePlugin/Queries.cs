@@ -5,7 +5,10 @@
     /// </summary>
     public static class Queries
     {
-        public static string Load(string queryName) 
-            => GraphQLClient.QueryResources.LoadFromResource("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName);
+        public static string Load(string queryName, bool loadFragments) 
+            => GraphQLClient.QueryResources.LoadQueryFromResource("Sdl.Web.PublicContentApi.ModelServicePlugin", queryName, loadFragments);
+
+        public static string LoadFragments(string query) 
+            => GraphQLClient.QueryResources.LoadFragments("Sdl.Web.PublicContentApi.ModelServicePlugin", query);
     }
 }

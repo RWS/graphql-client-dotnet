@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using System.Threading;
@@ -78,7 +79,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentById", true), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -94,7 +95,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -110,7 +111,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentByCmUri", true), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
@@ -128,31 +129,20 @@ namespace Sdl.Web.PublicContentApi
                 contextData = new List<InputClaimValue>();
 
             // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
+            string query = Queries.Load("ItemQuery", false);
 
             // We only include the fragments that will be required based on the item types in the
             // input item filter
             if (filter.ItemTypes != null)
             {
-                string fragmentList = string.Empty;
-                foreach (var itemType in filter.ItemTypes)
-                {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
-                    query += Queries.Load(fragment + "Fragment");
-                    fragmentList += $"...{fragment}\n";
-                }
+                string fragmentList = filter.ItemTypes.Select(itemType 
+                    => $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
                 // Just a quick and easy way to replace markers in our queries with vars here.
                 query = query.Replace("@fragmentList", fragmentList);
-                query = query.Replace("@customMetaFilter", "\""+customMetaFilter+"\"");
+                query = Queries.LoadFragments(query);
             }
+
+            query = InjectCustomMetaFilter(query, customMetaFilter);
 
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
@@ -174,20 +164,10 @@ namespace Sdl.Web.PublicContentApi
         {
             if (contextData == null)
                 contextData = new List<InputClaimValue>();
-
-            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
-
+           
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = query,
+                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -202,7 +182,7 @@ namespace Sdl.Web.PublicContentApi
         {
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("ResolveLink"),
+                Query = Queries.Load("ResolveLink", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
@@ -214,9 +194,18 @@ namespace Sdl.Web.PublicContentApi
             return response.TypedResponseData.Link.Url;
         }     
 
-        public object GetPublicationMapping(ContentNamespace ns, string uri, IContextData contextData)
+        public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url)
         {
-            throw new NotImplementedException();
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("PublicationMapping", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"siteUrl", url}
+                }
+            });
+            return response.TypedResponseData.PublicationMapping;
         }
 
         #endregion
@@ -228,9 +217,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -246,9 +233,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentByUrl", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -264,9 +249,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentByCmUri", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
@@ -285,31 +268,20 @@ namespace Sdl.Web.PublicContentApi
                 contextData = new List<InputClaimValue>();
 
             // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
+            string query = Queries.Load("ItemQuery", false);
 
             // We only include the fragments that will be required based on the item types in the
             // input item filter
             if (filter.ItemTypes != null)
             {
-                string fragmentList = string.Empty;
-                foreach (var itemType in filter.ItemTypes)
-                {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
-                    query += Queries.Load(fragment + "Fragment");
-                    fragmentList += $"...{fragment}\n";
-                }
+                string fragmentList = filter.ItemTypes.Select(itemType
+                    => $"{Enum.GetName(typeof(ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
                 // Just a quick and easy way to replace markers in our queries with vars here.
                 query = query.Replace("@fragmentList", fragmentList);
-                query = query.Replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
+                query = Queries.LoadFragments(query);
             }
+
+            query = InjectCustomMetaFilter(query, customMetaFilter);
 
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
@@ -321,7 +293,7 @@ namespace Sdl.Web.PublicContentApi
                     {"filter", filter},
                     {"contextData", contextData}
                 },
-                Convertors = new List<JsonConverter> {new ItemConvertor()}
+                Convertors = new List<JsonConverter> { new ItemConvertor() }
             }, cancellationToken);
             return response.TypedResponseData.Items;
         }
@@ -333,19 +305,9 @@ namespace Sdl.Web.PublicContentApi
             if (contextData == null)
                 contextData = new List<InputClaimValue>();
 
-            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
-
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query = query,
+                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -360,7 +322,7 @@ namespace Sdl.Web.PublicContentApi
         {
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("ResolveLink"),
+                Query = Queries.Load("ResolveLink", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
@@ -370,6 +332,20 @@ namespace Sdl.Web.PublicContentApi
                 }
             }, cancellationToken);
             return response.TypedResponseData.Link.Url;
+        }
+
+        public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("PublicationMapping", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"siteUrl", url}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.PublicationMapping;
         }
 
         #endregion
@@ -442,6 +418,9 @@ namespace Sdl.Web.PublicContentApi
         #endregion
 
         #region Helpers
+        protected static string InjectCustomMetaFilter(string query, string customMetaFilter)
+            => query.Replace("@customMetaArgs", string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
+
         protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
         {
             if (cmUri.ItemType == ItemType.Page) return LinkType.PAGE;

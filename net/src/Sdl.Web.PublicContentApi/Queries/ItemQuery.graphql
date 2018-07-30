@@ -1,4 +1,4 @@
-﻿ query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!]) {
+﻿query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!]) {
 	items(first: $first, after: $after, filter: $filter, contextData: $contextData) {
 		edges {
 			cursor

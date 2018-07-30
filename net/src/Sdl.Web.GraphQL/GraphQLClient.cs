@@ -168,7 +168,7 @@ namespace Sdl.Web.GraphQLClient
                     return Execute(new GraphQLRequest
                     {
                         Authenticaton = _auth,
-                        Query = Queries.Load("IntrospectionQuery"),
+                        Query = Queries.Load("IntrospectionQuery", false),
                         OperationName = "IntrospectionQuery"
                     }).Data.__schema.ToObject<GraphQLSchema>();
                 }
@@ -190,7 +190,7 @@ namespace Sdl.Web.GraphQLClient
                 return await ExecuteAsync(new GraphQLRequest
                 {
                     Authenticaton = _auth,
-                    Query = Queries.Load("IntrospectionQuery"),
+                    Query = Queries.Load("IntrospectionQuery", false),
                     OperationName = "IntrospectionQuery"
                 }).Result.Data.__schema.ToObject<GraphQLSchema>();
             }

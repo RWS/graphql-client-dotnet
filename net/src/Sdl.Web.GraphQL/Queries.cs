@@ -2,7 +2,7 @@
 {
     public static class Queries
     {
-        public static string Load(string queryName)
-            => QueryResources.LoadFromResource("Sdl.Web.GraphQLClient", queryName);
+        public static string Load(string queryName, bool loadFragments)
+            => QueryResources.LoadQueryFromResource("Sdl.Web.GraphQLClient", queryName, loadFragments);
     }
 }

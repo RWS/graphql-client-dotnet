@@ -25,7 +25,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelById"),
+                Query = Queries.Load("PageModelById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -43,7 +43,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelByUrl"),
+                Query = Queries.Load("PageModelByUrl", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -62,7 +62,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("EntityModelById"),
+                Query = Queries.Load("EntityModelById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -80,7 +80,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             {
                 contextData = new ContextData();
             }
-            string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
+            string query = Queries.Load("Sitemap", true);
             QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
@@ -103,7 +103,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             {
                 contextData = new ContextData();
             }
-            string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
+            string query = Queries.Load("SitemapSubtree", true);
             QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
@@ -126,7 +126,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelById"),
+                Query = Queries.Load("PageModelById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -144,7 +144,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelByUrl"),
+                Query = Queries.Load("PageModelByUrl", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -163,7 +163,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("EntityModelById"),
+                Query = Queries.Load("EntityModelById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -182,7 +182,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             {
                 contextData = new ContextData();
             }
-            string query = Queries.Load("Sitemap") + Queries.Load("SitemapFragments");
+            string query = Queries.Load("Sitemap", true);
             QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
@@ -205,7 +205,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             {
                 contextData = new ContextData();
             }
-            string query = Queries.Load("SitemapSubtree") + Queries.Load("SitemapFragments");
+            string query = Queries.Load("SitemapSubtree", true);
             QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {

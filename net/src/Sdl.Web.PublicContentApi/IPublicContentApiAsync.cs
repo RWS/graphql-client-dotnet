@@ -25,5 +25,7 @@ namespace Sdl.Web.PublicContentApi
             string customMetaFilter, CancellationToken cancellationToken);
 
         Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary, CancellationToken cancellationToken);
+
+        Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken);
     }
 }

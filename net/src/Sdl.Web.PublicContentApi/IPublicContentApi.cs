@@ -23,5 +23,7 @@ namespace Sdl.Web.PublicContentApi
             string customMetaFilter);
 
         string ResolveLink(CmUri cmUri, bool resolveToBinary);
+
+        PublicationMapping GetPublicationMapping(ContentNamespace ns, string url);
     }
 }
