@@ -1,0 +1,5 @@
+﻿fragment ComponentPresentationFields on ComponentPresentation {
+	rawContent(renderContent: false) {
+		data 
+	}
+}

@@ -102,6 +102,7 @@
     <EmbeddedResource Include="Queries\BinaryComponentByCmUri.graphql" />
     <EmbeddedResource Include="Queries\Publication.graphql" />
     <EmbeddedResource Include="Queries\ResolveLink.graphql" />
+    <EmbeddedResource Include="Queries\ComponentPresentationFieldsFragment.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
