@@ -3,4 +3,9 @@
 	rawContent(renderContent: true) {
 		data 
 	}
+	containerItems(types: [COMPONENT_PRESENTATION]) {
+		...on ComponentPresentation {
+			...ComponentPresentationFields
+		}		
+	}
 }
