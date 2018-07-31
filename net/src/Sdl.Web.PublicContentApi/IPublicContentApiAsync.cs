@@ -19,9 +19,9 @@ namespace Sdl.Web.PublicContentApi
         Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, IContextData contextData, CancellationToken cancellationToken);
 
         Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter, CancellationToken cancellationToken);
+            IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
 
-        Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, List<InputClaimValue> contextData,
+        Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, IContextData contextData,
             string customMetaFilter, CancellationToken cancellationToken);
 
         Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary, CancellationToken cancellationToken);

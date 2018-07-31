@@ -31,7 +31,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"pageId", pageId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             });
             return response.Data.page.rawContent.data;
@@ -49,7 +49,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             });
             return response.Data.page.rawContent.data;
@@ -68,7 +68,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"entityId", entityId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             });
             return response.Data.entity.rawContent.data;
@@ -89,7 +89,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
@@ -113,7 +113,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"taxonomyNodeId", taxonomyNodeId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             });
@@ -132,7 +132,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"pageId", pageId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken);
             return response.Data.page.rawContent.data;
@@ -150,7 +150,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken);
             return response.Data.page.rawContent.data;
@@ -169,7 +169,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"entityId", entityId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken);
             return response.Data.entity.rawContent.data;
@@ -191,7 +191,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             }, cancellationToken);
@@ -215,7 +215,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"taxonomyNodeId", taxonomyNodeId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
             }, cancellationToken);

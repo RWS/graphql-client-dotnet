@@ -81,7 +81,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -97,7 +97,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -113,16 +113,16 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter = null)
+            IContextData contextData, string customMetaFilter = null)
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
 
             // Dynamically build our item query based on the filter(s) being used.
             string query = Queries.Load("ItemQuery", false);
@@ -148,7 +148,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
@@ -156,10 +156,10 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
-            List<InputClaimValue> contextData, string customMetaFilter)
+            IContextData contextData, string customMetaFilter)
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
            
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
@@ -168,7 +168,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             });
             return response.TypedResponseData.Publication;
@@ -219,7 +219,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }       
@@ -235,7 +235,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
@@ -251,17 +251,17 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter = null,
+            IContextData contextData, string customMetaFilter = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
 
             // Dynamically build our item query based on the filter(s) being used.
             string query = Queries.Load("ItemQuery", false);
@@ -287,7 +287,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new ItemConvertor() }
             }, cancellationToken);
@@ -295,11 +295,11 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
-            List<InputClaimValue> contextData, string customMetaFilter,
+            IContextData contextData, string customMetaFilter,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
 
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
@@ -308,7 +308,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", contextData.ClaimValues}
                 }
             }, cancellationToken);
             return response.TypedResponseData.Publication;

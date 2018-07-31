@@ -17,9 +17,9 @@ namespace Sdl.Web.PublicContentApi
         BinaryComponent GetBinaryComponent(CmUri cmUri, IContextData contextData);
 
         ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter);
+            IContextData contextData, string customMetaFilter);
 
-        Publication GetPublication(ContentNamespace ns, int publicationId, List<InputClaimValue> contextData,
+        Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData,
             string customMetaFilter);
 
         string ResolveLink(CmUri cmUri, bool resolveToBinary);
