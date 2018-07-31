@@ -20,12 +20,12 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelById", true),
+                Query = InjectRenderContentArgs(Queries.Load("PageModelById", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -38,12 +38,12 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelByUrl", true),
+                Query = InjectRenderContentArgs(Queries.Load("PageModelByUrl", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -56,13 +56,13 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData)
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, dcpType);
 
             var response = _client.Execute(new GraphQLRequest
             {
-                Query = Queries.Load("EntityModelById", true),
+                Query = InjectRenderContentArgs(Queries.Load("EntityModelById", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -121,12 +121,12 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
        
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelById", true),
+                Query = InjectRenderContentArgs(Queries.Load("PageModelById", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -139,12 +139,12 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-          DataModelType modelType, PageInclusion pageInclusion, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+          DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("PageModelByUrl", true),
+                Query = InjectRenderContentArgs(Queries.Load("PageModelByUrl", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -157,13 +157,13 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             UpdateContextData(ref contextData, contentType, modelType, dcpType);
 
             var response = await _client.ExecuteAsync(new GraphQLRequest
             {
-                Query = Queries.Load("EntityModelById", true),
+                Query = InjectRenderContentArgs(Queries.Load("EntityModelById", true), renderContent),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -275,5 +275,8 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
             contextData.ClaimValues.Add(CreateClaim(dataModelType));
             contextData.ClaimValues.Add(CreateClaim(dcpType));
         }
+
+        protected static string InjectRenderContentArgs(string query, bool renderContent)
+            => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
     }
 }

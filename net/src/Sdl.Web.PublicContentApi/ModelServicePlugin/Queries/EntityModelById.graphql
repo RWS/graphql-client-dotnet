@@ -1,7 +1,7 @@
 ﻿query componentPresentation($namespaceId: Int!, $publicationId: Int!, $componentId: Int!) {
     componentPresentation(namespaceId: $namespaceId, publicationId: $publicationId, componentId: $componentId) {
         itemId            
-        rawContent(renderContent: true) {
+        rawContent@renderContentArgs {
             data
         }
     }

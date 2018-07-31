@@ -1,6 +1,6 @@
 ﻿fragment PageFields on Page {
 	url
-	rawContent(renderContent: true) {
+	rawContent@renderContentArgs {
 		data 
 	}
 	containerItems(types: [COMPONENT_PRESENTATION]) {

@@ -119,7 +119,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
-            IContextData contextData, string customMetaFilter = null)
+            IContextData contextData, string customMetaFilter, bool renderContent)
         {
             if (contextData == null)
                 contextData = new ContextData();
@@ -139,7 +139,7 @@ namespace Sdl.Web.PublicContentApi
             }
 
             query = InjectCustomMetaFilter(query, customMetaFilter);
-
+            query = InjectRenderContentArgs(query, renderContent);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -257,7 +257,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
-            IContextData contextData, string customMetaFilter = null,
+            IContextData contextData, string customMetaFilter, bool renderContent,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
@@ -278,7 +278,7 @@ namespace Sdl.Web.PublicContentApi
             }
 
             query = InjectCustomMetaFilter(query, customMetaFilter);
-
+            query = InjectRenderContentArgs(query, renderContent);
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -349,21 +349,21 @@ namespace Sdl.Web.PublicContentApi
         #region IModelServicePluginApi & IModelServicePluginApiAsync
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion,
+                _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion, renderContent,
                     contextData);
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetPageModelData(ns, publicationId, pageId, contentType, modelType, pageInclusion,
+                _modelserviceApi.GetPageModelData(ns, publicationId, pageId, contentType, modelType, pageInclusion, renderContent,
                     contextData);
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData)
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType,
+                _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType, renderContent,
                     contextData);
 
         public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
@@ -377,25 +377,25 @@ namespace Sdl.Web.PublicContentApi
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
             ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             =>
                 await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, url, contentType, modelType,
-                    pageInclusion, contextData, cancellationToken);
+                    pageInclusion, renderContent, contextData, cancellationToken);
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
             ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, pageId, contentType, modelType,
-                pageInclusion, contextData, cancellationToken);
+                pageInclusion, renderContent, contextData, cancellationToken);
 
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
             ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData,
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetEntityModelDataAsync(ns, publicationId, entityId, contentType, modelType,
-                dcpType, contextData, cancellationToken);
+                dcpType, renderContent, contextData, cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId,
             int descendantLevels, IContextData contextData,
@@ -416,6 +416,9 @@ namespace Sdl.Web.PublicContentApi
         #region Helpers
         protected static string InjectCustomMetaFilter(string query, string customMetaFilter)
             => query.Replace("@customMetaArgs", string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
+
+        protected static string InjectRenderContentArgs(string query, bool renderContent)
+            => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
 
         protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
         {
