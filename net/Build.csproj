@@ -30,8 +30,9 @@
 	<Message Text="Clearing NuGet cache..." />
     <Exec Command="$(NuGet) locals all -Clear" />
     <Message Text="Restoring NuGet packages ..." />
+    <Exec Command="$(NuGet) restore sln/Sdl.Web.PublicContentApi.sln" />
     <Exec Command="$(NuGet) restore sln/Sdl.Web.PublicContentApi.SingleAssembly.sln" />
-	
+  	
 
 	<ItemGroup>
       <AssemblyInfo Include="[assembly: AssemblyVersion(&quot;$(VersionMajor).$(VersionMinor).$(VersionPatch).0&quot;)]" />
