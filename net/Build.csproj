@@ -33,7 +33,6 @@
     <Exec Command="$(NuGet) restore sln/Sdl.Web.PublicContentApi.sln" />
     <Exec Command="$(NuGet) restore sln/Sdl.Web.PublicContentApi.SingleAssembly.sln" />
   	
-
 	<ItemGroup>
       <AssemblyInfo Include="[assembly: AssemblyVersion(&quot;$(VersionMajor).$(VersionMinor).$(VersionPatch).0&quot;)]" />
       <AssemblyInfo Include="[assembly: AssemblyFileVersion(&quot;$(Version)&quot;)]" />
@@ -82,7 +81,7 @@
     <Target Name="Test" Condition="'$(BuildConfiguration)' == 'Release'">
         <Message Text="Running unit tests..." />
 
-        <Exec Command='sln\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user "-target:$(MsTestExe)" "-targetargs:/testcontainer:src\Sdl.Web.PublicContentApi.Tests\bin\$(BuildConfiguration)\Sdl.Web.PublicContentApi.Tests.dll /testsettings:MsTest.testsettings /resultsfile:TestResults.trx" "-filter:+[Sdl.*]* -[*Test*]*" -output:CoverageReports\Coverage.xml"'/>
+        <Exec Command='sln\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user "-target:$(MsTestExe)" "-targetargs:/testcontainer:src\Sdl.Web.PublicContentApi.Tests\bin\$(BuildConfiguration)\Sdl.Web.PublicContentApi.Tests.dll /resultsfile:TestResults.trx" "-filter:+[Sdl.*]* -[*Test*]*" -output:CoverageReports\Coverage.xml"'/>
 
         <Exec Command='sln\packages\ReportGenerator.2.4.4.0\tools\ReportGenerator.exe "-reports:CoverageReports\Coverage.xml" "-targetdir:CoverageReports"'/>
     </Target>
