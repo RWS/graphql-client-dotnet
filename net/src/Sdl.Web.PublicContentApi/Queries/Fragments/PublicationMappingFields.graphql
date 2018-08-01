@@ -1,4 +1,5 @@
 ﻿fragment PublicationMappingFields on PublicationMapping {
+    publicationId
     protocol
     domain
     port
