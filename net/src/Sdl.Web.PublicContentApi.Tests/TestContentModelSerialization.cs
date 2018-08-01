@@ -46,7 +46,7 @@ namespace Sdl.Web.PublicContentApi.Tests
             ItemConnection query = client.ExecuteItemQuery(filter, new Pagination { First = 10 }, null, null, false);
             
 
-            Assert.Equals(query.Edges.Count, 10);
+            Assert.AreEqual(query.Edges.Count, 10);
         }      
     }
 }
