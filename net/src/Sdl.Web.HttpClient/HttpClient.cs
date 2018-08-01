@@ -36,7 +36,7 @@ namespace Sdl.Web.HttpClient
             BaseUri = endpoint;
         }
         
-        public IHttpClientResponse<T> Execute<T>(IHttpClientRequest clientRequest)
+        public virtual IHttpClientResponse<T> Execute<T>(IHttpClientRequest clientRequest)
         {
             HttpWebRequest request = CreateHttpWebRequest(clientRequest);
             try
@@ -78,7 +78,7 @@ namespace Sdl.Web.HttpClient
             throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}");
         }
      
-        public async Task<IHttpClientResponse<T>> ExecuteAsync<T>(IHttpClientRequest clientRequest, 
+        public virtual async Task<IHttpClientResponse<T>> ExecuteAsync<T>(IHttpClientRequest clientRequest, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpWebRequest request = CreateHttpWebRequest(clientRequest);
@@ -119,7 +119,7 @@ namespace Sdl.Web.HttpClient
             throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}");
         }
 
-        private HttpWebRequest CreateHttpWebRequest(IHttpClientRequest clientRequest)
+        protected virtual HttpWebRequest CreateHttpWebRequest(IHttpClientRequest clientRequest)
         {
             IHttpClientRequest requestCopy = new HttpClientRequest(clientRequest);
             Uri requestUri = requestCopy.BuildRequestUri(this);
@@ -142,7 +142,7 @@ namespace Sdl.Web.HttpClient
             return request;
         }
 
-        private static byte[] ReadStream(Stream inputStream)
+        protected virtual byte[] ReadStream(Stream inputStream)
         {
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream outputStream = new MemoryStream())
@@ -154,7 +154,7 @@ namespace Sdl.Web.HttpClient
             }
         }
 
-        private static async Task<byte[]> ReadStreamAsync(Stream inputStream, CancellationToken cancellationToken)
+        protected virtual async Task<byte[]> ReadStreamAsync(Stream inputStream, CancellationToken cancellationToken)
         {
             byte[] buffer = new byte[16 * 1024];
             using (var outputStream = new MemoryStream())
@@ -166,7 +166,7 @@ namespace Sdl.Web.HttpClient
             }
         }
 
-        protected static bool IsJsonMimeType(string contentType) 
+        protected virtual bool IsJsonMimeType(string contentType) 
             => !string.IsNullOrEmpty(contentType) && contentType.ToLower().Contains("application/json");
 
         protected virtual byte[] Serialize(object data, string contentType)

@@ -30,6 +30,12 @@ namespace Sdl.Web.GraphQLClient
             _auth = auth;
         }
 
+        public GraphQLClient(IHttpClient httpClient, IAuthentication auth = null)
+        {
+            _httpClient = httpClient;
+            _auth = auth;
+        }
+
         public IHttpClient HttpClient => _httpClient;
 
         public int Timeout
@@ -217,7 +223,7 @@ namespace Sdl.Web.GraphQLClient
                             NullValueHandling = NullValueHandling.Ignore,
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }),
-                    Authenticaton = graphQLrequest.Authenticaton,
+                    Authenticaton = graphQLrequest.Authenticaton ?? _auth,
                     Headers = graphQLrequest.Headers,
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors
