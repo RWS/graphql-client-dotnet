@@ -36,7 +36,7 @@ public class Program {
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
         InputItemFilter inputItemFilter = new InputItemFilter();
-        inputItemFilter.setItemTypes(new ArrayList<ItemType>(Arrays.asList(ItemType.COMPONENT)));
+        //inputItemFilter.setItemTypes(new ArrayList<ItemType>(Arrays.asList(ItemType.COMPONENT)));
         inputItemFilter.setNamespaceIds(new ArrayList<Integer>(Arrays.asList(1)));
 
         Publication publication = new Publication();

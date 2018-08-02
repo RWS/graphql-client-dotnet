@@ -23,7 +23,7 @@ public class PublicContentApi implements IPublicContentApi {
         body.addProperty("query", query);
         body.add( "variables", variables);
 
-        String responseString = GraphQLClient.execute(endpoint.toString(), body.toString(), headers);
+        String responseString = new GraphQLClient(endpoint.toString(),headers).execute( body.toString());
 
         ObjectMapper objectMapper = new ObjectMapper();
         ContentComponent contentComponent = objectMapper.readValue(responseString, ContentComponent.class);

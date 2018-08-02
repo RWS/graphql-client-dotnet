@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -15,22 +16,37 @@ import java.util.Map;
 
 public class GraphQLClient implements IGraphQLClient {
 
-    private int Timeout;
+    private HttpClient _httpClient;
+    private HttpPost _httpPost;
 
-    public static String execute(String url, String jsonEntity, Map<String, String> headers) throws IOException {
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost(url);
-        for(Map.Entry<String, String> header : headers.entrySet()) {
+    public GraphQLClient(String endpoint, Map<String,String> headers)
+    {
+        _httpClient = HttpClients.createDefault();
+        _httpPost = new HttpPost(endpoint);
 
-            httppost.addHeader(header.getKey(), header.getValue());
+        /*for(Map.Entry<String, String> header : headers.entrySet()) {
+            _httpPost.addHeader(header.getKey(), header.getValue());
+        }
+        _httpPost.addHeader("Content-Type","application/json");*/
+    }
+
+    @Override
+    public String execute(String jsonEntity) throws IOException {
+        return execute(jsonEntity, 0);
+    }
+
+    @Override
+    public String execute(String jsonEntity, int timeout) throws IOException {
+        if(timeout>0) {
+            final RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
+            _httpPost.setConfig(params);
         }
 
         StringEntity entity = new StringEntity(jsonEntity, ContentType.APPLICATION_JSON);
-
-        httppost.setEntity(entity);
+        _httpPost.setEntity(entity);
 
         //Execute and get the response.
-        HttpResponse response = httpclient.execute(httppost);
+        HttpResponse response = _httpClient.execute(_httpPost);
 
         InputStream contentStream = response.getEntity().getContent();
 
@@ -41,14 +57,5 @@ public class GraphQLClient implements IGraphQLClient {
         }
 
         return contentString;
-    }
-
-    @Override
-    public void setTimeout(int timeout) {
-        Timeout = timeout;
-    }
-    @Override
-    public int getTimeout() {
-        return Timeout;
     }
 }
