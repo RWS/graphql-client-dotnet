@@ -24,10 +24,11 @@ public class GraphQLClient implements IGraphQLClient {
         _httpClient = HttpClients.createDefault();
         _httpPost = new HttpPost(endpoint);
 
-        /*for(Map.Entry<String, String> header : headers.entrySet()) {
-            _httpPost.addHeader(header.getKey(), header.getValue());
+        if (headers != null) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                _httpPost.addHeader(header.getKey(), header.getValue());
+            }
         }
-        _httpPost.addHeader("Content-Type","application/json");*/
     }
 
     @Override
