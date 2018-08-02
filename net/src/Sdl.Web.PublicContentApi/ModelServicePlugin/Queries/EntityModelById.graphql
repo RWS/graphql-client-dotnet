@@ -1,5 +1,5 @@
-﻿query componentPresentation($namespaceId: Int!, $publicationId: Int!, $componentId: Int!) {
-    componentPresentation(namespaceId: $namespaceId, publicationId: $publicationId, componentId: $componentId) {
+﻿query componentPresentation($namespaceId: Int!, $publicationId: Int!, $componentId: Int!, $contextData: [InputClaimValue!]) {
+    componentPresentation(namespaceId: $namespaceId, publicationId: $publicationId, componentId: $componentId, contextData: $contextData) {
         itemId            
         rawContent@renderContentArgs {
             data

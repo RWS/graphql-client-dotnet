@@ -1,4 +1,4 @@
-﻿query sitemapSubtree($namespaceId: Int! $publicationId: Int! $taxonomyNodeId: String!) {          
+﻿query sitemapSubtree($namespaceId: Int!, $publicationId: Int!, $taxonomyNodeId: String!) {          
     sitemapSubtree(namespaceId: $namespaceId, publicationId: $publicationId, taxonomyNodeId: $taxonomyNodeId) {
 		...TaxonomyItemFields    
 		...RecurseItems

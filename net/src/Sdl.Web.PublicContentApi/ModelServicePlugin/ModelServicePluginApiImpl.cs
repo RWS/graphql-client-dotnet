@@ -50,7 +50,8 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                     {"publicationId", publicationId},
                     {"url", url},
                     {"contextData", contextData.ClaimValues}
-                }
+                },
+                OperationName = "page"
             });
             return response.Data.page.rawContent.data;
         }
@@ -224,7 +225,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 
         protected ClaimValue CreateClaim(ContentType contentType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.ModelType,
+            Uri = ModelServiceClaimUris.ContentType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof(ContentType), contentType)
         };
