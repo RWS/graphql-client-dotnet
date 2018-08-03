@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -58,5 +59,10 @@ public class GraphQLClient implements IGraphQLClient {
         }
 
         return contentString;
+    }
+
+    @Override
+    public String execute(GraphQLRequest request) {
+        return null;
     }
 }

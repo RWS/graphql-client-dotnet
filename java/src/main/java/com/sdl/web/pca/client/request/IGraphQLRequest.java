@@ -1,11 +1,13 @@
 package com.sdl.web.pca.client.request;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 
 public interface IGraphQLRequest {
     String Query = null;
     String OperationName = null;
-    Dictionary<String, Object> Variables = null;
+    HashMap<String, Object> Variables = null;
+    int timeout=0;
 
     /* IGraphQLRequest AddVariable(String name, Object value);*/
     /*SerializationBinder Binder;*/
@@ -14,9 +16,12 @@ public interface IGraphQLRequest {
     void setQuery(String query);
     String getQuery();
 
+    void setTimeout(int timeout);
+    int getTimeout();
+
     void setOperationName(String operationName);
     String getOperationName();
 
-    void setVariables(Dictionary<String, Object> variables);
-    Dictionary<String, Object> getVariables();
+    void setVariables(HashMap<String, Object> variables);
+    HashMap<String, Object> getVariables();
 }

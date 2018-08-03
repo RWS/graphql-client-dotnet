@@ -1,5 +1,8 @@
 package com.sdl.web.pca.client;
 
+import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.request.IGraphQLRequest;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -24,4 +27,7 @@ public interface IGraphQLClient {
      * @return The GraphQL response with data and errors if any.
      */
     String execute(String jsonEntity) throws IOException;
+
+
+    String execute(IGraphQLRequest request) throws IOException;
 }

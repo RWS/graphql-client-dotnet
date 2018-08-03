@@ -18,10 +18,8 @@ public class GraphQLClientTest {
     @Test
     public void executePublicationsQuery() throws IOException {
         prop = new Properties();
-        InputStream inputStream1 = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
-
-        InputStream inputStream = this.getClass().getResourceAsStream("testconfig.properties");
-        prop.load(inputStream1);
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        prop.load(inputStream);
         client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
 
         String query = prop.getProperty("PUBLICATION_QUERY");

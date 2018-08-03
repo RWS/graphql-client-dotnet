@@ -1,0 +1,6 @@
+﻿ query binaryComponent($namespaceId: Int! $publicationId: Int! $binaryId: Int! $contextData: [InputClaimValue!]) {
+	binaryComponent(namespaceId: $namespaceId, publicationId: $publicationId, binaryId: $binaryId, contextData: $contextData) {
+		...ItemFields
+		...BinaryComponentFields
+	}
+}

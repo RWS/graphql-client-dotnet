@@ -1,10 +1,12 @@
 package com.sdl.web.pca.client;
 
 import com.google.gson.JsonObject;
+import com.sdl.web.pca.client.contentmodel.IPagination;
+import com.sdl.web.pca.client.contentmodel.InputItemFilter;
 
 import java.io.IOException;
 
 public interface IPublicContentApi {
 
-    <T> T getComponent(String query, JsonObject variables) throws IOException, GraphQLException;
+    <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException;
 }

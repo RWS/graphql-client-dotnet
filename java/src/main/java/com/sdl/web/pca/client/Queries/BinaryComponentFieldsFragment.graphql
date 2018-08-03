@@ -1,0 +1,16 @@
+﻿fragment BinaryComponentFields on BinaryComponent {
+	schemaId
+    multiMedia  
+	variants {
+		edges {
+			node {
+				binaryId
+				path
+				url
+				downloadUrl
+				description
+				variantId
+			}
+		}
+    }
+}

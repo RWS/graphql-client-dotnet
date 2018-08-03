@@ -1,0 +1,14 @@
+﻿fragment ItemFields on Item {
+    id
+    itemId
+    itemType
+    namespaceId
+    owningPublicationId
+    publicationId
+    title
+    lastPublishDate
+    creationDate
+    initialPublishDate
+    updatedDate   
+    ...CustomMetaFields
+}

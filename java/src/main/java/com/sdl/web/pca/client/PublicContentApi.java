@@ -1,33 +1,70 @@
 package com.sdl.web.pca.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
-import com.sdl.web.pca.client.contentmodel.ContentComponent;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.request.IGraphQLRequest;
+import org.apache.commons.io.IOUtils;
+import com.sdl.web.pca.client.contentmodel.*;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
+import java.util.HashMap;
 
 public class PublicContentApi implements IPublicContentApi {
 
-    private URL endpoint;
-    private Map<String, String> headers;
+    public IGraphQLClient _client;
 
-    public PublicContentApi(URL endpoint, Map<String, String> headers) {
-        this.endpoint = endpoint;
-        this.headers = headers;
+    public PublicContentApi(IGraphQLClient graphQLClient) {
+        _client = graphQLClient;
     }
 
-    public <T> T getComponent(String query, JsonObject variables) throws IOException, GraphQLException {
-        JsonObject body = new JsonObject();
-        body.addProperty("query", query);
-        body.add( "variables", variables);
+    private String LoadQueryFromResourcefile(String filename) throws IOException {
+        String query = IOUtils.toString(this.getClass().getResourceAsStream(filename+".graphql"),"UTF-8");
+        return query;
+    }
 
-        String responseString = new GraphQLClient(endpoint.toString(),headers).execute( body.toString());
+    public <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        ContentComponent contentComponent = objectMapper.readValue(responseString, ContentComponent.class);
+        String customMetaFilter ="";
+        String query = LoadQueryFromResourcefile("ItemQuery");
+        query += LoadQueryFromResourcefile( "ItemFieldsFragment");
+        query += LoadQueryFromResourcefile( "CustomMetaFieldsFragment");
 
-        return (T) contentComponent;
+        // We only include the fragments that will be required based on the item types in the
+        // input item filter
+        if (filter.getItemTypes() != null)
+        {
+            String fragmentList = "";
+            for (ItemType itemType : filter.getItemTypes())
+            {
+                String fragment = itemType.name().toUpperCase()+"Fields";
+                query +=  LoadQueryFromResourcefile(fragment + "Fragment");
+                fragmentList += "..."+fragment+"\n";
+            }
+            // Just a quick and easy way to replace markers in our queries with vars here.
+            query = query.replace("@fragmentList", fragmentList);
+            query = query.replace("@customMetaFilter", "\""+customMetaFilter+"\"");
+        }
+
+        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
+
+        HashMap<String, Object> variables = new HashMap<String, Object>();
+        variables.put("first", pagination.getFirst());
+        variables.put("after", pagination.getAfter());
+        variables.put("filter", filter);
+        variables.put("contextData", inputClaimValues);
+
+        IGraphQLRequest graphQLRequest =new GraphQLRequest();
+        graphQLRequest.setQuery(query);
+        graphQLRequest.setVariables(variables);
+
+       String contentQuery = _client.execute(graphQLRequest);
+
+        /* ObjectMapper objectMapper = new ObjectMapper();
+
+        ContentComponent contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+
+
+        return (T) contentComponent;*/
+        return null;
     }
 }
