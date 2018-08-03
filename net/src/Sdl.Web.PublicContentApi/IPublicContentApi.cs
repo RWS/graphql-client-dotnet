@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Sdl.Web.PublicContentApi.ContentModel;
+﻿using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
@@ -9,6 +8,8 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public interface IPublicContentApi
     {
+        IContextData GlobalContextData { get; set; }
+
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData);
 

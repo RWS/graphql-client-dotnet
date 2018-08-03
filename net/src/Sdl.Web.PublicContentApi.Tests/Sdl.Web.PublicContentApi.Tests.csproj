@@ -51,6 +51,7 @@
     <Compile Include="TestClass.cs" />
     <Compile Include="TestCMUri.cs" />
     <Compile Include="TestContentModelSerialization.cs" />
+    <Compile Include="TestPublicContentApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

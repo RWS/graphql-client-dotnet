@@ -24,6 +24,9 @@ namespace Sdl.Web.PublicContentApi.Tests
             return new PublicContentApi(graphQL);
         }
 
+        public static PublicContentApi CreateClient(IGraphQLClient graphQL) 
+            => new PublicContentApi(graphQL);
+
         public static string LoadResource(string resourceName)
         {
             string resource = $"Sdl.Web.PublicContentApi.Tests.Resources.{resourceName}";

@@ -70,6 +70,8 @@ namespace Sdl.Web.PublicContentApi
 
         #region IPublicContentApi
 
+        public IContextData GlobalContextData { get; set; } = new ContextData();
+
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData)
         {
@@ -81,7 +83,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -97,7 +99,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -113,7 +115,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -148,7 +150,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
@@ -168,7 +170,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             });
             return response.TypedResponseData.Publication;
@@ -219,7 +221,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }       
@@ -235,7 +237,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
@@ -251,7 +253,7 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
@@ -287,7 +289,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new ItemConvertor() }
             }, cancellationToken);
@@ -308,7 +310,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData.ClaimValues}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken);
             return response.TypedResponseData.Publication;
@@ -352,28 +354,28 @@ namespace Sdl.Web.PublicContentApi
             DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
                 _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion, renderContent,
-                    contextData);
+                    MergeContextData(contextData));
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
                 _modelserviceApi.GetPageModelData(ns, publicationId, pageId, contentType, modelType, pageInclusion, renderContent,
-                    contextData);
+                    MergeContextData(contextData));
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
             DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData)
             =>
                 _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType, renderContent,
-                    contextData);
+                    MergeContextData(contextData));
 
         public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, contextData);
+            => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, MergeContextData(contextData));
 
         public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
             int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);       
+            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, MergeContextData(contextData));       
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
             ContentType contentType,
@@ -381,27 +383,27 @@ namespace Sdl.Web.PublicContentApi
             CancellationToken cancellationToken = default(CancellationToken))
             =>
                 await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, url, contentType, modelType,
-                    pageInclusion, renderContent, contextData, cancellationToken);
+                    pageInclusion, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
             ContentType contentType,
             DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, pageId, contentType, modelType,
-                pageInclusion, renderContent, contextData, cancellationToken);
+                pageInclusion, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
             ContentType contentType,
             DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetEntityModelDataAsync(ns, publicationId, entityId, contentType, modelType,
-                dcpType, renderContent, contextData, cancellationToken);
+                dcpType, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId,
             int descendantLevels, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             =>
-                await _modelserviceApiAsync.GetSitemapAsync(ns, publicationId, descendantLevels, contextData,
+                await _modelserviceApiAsync.GetSitemapAsync(ns, publicationId, descendantLevels, MergeContextData(contextData),
                     cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
@@ -409,11 +411,28 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             =>
                 await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
-                    contextData, cancellationToken);
+                    MergeContextData(contextData), cancellationToken);
 
         #endregion
 
         #region Helpers
+
+        private static ClaimValue FindClaim(string claimUri, IContextData contextData) 
+            => contextData?.ClaimValues.FirstOrDefault(claim => claim.Uri.Equals(claimUri));
+
+        protected IContextData MergeContextData(IContextData localContextData)
+        {
+            if(localContextData == null)    
+                return GlobalContextData;
+
+            if (GlobalContextData == null)
+                return localContextData;
+
+            IContextData merged = new ContextData();
+            merged.ClaimValues = GlobalContextData.ClaimValues.Concat(localContextData.ClaimValues).ToList();
+            return merged;
+        }
+
         protected static string InjectCustomMetaFilter(string query, string customMetaFilter)
             => query.Replace("@customMetaArgs", string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
 
