@@ -14,20 +14,25 @@ import java.util.Map;
 public interface IGraphQLClient {
 
     /**
-     * This method is used to execute the graphQL queries.
+     * This method can be used to execute the graphQL queries.
      * @param jsonEntity graphql query which needs to be executed against the graphql server
      * @param timeout  specify the timeout period in milliseconds
-     * @return The GraphQL response with data and errors if any.
+     * @return The GraphQL JSON string response with data and errors if any.
      */
     String execute(String jsonEntity, int timeout) throws IOException;
 
     /**
-     * This method is used to execute the graphQL queries with no timeout.
+     * This method can be used to execute the graphQL queries with no timeout.
      * @param jsonEntity graphql query which needs to be executed against the graphql server
-     * @return The GraphQL response with data and errors if any.
+     * @return The GraphQL JSON string response with data and errors if any.
      */
     String execute(String jsonEntity) throws IOException;
 
-
+    /**
+     * This method can be used to execute the GraphQL queries against the GraphQL server for the GraphQLRequest parameter
+     * @param request GraphQLRequest object which holds the information to execute the query.
+     * @return The GraphQL JSON string response with data and errors if any.
+     * @throws IOException
+     */
     String execute(IGraphQLRequest request) throws IOException;
 }
