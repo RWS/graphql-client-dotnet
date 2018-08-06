@@ -50,6 +50,7 @@
     <Compile Include="ContentModel\IContextData.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
+    <Compile Include="Exceptions\PcaException.cs" />
     <Compile Include="IPublicContentApiAsync.cs" />
     <Compile Include="ItemConvertor.cs" />
     <Compile Include="ItemTypes.cs" />
