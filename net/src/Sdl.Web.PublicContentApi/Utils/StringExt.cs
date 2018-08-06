@@ -19,5 +19,7 @@ namespace Sdl.Web.PublicContentApi.Utils
                          .Where(w => w.Length > 0)
                          .Select(w => w.Substring(0, 1).ToUpper() + w.Substring(1).ToLower()));
         }
+
+        public static bool IsCmUri(this string str) => CmUri.IsCmUri(str);
     }
 }
