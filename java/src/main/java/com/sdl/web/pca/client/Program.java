@@ -7,7 +7,7 @@ import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Publication;
-import com.sdl.web.pca.client.util.GraphQlQuery;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +27,7 @@ public class Program {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authentication", "Bearer: 123456");
 
-        String query = GraphQlQuery.getGraphQlQuery();
+        String query = ""; //GraphQlQuery.getGraphQlQuery();
 
         PublicContentApi client = new PublicContentApi(graphqlEndpoint, headers);
 
@@ -59,7 +59,7 @@ public class Program {
 
         String itemType = inputItemFilter.getItemTypes().toString();
         itemType = itemType.substring(1, itemType.length()-1);
-        String subQuery = GraphQlQuery.getGraphQlItemTypeQuery(itemType);
+        String subQuery = ""; //GraphQlQuery.getGraphQlItemTypeQuery(itemType);
         query = query+subQuery;
 
         /**

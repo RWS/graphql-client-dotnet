@@ -13,51 +13,59 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <junit.version>4.11</junit.version>
+        <httpclient.version>4.5.6</httpclient.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <jackson-databind.version>2.9.4</jackson-databind.version>
+        <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+        <graphql-java.version>9.2</graphql-java.version>
+        <commons-io.version>2.6</commons-io.version>
+        <gson.version>2.8.5</gson.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.6</version>
+            <version>${httpclient.version}</version>
         </dependency>
 
         <!--Schema Parser-->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
+            <version>${dom4j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.4</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
+            <version>${jackson-mapper-asl.version}</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java</artifactId>
-            <version>9.2</version>
+            <version>${graphql-java.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <version>${gson.version}</version>
         </dependency>
     </dependencies>
 
