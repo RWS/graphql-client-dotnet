@@ -77,7 +77,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentById", true), null),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentById", true), null), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -93,7 +93,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null), url),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
@@ -109,7 +109,7 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = InjectCustomMetaFilter(Queries.Load("BinaryComponentByCmUri", true), null),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByCmUri", true), null), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
@@ -438,6 +438,9 @@ namespace Sdl.Web.PublicContentApi
 
         protected static string InjectRenderContentArgs(string query, bool renderContent)
             => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
+
+        protected static string InjectVariantsArgs(string query, string url) 
+            => query.Replace("@variantsArgs", !string.IsNullOrEmpty(url) ? $"(url: \"{url}\")" : "");
 
         protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
         {

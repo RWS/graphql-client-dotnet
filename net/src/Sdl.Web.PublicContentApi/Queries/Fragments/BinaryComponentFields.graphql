@@ -1,7 +1,7 @@
 ﻿fragment BinaryComponentFields on BinaryComponent {
 	schemaId
     multiMedia  
-	variants {
+	variants@variantsArgs {
 		edges {
 			node {
 				binaryId
