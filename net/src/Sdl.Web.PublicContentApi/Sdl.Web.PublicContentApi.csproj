@@ -78,6 +78,10 @@
       <Project>{9a31aa66-01f4-4bde-9038-682ad23926fd}</Project>
       <Name>Sdl.Web.HttpClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sdl.Web.IQQuery\Sdl.Web.IQClient.csproj">
+      <Project>{fbb9e872-5a37-4fcc-90a8-6e09554411c3}</Project>
+      <Name>Sdl.Web.IQClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ModelServicePlugin\Queries\PageModelByUrl.graphql" />
