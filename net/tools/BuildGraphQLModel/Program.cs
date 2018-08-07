@@ -28,7 +28,9 @@ namespace BuildGraphQLModel
             sb.AppendLine("using System.Collections;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using Newtonsoft.Json;");
-            sb.AppendLine("using Newtonsoft.Json.Converters;\n");
+            sb.AppendLine("using Newtonsoft.Json.Converters;");
+            sb.AppendLine("using Sdl.Web.PublicContentApi.Utils;\n");
+
             sb.AppendLine($"namespace {ns}");
         }
 
@@ -99,6 +101,15 @@ namespace BuildGraphQLModel
                 $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");
         }
 
+        static void GenerateHelpers(ref StringBuilder sb, int indent)
+        {
+            sb.AppendLine($"{Indent(indent)}public static class ItemExtensions");
+            sb.AppendLine($"{Indent(indent)}{{");
+            sb.AppendLine($"{Indent(indent+1)}public static CmUri CmUri(this IItem item)");
+            sb.AppendLine($"{Indent(indent + 2)}=> new CmUri(item.NamespaceId, item.PublicationId, item.ItemId, item.ItemType);");
+            sb.AppendLine($"{Indent(indent)}}}\n");                
+        }    
+
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
         {
             if (type.Name.StartsWith("__")) return;
@@ -148,6 +159,9 @@ namespace BuildGraphQLModel
             StringBuilder sb = new StringBuilder();
             EmitHeader(ref sb, ns);          
             sb.AppendLine("{");
+
+            GenerateHelpers(ref sb, 1);
+
             foreach (var type in schema.Types)
                 GenerateClass(sb, schema, type, 1);
             sb.AppendLine("}");

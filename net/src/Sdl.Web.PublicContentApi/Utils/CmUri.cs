@@ -23,6 +23,15 @@ namespace Sdl.Web.PublicContentApi.Utils
             Version = version;
         }
 
+
+        public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType? itemType)
+        {
+            Namespace = uriNamespace;
+            PublicationId = publicationId;
+            ItemId = itemId;
+            ItemType = itemType;
+        }
+
         public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId)
         {
             Namespace = uriNamespace;
