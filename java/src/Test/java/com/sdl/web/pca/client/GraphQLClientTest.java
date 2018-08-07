@@ -31,24 +31,6 @@ public class GraphQLClientTest {
     }
 
     @Test
-    public void executePublicationsQueryUsingGraphQLRequest() throws IOException{
-        prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
-        prop.load(inputStream);
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
-
-        String query = prop.getProperty("ITEMTYPES_QUERY");
-        IGraphQLRequest request = new GraphQLRequest();
-        request.setQuery(query);
-
-        String variables = prop.getProperty("ITEMTYPES_VARIABLES");
-        HashMap<String,Object> variablesMap =
-                new ObjectMapper().readValue("{"+variables+"}", HashMap.class);
-        request.setVariables(variablesMap);
-
-    }
-
-    @Test
     public void executeItemTypesQuery() throws IOException {
         prop = new Properties();
         InputStream inputStream1 = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
@@ -59,5 +41,27 @@ public class GraphQLClientTest {
 
         String query = prop.getProperty("ITEMTYPES_QUERY_AND_VARIABLES");
         String graphQLJsonResponse = client.execute(query, 0);
+
+    }
+
+    @Test
+    public void executeItemTypesQueryUsingGraphQLRequest() throws IOException{
+
+        prop = new Properties();
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        prop.load(inputStream);
+
+        String query = prop.getProperty("ITEMTYPES_QUERY");
+        IGraphQLRequest request = new GraphQLRequest();
+        request.setQuery(query);
+
+        String variables = prop.getProperty("ITEMTYPES_VARIABLES");
+        HashMap<String,Object> variablesMap =
+                new ObjectMapper().readValue("{"+variables+"}", HashMap.class);
+        request.setVariables(variablesMap);
+
+        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        String responsedata = client.execute(request);
+
     }
 }

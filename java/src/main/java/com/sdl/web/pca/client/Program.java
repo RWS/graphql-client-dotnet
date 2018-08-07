@@ -29,7 +29,8 @@ public class Program {
 
         String query = GraphQlQuery.getGraphQlQuery();
 
-        PublicContentApi client = new PublicContentApi(graphqlEndpoint, headers);
+        //PublicContentApi client = new PublicContentApi(graphqlEndpoint, headers);
+        PublicContentApi client = new PublicContentApi(new GraphQLClient(graphqlEndpoint.toString(), headers));
 
         JsonObject variables = new JsonObject();
 
@@ -78,7 +79,7 @@ public class Program {
         variables.add("cmUri", new Gson().toJsonTree("tcm:5-168"));*/
 
 
-       client.getComponent(query, variables);
+       //client.getComponent(query, variables);
     }
 }
 

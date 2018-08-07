@@ -48,7 +48,7 @@ public class GraphQLRequest implements IGraphQLRequest {
         return _variables;
     }
 
-    public IGraphQLRequest AddVariable(String name, Object value)
+    public IGraphQLRequest AddVariable(String name, String value)
     {
         _variables.put(name, value);
         return this;

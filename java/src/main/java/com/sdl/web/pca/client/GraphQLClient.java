@@ -1,6 +1,8 @@
 package com.sdl.web.pca.client;
 
+import com.google.gson.JsonObject;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.request.IGraphQLRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -10,9 +12,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GraphQLClient implements IGraphQLClient {
@@ -62,7 +66,20 @@ public class GraphQLClient implements IGraphQLClient {
     }
 
     @Override
-    public String execute(GraphQLRequest request) {
-        return null;
+    public String execute(IGraphQLRequest request) throws IOException {
+        JSONObject querybuilder = new JSONObject();
+
+        querybuilder.put("query",request.getQuery());
+        HashMap<String,Object> map = request.getVariables();
+        if(map!=null)
+        {
+            /*for (Map.Entry<String, Object> entry : map.entrySet()) {
+                querybuilder.addProperty(entry.getKey(),entry.getValue().toString());
+            }*/
+            querybuilder.putAll(map);
+        }
+        String result = execute(querybuilder.toString(), 0);
+
+        return result;
     }
 }
