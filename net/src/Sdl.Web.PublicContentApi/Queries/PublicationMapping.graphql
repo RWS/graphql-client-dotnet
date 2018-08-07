@@ -1,4 +1,4 @@
-﻿query publicationMapping($namespaceId: Int!, $siteUrl: String) {
+﻿query publicationMapping($namespaceId: Int!, $siteUrl: String!) {
 	publicationMapping(namespaceId: $namespaceId, siteUrl: $siteUrl) {		
 		...PublicationMappingFields
 	}
