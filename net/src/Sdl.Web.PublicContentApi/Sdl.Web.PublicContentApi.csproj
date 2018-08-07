@@ -66,6 +66,7 @@
     <Compile Include="PublicContentApi.cs" />
     <Compile Include="Queries.cs" />
     <Compile Include="Utils\CmUri.cs" />
+    <Compile Include="Utils\ContentModelHelpers.cs" />
     <Compile Include="Utils\QueryHelpers.cs" />
     <Compile Include="Utils\StringExt.cs" />
   </ItemGroup>
