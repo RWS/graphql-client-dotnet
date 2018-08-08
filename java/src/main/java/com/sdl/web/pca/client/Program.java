@@ -2,10 +2,10 @@ package com.sdl.web.pca.client;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.sdl.web.pca.client.contentmodel1.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel1.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel1.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel1.Publication;
+import com.sdl.web.pca.client.contentmodel.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.Publication;
 import com.sdl.web.pca.client.util.GraphQlQuery;
 
 import java.io.IOException;

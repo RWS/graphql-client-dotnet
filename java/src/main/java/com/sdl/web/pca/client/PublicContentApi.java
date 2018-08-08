@@ -4,7 +4,7 @@ package com.sdl.web.pca.client;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.request.IGraphQLRequest;
 import org.apache.commons.io.IOUtils;
-import com.sdl.web.pca.client.contentmodel1.*;
+import com.sdl.web.pca.client.contentmodel.*;
 import java.io.IOException;
 import java.util.HashMap;
 
