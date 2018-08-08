@@ -10,5 +10,5 @@ CoverageReports/
 *.psess
 *.nupkg
 *.iml
-target
-.idea
+target/
+.idea/

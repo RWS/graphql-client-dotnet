@@ -1,8 +1,7 @@
 package com.sdl.web.pca.client;
 
-import com.google.gson.JsonObject;
-import com.sdl.web.pca.client.contentmodel.IPagination;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel1.IPagination;
+import com.sdl.web.pca.client.contentmodel1.InputItemFilter;
 
 import java.io.IOException;
 
