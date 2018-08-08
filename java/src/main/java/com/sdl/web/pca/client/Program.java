@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.sdl.web.pca.client.contentmodel.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Publication;
 
 
@@ -29,7 +28,8 @@ public class Program {
 
         String query = ""; //GraphQlQuery.getGraphQlQuery();
 
-        PublicContentApi client = new PublicContentApi(graphqlEndpoint, headers);
+        //PublicContentApi client = new PublicContentApi(graphqlEndpoint, headers);
+        PublicContentApi client = new PublicContentApi(new GraphQLClient(graphqlEndpoint.toString(), headers));
 
         JsonObject variables = new JsonObject();
 
@@ -78,7 +78,7 @@ public class Program {
         variables.add("cmUri", new Gson().toJsonTree("tcm:5-168"));*/
 
 
-       client.getComponent(query, variables);
+       //client.getComponent(query, variables);
     }
 }
 
