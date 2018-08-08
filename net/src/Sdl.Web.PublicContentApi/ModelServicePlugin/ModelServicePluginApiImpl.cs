@@ -133,7 +133,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels,
+            int descendantLevels, bool includeAncestors,
             IContextData contextData)
         {
             try
@@ -152,6 +152,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                         {"namespaceId", ns},
                         {"publicationId", publicationId},
                         {"taxonomyNodeId", taxonomyNodeId},
+                        {"includeAncestors", includeAncestors},
                         {"contextData", contextData.ClaimValues}
                     },
                     Convertors = new List<JsonConverter> {new TaxonomyItemConvertor()}
@@ -285,7 +286,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
         }
 
         public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
-            string taxonomyNodeId, int descendantLevels,
+            string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -304,6 +305,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
                         {"namespaceId", ns},
                         {"publicationId", publicationId},
                         {"taxonomyNodeId", taxonomyNodeId},
+                        {"includeAncestors", includeAncestors},
                         {"contextData", contextData.ClaimValues}
                     },
                     Convertors = new List<JsonConverter> {new TaxonomyItemConvertor()}

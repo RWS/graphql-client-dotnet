@@ -375,9 +375,9 @@ namespace Sdl.Web.PublicContentApi
             => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, MergeContextData(contextData));
 
         public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels,
+            int descendantLevels, bool includeAncestors,
             IContextData contextData)
-            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, MergeContextData(contextData));       
+            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, includeAncestors, MergeContextData(contextData));       
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
             ContentType contentType,
@@ -409,10 +409,10 @@ namespace Sdl.Web.PublicContentApi
                     cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
-            string taxonomyNodeId, int descendantLevels,
+            string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             =>
-                await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
+                await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels, includeAncestors,
                     MergeContextData(contextData), cancellationToken);
 
         #endregion

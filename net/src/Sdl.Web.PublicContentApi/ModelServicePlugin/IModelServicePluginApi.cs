@@ -18,7 +18,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 
         TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData);
 
-        TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels,
+        TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData);
     }
 }
