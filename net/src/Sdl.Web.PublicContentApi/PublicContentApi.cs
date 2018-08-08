@@ -120,7 +120,7 @@ namespace Sdl.Web.PublicContentApi
             }).TypedResponseData.BinaryComponent;
         }
 
-        public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
+        public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
             IContextData contextData, string customMetaFilter, bool renderContent)
         {
             if (contextData == null)
@@ -150,6 +150,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
+                    {"sort", sort},
                     {"contextData", MergeContextData(contextData).ClaimValues}
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
@@ -258,7 +259,7 @@ namespace Sdl.Web.PublicContentApi
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
 
-        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
+        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort, IPagination pagination,
             IContextData contextData, string customMetaFilter, bool renderContent,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -289,6 +290,7 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
+                    {"sort", sort},
                     {"contextData", MergeContextData(contextData).ClaimValues}
                 },
                 Convertors = new List<JsonConverter> { new ItemConvertor() }
