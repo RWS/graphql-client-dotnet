@@ -10,4 +10,5 @@
     key
     abstract
     hasChildNodes
+	classifiedItemsCount
 }
