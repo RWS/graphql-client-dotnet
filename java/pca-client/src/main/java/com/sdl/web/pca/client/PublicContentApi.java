@@ -23,6 +23,25 @@ public class PublicContentApi implements IPublicContentApi {
         return query;
     }
 
+    public <T> T GetPageModelData(Page page, Class<T> model) throws IOException {
+        /*String query = graphQLQueries.LoadItems();
+
+        dictionary.put("namespaceId", page.getNamespaceId());
+        dictionary.put("publicationId", page.getPublicationId());
+        dictionary.put("url", page.getUrl());
+
+        graphQLRequest.setQuery(query);
+        graphQLRequest.setVariables(dictionary);
+
+        String contentQuery = _client.Execute(graphQLRequest);
+
+        T pageModelData = objectMapper.readValue(contentQuery, model);
+
+        return pageModelData;*/
+        return null;
+    }
+
+
     public <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException {
 
         String customMetaFilter ="";
