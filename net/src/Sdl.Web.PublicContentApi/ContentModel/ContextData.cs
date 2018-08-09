@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Sdl.Web.PublicContentApi.ContentModel
 {
@@ -11,5 +13,5 @@ namespace Sdl.Web.PublicContentApi.ContentModel
         /// List of claim values to pass to query.
         /// </summary>
         public List<ClaimValue> ClaimValues { get; set; } = new List<ClaimValue>();
-    }
+    }  
 }

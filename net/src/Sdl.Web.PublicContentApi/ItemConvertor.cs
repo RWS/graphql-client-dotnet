@@ -39,6 +39,9 @@ namespace Sdl.Web.PublicContentApi
                 case (int) ItemType.ComponentTemplate:
                     item = new Template();
                     break;
+                case 2048: // ?? huh?
+                    item = new ComponentPresentation();
+                    break;
             }
             if (item == null) return null;
             serializer.Populate(target.CreateReader(), item);

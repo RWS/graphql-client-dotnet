@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using System.Threading;
@@ -47,25 +48,21 @@ namespace Sdl.Web.PublicContentApi
 
         public IGraphQLResponse Execute(IGraphQLRequest request)
         {
-            request.Convertors.Add(new ItemConvertor());
             return _client.Execute(request);
         }
 
         public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request)
         {
-            request.Convertors.Add(new ItemConvertor());
             return _client.Execute<T>(request);
         }
 
         public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
         {
-            request.Convertors.Add(new ItemConvertor());
             return await _client.ExecuteAsync(request, cancellationToken);
         }
 
         public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
         {
-            request.Convertors.Add(new ItemConvertor());
             return await _client.ExecuteAsync<T>(request, cancellationToken);
         }
 
@@ -73,18 +70,20 @@ namespace Sdl.Web.PublicContentApi
 
         #region IPublicContentApi
 
+        public IContextData GlobalContextData { get; set; } = new ContextData();
+
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData)
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentById", true), null), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -94,13 +93,13 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null), url),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
@@ -110,50 +109,39 @@ namespace Sdl.Web.PublicContentApi
         {
             return _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment", "CustomMetaFieldsFragment"),
+                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByCmUri", true), null), null),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }).TypedResponseData.BinaryComponent;
         }
 
-        public ItemConnection ExecuteItemQuery(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter = null)
+        public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+            IContextData contextData, string customMetaFilter, bool renderContent)
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
 
             // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
+            string query = Queries.Load("ItemQuery", false);
 
             // We only include the fragments that will be required based on the item types in the
             // input item filter
             if (filter.ItemTypes != null)
             {
-                string fragmentList = string.Empty;
-                foreach (var itemType in filter.ItemTypes)
-                {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
-                    query += Queries.Load(fragment + "Fragment");
-                    fragmentList += $"...{fragment}\n";
-                }
+                string fragmentList = filter.ItemTypes.Select(itemType 
+                    => $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
                 // Just a quick and easy way to replace markers in our queries with vars here.
                 query = query.Replace("@fragmentList", fragmentList);
-                query = query.Replace("@customMetaFilter", "\""+customMetaFilter+"\"");
+                query = Queries.LoadFragments(query);
             }
 
+            query = InjectCustomMetaFilter(query, customMetaFilter);
+            query = InjectRenderContentArgs(query, renderContent);
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -162,7 +150,8 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData}
+                    {"sort", sort},
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 },
                 Convertors = new List<JsonConverter> {new ItemConvertor()}
             });
@@ -170,37 +159,52 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
-            List<InputClaimValue> contextData, string customMetaFilter)
+            IContextData contextData, string customMetaFilter)
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
-
-            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
-
+                contextData = new ContextData();
+           
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = query,
+                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             });
             return response.TypedResponseData.Publication;
         }
 
-        public object GetPublicationMapping(ContentNamespace ns, string uri, IContextData contextData)
+        public string ResolveLink(CmUri cmUri, bool resolveToBinary = false)
         {
-            throw new NotImplementedException();
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
+                    {"type", GetLinkType(cmUri, resolveToBinary)},
+                    {"itemId", cmUri.ItemId}
+                }
+            });
+            return response.TypedResponseData.Link.Url;
+        }     
+
+        public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url)
+        {
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("PublicationMapping", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"siteUrl", url}
+                }
+            });
+            return response.TypedResponseData.PublicationMapping;
         }
 
         #endregion
@@ -212,15 +216,13 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentById", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentById", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }       
@@ -230,15 +232,13 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentByUrl", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentByUrl", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"url", url},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
@@ -248,53 +248,40 @@ namespace Sdl.Web.PublicContentApi
         {
             return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query =
-                    Queries.Load("BinaryComponentByCmUri", "BinaryComponentFieldsFragment", "ItemFieldsFragment",
-                        "CustomMetaFieldsFragment"),
+                Query = Queries.Load("BinaryComponentByCmUri", true),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", cmUri.Namespace},
                     {"publicationId", cmUri.PublicationId},
                     {"cmUri", cmUri.ToString()},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken)).TypedResponseData.BinaryComponent;
         }
 
-        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, IPagination pagination,
-            List<InputClaimValue> contextData, string customMetaFilter = null,
+        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+            IContextData contextData, string customMetaFilter, bool renderContent,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
+                contextData = new ContextData();
 
             // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", "ItemFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
+            string query = Queries.Load("ItemQuery", false);
 
             // We only include the fragments that will be required based on the item types in the
             // input item filter
             if (filter.ItemTypes != null)
             {
-                string fragmentList = string.Empty;
-                foreach (var itemType in filter.ItemTypes)
-                {
-                    string fragment = $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields";
-                    query += Queries.Load(fragment + "Fragment");
-                    fragmentList += $"...{fragment}\n";
-                }
+                string fragmentList = filter.ItemTypes.Select(itemType
+                    => $"{Enum.GetName(typeof(ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
                 // Just a quick and easy way to replace markers in our queries with vars here.
                 query = query.Replace("@fragmentList", fragmentList);
-                query = query.Replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
+                query = Queries.LoadFragments(query);
             }
 
+            query = InjectCustomMetaFilter(query, customMetaFilter);
+            query = InjectRenderContentArgs(query, renderContent);
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
                 Query = query,
@@ -303,41 +290,62 @@ namespace Sdl.Web.PublicContentApi
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
-                    {"contextData", contextData}
+                    {"sort", sort},
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 },
-                Convertors = new List<JsonConverter> {new ItemConvertor()}
+                Convertors = new List<JsonConverter> { new ItemConvertor() }
             }, cancellationToken);
             return response.TypedResponseData.Items;
         }
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
-            List<InputClaimValue> contextData, string customMetaFilter,
+            IContextData contextData, string customMetaFilter,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (contextData == null)
-                contextData = new List<InputClaimValue>();
-
-            string query = Queries.Load("Publication", "ItemFieldsFragment", "PublicationFieldsFragment");
-            if (customMetaFilter != null)
-            {
-                query += Queries.Load("CustomMetaFieldsFilterFragment");
-            }
-            else
-            {
-                query += Queries.Load("CustomMetaFieldsFragment");
-            }
+                contextData = new ContextData();
 
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query = query,
+                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"contextData", contextData}
+                    {"contextData", MergeContextData(contextData).ClaimValues}
                 }
             }, cancellationToken);
             return response.TypedResponseData.Publication;
+        }
+
+        public async Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", cmUri.Namespace},
+                    {"publicationId", cmUri.PublicationId},
+                    {"type", GetLinkType(cmUri, resolveToBinary)},
+                    {"itemId", cmUri.ItemId}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.Link.Url;
+        }
+
+        public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("PublicationMapping", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"siteUrl", url}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.PublicationMapping;
         }
 
         #endregion
@@ -345,68 +353,103 @@ namespace Sdl.Web.PublicContentApi
         #region IModelServicePluginApi & IModelServicePluginApiAsync
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion,
-                    contextData);
+                _modelserviceApi.GetPageModelData(ns, publicationId, url, contentType, modelType, pageInclusion, renderContent,
+                    MergeContextData(contextData));
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData)
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetPageModelData(ns, publicationId, pageId, contentType, modelType, pageInclusion,
-                    contextData);
+                _modelserviceApi.GetPageModelData(ns, publicationId, pageId, contentType, modelType, pageInclusion, renderContent,
+                    MergeContextData(contextData));
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData)
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData)
             =>
-                _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType,
-                    contextData);
+                _modelserviceApi.GetEntityModelData(ns, publicationId, entityId, contentType, modelType, dcpType, renderContent,
+                    MergeContextData(contextData));
 
         public TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData)
-            => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, contextData);
+            => _modelserviceApi.GetSitemap(ns, publicationId, descendantLevels, MergeContextData(contextData));
 
         public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels,
+            int descendantLevels, bool includeAncestors,
             IContextData contextData)
-            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, contextData);       
+            => _modelserviceApi.GetSitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels, includeAncestors, MergeContextData(contextData));       
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
             ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             =>
                 await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, url, contentType, modelType,
-                    pageInclusion, contextData, cancellationToken);
+                    pageInclusion, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
             ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, IContextData contextData,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetPageModelDataAsync(ns, publicationId, pageId, contentType, modelType,
-                pageInclusion, contextData, cancellationToken);
+                pageInclusion, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
             ContentType contentType,
-            DataModelType modelType, DcpType dcpType, IContextData contextData,
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => await _modelserviceApiAsync.GetEntityModelDataAsync(ns, publicationId, entityId, contentType, modelType,
-                dcpType, contextData, cancellationToken);
+                dcpType, renderContent, MergeContextData(contextData), cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId,
             int descendantLevels, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             =>
-                await _modelserviceApiAsync.GetSitemapAsync(ns, publicationId, descendantLevels, contextData,
+                await _modelserviceApiAsync.GetSitemapAsync(ns, publicationId, descendantLevels, MergeContextData(contextData),
                     cancellationToken);
 
         public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
-            string taxonomyNodeId, int descendantLevels,
+            string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             =>
-                await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels,
-                    contextData, cancellationToken);
+                await _modelserviceApiAsync.GetSitemapSubtreeAsync(ns, publicationId, taxonomyNodeId, descendantLevels, includeAncestors,
+                    MergeContextData(contextData), cancellationToken);
 
-        #endregion      
+        #endregion
+
+        #region Helpers
+
+        private static ClaimValue FindClaim(string claimUri, IContextData contextData) 
+            => contextData?.ClaimValues.FirstOrDefault(claim => claim.Uri.Equals(claimUri));
+
+        protected IContextData MergeContextData(IContextData localContextData)
+        {
+            if(localContextData == null)    
+                return GlobalContextData;
+
+            if (GlobalContextData == null)
+                return localContextData;
+
+            IContextData merged = new ContextData();
+            merged.ClaimValues = GlobalContextData.ClaimValues.Concat(localContextData.ClaimValues).ToList();
+            return merged;
+        }
+
+        protected static string InjectCustomMetaFilter(string query, string customMetaFilter)
+            => query.Replace("@customMetaArgs", string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
+
+        protected static string InjectRenderContentArgs(string query, bool renderContent)
+            => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
+
+        protected static string InjectVariantsArgs(string query, string url) 
+            => query.Replace("@variantsArgs", !string.IsNullOrEmpty(url) ? $"(url: \"{url}\")" : "");
+
+        protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
+        {
+            if (cmUri.ItemType == ItemType.Page) return LinkType.PAGE;
+            if (cmUri.ItemType == ItemType.Component && resolveToBinary) return LinkType.BINARY;
+            return LinkType.COMPONENT;
+        }
+        #endregion
     }
 }

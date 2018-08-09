@@ -1,7 +1,7 @@
-﻿query page($namespaceId: Int! $publicationId: Int! $url: String) {
-    page(namespaceId: $namespaceId, publicationId: $publicationId, url: $url) {
+﻿query page($namespaceId: Int!, $publicationId: Int!, $url: String, $contextData: [InputClaimValue!]) {
+    page(namespaceId: $namespaceId, publicationId: $publicationId, url: $url, contextData: $contextData) {
         itemId                
-        rawContent(renderContent: false) {
+        rawContent@renderContentArgs {
             data 
         }
     }

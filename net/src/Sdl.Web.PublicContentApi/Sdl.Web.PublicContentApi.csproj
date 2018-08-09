@@ -50,6 +50,7 @@
     <Compile Include="ContentModel\IContextData.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
+    <Compile Include="Exceptions\PcaException.cs" />
     <Compile Include="IPublicContentApiAsync.cs" />
     <Compile Include="ItemConvertor.cs" />
     <Compile Include="ItemTypes.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="PublicContentApi.cs" />
     <Compile Include="Queries.cs" />
     <Compile Include="Utils\CmUri.cs" />
+    <Compile Include="Utils\ContentModelHelpers.cs" />
     <Compile Include="Utils\QueryHelpers.cs" />
     <Compile Include="Utils\StringExt.cs" />
   </ItemGroup>
@@ -77,6 +79,10 @@
       <Project>{9a31aa66-01f4-4bde-9038-682ad23926fd}</Project>
       <Name>Sdl.Web.HttpClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sdl.Web.IQQuery\Sdl.Web.IQClient.csproj">
+      <Project>{fbb9e872-5a37-4fcc-90a8-6e09554411c3}</Project>
+      <Name>Sdl.Web.IQClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ModelServicePlugin\Queries\PageModelByUrl.graphql" />
@@ -84,23 +90,29 @@
     <EmbeddedResource Include="ModelServicePlugin\Queries\EntityModelById.graphql" />
     <EmbeddedResource Include="ModelServicePlugin\Queries\Sitemap.graphql" />
     <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapSubtree.graphql" />
-    <EmbeddedResource Include="ModelServicePlugin\Queries\SitemapFragments.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\Fragments\RecurseItems.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\Fragments\TaxonomyItemFields.graphql" />
+    <EmbeddedResource Include="ModelServicePlugin\Queries\Fragments\TaxonomyPageFields.graphql" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Queries\ItemFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\CustomMetaFieldsFilterFragment.graphql" />
-    <EmbeddedResource Include="Queries\CustomMetaFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\ItemFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\CustomMetaFieldsFilter.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\CustomMetaFields.graphql" />
     <EmbeddedResource Include="Queries\ItemQuery.graphql" />
-    <EmbeddedResource Include="Queries\PublicationFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\ComponentFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\BinaryComponentFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\PageFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\StructureGroupFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\KeywordFieldsFragment.graphql" />
-    <EmbeddedResource Include="Queries\TemplateFieldsFragment.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\PublicationFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\ComponentFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\BinaryComponentFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\PageFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\StructureGroupFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\KeywordFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\TemplateFields.graphql" />
     <EmbeddedResource Include="Queries\BinaryComponentById.graphql" />
     <EmbeddedResource Include="Queries\BinaryComponentByUrl.graphql" />
     <EmbeddedResource Include="Queries\BinaryComponentByCmUri.graphql" />
     <EmbeddedResource Include="Queries\Publication.graphql" />
+    <EmbeddedResource Include="Queries\ResolveLink.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\ComponentPresentationFields.graphql" />
+    <EmbeddedResource Include="Queries\PublicationMapping.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\PublicationMappingFields.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

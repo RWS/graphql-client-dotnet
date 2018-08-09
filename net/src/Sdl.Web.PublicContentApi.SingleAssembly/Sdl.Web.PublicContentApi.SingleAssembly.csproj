@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +64,9 @@
     </Compile>
     <Compile Include="..\Sdl.Web.GraphQL\**\*.cs" Exclude="..\Sdl.Web.GraphQL\**\Temp*;..\Sdl.Web.GraphQL\**\AssemblyInfo.cs;..\Sdl.Web.GraphQL\**\Queries.cs;..\Sdl.Web.GraphQL\QueryResources.cs">
       <LinkBase>GraphQL</LinkBase>
+    </Compile>
+    <Compile Include="..\Sdl.Web.IQQuery\**\*.cs;" Exclude="..\Sdl.Web.IQQuery\**\Temp*;..\Sdl.Web.IQQuery\**\AssemblyInfo.cs*">
+      <LinkBase>IQQuery</LinkBase>
     </Compile>
     <Compile Include="..\Sdl.Web.PublicContentApi\**\*.cs;" Exclude="..\Sdl.Web.PublicContentApi\**\Temp*;..\Sdl.Web.PublicContentApi\**\AssemblyInfo.cs*;..\Sdl.Web.PublicContentApi\**\Queries.cs">
       <LinkBase>PublicContentApi</LinkBase>

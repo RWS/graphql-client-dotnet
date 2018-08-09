@@ -23,6 +23,15 @@ namespace Sdl.Web.PublicContentApi.Utils
             Version = version;
         }
 
+
+        public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId, Sdl.Web.PublicContentApi.ItemType? itemType)
+        {
+            Namespace = uriNamespace;
+            PublicationId = publicationId;
+            ItemId = itemId;
+            ItemType = itemType;
+        }
+
         public CmUri(ContentNamespace uriNamespace, int publicationId, int itemId)
         {
             Namespace = uriNamespace;
@@ -52,19 +61,21 @@ namespace Sdl.Web.PublicContentApi.Utils
 
         public ContentNamespace Namespace { get; set; }
         public int ItemId { get; set; }
-        public Sdl.Web.PublicContentApi.ItemType? ItemType { get; set; }
+        public ItemType? ItemType { get; set; }
         public int PublicationId { get; set; }
         public int? Version { get; set; }
 
         [JsonIgnore]
         public bool IsNullUri => ItemId == 0 && ItemType == 0 && PublicationId == 0;
 
+        public static bool IsCmUri(string cmUri) => UriRegEx.IsMatch(cmUri);
+
         public static bool TryParse(string uri, out CmUri cmUri)
         {
             cmUri = null;
             if (string.IsNullOrEmpty(uri)) return false;
             string ns = null;
-            Sdl.Web.PublicContentApi.ItemType itemType;
+            ItemType itemType;
             int itemId = -1;
             int publicationId = -1;
             int version = -1;
@@ -80,11 +91,11 @@ namespace Sdl.Web.PublicContentApi.Utils
                 itemId = int.Parse(match.Groups["itemId"].Value);
                 if (match.Groups["itemType"].Captures.Count > 0)
                 {
-                    itemType = (Sdl.Web.PublicContentApi.ItemType)int.Parse(match.Groups["itemType"].Value);
+                    itemType = (ItemType)int.Parse(match.Groups["itemType"].Value);
                 }
                 else
                 {
-                    itemType = Sdl.Web.PublicContentApi.ItemType.Component;
+                    itemType = Web.PublicContentApi.ItemType.Component;
                 }
                 if (match.Groups["version"].Captures.Count > 0)
                 {
@@ -116,7 +127,7 @@ namespace Sdl.Web.PublicContentApi.Utils
             switch (ns)
             {
                 case ContentNamespace.Docs:
-                    return "ish";              
+                    return "ish";        
                 default:
                     return "tcm";
             }
@@ -136,11 +147,11 @@ namespace Sdl.Web.PublicContentApi.Utils
                 ItemId = int.Parse(match.Groups["itemId"].Value);
                 if (match.Groups["itemType"].Captures.Count > 0)
                 {
-                    ItemType = (Sdl.Web.PublicContentApi.ItemType)int.Parse(match.Groups["itemType"].Value);
+                    ItemType = (ItemType)int.Parse(match.Groups["itemType"].Value);
                 }
                 else
                 {
-                    ItemType = Sdl.Web.PublicContentApi.ItemType.Component;
+                    ItemType = Web.PublicContentApi.ItemType.Component;
                 }
                 if (match.Groups["version"].Captures.Count > 0)
                 {
