@@ -1,12 +1,14 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.request.IGraphQLRequest;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -61,6 +63,47 @@ public class GraphQLClientTest {
 
         client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
         String responsedata = client.execute(request);
+
+    }
+
+    @Test
+    public void executePageItemQuery() throws IOException {
+        prop = new Properties();
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+
+        prop.load(inputStream);
+        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+
+        PublicContentApi publicContentApi = new PublicContentApi(client);
+
+        InputItemFilter filter = new InputItemFilter();
+        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
+        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
+
+        Pagination pagination = new Pagination();
+        pagination.setFirst(2);
+
+        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+    }
+
+    @Test
+    public void executeSiteMap() throws IOException {
+        prop = new Properties();
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+
+        prop.load(inputStream);
+        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+
+        Class<ContentQuery> dataModel = ContentQuery.class;
+        PublicContentApi publicContentApi = new PublicContentApi(client);
+
+        Page page=new Page();
+        page.setNamespaceId(1);
+        page.setPublicationId(5);
+        page.setUrl("/index.html");
+
+        publicContentApi.ExecuteSiteMap(page, dataModel);
 
     }
 }

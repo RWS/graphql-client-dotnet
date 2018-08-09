@@ -1,6 +1,8 @@
 package com.sdl.web.pca.client;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.request.IGraphQLRequest;
 import org.apache.commons.io.IOUtils;
@@ -17,7 +19,7 @@ public class PublicContentApi implements IPublicContentApi {
     }
 
     private String LoadQueryFromResourcefile(String filename) throws IOException {
-        String query = IOUtils.toString(this.getClass().getResourceAsStream(filename+".graphql"),"UTF-8");
+        String query = IOUtils.toString(PublicContentApi.class.getClassLoader().getResourceAsStream(filename+".graphql"),"UTF-8");
         return query;
     }
 
@@ -35,7 +37,7 @@ public class PublicContentApi implements IPublicContentApi {
             String fragmentList = "";
             for (ItemType itemType : filter.getItemTypes())
             {
-                String fragment = itemType.name().toUpperCase()+"Fields";
+                String fragment = itemType.name().substring(0,1).toUpperCase() + itemType.name().substring(1).toLowerCase()+"Fields";
                 query +=  LoadQueryFromResourcefile(fragment + "Fragment");
                 fragmentList += "..."+fragment+"\n";
             }
@@ -58,12 +60,31 @@ public class PublicContentApi implements IPublicContentApi {
 
        String contentQuery = _client.execute(graphQLRequest);
 
-        /* ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         ContentComponent contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
 
+        return (T) contentComponent;
+    }
 
-        return (T) contentComponent;*/
-        return null;
+    public <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException {
+        String query = LoadQueryFromResourcefile("Sitemap");
+
+        HashMap<String, Object> variables = new HashMap<String, Object>();
+        variables.put("namespaceId", page.getNamespaceId());
+        variables.put("publicationId", page.getPublicationId());
+
+        IGraphQLRequest graphQLRequest =new GraphQLRequest();
+        graphQLRequest.setQuery(query);
+        graphQLRequest.setVariables(variables);
+
+        String contentQuery = _client.execute(graphQLRequest);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectReader objectReader = objectMapper.reader(model).withRootName("data");
+
+        T sitemap = objectReader.readValue(contentQuery);
+
+        return sitemap;
     }
 }

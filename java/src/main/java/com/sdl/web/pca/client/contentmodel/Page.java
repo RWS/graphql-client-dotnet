@@ -5,7 +5,7 @@ import java.util.List;
 /// <summary>
 	/// Represents a page.
 	/// </summary>
-	class Page implements IContainer, IItem
+public class Page implements IContainer, IItem
 	{
 		private List<IItem> containerItems;
 		private IContent content;
