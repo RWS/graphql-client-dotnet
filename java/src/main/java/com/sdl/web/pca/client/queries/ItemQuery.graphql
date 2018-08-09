@@ -4,47 +4,8 @@
       edges
       {cursor node
         {...ItemFields
-          ...ComponentFields
+          @fragmentList
         }
       }
     }
-  }
-  fragment ItemFields on Item
-  {
-    id
-    itemId
-    itemType
-    namespaceId
-    owningPublicationId
-    publicationId
-    title
-    lastPublishDate
-    creationDate
-    initialPublishDate
-    updatedDate
-    ...CustomMetaFields
-  }
-  fragment CustomMetaFields on Item
-  {
-    customMetas
-    {
-      edges
-      {
-        node
-        {
-          id
-          itemId
-          key
-          namespaceId
-          publicationId
-          value
-          valueType
-        }
-      }
-    }
-  }
-  fragment ComponentFields on Component
-  {
-    schemaId
-    multiMedia
   }

@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 /// The query root for the GraphQL Public Content API.
 /// </summary>
-class ContentQuery
+public class ContentQuery
 {
     private BinaryComponent binaryComponent;
     private KeywordConnection categories;

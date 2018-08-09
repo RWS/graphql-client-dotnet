@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.request.IGraphQLRequest;
@@ -67,19 +68,23 @@ public class GraphQLClient implements IGraphQLClient {
 
     @Override
     public String execute(IGraphQLRequest request) throws IOException {
-        JSONObject querybuilder = new JSONObject();
+        JsonObject body = new JsonObject();
+        body.addProperty("query", request.getQuery());
+        body.add("variables", new Gson().toJsonTree(request.getVariables()));
+        String contentString = null;
 
-        querybuilder.put("query",request.getQuery());
-        HashMap<String,Object> map = request.getVariables();
-        if(map!=null)
-        {
-            /*for (Map.Entry<String, Object> entry : map.entrySet()) {
-                querybuilder.addProperty(entry.getKey(),entry.getValue().toString());
-            }*/
-            querybuilder.putAll(map);
-        }
-        String result = execute(querybuilder.toString(), 0);
+        try {
+            StringEntity entity = new StringEntity(body.toString(), ContentType.APPLICATION_JSON);
+            _httpPost.setEntity(entity);
+            HttpResponse response = _httpClient.execute(_httpPost);
+            InputStream contentStream = response.getEntity().getContent();
 
-        return result;
+            contentString = IOUtils.toString(contentStream, "UTF-8");
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new HttpResponseException(response.getStatusLine().getStatusCode(), "The server responded with" + contentString);
+            }
+        }catch (Exception ex){ex.printStackTrace();}
+        return contentString;
     }
 }
