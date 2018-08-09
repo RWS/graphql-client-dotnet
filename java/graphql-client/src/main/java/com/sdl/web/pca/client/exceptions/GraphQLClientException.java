@@ -1,4 +1,4 @@
-package com.sdl.web.Exceptions;
+package com.sdl.web.pca.client.exceptions;
 
 import com.sdl.web.pca.client.response.IGraphQLResponse;
 

@@ -3,11 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sdl.web.pca</groupId>
-    <artifactId>pca-client</artifactId>
+    <artifactId>pca-client-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>graphql-client</module>
+        <module>pca-client</module>
+        <module>pca-model</module>
+    </modules>
+    <packaging>pom</packaging>
 
-    <name>PCA GraphQL client</name>
+    <name>PCA client parent</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
