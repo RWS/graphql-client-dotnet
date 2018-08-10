@@ -9,6 +9,7 @@
         <module>graphql-client</module>
         <module>pca-client</module>
         <module>pca-model</module>
+        <module>pca-integration-tests</module>
     </modules>
     <packaging>pom</packaging>
 
