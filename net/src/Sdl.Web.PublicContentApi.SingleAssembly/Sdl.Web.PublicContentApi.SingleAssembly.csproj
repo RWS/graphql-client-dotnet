@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Sdl.Web.Core\**\*.cs;" Exclude="..\Sdl.Web.Core\**\Temp*;..\Sdl.Web.Core\**\AssemblyInfo.cs*">
+      <LinkBase>Core</LinkBase>
+    </Compile>
     <Compile Include="..\Sdl.Web.HttpClient\**\*.cs" Exclude="..\Sdl.Web.HttpClient\**\Temp*;..\Sdl.Web.HttpClient\**\AssemblyInfo.cs">
       <LinkBase>HttpClient</LinkBase>
     </Compile>

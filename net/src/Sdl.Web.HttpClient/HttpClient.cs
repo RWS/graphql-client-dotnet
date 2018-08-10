@@ -10,6 +10,7 @@ using Sdl.Web.HttpClient.Exceptions;
 using Sdl.Web.HttpClient.Request;
 using Sdl.Web.HttpClient.Response;
 using Newtonsoft.Json;
+using Sdl.Web.Core;
 
 namespace Sdl.Web.HttpClient
 {
@@ -22,6 +23,7 @@ namespace Sdl.Web.HttpClient
         public int Timeout { get; set; } = 30000;
         public string UserAgent { get; set; } = "SDL.PCA.NET";
         public HttpHeaders Headers { get; set; } = new HttpHeaders();
+        public ILogger Logger { get; } = new NullLogger();
 
         public HttpClient()
         { }
@@ -34,6 +36,16 @@ namespace Sdl.Web.HttpClient
         public HttpClient(Uri endpoint)
         {
             BaseUri = endpoint;
+        }
+
+        public HttpClient(string endpoint, ILogger logger) : this(endpoint)
+        {
+            Logger = logger ?? new NullLogger();
+        }
+
+        public HttpClient(Uri endpoint, ILogger logger) : this(endpoint)
+        {
+            Logger = logger ?? new NullLogger();
         }
         
         public virtual IHttpClientResponse<T> Execute<T>(IHttpClientRequest clientRequest)
@@ -107,15 +119,17 @@ namespace Sdl.Web.HttpClient
             }
             catch (WebException e)
             {
+                Logger.Error(e, $"Failed to get http response from '{BaseUri}' with request: '{clientRequest}'");
                 byte[] data = ReadStream(e.Response.GetResponseStream());
                 throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}",
                     e, (int)e.Status, Encoding.UTF8.GetString(data));
             }
             catch (Exception e)
             {
+                Logger.Error(e, $"Failed to get http response from '{BaseUri}' with request: '{clientRequest}'");
                 throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}", e);
             }
-
+            Logger.Error($"Failed to get http response from '{BaseUri}' with request: '{clientRequest}'");
             throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}");
         }
 
@@ -123,7 +137,7 @@ namespace Sdl.Web.HttpClient
         {
             IHttpClientRequest requestCopy = new HttpClientRequest(clientRequest);
             Uri requestUri = requestCopy.BuildRequestUri(this);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(requestUri);
             request.Method = requestCopy.Method;
             request.Timeout = Timeout;
             request.ContentType = requestCopy.ContentType;
@@ -139,6 +153,14 @@ namespace Sdl.Web.HttpClient
             byte[] serialized = Serialize(requestCopy.Body, requestCopy.ContentType);
             using (Stream requestStream = request.GetRequestStream())
                 requestStream.Write(serialized, 0, serialized.Length);
+            if (!Logger.IsTracingEnabled) return request;
+            Logger.Trace($"Performing Http Request:");
+            Logger.Trace($"[{request.Method}] {request.RequestUri}");
+            Logger.Trace($"[BODY] {requestCopy.Body}");
+            foreach (var x in request.Headers.AllKeys)
+            {
+                Logger.Trace($"[HEADER] {x}={request.Headers[x]}");
+            }
             return request;
         }
 

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CSharp.RuntimeBinder;
 using Newtonsoft.Json;
+using Sdl.Web.Core;
 using Sdl.Web.GraphQLClient;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.PublicContentApi.ContentModel;
@@ -15,10 +16,12 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
     public class ModelServicePluginApiImpl : IModelServicePluginApi, IModelServicePluginApiAsync
     {
         private readonly IGraphQLClient _client;
+        private readonly ILogger _logger;
 
-        public ModelServicePluginApiImpl(IGraphQLClient client)
+        public ModelServicePluginApiImpl(IGraphQLClient client, ILogger logger)
         {
             _client = client;
+            _logger = logger ?? new NullLogger();
         }
 
         public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,

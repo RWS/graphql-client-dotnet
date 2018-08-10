@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.HttpClient;
@@ -10,6 +11,7 @@ using Sdl.Web.GraphQLClient.Exceptions;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.GraphQLClient.Response;
 using Sdl.Web.GraphQLClient.Schema;
+using Sdl.Web.Core;
 
 namespace Sdl.Web.GraphQLClient
 {
@@ -17,6 +19,7 @@ namespace Sdl.Web.GraphQLClient
     {
         protected readonly IHttpClient _httpClient;
         protected readonly IAuthentication _auth;
+        public ILogger Logger { get; } = new NullLogger();
 
         public GraphQLClient(string endpoint, IAuthentication auth = null)
         {
@@ -36,6 +39,27 @@ namespace Sdl.Web.GraphQLClient
             _auth = auth;
         }
 
+        public GraphQLClient(string endpoint, ILogger logger, IAuthentication auth = null) 
+        {
+            Logger = logger ?? new NullLogger();
+            _httpClient = new HttpClient.HttpClient(endpoint, Logger);
+            _auth = auth;
+        }
+
+        public GraphQLClient(Uri endpoint, ILogger logger, IAuthentication auth = null)
+        {
+            Logger = logger ?? new NullLogger();
+            _httpClient = new HttpClient.HttpClient(endpoint, Logger);
+            _auth = auth;
+        }
+
+        public GraphQLClient(IHttpClient httpClient, ILogger logger, IAuthentication auth = null)
+        {
+            Logger = logger ?? new NullLogger();
+            _httpClient = httpClient;
+            _auth = auth;
+        }
+
         public IHttpClient HttpClient => _httpClient;
 
         public int Timeout
@@ -49,11 +73,12 @@ namespace Sdl.Web.GraphQLClient
             try
             {
                 var response = _httpClient.Execute<GraphQLResponse>(CreateHttpRequest(graphQLrequest));
-                var responseData = response.ResponseData;
+                var responseData = response.ResponseData;               
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
                 if (responseData.Errors != null && responseData.Errors.Count > 0)
                     throw new GraphQLClientException(response);
+                if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 return responseData;
             }
             catch (GraphQLClientException)
@@ -76,6 +101,7 @@ namespace Sdl.Web.GraphQLClient
                 responseData.Headers = response.Headers;
                 if (responseData.Errors != null && responseData.Errors.Count > 0)
                     throw new GraphQLClientException(response);
+                if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 if (responseData.Data == null) throw new GraphQLClientException(response);
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
@@ -114,6 +140,7 @@ namespace Sdl.Web.GraphQLClient
                 responseData.Headers = response.Headers;
                 if (responseData.Errors != null && responseData.Errors.Count > 0)
                     throw new GraphQLClientException(response);
+                if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 return responseData;
             }
             catch (GraphQLClientException)
@@ -141,6 +168,7 @@ namespace Sdl.Web.GraphQLClient
                 if (responseData.Errors != null && responseData.Errors.Count > 0)
                     throw new GraphQLClientException(response);
                 if (responseData.Data == null) throw new GraphQLClientException(response);
+                if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 if (graphQLrequest.Convertors == null || graphQLrequest.Convertors.Count <= 0)
                     responseData.TypedResponseData = responseData.Data.ToObject<T>();

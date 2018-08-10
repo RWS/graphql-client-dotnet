@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}</ProjectGuid>
+    <ProjectGuid>{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sdl.Web.GraphQLClient</RootNamespace>
-    <AssemblyName>Sdl.Web.GraphQLClient</AssemblyName>
+    <RootNamespace>Sdl.Web.Core</RootNamespace>
+    <AssemblyName>Sdl.Web.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\sln\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,42 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <EmbeddedResource Include="Queries\IntrospectionQuery.graphql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Exceptions\GraphQlClientException.cs" />
-    <Compile Include="GraphQLClient.cs" />
-    <Compile Include="IGraphQLClient.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="NullLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries.cs" />
-    <Compile Include="QueryResources.cs" />
-    <Compile Include="Request\GraphQLRequest.cs" />
-    <Compile Include="Request\IGraphQLRequest.cs" />
-    <Compile Include="Response\GraphQLError.cs" />
-    <Compile Include="Response\GraphQLErrorLocation.cs" />
-    <Compile Include="Response\GraphQLExtensions.cs" />
-    <Compile Include="Response\GraphQLTypedResponse.cs" />
-    <Compile Include="Response\GraphQLResponse.cs" />
-    <Compile Include="Response\IGraphQLResponse.cs" />
-    <Compile Include="Response\IGraphQLTypedResponse.cs" />
-    <Compile Include="Schema\GraphQLSchema.cs" />
-    <Compile Include="Schema\GraphQLSchemaEnum.cs" />
-    <Compile Include="Schema\GraphQLSchemaField.cs" />
-    <Compile Include="Schema\GraphQLSchemaInterface.cs" />
-    <Compile Include="Schema\GraphQLQueryType.cs" />
-    <Compile Include="Schema\GraphQLSchemaType.cs" />
-    <Compile Include="Schema\GraphQLSchemaTypeInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sdl.Web.Core\Sdl.Web.Core.csproj">
-      <Project>{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}</Project>
-      <Name>Sdl.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj">
-      <Project>{9a31aa66-01f4-4bde-9038-682ad23926fd}</Project>
-      <Name>Sdl.Web.HttpClient</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

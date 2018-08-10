@@ -12,6 +12,7 @@ using Sdl.Web.GraphQLClient.Schema;
 using Sdl.Web.HttpClient;
 using Sdl.Web.PublicContentApi.ModelServicePlugin;
 using Sdl.Web.PublicContentApi.Utils;
+using Sdl.Web.Core;
 
 namespace Sdl.Web.PublicContentApi
 {
@@ -24,12 +25,21 @@ namespace Sdl.Web.PublicContentApi
         private readonly IGraphQLClient _client;
         private readonly IModelServicePluginApi _modelserviceApi;
         private readonly IModelServicePluginApiAsync _modelserviceApiAsync;
+        public ILogger Logger { get; } = new NullLogger();
 
         public PublicContentApi(IGraphQLClient graphQLclient)
         {
+            _client = graphQLclient;        
+            _modelserviceApi = new ModelServicePluginApiImpl(_client, Logger);
+            _modelserviceApiAsync = new ModelServicePluginApiImpl(_client, Logger);
+        }
+
+        public PublicContentApi(IGraphQLClient graphQLclient, ILogger logger)
+        {
             _client = graphQLclient;
-            _modelserviceApi = new ModelServicePluginApiImpl(_client);
-            _modelserviceApiAsync = new ModelServicePluginApiImpl(_client);
+            Logger = logger ?? new NullLogger();
+            _modelserviceApi = new ModelServicePluginApiImpl(_client, Logger);
+            _modelserviceApiAsync = new ModelServicePluginApiImpl(_client, Logger);
         }        
 
         public GraphQLSchema Schema => _client.Schema;
@@ -44,27 +54,20 @@ namespace Sdl.Web.PublicContentApi
             set { _client.Timeout = value; }
         }
 
-        public IHttpClient HttpClient => _client.HttpClient;
+        public IHttpClient HttpClient 
+            => _client.HttpClient;
 
-        public IGraphQLResponse Execute(IGraphQLRequest request)
-        {
-            return _client.Execute(request);
-        }
+        public IGraphQLResponse Execute(IGraphQLRequest request) 
+            => _client.Execute(request);
 
-        public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request)
-        {
-            return _client.Execute<T>(request);
-        }
+        public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request) 
+            => _client.Execute<T>(request);
 
-        public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
-        {
-            return await _client.ExecuteAsync(request, cancellationToken);
-        }
+        public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken) 
+            => await _client.ExecuteAsync(request, cancellationToken);
 
-        public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken)
-        {
-            return await _client.ExecuteAsync<T>(request, cancellationToken);
-        }
+        public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request, CancellationToken cancellationToken) 
+            => await _client.ExecuteAsync<T>(request, cancellationToken);
 
         #endregion
 

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.PublicContentApi.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.IQClient", "..\src\Sdl.Web.IQQuery\Sdl.Web.IQClient.csproj", "{FBB9E872-5A37-4FCC-90A8-6E09554411C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.Core", "..\src\Sdl.Web.Core\Sdl.Web.Core.csproj", "{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
