@@ -346,7 +346,7 @@ namespace Sdl.Web.PublicContentApi.ModelServicePlugin
 
         protected ClaimValue CreateClaim(DcpType dcpType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.PageIncludeRegions,
+            Uri = ModelServiceClaimUris.EntityDcpType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof(DcpType), dcpType)
         };
