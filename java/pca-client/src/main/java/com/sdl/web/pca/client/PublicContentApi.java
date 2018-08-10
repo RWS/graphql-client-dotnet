@@ -3,23 +3,23 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.sdl.web.pca.client.request.GraphQLRequest;
-import com.sdl.web.pca.client.request.IGraphQLRequest;
-import org.apache.commons.io.IOUtils;
 import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.request.GraphQLRequest;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 
 public class PublicContentApi implements IPublicContentApi {
 
-    public IGraphQLClient _client;
+    public GraphQLClient _client;
 
-    public PublicContentApi(IGraphQLClient graphQLClient) {
+    public PublicContentApi(GraphQLClient graphQLClient) {
         _client = graphQLClient;
     }
 
     private String LoadQueryFromResourcefile(String filename) throws IOException {
-        String query = IOUtils.toString(PublicContentApi.class.getClassLoader().getResourceAsStream(filename+".graphql"),"UTF-8");
+        String query = IOUtils.toString(PublicContentApi.class.getClassLoader().getResourceAsStream(filename + ".graphql"), "UTF-8");
         return query;
     }
 
@@ -44,25 +44,23 @@ public class PublicContentApi implements IPublicContentApi {
 
     public <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException {
 
-        String customMetaFilter ="";
+        String customMetaFilter = "";
         String query = LoadQueryFromResourcefile("ItemQuery");
-        query += LoadQueryFromResourcefile( "ItemFieldsFragment");
-        query += LoadQueryFromResourcefile( "CustomMetaFieldsFragment");
+        query += LoadQueryFromResourcefile("ItemFieldsFragment");
+        query += LoadQueryFromResourcefile("CustomMetaFieldsFragment");
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
-        if (filter.getItemTypes() != null)
-        {
+        if (filter.getItemTypes() != null) {
             String fragmentList = "";
-            for (ItemType itemType : filter.getItemTypes())
-            {
-                String fragment = itemType.name().substring(0,1).toUpperCase() + itemType.name().substring(1).toLowerCase()+"Fields";
-                query +=  LoadQueryFromResourcefile(fragment + "Fragment");
-                fragmentList += "..."+fragment+"\n";
+            for (ItemType itemType : filter.getItemTypes()) {
+                String fragment = itemType.name().substring(0, 1).toUpperCase() + itemType.name().substring(1).toLowerCase() + "Fields";
+                query += LoadQueryFromResourcefile(fragment + "Fragment");
+                fragmentList += "..." + fragment + "\n";
             }
             // Just a quick and easy way to replace markers in our queries with vars here.
             query = query.replace("@fragmentList", fragmentList);
-            query = query.replace("@customMetaFilter", "\""+customMetaFilter+"\"");
+            query = query.replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
         }
 
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
@@ -73,11 +71,11 @@ public class PublicContentApi implements IPublicContentApi {
         variables.put("filter", filter);
         variables.put("contextData", inputClaimValues);
 
-        IGraphQLRequest graphQLRequest =new GraphQLRequest();
+        GraphQLRequest graphQLRequest = new GraphQLRequest();
         graphQLRequest.setQuery(query);
         graphQLRequest.setVariables(variables);
 
-       String contentQuery = _client.execute(graphQLRequest);
+        String contentQuery = _client.execute(graphQLRequest);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -93,7 +91,7 @@ public class PublicContentApi implements IPublicContentApi {
         variables.put("namespaceId", page.getNamespaceId());
         variables.put("publicationId", page.getPublicationId());
 
-        IGraphQLRequest graphQLRequest =new GraphQLRequest();
+        GraphQLRequest graphQLRequest = new GraphQLRequest();
         graphQLRequest.setQuery(query);
         graphQLRequest.setVariables(variables);
 

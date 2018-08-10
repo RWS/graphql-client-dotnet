@@ -1,39 +1,23 @@
 package com.sdl.web.pca.client.exceptions;
 
-import com.sdl.web.pca.client.response.IGraphQLResponse;
-
-public class GraphQLClientException extends Exception{
-
-    public int StatusCode;
-    public IGraphQLResponse Response;
-
-    public int getStatusCode() {
-        return StatusCode;
-    }
-
-    public IGraphQLResponse getResponse() {
-        return Response;
-    }
+public class GraphQLClientException extends RuntimeException {
 
     public GraphQLClientException() {
     }
-    public GraphQLClientException(String msg) {
+
+    public GraphQLClientException(String message) {
+        super(message);
     }
-    public GraphQLClientException(String msg, Exception ex) {
+
+    public GraphQLClientException(String message, Throwable cause) {
+        super(message, cause);
     }
-    public GraphQLClientException(IGraphQLResponse response){
-        Response = response;
+
+    public GraphQLClientException(Throwable cause) {
+        super(cause);
     }
-    public GraphQLClientException(IGraphQLResponse response, String msg)
-    {
-        Response = response;
-    }
-    public GraphQLClientException(IGraphQLResponse response, String msg, Exception ex)
-    {
-        Response = response;
-    }
-    public GraphQLClientException(IGraphQLResponse response, String msg, Exception ex, int statusCode){
-        StatusCode = statusCode;
-        Response = response;
+
+    public GraphQLClientException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

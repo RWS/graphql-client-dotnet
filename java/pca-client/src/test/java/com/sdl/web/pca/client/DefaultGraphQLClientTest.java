@@ -3,7 +3,6 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.request.GraphQLRequest;
-import com.sdl.web.pca.client.request.IGraphQLRequest;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,9 +11,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 
-public class GraphQLClientTest {
+public class DefaultGraphQLClientTest {
 
-    private GraphQLClient client = null;
+    private DefaultGraphQLClient client = null;
     private Properties prop =null;
     @BeforeClass
     public static void setUp() {
@@ -24,10 +23,10 @@ public class GraphQLClientTest {
     @Test
     public void executePublicationsQuery() throws IOException {
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
 
         String query = prop.getProperty("PUBLICATION_QUERY");
         String graphQLJsonResponse = client.execute(query, 0);
@@ -36,9 +35,9 @@ public class GraphQLClientTest {
     @Test
     public void executeItemTypesQuery() throws IOException {
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
         prop.load(inputStream);
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
 
         String query = prop.getProperty("ITEMTYPES_QUERY_AND_VARIABLES");
         String graphQLJsonResponse = client.execute(query, 0);
@@ -49,11 +48,11 @@ public class GraphQLClientTest {
     public void executeItemTypesQueryUsingGraphQLRequest() throws IOException{
 
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
         prop.load(inputStream);
 
         String query = prop.getProperty("ITEMTYPES_QUERY");
-        IGraphQLRequest request = new GraphQLRequest();
+        GraphQLRequest request = new GraphQLRequest();
         request.setQuery(query);
 
         String variables = prop.getProperty("ITEMTYPES_VARIABLES");
@@ -61,7 +60,7 @@ public class GraphQLClientTest {
                 new ObjectMapper().readValue("{"+variables+"}", HashMap.class);
         request.setVariables(variablesMap);
 
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
         String responsedata = client.execute(request);
 
     }
@@ -69,10 +68,10 @@ public class GraphQLClientTest {
     @Test
     public void executePageItemQuery() throws IOException {
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
 
         PublicContentApi publicContentApi = new PublicContentApi(client);
 
@@ -90,10 +89,10 @@ public class GraphQLClientTest {
     @Test
     public void executeSiteMap() throws IOException {
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
-        client = new GraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
 
         Class<ContentQuery> dataModel = ContentQuery.class;
         PublicContentApi publicContentApi = new PublicContentApi(client);
