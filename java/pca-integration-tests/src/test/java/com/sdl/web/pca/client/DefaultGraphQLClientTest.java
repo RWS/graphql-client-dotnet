@@ -2,6 +2,8 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
+import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -103,6 +105,20 @@ public class DefaultGraphQLClientTest {
         page.setUrl("/index.html");
 
         publicContentApi.ExecuteSiteMap(page, dataModel);
+
+    }
+
+    @Test
+    public void executeGetPageModelData() throws IOException {
+        prop = new Properties();
+        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+
+        prop.load(inputStream);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+
+        PublicContentApi publicContentApi = new PublicContentApi(client);
+
+        publicContentApi.GetPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null);
 
     }
 }

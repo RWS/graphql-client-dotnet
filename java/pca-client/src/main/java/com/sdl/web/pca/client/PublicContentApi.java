@@ -4,6 +4,8 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
+import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 
@@ -19,7 +21,8 @@ public class PublicContentApi implements IPublicContentApi {
     }
 
     private String LoadQueryFromResourcefile(String filename) throws IOException {
-        String query = IOUtils.toString(PublicContentApi.class.getClassLoader().getResourceAsStream(filename + ".graphql"), "UTF-8");
+        String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/"+filename + ".graphql"), "UTF-8");
+
         return query;
     }
 
@@ -83,6 +86,44 @@ public class PublicContentApi implements IPublicContentApi {
 
         return (T) contentComponent;
     }
+
+    public <T> T GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
+
+        ContentComponent contentComponent = null;
+        try {
+            UpdateContextData(contextData, contentType, modelType, pageInclusion);
+            String query="";
+            try {
+                query = LoadQueryFromResourcefile("PageModelById");
+            }
+            catch(Exception e){
+                String s = e.getMessage();
+            }
+            HashMap<String, Object> variables = new HashMap<String, Object>();
+            variables.put("namespaceId", 1);
+            variables.put("publicationId", publicationId);
+            variables.put("pageId", pageId);
+            variables.put("contextData", contextData);
+
+            GraphQLRequest graphQLRequest = new GraphQLRequest();
+            graphQLRequest.setQuery(query);
+            graphQLRequest.setVariables(variables);
+
+            String contentQuery = _client.execute(graphQLRequest);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+
+        }catch (Exception ex){ex.printStackTrace();}
+        return  (T) contentComponent;
+    }
+
+    protected void UpdateContextData(IContextData contextData, ContentType contentType, DataModelType dataModelType, PageInclusion pageInclusion) {
+        if(contextData == null){
+            contextData = new ContextData();
+        }
+    }
+
 
     public <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException {
         String query = LoadQueryFromResourcefile("Sitemap");
