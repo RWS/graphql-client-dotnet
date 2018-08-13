@@ -125,7 +125,10 @@ public class PublicContentApi implements IPublicContentApi {
 
 
     public <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException {
-        String query = LoadQueryFromResourcefile("GetSitemap");
+        String query = LoadQueryFromResourcefile("Sitemap");
+        query += LoadQueryFromResourcefile("RecurseItems");
+        query += LoadQueryFromResourcefile("TaxonomyItemFields");
+        query += LoadQueryFromResourcefile("TaxonomyPageFields");
 
         HashMap<String, Object> variables = new HashMap<String, Object>();
         variables.put("namespaceId", page.getNamespaceId());
