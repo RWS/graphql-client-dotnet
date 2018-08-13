@@ -1,5 +1,7 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.pagemodeldata.ModelData;
+
 import java.util.Dictionary;
 
 /// <summary>
@@ -9,7 +11,7 @@ import java.util.Dictionary;
 	{
 		private String charSet;
 		private String content;
-		private Dictionary data;
+		private ModelData data;
 		private String id;
 
 		 public String getCharSet()
@@ -30,16 +32,15 @@ import java.util.Dictionary;
 			 this.content = content;
 		 }
 
-		 public Dictionary getData()
-		 {
-			 return data;
-		 }
-		 public void setData(Dictionary data)
-		 {
-			 this.data = data;
-		 }
+		public ModelData getData() {
+			return data;
+		}
 
-		 public String getId()
+		public void setData(ModelData data) {
+			this.data = data;
+		}
+
+		public String getId()
 		 {
 			 return id;
 		 }

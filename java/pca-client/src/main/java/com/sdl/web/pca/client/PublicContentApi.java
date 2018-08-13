@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class PublicContentApi implements IPublicContentApi {
 
     public GraphQLClient _client;
+    private ContentComponent  contentComponent;
 
     public PublicContentApi(GraphQLClient graphQLClient) {
         _client = graphQLClient;
@@ -22,7 +23,6 @@ public class PublicContentApi implements IPublicContentApi {
 
     private String LoadQueryFromResourcefile(String filename) throws IOException {
         String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/"+filename + ".graphql"), "UTF-8");
-
         return query;
     }
 
@@ -82,14 +82,13 @@ public class PublicContentApi implements IPublicContentApi {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ContentComponent contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+        contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
 
         return (T) contentComponent;
     }
 
     public <T> T GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
 
-        ContentComponent contentComponent = null;
         try {
             UpdateContextData(contextData, contentType, modelType, pageInclusion);
             String query="";
@@ -126,7 +125,7 @@ public class PublicContentApi implements IPublicContentApi {
 
 
     public <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException {
-        String query = LoadQueryFromResourcefile("Sitemap");
+        String query = LoadQueryFromResourcefile("GetSitemap");
 
         HashMap<String, Object> variables = new HashMap<String, Object>();
         variables.put("namespaceId", page.getNamespaceId());
@@ -144,5 +143,78 @@ public class PublicContentApi implements IPublicContentApi {
         T sitemap = objectReader.readValue(contentQuery);
 
         return sitemap;
+    }
+
+    public <T> T GetSitemap(ContentNamespace ns, int publicationId){
+
+        try {
+            String query = LoadQueryFromResourcefile("Sitemap");
+            query += LoadQueryFromResourcefile("RecurseItems");
+            query += LoadQueryFromResourcefile("TaxonomyItemFields");
+            query += LoadQueryFromResourcefile("TaxonomyPageFields");
+
+            HashMap<String, Object> variables = new HashMap<String, Object>();
+            variables.put("namespaceId", 1);
+            variables.put("publicationId", publicationId);
+
+            GraphQLRequest graphQLRequest = new GraphQLRequest();
+            graphQLRequest.setQuery(query);
+            graphQLRequest.setVariables(variables);
+
+            String contentQuery = _client.execute(graphQLRequest);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+
+        }catch (Exception ex){ex.printStackTrace();}
+        return (T) contentComponent;
+    }
+
+    public <T> T GetSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors){
+        try {
+            String query = LoadQueryFromResourcefile("SitemapSubtree");
+            query += LoadQueryFromResourcefile("TaxonomyItemFields");
+            query += LoadQueryFromResourcefile("RecurseItems");
+            query += LoadQueryFromResourcefile("TaxonomyPageFields");
+
+            HashMap<String, Object> variables = new HashMap<String, Object>();
+            variables.put("namespaceId", 1);
+            variables.put("publicationId", publicationId);
+            variables.put("taxonomyNodeId", taxonomyNodeId);
+            variables.put("includeAncestors", includeAncestors);
+
+            GraphQLRequest graphQLRequest = new GraphQLRequest();
+            graphQLRequest.setQuery(query);
+            graphQLRequest.setVariables(variables);
+
+            String contentQuery = _client.execute(graphQLRequest);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+
+        }catch (Exception ex){ex.printStackTrace();}
+        return (T) contentComponent;
+    }
+
+    public <T> T GetEntityModelData(ContentNamespace ns, int publicationId, int entityId){
+        try {
+            String query = LoadQueryFromResourcefile("EntityModelById");
+
+            HashMap<String, Object> variables = new HashMap<String, Object>();
+
+            variables.put("namespaceId", 1);
+            variables.put("publicationId", publicationId);
+            variables.put("entityId", entityId);
+
+            GraphQLRequest graphQLRequest = new GraphQLRequest();
+            graphQLRequest.setQuery(query);
+            graphQLRequest.setVariables(variables);
+
+            String contentQuery = _client.execute(graphQLRequest);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+        }catch (Exception ex){ex.printStackTrace();}
+        return (T) contentComponent;
     }
 }

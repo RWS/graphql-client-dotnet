@@ -2,14 +2,14 @@ package com.sdl.web.pca.client.contentmodel;
 
 public class ContentComponent {
 
-    private Data data;
+    private ContentQuery data;
 
-    public void setData(Data data) {
-        this.data = data;
+    public ContentQuery getData() {
+        return data;
     }
 
-    public Data getData() {
-        return data;
+    public void setData(ContentQuery data) {
+        this.data = data;
     }
 }
 

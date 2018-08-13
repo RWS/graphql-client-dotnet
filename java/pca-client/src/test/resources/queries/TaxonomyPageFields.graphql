@@ -1,0 +1,9 @@
+﻿fragment TaxonomyPageFields on PageSitemapItem {
+    id
+    title
+    originalTitle
+    url
+    type
+    publishedDate
+    visible  
+}

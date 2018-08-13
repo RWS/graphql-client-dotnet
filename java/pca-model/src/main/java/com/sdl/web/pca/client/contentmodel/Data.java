@@ -5,6 +5,7 @@ class Data {
     private Items items;
     private Publication publication;
     private BinaryComponent binaryComponent;
+    private Page page;
 
     public void setItems(Items items) {
         this.items = items;
@@ -25,5 +26,12 @@ class Data {
     }
     public BinaryComponent getBinaryComponent() {
         return binaryComponent;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+    public void setPage(Page page) {
+        this.page = page;
     }
 }

@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// Represents the type of claim value.
 /// </summary>
 /*[JsonConverter(typeof(StringEnumConverter))]*/
-enum ClaimValueType
+public enum ClaimValueType
 {
     /// <summary>
     /// A string value.

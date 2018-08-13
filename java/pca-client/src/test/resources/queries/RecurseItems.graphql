@@ -1,0 +1,11 @@
+﻿fragment RecurseItems on TaxonomySitemapItem {
+	...TaxonomyItemFields
+    items {		  
+		...on TaxonomySitemapItem {
+			...TaxonomyItemFields
+		}
+		...on PageSitemapItem {
+			...TaxonomyPageFields
+		}
+    }
+}

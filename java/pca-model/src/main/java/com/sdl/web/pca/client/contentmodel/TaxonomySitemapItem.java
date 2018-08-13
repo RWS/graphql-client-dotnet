@@ -2,7 +2,7 @@ package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
 
-class TaxonomySitemapItem implements ISitemapItem
+public class TaxonomySitemapItem implements ISitemapItem
 	{
 		private int classifiedItemsCount;
 		private String description;
