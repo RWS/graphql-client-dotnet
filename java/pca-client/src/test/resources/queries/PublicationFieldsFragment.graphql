@@ -1,6 +1,0 @@
-﻿fragment PublicationFields on Publication {
-    publicationUrl
-	publicationPath
-	multimediaPath
-	multimediaUrl         
-}

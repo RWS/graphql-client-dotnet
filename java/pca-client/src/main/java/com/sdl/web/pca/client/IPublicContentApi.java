@@ -42,4 +42,31 @@ public interface IPublicContentApi {
      * @return The GraphQL JSON string response with data and errors if any.
      */
     <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException;
+
+    /**
+     * This method can be used to execute the graphQL Sitemap querie using ContentNamespace & publicationId parameters.
+     * @param ns
+     * @param publicationId
+     * @return The GraphQL JSON string response with data and errors if any.
+     */
+    <T> T GetSitemap(ContentNamespace ns, int publicationId);
+
+    /**
+     * This method can be used to execute the graphQL Sitemap querie using ContentNamespace, publicationId, taxonomyNodeId & includeAncestors parameters.
+     * @param ns
+     * @param publicationId
+     * @param taxonomyNodeId
+     * @param includeAncestors
+     * @return The GraphQL JSON string response with data and errors if any.
+     */
+    <T> T GetSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors);
+
+    /**
+     * This method can be used to execute the graphQL EntityModelById querie using ContentNamespace, publicationId & entityId parameters.
+     * @param ns
+     * @param publicationId
+     * @param entityId
+     * @return The GraphQL JSON string response with data and errors if any.
+     */
+    <T> T GetEntityModelData(ContentNamespace ns, int publicationId, int entityId);
 }

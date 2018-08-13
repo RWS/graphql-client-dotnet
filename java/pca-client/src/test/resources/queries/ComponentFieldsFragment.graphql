@@ -1,4 +1,0 @@
-﻿fragment ComponentFields on Component {
-	schemaId
-    multiMedia  
-}

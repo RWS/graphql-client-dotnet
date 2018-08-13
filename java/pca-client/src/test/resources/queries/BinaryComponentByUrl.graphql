@@ -1,6 +1,0 @@
-﻿ query binaryComponent($namespaceId: Int! $publicationId: Int! $url: String $contextData: [InputClaimValue!]) {
-	binaryComponent(namespaceId: $namespaceId, publicationId: $publicationId, url: $url, contextData: $contextData) {
-		...ItemFields
-		...BinaryComponentFields
-	}
-}

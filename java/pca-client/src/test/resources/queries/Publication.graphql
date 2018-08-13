@@ -1,6 +1,0 @@
-﻿ query publication($namespaceId: Int! $publicationId: Int! $contextData: [InputClaimValue!]) {
-	publication(namespaceId: $namespaceId, publicationId: $publicationId, contextData: $contextData) {
-		...ItemFields
-		...PublicationFields
-	}
-}

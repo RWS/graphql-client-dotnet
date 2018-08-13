@@ -1,3 +1,0 @@
-﻿fragment StructureGroupFields on StructureGroup {
-	directory
-}
