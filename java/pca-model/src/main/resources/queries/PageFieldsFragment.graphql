@@ -1,0 +1,3 @@
+﻿fragment PageFields on Page {
+	url
+}

@@ -9,3 +9,6 @@ CoverageReports/
 *.vspx
 *.psess
 *.nupkg
+*.iml
+target/
+.idea/
