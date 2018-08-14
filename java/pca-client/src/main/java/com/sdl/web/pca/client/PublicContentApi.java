@@ -7,6 +7,8 @@ import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.response.GraphQLResponse;
+import com.sdl.web.pca.client.response.IGraphQLResponse;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -14,8 +16,8 @@ import java.util.HashMap;
 
 public class PublicContentApi implements IPublicContentApi {
 
-    public GraphQLClient _client;
-    private ContentComponent  contentComponent;
+    private GraphQLClient _client;
+    private IGraphQLResponse graphQLResponse;
 
     public PublicContentApi(GraphQLClient graphQLClient) {
         _client = graphQLClient;
@@ -26,7 +28,7 @@ public class PublicContentApi implements IPublicContentApi {
         return query;
     }
 
-    public <T> T GetPageModelData(Page page, Class<T> model) throws IOException {
+    public <T> T GetPageModelData(Page page, Class<T> model) {
         /*String query = graphQLQueries.LoadItems();
 
         dictionary.put("namespaceId", page.getNamespaceId());
@@ -68,7 +70,7 @@ public class PublicContentApi implements IPublicContentApi {
 
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
-        HashMap<String, Object> variables = new HashMap<String, Object>();
+        HashMap<String, Object> variables = new HashMap<>();
         variables.put("first", pagination.getFirst());
         variables.put("after", pagination.getAfter());
         variables.put("filter", filter);
@@ -82,10 +84,11 @@ public class PublicContentApi implements IPublicContentApi {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+        graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
 
-        return (T) contentComponent;
+        return (T) graphQLResponse;
     }
+
 
     public <T> T GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
 
@@ -98,7 +101,7 @@ public class PublicContentApi implements IPublicContentApi {
             catch(Exception e){
                 String s = e.getMessage();
             }
-            HashMap<String, Object> variables = new HashMap<String, Object>();
+            HashMap<String, Object> variables = new HashMap<>();
             variables.put("namespaceId", 1);
             variables.put("publicationId", publicationId);
             variables.put("pageId", pageId);
@@ -111,10 +114,10 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
 
         }catch (Exception ex){ex.printStackTrace();}
-        return  (T) contentComponent;
+        return  (T) graphQLResponse;
     }
 
     protected void UpdateContextData(IContextData contextData, ContentType contentType, DataModelType dataModelType, PageInclusion pageInclusion) {
@@ -130,7 +133,7 @@ public class PublicContentApi implements IPublicContentApi {
         query += LoadQueryFromResourcefile("TaxonomyItemFields");
         query += LoadQueryFromResourcefile("TaxonomyPageFields");
 
-        HashMap<String, Object> variables = new HashMap<String, Object>();
+        HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", page.getNamespaceId());
         variables.put("publicationId", page.getPublicationId());
 
@@ -156,7 +159,7 @@ public class PublicContentApi implements IPublicContentApi {
             query += LoadQueryFromResourcefile("TaxonomyItemFields");
             query += LoadQueryFromResourcefile("TaxonomyPageFields");
 
-            HashMap<String, Object> variables = new HashMap<String, Object>();
+            HashMap<String, Object> variables = new HashMap<>();
             variables.put("namespaceId", 1);
             variables.put("publicationId", publicationId);
 
@@ -167,10 +170,10 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
 
         }catch (Exception ex){ex.printStackTrace();}
-        return (T) contentComponent;
+        return (T) graphQLResponse;
     }
 
     public <T> T GetSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors){
@@ -180,7 +183,7 @@ public class PublicContentApi implements IPublicContentApi {
             query += LoadQueryFromResourcefile("RecurseItems");
             query += LoadQueryFromResourcefile("TaxonomyPageFields");
 
-            HashMap<String, Object> variables = new HashMap<String, Object>();
+            HashMap<String, Object> variables = new HashMap<>();
             variables.put("namespaceId", 1);
             variables.put("publicationId", publicationId);
             variables.put("taxonomyNodeId", taxonomyNodeId);
@@ -193,17 +196,17 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
 
         }catch (Exception ex){ex.printStackTrace();}
-        return (T) contentComponent;
+        return (T) graphQLResponse;
     }
 
     public <T> T GetEntityModelData(ContentNamespace ns, int publicationId, int entityId){
         try {
             String query = LoadQueryFromResourcefile("EntityModelById");
 
-            HashMap<String, Object> variables = new HashMap<String, Object>();
+            HashMap<String, Object> variables = new HashMap<>();
 
             variables.put("namespaceId", 1);
             variables.put("publicationId", publicationId);
@@ -216,8 +219,8 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            contentComponent = objectMapper.readValue(contentQuery, ContentComponent.class);
+            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
         }catch (Exception ex){ex.printStackTrace();}
-        return (T) contentComponent;
+        return (T) graphQLResponse;
     }
 }

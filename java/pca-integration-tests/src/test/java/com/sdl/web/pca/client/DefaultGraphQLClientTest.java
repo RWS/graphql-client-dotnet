@@ -82,7 +82,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        publicContentApi.ExecuteItemQuery(filter, pagination);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        publicContentApi.ExecuteItemQuery(filter, pagination);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        publicContentApi.ExecuteItemQuery(filter, pagination);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        publicContentApi.ExecuteItemQuery(filter, pagination);
     }
 
     @Test
