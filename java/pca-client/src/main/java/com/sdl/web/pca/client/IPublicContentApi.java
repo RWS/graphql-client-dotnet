@@ -24,7 +24,7 @@ public interface IPublicContentApi {
      * @param contextData specify the context data.
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData);
+    <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData, Class<T> clazz);
 
     /**
      * This method can be used to execute the graphQL ItemQuery querie using InputItemFilter & Pagination parameters.
@@ -32,7 +32,7 @@ public interface IPublicContentApi {
      * @param pagination
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T executeItemQuery(InputItemFilter filter, IPagination pagination) throws GraphQLClientException, IOException;
+    <T> T executeItemQuery(InputItemFilter filter, IPagination pagination, Class<T> clazz) throws GraphQLClientException, IOException;
 
     /**
      * This method can be used to execute the graphQL Sitemap querie using Page & Class model parameters.
@@ -48,7 +48,7 @@ public interface IPublicContentApi {
      * @param publicationId
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T getSitemap(ContentNamespace ns, int publicationId);
+    <T> T getSitemap(ContentNamespace ns, int publicationId, Class<T> clazz);
 
     /**
      * This method can be used to execute the graphQL Sitemap querie using ContentNamespace, publicationId, taxonomyNodeId & includeAncestors parameters.
@@ -58,7 +58,7 @@ public interface IPublicContentApi {
      * @param includeAncestors
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors);
+    <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors, Class<T> clazz);
 
     /**
      * This method can be used to execute the graphQL EntityModelById querie using ContentNamespace, publicationId & entityId parameters.
@@ -67,5 +67,5 @@ public interface IPublicContentApi {
      * @param entityId
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId);
+    <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId, Class<T> clazz);
 }

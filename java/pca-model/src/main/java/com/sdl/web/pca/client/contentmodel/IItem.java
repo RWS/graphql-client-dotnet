@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 	/// Represents an item. The root of all content models.
 	/// </summary>
-	interface IItem
+	public interface IItem
 	{
 		String creationDate = null;
 		CustomMetaConnection customMetas = null;

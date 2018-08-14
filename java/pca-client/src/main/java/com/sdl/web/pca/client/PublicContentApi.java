@@ -8,8 +8,6 @@ import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exceptions.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
-import com.sdl.web.pca.client.response.GraphQLResponse;
-import com.sdl.web.pca.client.response.IGraphQLResponse;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -18,42 +16,22 @@ import java.util.HashMap;
 public class PublicContentApi implements IPublicContentApi {
 
     private GraphQLClient _client;
-    private IGraphQLResponse graphQLResponse;
 
     public PublicContentApi(GraphQLClient graphQLClient) {
         _client = graphQLClient;
     }
 
-    private String LoadQueryFromResourcefile(String filename) throws IOException {
+    private String loadQueryFromResourcefile(String filename) throws IOException {
         String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/" + filename + ".graphql"), "UTF-8");
         return query;
     }
 
-    public <T> T GetPageModelData(Page page, Class<T> model) {
-        /*String query = graphQLQueries.LoadItems();
-
-        dictionary.put("namespaceId", page.getNamespaceId());
-        dictionary.put("publicationId", page.getPublicationId());
-        dictionary.put("url", page.getUrl());
-
-        graphQLRequest.setQuery(query);
-        graphQLRequest.setVariables(dictionary);
-
-        String contentQuery = _client.Execute(graphQLRequest);
-
-        T pageModelData = objectMapper.readValue(contentQuery, model);
-
-        return pageModelData;*/
-        return null;
-    }
-
-
-    public <T> T executeItemQuery(InputItemFilter filter, IPagination pagination) throws GraphQLClientException, IOException {
+    public <T> T executeItemQuery(InputItemFilter filter, IPagination pagination, Class<T> clazz) throws GraphQLClientException, IOException {
 
         String customMetaFilter = "";
-        String query = LoadQueryFromResourcefile("ItemQuery");
-        query += LoadQueryFromResourcefile("ItemFieldsFragment");
-        query += LoadQueryFromResourcefile("CustomMetaFieldsFragment");
+        String query = loadQueryFromResourcefile("ItemQuery");
+        query += loadQueryFromResourcefile("ItemFieldsFragment");
+        query += loadQueryFromResourcefile("CustomMetaFieldsFragment");
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
@@ -61,7 +39,7 @@ public class PublicContentApi implements IPublicContentApi {
             String fragmentList = "";
             for (ItemType itemType : filter.getItemTypes()) {
                 String fragment = itemType.name().substring(0, 1).toUpperCase() + itemType.name().substring(1).toLowerCase() + "Fields";
-                query += LoadQueryFromResourcefile(fragment + "Fragment");
+                query += loadQueryFromResourcefile(fragment + "Fragment");
                 fragmentList += "..." + fragment + "\n";
             }
             // Just a quick and easy way to replace markers in our queries with vars here.
@@ -85,19 +63,17 @@ public class PublicContentApi implements IPublicContentApi {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
-
-        return (T) graphQLResponse;
+        return objectMapper.readValue(contentQuery, clazz);
     }
 
 
-    public <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
+    public <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData, Class<T> clazz) {
 
         try {
-            UpdateContextData(contextData, contentType, modelType, pageInclusion);
+            updateContextData(contextData, contentType, modelType, pageInclusion);
             String query = "";
             try {
-                query = LoadQueryFromResourcefile("PageModelById");
+                query = loadQueryFromResourcefile("PageModelById");
             } catch (Exception e) {
                 String s = e.getMessage();
             }
@@ -114,15 +90,14 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return (T) graphQLResponse;
     }
 
-    protected void UpdateContextData(IContextData contextData, ContentType contentType, DataModelType dataModelType, PageInclusion pageInclusion) {
+    protected void updateContextData(IContextData contextData, ContentType contentType, DataModelType dataModelType, PageInclusion pageInclusion) {
         if (contextData == null) {
             contextData = new ContextData();
         }
@@ -130,10 +105,10 @@ public class PublicContentApi implements IPublicContentApi {
 
 
     public <T> T executeSiteMap(Page page, Class<T> model) throws IOException, GraphQLClientException {
-        String query = LoadQueryFromResourcefile("Sitemap");
-        query += LoadQueryFromResourcefile("RecurseItems");
-        query += LoadQueryFromResourcefile("TaxonomyItemFields");
-        query += LoadQueryFromResourcefile("TaxonomyPageFields");
+        String query = loadQueryFromResourcefile("Sitemap");
+        query += loadQueryFromResourcefile("RecurseItems");
+        query += loadQueryFromResourcefile("TaxonomyItemFields");
+        query += loadQueryFromResourcefile("TaxonomyPageFields");
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", page.getNamespaceId());
@@ -153,13 +128,13 @@ public class PublicContentApi implements IPublicContentApi {
         return sitemap;
     }
 
-    public <T> T getSitemap(ContentNamespace ns, int publicationId) {
+    public <T> T getSitemap(ContentNamespace ns, int publicationId, Class<T> clazz) {
 
         try {
-            String query = LoadQueryFromResourcefile("Sitemap");
-            query += LoadQueryFromResourcefile("RecurseItems");
-            query += LoadQueryFromResourcefile("TaxonomyItemFields");
-            query += LoadQueryFromResourcefile("TaxonomyPageFields");
+            String query = loadQueryFromResourcefile("Sitemap");
+            query += loadQueryFromResourcefile("RecurseItems");
+            query += loadQueryFromResourcefile("TaxonomyItemFields");
+            query += loadQueryFromResourcefile("TaxonomyPageFields");
 
             HashMap<String, Object> variables = new HashMap<>();
             variables.put("namespaceId", 1);
@@ -172,20 +147,19 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return (T) graphQLResponse;
     }
 
-    public <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors) {
+    public <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors, Class<T> clazz) {
         try {
-            String query = LoadQueryFromResourcefile("SitemapSubtree");
-            query += LoadQueryFromResourcefile("TaxonomyItemFields");
-            query += LoadQueryFromResourcefile("RecurseItems");
-            query += LoadQueryFromResourcefile("TaxonomyPageFields");
+            String query = loadQueryFromResourcefile("SitemapSubtree");
+            query += loadQueryFromResourcefile("TaxonomyItemFields");
+            query += loadQueryFromResourcefile("RecurseItems");
+            query += loadQueryFromResourcefile("TaxonomyPageFields");
 
             HashMap<String, Object> variables = new HashMap<>();
             variables.put("namespaceId", 1);
@@ -200,17 +174,16 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return (T) graphQLResponse;
     }
 
-    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId) {
+    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId, Class<T> clazz) {
         try {
-            String query = LoadQueryFromResourcefile("EntityModelById");
+            String query = loadQueryFromResourcefile("EntityModelById");
 
             HashMap<String, Object> variables = new HashMap<>();
 
@@ -225,10 +198,9 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            graphQLResponse = objectMapper.readValue(contentQuery, GraphQLResponse.class);
+            return objectMapper.readValue(contentQuery, clazz);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return (T) graphQLResponse;
     }
 }

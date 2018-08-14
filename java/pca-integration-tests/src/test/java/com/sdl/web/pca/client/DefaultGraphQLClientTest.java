@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.pagemodeldata.Sitemapkeyword;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.junit.After;
 import org.junit.Before;
@@ -83,7 +84,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
+        IContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination, IContentComponent.class);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
+        IContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination, IContentComponent.class);
     }
 
     @Test
@@ -111,7 +112,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
+        IContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination, IContentComponent.class);
     }
 
     @Test
@@ -125,7 +126,7 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
+        IContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination, IContentComponent.class);
     }
 
     @Test
@@ -141,22 +142,22 @@ public class DefaultGraphQLClientTest {
 
     @Test
     public void executeGetPageModelData() {
-        publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null);
+        publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, Page.class);
     }
 
     @Test
     public void executeGetSitemap() {
-        publicContentApi.getSitemap(ContentNamespace.Sites, 7);
+        publicContentApi.getSitemap(ContentNamespace.Sites, 7, Sitemapkeyword.class);
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true);
+        publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, Sitemapkeyword.class);
     }
 
     @Test
     public void executeGetEntityModelData() {
-        publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1);
+        publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, IItem.class);
     }
 
     @After

@@ -5,7 +5,7 @@ import java.util.List;
 /// <summary>
 	/// Represents a component which has content.
 	/// </summary>
-	interface IContentComponent
+	public interface IContentComponent
 	{
 		String creationDate = null;
 		CustomMetaConnection customMetas = null;
