@@ -1,11 +1,10 @@
 package com.sdl.web.pca.client;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sdl.web.pca.client.exceptions.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -13,23 +12,28 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class DefaultGraphQLClient implements GraphQLClient {
+    private static final Logger LOG = getLogger(DefaultGraphQLClient.class);
 
     private CloseableHttpClient httpClient;
     private String endpoint;
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> defaultHeaders = new HashMap<>();
 
-    public DefaultGraphQLClient(String endpoint, Map<String, String> headers) {
+    public DefaultGraphQLClient(String endpoint, Map<String, String> defaultHeaders) {
         this.httpClient = HttpClients.createDefault();
         this.endpoint = endpoint;
-        if (headers != null) {
-            this.headers.putAll(headers);
+        if (defaultHeaders != null) {
+            this.defaultHeaders.putAll(defaultHeaders);
         }
     }
 
@@ -40,8 +44,12 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
     @Override
     public String execute(String jsonEntity, int timeout) throws GraphQLClientException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Requested entity: {}" + jsonEntity);
+        }
+
         HttpPost httpPost = new HttpPost(endpoint);
-        headers.forEach((key, value) -> httpPost.addHeader(key, value));
+        defaultHeaders.forEach((key, value) -> httpPost.addHeader(key, value));
 
         if (timeout > 0) {
             RequestConfig params = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
@@ -50,32 +58,39 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
         StringEntity entity = new StringEntity(jsonEntity, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
-//TODO add logging
+
         //Execute and get the response.
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             InputStream contentStream = response.getEntity().getContent();
 
             String contentString = IOUtils.toString(contentStream, "UTF-8");
 
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new GraphQLClientException("Response code is '" + response.getStatusLine().getStatusCode() +
+            if (response.getStatusLine().getStatusCode() != SC_OK) {
+                LOG.error("Response code is '" + response.getStatusLine().getStatusCode() +
                         "'. The response message: " + contentString);
+                throw new GraphQLClientException("Unable to retrieve requested entity");
+            }
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Returned message: {}", contentString);
             }
             return contentString;
-        } catch (ClientProtocolException e) {
-            throw new GraphQLClientException("Client Protocol Exception", e);
         } catch (IOException e) {
-            throw new GraphQLClientException("IOException", e);
+            throw new GraphQLClientException("Exception during requesting entity: " + jsonEntity, e);
         }
     }
 
     @Override
     public String execute(GraphQLRequest request) throws GraphQLClientException {
-        JsonObject body = new JsonObject();
-        body.addProperty("query", request.getQuery());
-        body.add("variables", new Gson().toJsonTree(request.getVariables()));
+        ObjectMapper mapper = new ObjectMapper();
 
-        return execute(body.toString(), request.getTimeout());
+        ObjectNode jsonObject = mapper.createObjectNode();
+        jsonObject.put("query", request.getQuery());
+        jsonObject.set("variables", mapper.valueToTree(request.getVariables()));
+        return execute(jsonObject.toString(), request.getTimeout());
+    }
 
+    public void setHttpClient(CloseableHttpClient httpClient) {
+        this.httpClient = httpClient;
     }
 }
