@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
@@ -20,27 +20,28 @@ import static org.junit.Assert.assertNull;
 public class DefaultGraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
-    private Properties prop =null;
+    private Properties prop = null;
     private PublicContentApi publicContentApi;
+
     @BeforeClass
     public static void setUp() {
 
     }
 
     @Before
-    public void before() throws IOException {
+    public void before() throws Exception {
 
         prop = new Properties();
         InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
-        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
 
         publicContentApi = new PublicContentApi(client);
     }
 
     @Test
-    public void executePublicationsQuery() throws IOException {
+    public void executePublicationsQuery() throws Exception {
 
         String query = prop.getProperty("PUBLICATION_QUERY");
         String graphQLJsonResponse = client.execute(query, 0);
@@ -48,31 +49,31 @@ public class DefaultGraphQLClientTest {
 
 
     @Test
-    public void executeItemTypesQuery() throws IOException {
+    public void executeItemTypesQuery() throws Exception {
 
         String query = prop.getProperty("ITEMTYPES_QUERY_AND_VARIABLES");
         String graphQLJsonResponse = client.execute(query, 0);
     }
 
     @Test
-    public void executeItemTypesQueryUsingGraphQLRequest() throws IOException{
+    public void executeItemTypesQueryUsingGraphQLRequest() throws Exception {
 
         String query = prop.getProperty("ITEMTYPES_QUERY");
         GraphQLRequest request = new GraphQLRequest();
         request.setQuery(query);
 
         String variables = prop.getProperty("ITEMTYPES_VARIABLES");
-        HashMap<String,Object> variablesMap =
-                new ObjectMapper().readValue("{"+variables+"}", HashMap.class);
+        HashMap<String, Object> variablesMap =
+                new ObjectMapper().readValue("{" + variables + "}", HashMap.class);
         request.setVariables(variablesMap);
 
-        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"),null);
+        client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
         String responsedata = client.execute(request);
 
     }
 
     @Test
-    public void executePageItemQuery() throws IOException {
+    public void executePageItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(1));
@@ -82,11 +83,11 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
     }
 
     @Test
-    public void executeComponentItemQuery() throws IOException {
+    public void executeComponentItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(1));
@@ -96,11 +97,11 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
     }
 
     @Test
-    public void executeKeywordItemQuery() throws IOException {
+    public void executeKeywordItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(1));
@@ -110,11 +111,11 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
     }
 
     @Test
-    public void executePublicationItemQuery() throws IOException {
+    public void executePublicationItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(1));
@@ -124,42 +125,42 @@ public class DefaultGraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentComponent contentComponent = publicContentApi.ExecuteItemQuery(filter, pagination);
+        ContentComponent contentComponent = publicContentApi.executeItemQuery(filter, pagination);
     }
 
     @Test
-    public void executeSiteMap() throws IOException {
+    public void executeSiteMap() throws Exception {
         Class<ContentQuery> dataModel = ContentQuery.class;
 
-        Page page=new Page();
+        Page page = new Page();
         page.setNamespaceId(1);
         page.setPublicationId(5);
-        publicContentApi.ExecuteSiteMap(page, dataModel);
+        publicContentApi.executeSiteMap(page, dataModel);
 
     }
 
     @Test
-    public void executeGetPageModelData() throws IOException {
-        publicContentApi.GetPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null);
+    public void executeGetPageModelData() {
+        publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null);
     }
 
     @Test
-    public void executeGetSitemap() throws IOException {
-        publicContentApi.GetSitemap(ContentNamespace.Sites, 7);
+    public void executeGetSitemap() {
+        publicContentApi.getSitemap(ContentNamespace.Sites, 7);
     }
 
     @Test
-    public void executeGetSitemapSubtree(){
-        publicContentApi.GetSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true);
+    public void executeGetSitemapSubtree() {
+        publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true);
     }
 
     @Test
-    public void executeGetEntityModelData(){
-        publicContentApi.GetEntityModelData(ContentNamespace.Sites, 5,  1);
+    public void executeGetEntityModelData() {
+        publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1);
     }
 
     @After
-    public void after()throws Exception{
+    public void after() {
         publicContentApi = null;
         assertNull(publicContentApi);
     }

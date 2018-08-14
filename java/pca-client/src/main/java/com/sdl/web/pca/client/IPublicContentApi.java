@@ -3,13 +3,12 @@ package com.sdl.web.pca.client;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.exceptions.GraphQLClientException;
 
 import java.io.IOException;
 
 /**
  * This interface enables java clients to connect to the GraphQL Service
- * @author
- * @version 1.0.0
  */
 public interface IPublicContentApi {
 
@@ -25,7 +24,7 @@ public interface IPublicContentApi {
      * @param contextData specify the context data.
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData);
+    <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData);
 
     /**
      * This method can be used to execute the graphQL ItemQuery querie using InputItemFilter & Pagination parameters.
@@ -33,7 +32,7 @@ public interface IPublicContentApi {
      * @param pagination
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException;
+    <T> T executeItemQuery(InputItemFilter filter, IPagination pagination) throws GraphQLClientException, IOException;
 
     /**
      * This method can be used to execute the graphQL Sitemap querie using Page & Class model parameters.
@@ -41,7 +40,7 @@ public interface IPublicContentApi {
      * @param model
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException;
+    <T> T executeSiteMap(Page page, Class<T> model) throws GraphQLClientException, IOException;
 
     /**
      * This method can be used to execute the graphQL Sitemap querie using ContentNamespace & publicationId parameters.
@@ -49,7 +48,7 @@ public interface IPublicContentApi {
      * @param publicationId
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T GetSitemap(ContentNamespace ns, int publicationId);
+    <T> T getSitemap(ContentNamespace ns, int publicationId);
 
     /**
      * This method can be used to execute the graphQL Sitemap querie using ContentNamespace, publicationId, taxonomyNodeId & includeAncestors parameters.
@@ -59,7 +58,7 @@ public interface IPublicContentApi {
      * @param includeAncestors
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T GetSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors);
+    <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors);
 
     /**
      * This method can be used to execute the graphQL EntityModelById querie using ContentNamespace, publicationId & entityId parameters.
@@ -68,5 +67,5 @@ public interface IPublicContentApi {
      * @param entityId
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T GetEntityModelData(ContentNamespace ns, int publicationId, int entityId);
+    <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId);
 }

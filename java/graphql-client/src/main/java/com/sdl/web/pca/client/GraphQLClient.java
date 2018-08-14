@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.sdl.web.pca.client.exceptions.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public interface GraphQLClient {
      * @param timeout    specify the timeout period in milliseconds
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    String execute(String jsonEntity, int timeout) throws IOException;
+    String execute(String jsonEntity, int timeout) throws GraphQLClientException;
 
     /**
      * This method can be used to execute the graphQL queries with no timeout.
@@ -24,7 +25,7 @@ public interface GraphQLClient {
      * @param jsonEntity graphql query which needs to be executed against the graphql server
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    String execute(String jsonEntity) throws IOException;
+    String execute(String jsonEntity) throws GraphQLClientException;
 
     /**
      * This method can be used to execute the GraphQL queries against the GraphQL server for the GraphQLRequest parameter
@@ -33,5 +34,5 @@ public interface GraphQLClient {
      * @return The GraphQL JSON string response with data and errors if any.
      * @throws IOException
      */
-    String execute(GraphQLRequest request) throws IOException;
+    String execute(GraphQLRequest request) throws GraphQLClientException;
 }

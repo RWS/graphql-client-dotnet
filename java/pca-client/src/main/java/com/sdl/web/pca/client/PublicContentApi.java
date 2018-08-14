@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.exceptions.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 
@@ -45,7 +46,7 @@ public class PublicContentApi implements IPublicContentApi {
     }
 
 
-    public <T> T ExecuteItemQuery(InputItemFilter filter, IPagination pagination) throws IOException {
+    public <T> T executeItemQuery(InputItemFilter filter, IPagination pagination) throws GraphQLClientException, IOException {
 
         String customMetaFilter = "";
         String query = LoadQueryFromResourcefile("ItemQuery");
@@ -87,7 +88,7 @@ public class PublicContentApi implements IPublicContentApi {
         return (T) contentComponent;
     }
 
-    public <T> T GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
+    public <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, boolean renderContent, IContextData contextData) {
 
         try {
             UpdateContextData(contextData, contentType, modelType, pageInclusion);
@@ -124,7 +125,7 @@ public class PublicContentApi implements IPublicContentApi {
     }
 
 
-    public <T> T ExecuteSiteMap(Page page, Class<T> model) throws IOException {
+    public <T> T executeSiteMap(Page page, Class<T> model) throws IOException, GraphQLClientException {
         String query = LoadQueryFromResourcefile("Sitemap");
         query += LoadQueryFromResourcefile("RecurseItems");
         query += LoadQueryFromResourcefile("TaxonomyItemFields");
@@ -148,7 +149,7 @@ public class PublicContentApi implements IPublicContentApi {
         return sitemap;
     }
 
-    public <T> T GetSitemap(ContentNamespace ns, int publicationId){
+    public <T> T getSitemap(ContentNamespace ns, int publicationId){
 
         try {
             String query = LoadQueryFromResourcefile("Sitemap");
@@ -173,7 +174,7 @@ public class PublicContentApi implements IPublicContentApi {
         return (T) contentComponent;
     }
 
-    public <T> T GetSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors){
+    public <T> T getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId, boolean includeAncestors){
         try {
             String query = LoadQueryFromResourcefile("SitemapSubtree");
             query += LoadQueryFromResourcefile("TaxonomyItemFields");
@@ -199,7 +200,7 @@ public class PublicContentApi implements IPublicContentApi {
         return (T) contentComponent;
     }
 
-    public <T> T GetEntityModelData(ContentNamespace ns, int publicationId, int entityId){
+    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId){
         try {
             String query = LoadQueryFromResourcefile("EntityModelById");
 

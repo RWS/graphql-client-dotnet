@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.exceptions;
 
-public class GraphQLClientException extends RuntimeException {
+public class GraphQLClientException extends Exception {
 
     public GraphQLClientException() {
     }
