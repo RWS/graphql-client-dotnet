@@ -88,13 +88,17 @@ public class Program {
             {
                 e.getStackTrace();
             }
-            //GenerateSchemaClasses(schema, ns, outputFile);
         }
     }
 
     static void GenerateSchemaClasses(GraphQLSchema schema, String ns, String outputFile) throws IOException {
 
         for (GraphQLSchemaType type : schema.types){
+            if(type.name==null || type.name.startsWith("__"))
+                continue;
+            if (type.kind.equalsIgnoreCase("SCALAR"))
+                continue;
+
             StringBuilder sb = new StringBuilder();
             sb = EmitHeader(sb, ns);
             StringBuilder sbuilder = GenerateClass(sb, schema, type, 1);
@@ -103,8 +107,6 @@ public class Program {
     }
 
     static void createJavaFile(GraphQLSchemaType type, StringBuilder sb, String outputFilePath) throws IOException {
-        if(type.name==null)
-            return;
         File file = new File(outputFilePath+type.name+".java");
         if(file.exists())
             file.delete();
@@ -139,17 +141,17 @@ public class Program {
     static StringBuilder GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount)
     {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
-        if (type.name.startsWith("__")) return sb;
-        if (type.kind.equalsIgnoreCase("SCALAR")) return sb;
+
         EmitComment(sb, type.description, indentCount);
         if (type.kind.equalsIgnoreCase("ENUM"))
         {
             sb.append(indentString);
             //sb.append([JsonConverter(typeof(StringEnumConverter))]");
         }
-        sb.append(indentString);
+
         sb.append("public class "+type.name);
         sb.append("{");
+        sb.append("\n");
         /* if (type.Interfaces != null && type.Interfaces.Count > 0)
         {
             sb.Append(" : ");
@@ -243,7 +245,10 @@ public class Program {
     static StringBuilder EmitHeader( StringBuilder sb, String ns)
     {
         Formatter fmt = new Formatter(sb);
-        fmt.format("package %s%n", ns);
+        fmt.format("package %s", ns);
+        sb.append(";");
+        sb.append("\n");
+        sb.append("\n");
         return sb;
     }
 
