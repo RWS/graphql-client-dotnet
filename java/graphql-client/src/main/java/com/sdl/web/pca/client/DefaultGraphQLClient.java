@@ -28,7 +28,9 @@ public class DefaultGraphQLClient implements GraphQLClient {
     public DefaultGraphQLClient(String endpoint, Map<String, String> headers) {
         this.httpClient = HttpClients.createDefault();
         this.endpoint = endpoint;
-        this.headers.putAll(headers);
+        if (headers != null) {
+            this.headers.putAll(headers);
+        }
     }
 
     @Override
