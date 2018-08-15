@@ -100,7 +100,7 @@ public class Program {
                 continue;
 
             StringBuilder sb = new StringBuilder();
-            sb = EmitHeader(sb, ns);
+            EmitPackage(sb, ns);
             StringBuilder sbuilder = GenerateClass(sb, schema, type, 1);
             createJavaFile(type, sbuilder,outputFile);
         }
@@ -135,19 +135,13 @@ public class Program {
         sb.append(indentString);
         sb.append("*/");
         sb.append("\n");
-        sb.append("\n");
     }
 
     static StringBuilder GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount)
     {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
 
-        EmitComment(sb, type.description, indentCount);
-        if (type.kind.equalsIgnoreCase("ENUM"))
-        {
-            sb.append(indentString);
-            //sb.append([JsonConverter(typeof(StringEnumConverter))]");
-        }
+        EmitComment(sb, type.description, indentCount-1);
 
         sb.append("public class "+type.name);
         sb.append("{");
@@ -193,18 +187,16 @@ public class Program {
 
     static void EmitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic)
     {
-        String indentString = new String(new char[indentCount]).replace("\0", "\t");
         if (fields == null) return;
+        String indentString = new String(new char[indentCount]).replace("\0", "\t");
         for (GraphQLSchemaField field : fields)
         {
-            sb.append(indentString);
             sb.append("\n");
             field.type = RemapFieldType(field);
-            sb.append(indentString);
-            sb.append("\n");
             if(field.type.name !=null) {
-                String lowercaseFirstLetter = field.type.name.substring(0, 1).toLowerCase();
-                sb.append("public " + field.type.name + " " + lowercaseFirstLetter + field.type.name.substring(1) + ";");
+                sb.append(indentString);
+                sb.append("public " + field.type.name + " " + field.name + ";");
+                sb.append("\n");
             }
         }
     }
@@ -242,7 +234,7 @@ public class Program {
         }
     }
 
-    static StringBuilder EmitHeader( StringBuilder sb, String ns)
+    static StringBuilder EmitPackage( StringBuilder sb, String ns)
     {
         Formatter fmt = new Formatter(sb);
         fmt.format("package %s", ns);
