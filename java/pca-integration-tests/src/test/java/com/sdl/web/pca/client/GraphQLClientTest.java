@@ -6,14 +6,12 @@ import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.pagemodeldata.Sitemapkeyword;
 import com.sdl.web.pca.client.request.GraphQLRequest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertNull;
@@ -45,7 +43,9 @@ public class GraphQLClientTest {
     public void executePublicationsQuery() throws Exception {
 
         String query = prop.getProperty("PUBLICATION_QUERY");
-        String graphQLJsonResponse = client.execute(query, 0);
+        GraphQLResponse graphQLJsonResponse = client.execute(query, 0);
+        List<GraphQLError> errors =  graphQLJsonResponse.getErrors();
+        Assert.assertEquals(null,errors);
     }
 
 
@@ -53,7 +53,9 @@ public class GraphQLClientTest {
     public void executeItemTypesQuery() throws Exception {
 
         String query = prop.getProperty("ITEMTYPES_QUERY_AND_VARIABLES");
-        String graphQLJsonResponse = client.execute(query, 0);
+        GraphQLResponse graphQLJsonResponse = client.execute(query, 0);
+        List<GraphQLError> errors =  graphQLJsonResponse.getErrors();
+        Assert.assertEquals(null,errors);
     }
 
     @Test
@@ -69,8 +71,9 @@ public class GraphQLClientTest {
         request.setVariables(variablesMap);
 
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
-        String responsedata = client.execute(request);
-
+        GraphQLResponse responsedata = client.execute(request);
+        List<GraphQLError> errors =  responsedata.getErrors();
+        Assert.assertEquals(null,errors);
     }
 
     @Test
