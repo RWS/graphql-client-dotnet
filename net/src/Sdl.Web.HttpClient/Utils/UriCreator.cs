@@ -55,7 +55,7 @@ namespace Sdl.Web.HttpClient.Utils
         {
             string a = (path1 ?? string.Empty).TrimEnd('/');
             string b = (path2 ?? string.Empty).TrimStart('/');
-            return $"{a}/{b}";
+            return !string.IsNullOrEmpty(b) ? $"{a}/{b}" : a;
         }
     }
 }
