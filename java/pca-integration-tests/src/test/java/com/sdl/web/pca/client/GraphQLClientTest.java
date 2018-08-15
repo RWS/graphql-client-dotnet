@@ -18,7 +18,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertNull;
 
-public class DefaultGraphQLClientTest {
+public class GraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
     private Properties prop = null;
@@ -33,7 +33,7 @@ public class DefaultGraphQLClientTest {
     public void before() throws Exception {
 
         prop = new Properties();
-        InputStream inputStream = DefaultGraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
