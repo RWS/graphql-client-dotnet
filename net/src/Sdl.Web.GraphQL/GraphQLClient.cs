@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.HttpClient;
@@ -18,46 +17,39 @@ namespace Sdl.Web.GraphQLClient
     public class GraphQLClient : IGraphQLClient
     {
         protected readonly IHttpClient _httpClient;
-        protected readonly IAuthentication _auth;
         public ILogger Logger { get; } = new NullLogger();
 
         public GraphQLClient(string endpoint, IAuthentication auth = null)
         {
-            _httpClient = new HttpClient.HttpClient(endpoint);
-            _auth = auth;
+            _httpClient = new HttpClient.HttpClient(endpoint, auth);
         }
 
         public GraphQLClient(Uri endpoint, IAuthentication auth = null)
         {
-            _httpClient = new HttpClient.HttpClient(endpoint);
-            _auth = auth;
+            _httpClient = new HttpClient.HttpClient(endpoint, auth);
         }
 
         public GraphQLClient(IHttpClient httpClient, IAuthentication auth = null)
         {
             _httpClient = httpClient;
-            _auth = auth;
         }
 
         public GraphQLClient(string endpoint, ILogger logger, IAuthentication auth = null) 
         {
             Logger = logger ?? new NullLogger();
-            _httpClient = new HttpClient.HttpClient(endpoint, Logger);
-            _auth = auth;
+            _httpClient = new HttpClient.HttpClient(endpoint, Logger, auth);
         }
 
         public GraphQLClient(Uri endpoint, ILogger logger, IAuthentication auth = null)
         {
             Logger = logger ?? new NullLogger();
-            _httpClient = new HttpClient.HttpClient(endpoint, Logger);
-            _auth = auth;
+            _httpClient = new HttpClient.HttpClient(endpoint, Logger, auth);
         }
 
-        public GraphQLClient(IHttpClient httpClient, ILogger logger, IAuthentication auth = null)
+        public GraphQLClient(IHttpClient httpClient, ILogger logger)
         {
             Logger = logger ?? new NullLogger();
             _httpClient = httpClient;
-            _auth = auth;
         }
 
         public IHttpClient HttpClient => _httpClient;
@@ -201,7 +193,6 @@ namespace Sdl.Web.GraphQLClient
                 {
                     return Execute(new GraphQLRequest
                     {
-                        Authenticaton = _auth,
                         Query = Queries.Load("IntrospectionQuery", false),
                         OperationName = "IntrospectionQuery"
                     }).Data.__schema.ToObject<GraphQLSchema>();
@@ -223,7 +214,6 @@ namespace Sdl.Web.GraphQLClient
             {
                 return await ExecuteAsync(new GraphQLRequest
                 {
-                    Authenticaton = _auth,
                     Query = Queries.Load("IntrospectionQuery", false),
                     OperationName = "IntrospectionQuery"
                 }).Result.Data.__schema.ToObject<GraphQLSchema>();
@@ -251,7 +241,6 @@ namespace Sdl.Web.GraphQLClient
                             NullValueHandling = NullValueHandling.Ignore,
                             ContractResolver = new CamelCasePropertyNamesContractResolver()
                         }),
-                    Authenticaton = graphQLrequest.Authenticaton ?? _auth,
                     Headers = graphQLrequest.Headers,
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors

@@ -11,6 +11,7 @@ using Sdl.Web.HttpClient.Request;
 using Sdl.Web.HttpClient.Response;
 using Newtonsoft.Json;
 using Sdl.Web.Core;
+using Sdl.Web.HttpClient.Auth;
 
 namespace Sdl.Web.HttpClient
 {
@@ -24,6 +25,7 @@ namespace Sdl.Web.HttpClient
         public string UserAgent { get; set; } = "SDL.PCA.NET";
         public HttpHeaders Headers { get; set; } = new HttpHeaders();
         public ILogger Logger { get; } = new NullLogger();
+        protected readonly IAuthentication _auth;
 
         public HttpClient()
         { }
@@ -33,12 +35,29 @@ namespace Sdl.Web.HttpClient
             BaseUri = new Uri(endpoint);
         }
 
+        public HttpClient(string endpoint, IAuthentication auth)
+        {
+            BaseUri = new Uri(endpoint);
+            _auth = auth;
+        }
+
         public HttpClient(Uri endpoint)
         {
             BaseUri = endpoint;
         }
 
+        public HttpClient(Uri endpoint, IAuthentication auth)
+        {
+            BaseUri = endpoint;
+            _auth = auth;
+        }
+
         public HttpClient(string endpoint, ILogger logger) : this(endpoint)
+        {
+            Logger = logger ?? new NullLogger();
+        }
+
+        public HttpClient(string endpoint, ILogger logger, IAuthentication auth) : this(endpoint, auth)
         {
             Logger = logger ?? new NullLogger();
         }
@@ -47,7 +66,12 @@ namespace Sdl.Web.HttpClient
         {
             Logger = logger ?? new NullLogger();
         }
-        
+
+        public HttpClient(Uri endpoint, ILogger logger, IAuthentication auth) : this(endpoint, auth)
+        {
+            Logger = logger ?? new NullLogger();
+        }
+
         public virtual IHttpClientResponse<T> Execute<T>(IHttpClientRequest clientRequest)
         {
             HttpWebRequest request = CreateHttpWebRequest(clientRequest);
@@ -136,6 +160,7 @@ namespace Sdl.Web.HttpClient
         protected virtual HttpWebRequest CreateHttpWebRequest(IHttpClientRequest clientRequest)
         {
             IHttpClientRequest requestCopy = new HttpClientRequest(clientRequest);
+            requestCopy.Authenticaton = requestCopy.Authenticaton ?? _auth;
             Uri requestUri = requestCopy.BuildRequestUri(this);
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(requestUri);
             request.Method = requestCopy.Method;
