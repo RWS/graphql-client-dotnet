@@ -23,7 +23,13 @@ namespace Sdl.Web.PublicContentApi
         Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData,
             string customMetaFilter);
 
-        string ResolveLink(CmUri cmUri, bool resolveToBinary);
+        string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId);
+
+        string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId, int? excludeComponentTemplateId);
+
+        string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId);
+
+        string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId, int templateId);
 
         PublicationMapping GetPublicationMapping(ContentNamespace ns, string url);
     }

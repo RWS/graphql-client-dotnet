@@ -24,7 +24,13 @@ namespace Sdl.Web.PublicContentApi
         Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, IContextData contextData,
             string customMetaFilter, CancellationToken cancellationToken);
 
-        Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary, CancellationToken cancellationToken);
+        Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, CancellationToken cancellationToken);
+
+        Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId, int? excludeComponentTemplateId, CancellationToken cancellationToken);
+
+        Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId, CancellationToken cancellationToken);
+
+        Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId, int componentId, int templateId, CancellationToken cancellationToken);
 
         Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken);
     }

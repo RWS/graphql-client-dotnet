@@ -178,23 +178,75 @@ namespace Sdl.Web.PublicContentApi
                 }
             });
             return response.TypedResponseData.Publication;
-        }
+        }     
 
-        public string ResolveLink(CmUri cmUri, bool resolveToBinary = false)
+        public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
         {
             var response = _client.Execute<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("ResolveLink", true),
+                Query = Queries.Load("ResolvePageLink", true),
                 Variables = new Dictionary<string, object>
                 {
-                    {"namespaceId", cmUri.Namespace},
-                    {"publicationId", cmUri.PublicationId},
-                    {"type", GetLinkType(cmUri, resolveToBinary)},
-                    {"itemId", cmUri.ItemId}
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},                  
+                    {"pageId", pageId}
                 }
             });
-            return response.TypedResponseData.Link.Url;
-        }     
+            return response.TypedResponseData.PageLink.Url;
+        }
+
+        public string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
+            int? excludeComponentTemplateId)
+        {
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveComponentLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"targetComponentId", componentId},
+                    {"sourcePageId", sourcePageId},
+                    {"excludeComponentTemplateId", excludeComponentTemplateId}
+                }
+            });
+            return response.TypedResponseData.ComponentLink.Url;
+        }
+
+        public string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId)
+        {
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveBinaryLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"binaryId", binaryId},
+                    {"variantId", variantId}
+                }
+            });
+            return response.TypedResponseData.BinaryLink.Url;
+        }
+
+        public string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
+            int templateId)
+        {
+            var response = _client.Execute<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveDynamicComponentLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"targetPageId", pageId},
+                    {"targetComponentId", componentId},
+                    {"targetTemplateId", templateId}
+                }
+            });
+            return response.TypedResponseData.DynamicComponentLink.Url;
+        }
+
 
         public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url)
         {
@@ -321,20 +373,71 @@ namespace Sdl.Web.PublicContentApi
             return response.TypedResponseData.Publication;
         }
 
-        public async Task<string> ResolveLinkAsync(CmUri cmUri, bool resolveToBinary = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
             {
-                Query = Queries.Load("ResolveLink", true),
+                Query = Queries.Load("ResolvePageLink", true),
                 Variables = new Dictionary<string, object>
                 {
-                    {"namespaceId", cmUri.Namespace},
-                    {"publicationId", cmUri.PublicationId},
-                    {"type", GetLinkType(cmUri, resolveToBinary)},
-                    {"itemId", cmUri.ItemId}
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"pageId", pageId}
                 }
             }, cancellationToken);
-            return response.TypedResponseData.Link.Url;
+            return response.TypedResponseData.PageLink.Url;
+        }
+
+        public async Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
+            int? excludeComponentTemplateId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveComponentLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"targetComponentId", componentId},
+                    {"sourcePageId", sourcePageId},
+                    {"excludeComponentTemplateId", excludeComponentTemplateId}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.ComponentLink.Url;
+        }
+
+        public async Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveBinaryLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"binaryId", binaryId},
+                    {"variantId", variantId}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.BinaryLink.Url;
+        }
+
+        public async Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId, int componentId,
+            int templateId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
+            {
+                Query = Queries.Load("ResolveDynamicComponentLink", true),
+                Variables = new Dictionary<string, object>
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"targetPageId", pageId},
+                    {"targetComponentId", componentId},
+                    {"targetTemplateId", templateId}
+                }
+            }, cancellationToken);
+            return response.TypedResponseData.DynamicComponentLink.Url;
         }
 
         public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken = default(CancellationToken))

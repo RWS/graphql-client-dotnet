@@ -113,10 +113,13 @@
     <EmbeddedResource Include="Queries\BinaryComponentByUrl.graphql" />
     <EmbeddedResource Include="Queries\BinaryComponentByCmUri.graphql" />
     <EmbeddedResource Include="Queries\Publication.graphql" />
-    <EmbeddedResource Include="Queries\ResolveLink.graphql" />
+    <EmbeddedResource Include="Queries\ResolvePageLink.graphql" />
     <EmbeddedResource Include="Queries\Fragments\ComponentPresentationFields.graphql" />
     <EmbeddedResource Include="Queries\PublicationMapping.graphql" />
     <EmbeddedResource Include="Queries\Fragments\PublicationMappingFields.graphql" />
+    <EmbeddedResource Include="Queries\ResolveComponentLink.graphql" />
+    <EmbeddedResource Include="Queries\ResolveBinaryLink.graphql" />
+    <EmbeddedResource Include="Queries\ResolveDynamicComponentLink.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
