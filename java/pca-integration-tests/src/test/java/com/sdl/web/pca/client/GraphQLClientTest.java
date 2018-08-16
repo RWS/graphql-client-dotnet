@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+@Category(IntegrationTest.class)
 public class GraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
@@ -89,6 +91,7 @@ public class GraphQLClientTest {
         pagination.setFirst(2);
 
         ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        assertNotNull(contentQuery);
     }
 
 
@@ -103,6 +106,7 @@ public class GraphQLClientTest {
         pagination.setFirst(2);
 
         ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        assertNotNull(contentQuery);
     }
 
 
@@ -141,27 +145,27 @@ public class GraphQLClientTest {
         Page page = new Page();
         page.setNamespaceId(1);
         page.setPublicationId(5);
-        publicContentApi.executeSiteMap(page, dataModel);
+        assertNotNull( publicContentApi.executeSiteMap(page, dataModel));
     }
 
 
     public void executeGetPageModelData() {
-        publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class);
+        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class));
     }
 
     @Test
     public void executeGetSitemap() {
-        publicContentApi.getSitemap(ContentNamespace.Sites, 7, ContentQuery.class);
+        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 7, ContentQuery.class));
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, ContentQuery.class);
+        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, ContentQuery.class));
     }
 
 
     public void executeGetEntityModelData() {
-        publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, ContentQuery.class);
+        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, ContentQuery.class));
     }
 
     @After
