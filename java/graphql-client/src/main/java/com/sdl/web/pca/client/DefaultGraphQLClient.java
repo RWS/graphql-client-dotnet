@@ -38,12 +38,12 @@ public class DefaultGraphQLClient implements GraphQLClient {
     }
 
     @Override
-    public GraphQLResponse execute(String jsonEntity) throws GraphQLClientException {
+    public String execute(String jsonEntity) throws GraphQLClientException {
         return execute(jsonEntity, 0);
     }
 
     @Override
-    public GraphQLResponse execute(String jsonEntity, int timeout) throws GraphQLClientException {
+    public String execute(String jsonEntity, int timeout) throws GraphQLClientException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Requested entity: {}" + jsonEntity);
         }
@@ -74,18 +74,14 @@ public class DefaultGraphQLClient implements GraphQLClient {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Returned message: {}", contentString);
             }
-
-            ObjectMapper responseMapper = new ObjectMapper();
-            GraphQLResponse graphQLresponse = responseMapper.readValue(contentString, GraphQLResponse.class);
-
-            return graphQLresponse;
+            return contentString;
         } catch (IOException e) {
             throw new GraphQLClientException("Exception during requesting entity: " + jsonEntity, e);
         }
     }
 
     @Override
-    public GraphQLResponse execute(GraphQLRequest request) throws GraphQLClientException {
+    public String execute(GraphQLRequest request) throws GraphQLClientException {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode jsonObject = mapper.createObjectNode();

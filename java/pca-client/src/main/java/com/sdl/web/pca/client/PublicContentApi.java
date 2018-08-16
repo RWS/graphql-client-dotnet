@@ -3,7 +3,6 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.google.gson.JsonObject;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
@@ -60,11 +59,11 @@ public class PublicContentApi implements IPublicContentApi {
         graphQLRequest.setQuery(query);
         graphQLRequest.setVariables(variables);
 
-        GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+        String contentQuery = _client.execute(graphQLRequest);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(contentQuery.getData().toString(), clazz);
+        return objectMapper.readValue(contentQuery, clazz);
     }
 
 
@@ -88,10 +87,10 @@ public class PublicContentApi implements IPublicContentApi {
             graphQLRequest.setQuery(query);
             graphQLRequest.setVariables(variables);
 
-            GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+            String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery.getData().toString(), clazz);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -119,12 +118,12 @@ public class PublicContentApi implements IPublicContentApi {
         graphQLRequest.setQuery(query);
         graphQLRequest.setVariables(variables);
 
-        GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+        String contentQuery = _client.execute(graphQLRequest);
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectReader objectReader = objectMapper.reader(model).withRootName("data");
 
-        T sitemap = objectReader.readValue(contentQuery.getData().toString());
+        T sitemap = objectReader.readValue(contentQuery);
 
         return sitemap;
     }
@@ -145,10 +144,10 @@ public class PublicContentApi implements IPublicContentApi {
             graphQLRequest.setQuery(query);
             graphQLRequest.setVariables(variables);
 
-            GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+            String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery.getData().toString(), clazz);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -172,10 +171,10 @@ public class PublicContentApi implements IPublicContentApi {
             graphQLRequest.setQuery(query);
             graphQLRequest.setVariables(variables);
 
-            GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+            String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery.getData().toString(), clazz);
+            return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -196,10 +195,10 @@ public class PublicContentApi implements IPublicContentApi {
             graphQLRequest.setQuery(query);
             graphQLRequest.setVariables(variables);
 
-            GraphQLResponse contentQuery = _client.execute(graphQLRequest);
+            String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery.getData().toString(), clazz);
+            return objectMapper.readValue(contentQuery, clazz);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
