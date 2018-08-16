@@ -31,14 +31,8 @@ public class GraphQLClientTest {
     private Properties prop = null;
     private PublicContentApi publicContentApi;
 
-    @BeforeClass
-    public static void setUp() {
-
-    }
-
     @Before
     public void before() throws Exception {
-
         prop = new Properties();
         InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
 
@@ -46,7 +40,6 @@ public class GraphQLClientTest {
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
 
         publicContentApi = new PublicContentApi(client);
-        assertNotNull(publicContentApi);
     }
 
     @Test
@@ -99,6 +92,7 @@ public class GraphQLClientTest {
     }
 
 
+    @Test
     public void executeComponentItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
@@ -114,6 +108,7 @@ public class GraphQLClientTest {
     }
 
 
+    @Test
     public void executeKeywordItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
@@ -128,6 +123,7 @@ public class GraphQLClientTest {
     }
 
 
+    @Test
     public void executePublicationItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
@@ -153,6 +149,7 @@ public class GraphQLClientTest {
     }
 
 
+    @Test
     public void executeGetPageModelData() {
         assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class));
     }
@@ -168,13 +165,8 @@ public class GraphQLClientTest {
     }
 
 
+    @Test
     public void executeGetEntityModelData() {
         assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, ContentQuery.class));
-    }
-
-    @After
-    public void after() {
-        publicContentApi = null;
-        assertNull(publicContentApi);
     }
 }

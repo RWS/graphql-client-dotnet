@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
@@ -190,6 +191,7 @@ public class PublicContentApi implements IPublicContentApi {
     private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz) throws PublicContentApiException {
         try {
             String contentQuery = client.execute(request);
+            MAPPER.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
             return MAPPER.readValue(contentQuery, clazz);
         } catch (GraphQLClientException e) {
             throw new PublicContentApiException("Unable to execute query: " + request, e);
