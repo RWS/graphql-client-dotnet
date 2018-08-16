@@ -17,6 +17,7 @@ package com.sdl.web.pca.client.contentmodel;
 		int publicationId = 0;
 		String title = null;
 		String updatedDate = null;
+		/*String url = null;*/
 
 
 		String getCreationDate();
@@ -54,4 +55,7 @@ package com.sdl.web.pca.client.contentmodel;
 
 		String getUpdatedDate();
 		void setUpdatedDate(String updatedDate);
+
+		/*String getUrl();
+		void setUrl(String url);*/
 	}

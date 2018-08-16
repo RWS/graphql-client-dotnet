@@ -1,5 +1,7 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.util.List;
 
 public class TaxonomySitemapItem implements ISitemapItem
@@ -7,7 +9,7 @@ public class TaxonomySitemapItem implements ISitemapItem
 		private int classifiedItemsCount;
 		private String description;
 		private String id;
-		private List<ISitemapItem> items;
+		private List<TaxonomySitemapItem> items;
 		private String key;
 		private String originalTitle;
 		private String publishedDate;
@@ -45,11 +47,11 @@ public class TaxonomySitemapItem implements ISitemapItem
 			 this.id = id;
 		 }
 
-		 public List<ISitemapItem> getItems()
+		 public List<TaxonomySitemapItem> getItems()
 		 {
 			 return items;
 		 }
-		 public void setItems(List<ISitemapItem> items)
+		 public void setItems(List<TaxonomySitemapItem> items)
 		 {
 			 this.items = items;
 		 }

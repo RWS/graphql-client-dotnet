@@ -5,14 +5,14 @@ package com.sdl.web.pca.client.contentmodel;
 	/// </summary>
 	class ItemEdge
 	{
-		private IItem node;
+		private Page node;
 		private String cursor;
 
-		 public IItem getNode()
+		 public Page getNode()
 		 {
 			 return node;
 		 }
-		 public void setNode(IItem node)
+		 public void setNode(Page node)
 		 {
 			 this.node = node;
 		 }

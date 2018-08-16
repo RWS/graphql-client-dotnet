@@ -145,4 +145,5 @@ package com.sdl.web.pca.client.contentmodel;
 		 {
 			 this.updatedDate = updatedDate;
 		 }
+
 	}

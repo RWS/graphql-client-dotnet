@@ -1,6 +1,7 @@
 package com.sdl.web.pca.client;
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.sdl.web.pca.client.contentmodel.*;
@@ -62,7 +63,7 @@ public class PublicContentApi implements IPublicContentApi {
         String contentQuery = _client.execute(graphQLRequest);
 
         ObjectMapper objectMapper = new ObjectMapper();
-
+        objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
         return objectMapper.readValue(contentQuery, clazz);
     }
 
@@ -90,7 +91,9 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery, clazz);
+            objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+
+            return objectMapper.reader().forType(clazz).readValue(contentQuery);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -147,7 +150,9 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(contentQuery, clazz);
+            objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+
+            return objectMapper.reader().forType(clazz).readValue(contentQuery);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -174,6 +179,8 @@ public class PublicContentApi implements IPublicContentApi {
             String contentQuery = _client.execute(graphQLRequest);
 
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+
             return objectMapper.readValue(contentQuery, clazz);
 
         } catch (Exception ex) {
