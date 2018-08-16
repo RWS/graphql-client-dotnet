@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client;
 
-import com.sdl.web.pca.client.exceptions.GraphQLClientException;
+import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 
 import java.io.IOException;

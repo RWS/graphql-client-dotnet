@@ -2,7 +2,7 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sdl.web.pca.client.exceptions.GraphQLClientException;
+import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.config.RequestConfig;

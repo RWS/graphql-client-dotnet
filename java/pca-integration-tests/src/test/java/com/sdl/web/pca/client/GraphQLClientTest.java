@@ -1,16 +1,21 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.contentmodel.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.ContentQuery;
+import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.ItemType;
+import com.sdl.web.pca.client.contentmodel.Page;
+import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
-import com.sdl.web.pca.client.contentmodel.pagemodeldata.Sitemapkeyword;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -20,7 +25,6 @@ import java.util.Properties;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-@Category(IntegrationTest.class)
 public class GraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
@@ -71,7 +75,7 @@ public class GraphQLClientTest {
 
         String variables = prop.getProperty("ITEMTYPES_VARIABLES");
         HashMap<String, Object> variablesMap =
-                new ObjectMapper().readValue( variables , HashMap.class);
+                new ObjectMapper().readValue(variables, HashMap.class);
         request.setVariables(variablesMap);
 
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
@@ -145,7 +149,7 @@ public class GraphQLClientTest {
         Page page = new Page();
         page.setNamespaceId(1);
         page.setPublicationId(5);
-        assertNotNull( publicContentApi.executeSiteMap(page, dataModel));
+        assertNotNull(publicContentApi.executeSiteMap(page, dataModel));
     }
 
 
