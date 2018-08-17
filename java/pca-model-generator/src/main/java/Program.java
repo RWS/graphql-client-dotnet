@@ -193,6 +193,8 @@ public class Program {
         {
             sb.append("\n");
             field.type = RemapFieldType(field);
+            if(field.name.equalsIgnoreCase("abstract"))
+                continue;
             if(field.type.name !=null) {
                 sb.append(indentString);
                 sb.append("public " + field.type.name + " " + field.name + ";");
@@ -206,6 +208,12 @@ public class Program {
         // Just remap itemType and namespaceId(s) from int to use our enum
         // to make things a little nicer to work with.
         GraphQLSchemaTypeInfo graphQLSchemaTypeInfo = new GraphQLSchemaTypeInfo();
+        switch (field.type.kind)
+        {
+            case "Int": {
+                field.type.kind = "int";
+            }
+        }
         switch (field.name)
         {
             case "namespaceIds":{
@@ -226,12 +234,13 @@ public class Program {
             case "itemType":
             {
                 graphQLSchemaTypeInfo.kind = "ENUM";
-                graphQLSchemaTypeInfo.name = "Sdl.Web.PublicContentApi.ItemType";
+                graphQLSchemaTypeInfo.name = "ItemType";
                 return graphQLSchemaTypeInfo;
             }
             default:
                 return field.type;
         }
+
     }
 
     static StringBuilder EmitPackage( StringBuilder sb, String ns)
