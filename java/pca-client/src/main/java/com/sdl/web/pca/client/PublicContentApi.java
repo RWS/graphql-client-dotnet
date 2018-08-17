@@ -157,16 +157,17 @@ public class PublicContentApi implements IPublicContentApi {
         return getResultForRequest(graphQLRequest, clazz);
     }
 
+
     @Override
-    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId,
-                                    Class<T> clazz) throws PublicContentApiException {
+    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int componentId, int templateId, Class<T> clazz) throws PublicContentApiException {
         String query = getQueryFor(ENTITY_MODEL_BY_ID);
 
         HashMap<String, Object> variables = new HashMap<>();
 
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
-        variables.put("entityId", entityId);
+        variables.put("componentId", componentId);
+        variables.put("templateId", templateId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest();
         graphQLRequest.setQuery(query);

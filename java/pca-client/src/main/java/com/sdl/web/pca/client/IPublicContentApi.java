@@ -76,5 +76,5 @@ public interface IPublicContentApi {
      * @param entityId
      * @return The GraphQL JSON string response with data and errors if any.
      */
-    <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId, Class<T> clazz) throws PublicContentApiException;
+    <T> T getEntityModelData(ContentNamespace ns, int publicationId, int componentId, int templateId, Class<T> clazz) throws PublicContentApiException;
 }

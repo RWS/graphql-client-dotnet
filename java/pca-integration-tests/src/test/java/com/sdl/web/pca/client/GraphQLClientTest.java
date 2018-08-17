@@ -1,14 +1,7 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentQuery;
-import com.sdl.web.pca.client.contentmodel.ContentType;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemType;
-import com.sdl.web.pca.client.contentmodel.Page;
-import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
@@ -23,7 +16,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+
 
 public class GraphQLClientTest {
 
@@ -86,8 +79,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
-        assertNotNull(contentQuery);
+        ItemConnection page = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class).getItems();
+        assertNotNull(page);
     }
 
     @Test
@@ -101,8 +94,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
-        assertNotNull(contentQuery);
+        ItemConnection component = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class).getItems();
+        assertNotNull(component);
     }
 
     @Test
@@ -116,7 +109,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        ItemConnection keyword = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class).getItems();
+        assertNotNull(keyword);
     }
 
     @Test
@@ -130,36 +124,39 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        ItemConnection publication = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class).getItems();
+        assertNotNull(publication);
     }
 
     @Test
     public void executeSiteMap() throws Exception {
-        Class<ContentQuery> dataModel = ContentQuery.class;
 
         Page page = new Page();
         page.setNamespaceId(1);
-        page.setPublicationId(5);
-        assertNotNull(publicContentApi.executeSiteMap(page, dataModel));
+        page.setPublicationId(8);
+        TaxonomySitemapItem taxonomySitemapItem = publicContentApi.executeSiteMap(page, ContentQuery.class).getSitemap();
+        assertNotNull(taxonomySitemapItem);
     }
 
     @Test
     public void executeGetPageModelData() {
-        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class));
+        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 8, 640, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class));
     }
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 7, ContentQuery.class));
+        TaxonomySitemapItem taxonomySitemapItem = publicContentApi.getSitemap(ContentNamespace.Sites, 8, ContentQuery.class).getSitemap();
+        assertNotNull(taxonomySitemapItem);
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, ContentQuery.class));
+        TaxonomySitemapItem taxonomySitemapSubtreeItem = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680", true, ContentQuery.class).getSitemapSubtree();
+        assertNotNull(taxonomySitemapSubtreeItem);
     }
 
     @Test
     public void executeGetEntityModelData() {
-        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, ContentQuery.class));
+        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 8, 1458, 9195, ContentQuery.class));
     }
 }
