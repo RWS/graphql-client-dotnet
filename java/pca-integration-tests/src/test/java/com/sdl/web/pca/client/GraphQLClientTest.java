@@ -50,7 +50,6 @@ public class GraphQLClientTest {
         assertNotNull(graphQLJsonResponse);
     }
 
-
     @Test
     public void executeItemTypesQuery() throws Exception {
 
@@ -91,7 +90,6 @@ public class GraphQLClientTest {
         assertNotNull(contentQuery);
     }
 
-
     @Test
     public void executeComponentItemQuery() throws Exception {
 
@@ -107,7 +105,6 @@ public class GraphQLClientTest {
         assertNotNull(contentQuery);
     }
 
-
     @Test
     public void executeKeywordItemQuery() throws Exception {
 
@@ -121,7 +118,6 @@ public class GraphQLClientTest {
 
         ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
     }
-
 
     @Test
     public void executePublicationItemQuery() throws Exception {
@@ -137,7 +133,6 @@ public class GraphQLClientTest {
         ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
     }
 
-
     @Test
     public void executeSiteMap() throws Exception {
         Class<ContentQuery> dataModel = ContentQuery.class;
@@ -147,7 +142,6 @@ public class GraphQLClientTest {
         page.setPublicationId(5);
         assertNotNull(publicContentApi.executeSiteMap(page, dataModel));
     }
-
 
     @Test
     public void executeGetPageModelData() {
@@ -163,7 +157,6 @@ public class GraphQLClientTest {
     public void executeGetSitemapSubtree() {
         assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, ContentQuery.class));
     }
-
 
     @Test
     public void executeGetEntityModelData() {

@@ -20,6 +20,7 @@ package com.sdl.web.pca.client.contentmodel;
 		private String title;
 		private String updatedDate;
 
+
 		 public String getCreationDate()
 		 {
 			 return creationDate;

@@ -30,6 +30,20 @@ class Node
     private String navigable;
     private String usedForIdentification;
 
+    /*Implemented variables for Keyword*/
+
+    private String depth;
+    private String hasChildren;
+    private String description;
+    private String Abstract;
+    private String totalRelatedItems;
+
+    /*Implemented variables for Publication*/
+
+    private String multimediaPath;
+    private String multimediaUrl;
+
+
     public String getId() {
         return id;
     }
@@ -204,5 +218,65 @@ class Node
 
     public void setUsedForIdentification(String usedForIdentification) {
         this.usedForIdentification = usedForIdentification;
+    }
+
+    /*Implemented Methods for Keyword*/
+
+    public String getDepth() {
+        return depth;
+    }
+
+    public void setDepth(String depth) {
+        this.depth = depth;
+    }
+
+    public String getHasChildren() {
+        return hasChildren;
+    }
+
+    public void setHasChildren(String hasChildren) {
+        this.hasChildren = hasChildren;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAbstract() {
+        return Abstract;
+    }
+
+    public void setAbstract(String anAbstract) {
+        Abstract = anAbstract;
+    }
+
+    public String getTotalRelatedItems() {
+        return totalRelatedItems;
+    }
+
+    public void setTotalRelatedItems(String totalRelatedItems) {
+        this.totalRelatedItems = totalRelatedItems;
+    }
+
+    /*Implemented methods for Publication*/
+
+    public String getMultimediaPath() {
+        return multimediaPath;
+    }
+
+    public void setMultimediaPath(String multimediaPath) {
+        this.multimediaPath = multimediaPath;
+    }
+
+    public String getMultimediaUrl() {
+        return multimediaUrl;
+    }
+
+    public void setMultimediaUrl(String multimediaUrl) {
+        this.multimediaUrl = multimediaUrl;
     }
 }
