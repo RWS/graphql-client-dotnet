@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import java.util.List;
-
+@JsonRootName(value = "data")
 public class TaxonomySitemapItem implements ISitemapItem
 	{
 		private int classifiedItemsCount;
