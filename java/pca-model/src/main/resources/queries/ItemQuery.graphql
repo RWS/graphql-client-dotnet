@@ -1,11 +1,11 @@
-﻿query items($first: Int $after: String $filter: InputItemFilter! $contextData: [InputClaimValue!])
-  {items(first: $first, after: $after, filter: $filter, contextData: $contextData)
-    {
-      edges
-      {cursor node
-        {...ItemFields
-          @fragmentList
-        }
-      }
-    }
-  }
+﻿query items($first: Int, $after: String, $filter: InputItemFilter!, $sort: InputSortParam, $contextData: [InputClaimValue!]) {
+	items(first: $first, after: $after, filter: $filter, sort: $sort, contextData: $contextData) {
+		edges {
+			cursor
+			node {
+				...ItemFields				
+				@fragmentList
+			}		
+		}
+	}
+}

@@ -1,7 +1,7 @@
 ﻿query page($pageId: Int!, $namespaceId: Int!, $publicationId: Int!, $contextData: [InputClaimValue!]) {
 	page(pageId: $pageId, namespaceId: $namespaceId, publicationId: $publicationId, contextData: $contextData) {
 		itemId                
-		rawContent(renderContent: true) {
+		rawContent@renderContentArgs {
 			data 
 		}
 	}

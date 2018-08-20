@@ -1,0 +1,5 @@
+﻿query link($namespaceId: Int!, $publicationId: Int!, $type: LinkType!, $itemId: Int!) {
+	link(namespaceId: $namespaceId, publicationId: $publicationId, type: $type, itemId: $itemId) {
+		url
+	}
+}

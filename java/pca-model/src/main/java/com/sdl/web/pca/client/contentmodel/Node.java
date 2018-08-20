@@ -5,7 +5,7 @@ import java.util.Date;
 /// <summary>
 /// Represents a node.
 /// </summary>
-class Node
+public class Node
 {
     private String id;
     private int itemId;

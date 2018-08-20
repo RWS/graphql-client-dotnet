@@ -5,7 +5,7 @@ import java.util.List;
 /// <summary>
 	/// A connection to a list of items.
 	/// </summary>
-	class ItemConnection
+	public class ItemConnection
 	{
 		private List<ItemEdge> edges;
 

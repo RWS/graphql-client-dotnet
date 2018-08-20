@@ -6,15 +6,13 @@ import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.ItemType;
-import com.sdl.web.pca.client.contentmodel.Page;
 import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -23,23 +21,23 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 public class GraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
     private Properties prop = null;
-    private PublicContentApi publicContentApi;
+    private DefaultPublicContentApi publicContentApi;
 
     @Before
     public void before() throws Exception {
         prop = new Properties();
-        InputStream inputStream = GraphQLClientTest.class.getClassLoader().getResourceAsStream("testconfig.properties");
+        InputStream inputStream = GraphQLClientTest.class.getClassLoader()
+                .getResourceAsStream("testconfig.properties");
 
         prop.load(inputStream);
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
 
-        publicContentApi = new PublicContentApi(client);
+        publicContentApi = new DefaultPublicContentApi(client);
     }
 
     @Test
@@ -62,13 +60,11 @@ public class GraphQLClientTest {
     public void executeItemTypesQueryUsingGraphQLRequest() throws Exception {
 
         String query = prop.getProperty("ITEMTYPES_QUERY");
-        GraphQLRequest request = new GraphQLRequest();
-        request.setQuery(query);
 
         String variables = prop.getProperty("ITEMTYPES_VARIABLES");
         HashMap<String, Object> variablesMap =
                 new ObjectMapper().readValue(variables, HashMap.class);
-        request.setVariables(variablesMap);
+        GraphQLRequest request = new GraphQLRequest(query, variablesMap);
 
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
         String responsedata = client.execute(request);
@@ -86,7 +82,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+                null, false);
         assertNotNull(contentQuery);
     }
 
@@ -101,7 +98,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+                null, false);
         assertNotNull(contentQuery);
     }
 
@@ -116,7 +114,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
+        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+                null, false);
     }
 
     @Test
@@ -130,36 +129,32 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(2);
 
-        ContentQuery contentQuery = publicContentApi.executeItemQuery(filter, pagination, ContentQuery.class);
-    }
-
-    @Test
-    public void executeSiteMap() throws Exception {
-        Class<ContentQuery> dataModel = ContentQuery.class;
-
-        Page page = new Page();
-        page.setNamespaceId(1);
-        page.setPublicationId(5);
-        assertNotNull(publicContentApi.executeSiteMap(page, dataModel));
+        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+                null, false);
     }
 
     @Test
     public void executeGetPageModelData() {
-        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240, ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null, ContentQuery.class));
+        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240,
+                ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null,
+                ContentQuery.class));
     }
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 7, ContentQuery.class));
+        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 0,
+                null));
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320", true, ContentQuery.class));
+        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320",
+                0, true, null));
     }
 
     @Test
     public void executeGetEntityModelData() {
-        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, ContentQuery.class));
+        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1,
+                null, null, null, false, null, ContentQuery.class));
     }
 }

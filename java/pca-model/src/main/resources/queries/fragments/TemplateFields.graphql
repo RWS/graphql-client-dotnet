@@ -1,0 +1,3 @@
+﻿fragment TemplateFields on Template {
+	outputFormat
+}

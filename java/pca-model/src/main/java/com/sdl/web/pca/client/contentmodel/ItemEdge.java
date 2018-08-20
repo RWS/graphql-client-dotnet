@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 	/// An edge in a connection
 	/// </summary>
-	class ItemEdge
+	public class ItemEdge
 	{
 		private Node node;
 		private String cursor;

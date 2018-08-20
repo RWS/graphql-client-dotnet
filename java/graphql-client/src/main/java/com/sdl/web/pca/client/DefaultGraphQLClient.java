@@ -2,6 +2,7 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sdl.web.pca.client.auth.Authentication;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
@@ -25,6 +26,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class DefaultGraphQLClient implements GraphQLClient {
     private static final Logger LOG = getLogger(DefaultGraphQLClient.class);
 
+    private Authentication auth;
     private CloseableHttpClient httpClient;
     private String endpoint;
     private Map<String, String> defaultHeaders = new HashMap<>();
@@ -35,6 +37,11 @@ public class DefaultGraphQLClient implements GraphQLClient {
         if (defaultHeaders != null) {
             this.defaultHeaders.putAll(defaultHeaders);
         }
+    }
+
+    public DefaultGraphQLClient(String endpoint, Map<String, String> defaultHeaders, Authentication auth) {
+        this(endpoint, defaultHeaders);
+        this.auth = auth;
     }
 
     @Override
@@ -58,6 +65,10 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
         StringEntity entity = new StringEntity(jsonEntity, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
+
+        if (auth != null) {
+            auth.applyManualAuthentication(httpPost);
+        }
 
         //Execute and get the response.
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
