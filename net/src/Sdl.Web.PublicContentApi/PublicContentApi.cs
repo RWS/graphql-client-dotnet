@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using System.Threading;
-using Newtonsoft.Json;
 using Sdl.Web.GraphQLClient;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.GraphQLClient.Response;
@@ -15,7 +12,7 @@ using Sdl.Web.PublicContentApi.Utils;
 using Sdl.Web.Core;
 
 namespace Sdl.Web.PublicContentApi
-{
+{   
     /// <summary>
     /// Public Content Api
     /// </summary>
@@ -76,383 +73,116 @@ namespace Sdl.Web.PublicContentApi
         public IContextData GlobalContextData { get; set; } = new ContextData();
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
-            IContextData contextData)
-        {
-            return _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentById", true), null), null),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"binaryId", binaryId},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }).TypedResponseData.BinaryComponent;
-        }
+            IContextData contextData) => _client.Execute<ContentQuery>(
+                GraphQLRequests.GetBinaryComponent(ns, publicationId, binaryId, contextData, GlobalContextData))
+                .TypedResponseData.BinaryComponent;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url,
-            IContextData contextData)
-        {
-            return _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null), url),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"url", url},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }).TypedResponseData.BinaryComponent;
-        }
+            IContextData contextData) => _client.Execute<ContentQuery>(GraphQLRequests.GetBinaryComponent(ns, publicationId, url, contextData,
+                GlobalContextData)).TypedResponseData.BinaryComponent;
 
         public BinaryComponent GetBinaryComponent(CmUri cmUri,
-          IContextData contextData)
-        {
-            return _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByCmUri", true), null), null),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", cmUri.Namespace},
-                    {"publicationId", cmUri.PublicationId},
-                    {"cmUri", cmUri.ToString()},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }).TypedResponseData.BinaryComponent;
-        }
+            IContextData contextData) => _client.Execute<ContentQuery>(GraphQLRequests.GetBinaryComponent(cmUri, contextData, GlobalContextData))
+                .TypedResponseData.BinaryComponent;
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            IContextData contextData, string customMetaFilter, bool renderContent)
-        {
-            if (contextData == null)
-                contextData = new ContextData();
-
-            // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", false);
-
-            // We only include the fragments that will be required based on the item types in the
-            // input item filter
-            if (filter.ItemTypes != null)
-            {
-                string fragmentList = filter.ItemTypes.Select(itemType 
-                    => $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
-                // Just a quick and easy way to replace markers in our queries with vars here.
-                query = query.Replace("@fragmentList", fragmentList);
-                query = Queries.LoadFragments(query);
-            }
-
-            query = InjectCustomMetaFilter(query, customMetaFilter);
-            query = InjectRenderContentArgs(query, renderContent);
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = query,
-                Variables = new Dictionary<string, object>
-                {
-                    {"first", pagination.First},
-                    {"after", pagination.After},
-                    {"filter", filter},
-                    {"sort", sort},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                },
-                Convertors = new List<JsonConverter> {new ItemConvertor()}
-            });
-            return response.TypedResponseData.Items;
-        }
+            IContextData contextData, string customMetaFilter, bool renderContent) => _client.Execute<ContentQuery>(GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, contextData,
+                GlobalContextData, customMetaFilter, renderContent)).TypedResponseData.Items;
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
-            IContextData contextData, string customMetaFilter)
-        {
-            if (contextData == null)
-                contextData = new ContextData();
-           
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            });
-            return response.TypedResponseData.Publication;
-        }     
+            IContextData contextData, string customMetaFilter) => _client.Execute<ContentQuery>(GraphQLRequests.GetPublication(ns, publicationId, contextData,
+                GlobalContextData, customMetaFilter)).TypedResponseData.Publication;
 
-        public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
-        {
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolvePageLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},                  
-                    {"pageId", pageId}
-                }
-            });
-            return response.TypedResponseData.PageLink.Url;
-        }
+        public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) => _client.Execute<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId))
+            .TypedResponseData.PageLink.Url;
 
         public string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
-            int? excludeComponentTemplateId)
-        {
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveComponentLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"targetComponentId", componentId},
-                    {"sourcePageId", sourcePageId},
-                    {"excludeComponentTemplateId", excludeComponentTemplateId}
-                }
-            });
-            return response.TypedResponseData.ComponentLink.Url;
-        }
+            int? excludeComponentTemplateId) => _client.Execute<ContentQuery>(GraphQLRequests.ResolveComponentLink(ns, publicationId, componentId,
+                sourcePageId, excludeComponentTemplateId)).TypedResponseData.ComponentLink.Url;
 
-        public string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId)
-        {
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveBinaryLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"binaryId", binaryId},
-                    {"variantId", variantId}
-                }
-            });
-            return response.TypedResponseData.BinaryLink.Url;
-        }
+        public string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId) => _client.Execute<ContentQuery>(GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId))
+            .TypedResponseData.BinaryLink.Url;
 
         public string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-            int templateId)
-        {
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveDynamicComponentLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"targetPageId", pageId},
-                    {"targetComponentId", componentId},
-                    {"targetTemplateId", templateId}
-                }
-            });
-            return response.TypedResponseData.DynamicComponentLink.Url;
-        }
+            int templateId) => _client.Execute<ContentQuery>(GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId,
+                componentId, templateId)).TypedResponseData.DynamicComponentLink.Url;
 
-
-        public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url)
-        {
-            var response = _client.Execute<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("PublicationMapping", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"siteUrl", url}
-                }
-            });
-            return response.TypedResponseData.PublicationMapping;
-        }
+        public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url) => _client.Execute<ContentQuery>(GraphQLRequests.GetPublicationMapping(ns, url))
+            .TypedResponseData.PublicationMapping;
 
         #endregion
 
         #region IPublicContentApiAsync
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
-            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("BinaryComponentById", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"binaryId", binaryId},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }, cancellationToken)).TypedResponseData.BinaryComponent;
-        }       
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
+                _client.ExecuteAsync<ContentQuery>(
+                    GraphQLRequests.GetBinaryComponent(ns, publicationId, binaryId, contextData, GlobalContextData),
+                    cancellationToken)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
-            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("BinaryComponentByUrl", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"url", url},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }, cancellationToken)).TypedResponseData.BinaryComponent;
-        }
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
+                _client.ExecuteAsync<ContentQuery>(
+                    GraphQLRequests.GetBinaryComponent(ns, publicationId, url, contextData, GlobalContextData),
+                    cancellationToken)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri,
-            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return (await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("BinaryComponentByCmUri", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", cmUri.Namespace},
-                    {"publicationId", cmUri.PublicationId},
-                    {"cmUri", cmUri.ToString()},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }, cancellationToken)).TypedResponseData.BinaryComponent;
-        }
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
+                _client.ExecuteAsync<ContentQuery>(
+                    GraphQLRequests.GetBinaryComponent(cmUri, contextData, GlobalContextData), cancellationToken))
+                .TypedResponseData.BinaryComponent;
 
-        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+        public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort,
+            IPagination pagination,
             IContextData contextData, string customMetaFilter, bool renderContent,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (contextData == null)
-                contextData = new ContextData();
-
-            // Dynamically build our item query based on the filter(s) being used.
-            string query = Queries.Load("ItemQuery", false);
-
-            // We only include the fragments that will be required based on the item types in the
-            // input item filter
-            if (filter.ItemTypes != null)
-            {
-                string fragmentList = filter.ItemTypes.Select(itemType
-                    => $"{Enum.GetName(typeof(ContentModel.ItemType), itemType).Capitialize()}Fields").Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
-                // Just a quick and easy way to replace markers in our queries with vars here.
-                query = query.Replace("@fragmentList", fragmentList);
-                query = Queries.LoadFragments(query);
-            }
-
-            query = InjectCustomMetaFilter(query, customMetaFilter);
-            query = InjectRenderContentArgs(query, renderContent);
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = query,
-                Variables = new Dictionary<string, object>
-                {
-                    {"first", pagination.First},
-                    {"after", pagination.After},
-                    {"filter", filter},
-                    {"sort", sort},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                },
-                Convertors = new List<JsonConverter> { new ItemConvertor() }
-            }, cancellationToken);
-            return response.TypedResponseData.Items;
-        }
+            CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, contextData, GlobalContextData,
+                            customMetaFilter, renderContent)
+                        , cancellationToken)).TypedResponseData.Items;
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
             IContextData contextData, string customMetaFilter,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (contextData == null)
-                contextData = new ContextData();
+            CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.GetPublication(ns, publicationId, contextData, GlobalContextData,
+                            customMetaFilter), cancellationToken)).TypedResponseData.Publication;
 
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"contextData", MergeContextData(contextData).ClaimValues}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.Publication;
-        }
+        public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,
+            CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId),
+                        cancellationToken)).TypedResponseData.PageLink.Url;
 
-        public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolvePageLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"pageId", pageId}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.PageLink.Url;
-        }
+        public async Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId,
+            int? sourcePageId,
+            int? excludeComponentTemplateId, CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.ResolveComponentLink(ns, publicationId, componentId, sourcePageId,
+                            excludeComponentTemplateId), cancellationToken)).TypedResponseData.ComponentLink.Url;
 
-        public async Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
-            int? excludeComponentTemplateId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveComponentLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"targetComponentId", componentId},
-                    {"sourcePageId", sourcePageId},
-                    {"excludeComponentTemplateId", excludeComponentTemplateId}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.ComponentLink.Url;
-        }
+        public async Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId,
+            string variantId, CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId), cancellationToken))
+                .TypedResponseData.BinaryLink.Url;
 
-        public async Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveBinaryLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"binaryId", binaryId},
-                    {"variantId", variantId}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.BinaryLink.Url;
-        }
+        public async Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId,
+            int componentId,
+            int templateId, CancellationToken cancellationToken = default(CancellationToken)) => (
+                await
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId, componentId, templateId),
+                        cancellationToken)).TypedResponseData.DynamicComponentLink.Url;
 
-        public async Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId, int componentId,
-            int templateId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("ResolveDynamicComponentLink", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"publicationId", publicationId},
-                    {"targetPageId", pageId},
-                    {"targetComponentId", componentId},
-                    {"targetTemplateId", templateId}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.DynamicComponentLink.Url;
-        }
-
-        public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var response = await _client.ExecuteAsync<ContentQuery>(new GraphQLRequest
-            {
-                Query = Queries.Load("PublicationMapping", true),
-                Variables = new Dictionary<string, object>
-                {
-                    {"namespaceId", ns},
-                    {"siteUrl", url}
-                }
-            }, cancellationToken);
-            return response.TypedResponseData.PublicationMapping;
-        }
+        public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url,
+            CancellationToken cancellationToken = default(CancellationToken)) => (await
+                _client.ExecuteAsync<ContentQuery>(GraphQLRequests.GetPublicationMapping(ns, url), cancellationToken))
+                .TypedResponseData.PublicationMapping;
 
         #endregion
 
@@ -525,9 +255,6 @@ namespace Sdl.Web.PublicContentApi
 
         #region Helpers
 
-        private static ClaimValue FindClaim(string claimUri, IContextData contextData) 
-            => contextData?.ClaimValues.FirstOrDefault(claim => claim.Uri.Equals(claimUri));
-
         protected IContextData MergeContextData(IContextData localContextData)
         {
             if(localContextData == null)    
@@ -540,22 +267,7 @@ namespace Sdl.Web.PublicContentApi
             merged.ClaimValues = GlobalContextData.ClaimValues.Concat(localContextData.ClaimValues).ToList();
             return merged;
         }
-
-        protected static string InjectCustomMetaFilter(string query, string customMetaFilter)
-            => query.Replace("@customMetaArgs", string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
-
-        protected static string InjectRenderContentArgs(string query, bool renderContent)
-            => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
-
-        protected static string InjectVariantsArgs(string query, string url) 
-            => query.Replace("@variantsArgs", !string.IsNullOrEmpty(url) ? $"(url: \"{url}\")" : "");
-
-        protected static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
-        {
-            if (cmUri.ItemType == ItemType.Page) return LinkType.PAGE;
-            if (cmUri.ItemType == ItemType.Component && resolveToBinary) return LinkType.BINARY;
-            return LinkType.COMPONENT;
-        }
+      
         #endregion
     }
 }

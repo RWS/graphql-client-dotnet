@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using Sdl.Web.HttpClient.Auth;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Sdl.Web.HttpClient;
 
 namespace Sdl.Web.GraphQLClient.Request
@@ -20,6 +21,17 @@ namespace Sdl.Web.GraphQLClient.Request
         {
             Variables.Add(name, value);
             return this;
+        }
+
+        public virtual string Serialize()
+        {
+            return JsonConvert.SerializeObject(this,
+                Formatting.None,
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
         }
     }
 }

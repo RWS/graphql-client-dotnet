@@ -234,13 +234,7 @@ namespace Sdl.Web.GraphQLClient
                 {
                     ContentType = "application/json",
                     Method = "POST",
-                    Body = JsonConvert.SerializeObject(graphQLrequest,
-                        Formatting.None,
-                        new JsonSerializerSettings
-                        {
-                            NullValueHandling = NullValueHandling.Ignore,
-                            ContractResolver = new CamelCasePropertyNamesContractResolver()
-                        }),
+                    Body = graphQLrequest.Serialize(),
                     Headers = graphQLrequest.Headers,
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors

@@ -57,5 +57,11 @@ namespace Sdl.Web.GraphQLClient.Request
         /// </summary>
         [JsonIgnore]
         List<JsonConverter> Convertors { get; set; }
+
+        /// <summary>
+        /// Serialize the GraphQL Request
+        /// </summary>
+        /// <returns>Serialized Request</returns>
+        string Serialize();
     }
 }
