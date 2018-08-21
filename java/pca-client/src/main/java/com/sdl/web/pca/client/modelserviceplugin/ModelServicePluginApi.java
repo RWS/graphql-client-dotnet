@@ -12,6 +12,7 @@ import com.sdl.web.pca.client.exception.PublicContentApiException;
 /**
  * Model service plugin API.
  */
+//TODO: update javadoc with meaningful values
 public interface ModelServicePluginApi {
 
     /**
