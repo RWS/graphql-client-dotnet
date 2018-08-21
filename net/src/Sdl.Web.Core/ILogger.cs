@@ -2,6 +2,9 @@
 
 namespace Sdl.Web.Core
 {
+    /// <summary>
+    /// ILogger interface used for logging.
+    /// </summary>
     public interface ILogger
     {        
         void Trace(string messageFormat, params object[] parameters);

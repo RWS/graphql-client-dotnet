@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Sdl.Web.PublicContentApi.ContentModel;
 
-namespace Sdl.Web.PublicContentApi.ModelServicePlugin
+namespace Sdl.Web.PublicContentApi
 {
     public class TaxonomyItemConvertor : JsonConverter
     {

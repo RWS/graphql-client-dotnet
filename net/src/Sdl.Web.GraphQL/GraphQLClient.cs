@@ -5,7 +5,6 @@ using Sdl.Web.HttpClient;
 using Sdl.Web.HttpClient.Auth;
 using Sdl.Web.HttpClient.Request;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Sdl.Web.GraphQLClient.Exceptions;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.GraphQLClient.Response;
@@ -14,6 +13,9 @@ using Sdl.Web.Core;
 
 namespace Sdl.Web.GraphQLClient
 {
+    /// <summary>
+    /// GraphQL Client
+    /// </summary>
     public class GraphQLClient : IGraphQLClient
     {
         protected readonly IHttpClient _httpClient;
@@ -52,14 +54,25 @@ namespace Sdl.Web.GraphQLClient
             _httpClient = httpClient;
         }
 
-        public IHttpClient HttpClient => _httpClient;
-
+        /// <summary>
+        /// Get/Sets the timeout (ms) for the requests.
+        /// </summary>
         public int Timeout
         {
             get { return _httpClient.Timeout; }
             set { _httpClient.Timeout = value; }
         }
 
+        /// <summary>
+        /// HttpClient used for performing the actual request.
+        /// </summary>
+        public IHttpClient HttpClient => _httpClient;
+
+        /// <summary>
+        /// Execute a GraphQL request
+        /// </summary>
+        /// <param name="request">Fully built GraphQL request</param>
+        /// <returns>GraphQL Response</returns>
         public IGraphQLResponse Execute(IGraphQLRequest graphQLrequest)
         {
             try
@@ -83,6 +96,12 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Execute a GraphQL request
+        /// </summary>
+        /// <typeparam name="T">Target Type of response data</typeparam>
+        /// <param name="request">GraphQL request</param>
+        /// <returns>GraphQL Response</returns>
         public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest graphQLrequest)
         {
             try
@@ -119,6 +138,11 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Execute a GraphQL request (async)
+        /// </summary>
+        /// <param name="request">Fully built GraphQL request</param>
+        /// <returns>GraphQL Response</returns>
         public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest graphQLrequest,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -145,6 +169,12 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Execute a GraphQL request (async)
+        /// </summary>
+        /// <typeparam name="T">Target Type of response data</typeparam>
+        /// <param name="request">GraphQL request</param>
+        /// <returns>GraphQL Response</returns>
         public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest graphQLrequest,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -185,6 +215,9 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Gets GraphQL Schema from the GraphQL service.
+        /// </summary>
         public GraphQLSchema Schema
         {
             get
@@ -208,6 +241,9 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Gets GraphQL Schema from the GraphQL service (async).
+        /// </summary>
         public async Task<GraphQLSchema> SchemaAsync()
         {
             try

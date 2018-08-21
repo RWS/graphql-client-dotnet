@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using System.Resources;
 
 namespace Sdl.Web.GraphQLClient
 {
     /// <summary>
-    /// GraphQL Queries
+    /// GraphQL Query Resource Handling
     /// </summary>
     public static class QueryResources
-    {      
+    {            
         public static string LoadQueryFromResource(string resourceNamespace, string queryName, bool loadFragments)
         {
             string resourceName = $"{resourceNamespace}.Queries.{queryName}.graphql";

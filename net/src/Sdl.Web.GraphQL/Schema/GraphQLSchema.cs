@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Sdl.Web.GraphQLClient.Schema
-{
+{    
     public class GraphQLSchema
     {
         public GraphQLQueryType QueryType { get; set; }

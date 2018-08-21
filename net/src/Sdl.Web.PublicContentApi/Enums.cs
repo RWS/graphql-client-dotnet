@@ -1,4 +1,4 @@
-﻿namespace Sdl.Web.PublicContentApi.ModelServicePlugin
+﻿namespace Sdl.Web.PublicContentApi
 {
     // Strategy of DCP template resolving is template ID is missing in request.
     public enum DcpType

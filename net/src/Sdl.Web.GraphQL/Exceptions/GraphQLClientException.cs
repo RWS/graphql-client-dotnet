@@ -4,9 +4,19 @@ using Sdl.Web.HttpClient.Response;
 
 namespace Sdl.Web.GraphQLClient.Exceptions
 {
+    /// <summary>
+    /// GraphQL Client Exception
+    /// </summary>
     public class GraphQLClientException : Exception
     {
+        /// <summary>
+        /// Http Status Code of request
+        /// </summary>
         public int StatusCode { get; }
+
+        /// <summary>
+        /// Response of request.
+        /// </summary>
         public IHttpClientResponse<IGraphQLResponse> Response { get; }
 
         public GraphQLClientException()

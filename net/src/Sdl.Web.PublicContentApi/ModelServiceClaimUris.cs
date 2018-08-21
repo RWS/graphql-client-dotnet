@@ -1,4 +1,4 @@
-﻿namespace Sdl.Web.PublicContentApi.ModelServicePlugin
+﻿namespace Sdl.Web.PublicContentApi
 {
     /// <summary>
     /// Claim Values for PCA Model Service Plugin

@@ -33,5 +33,19 @@ namespace Sdl.Web.PublicContentApi
         Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId, int componentId, int templateId, CancellationToken cancellationToken);
 
         Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url, CancellationToken cancellationToken);
+
+        Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url, ContentType contentType,
+          DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId, int templateId, ContentType contentType,
+            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId, int descendantLevels, bool includeAncestors,
+            IContextData contextData, CancellationToken cancellationToken);
     }
 }

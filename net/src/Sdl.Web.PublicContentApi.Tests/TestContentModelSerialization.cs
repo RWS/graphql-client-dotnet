@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sdl.Web.PublicContentApi.ContentModel;
-using Sdl.Web.PublicContentApi.ModelServicePlugin;
 
 namespace Sdl.Web.PublicContentApi.Tests
 {

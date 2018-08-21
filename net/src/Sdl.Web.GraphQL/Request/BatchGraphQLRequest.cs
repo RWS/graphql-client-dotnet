@@ -4,6 +4,10 @@ using Newtonsoft.Json.Serialization;
 
 namespace Sdl.Web.GraphQLClient.Request
 {
+    /// <summary>
+    /// Provide Batch GraphQL requests to let you build multiple GraphQL requests and
+    /// execute them in a single http request.
+    /// </summary>
     public class BatchGraphQLRequest : GraphQLRequest
     {
         public List<IGraphQLRequest> Requests { get; set; } = new List<IGraphQLRequest>();
