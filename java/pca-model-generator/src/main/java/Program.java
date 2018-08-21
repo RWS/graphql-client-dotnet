@@ -16,6 +16,9 @@ import java.util.Formatter;
 import java.util.List;
 
 public class Program {
+
+    static StringBuilder  importBuilder = new StringBuilder();
+
     public static void main(String[] args) {
         System.out.print("Hi");
         if (args.length > 0)
@@ -101,6 +104,9 @@ public class Program {
 
             StringBuilder sb = new StringBuilder();
             EmitPackage(sb, ns);
+
+            sb.append(importBuilder);
+
             StringBuilder sbuilder = GenerateClass(sb, schema, type, 1);
             createJavaFile(type, sbuilder,outputFile);
         }
@@ -143,6 +149,9 @@ public class Program {
 
         EmitComment(sb, type.description, indentCount-1);
 
+        if(type.kind.equalsIgnoreCase("ENUM"))
+            sb.append("public enum "+type.name);
+        else
         sb.append("public class "+type.name);
         sb.append("{");
         sb.append("\n");
@@ -171,9 +180,9 @@ public class Program {
                     EmitFields( sb, type.fields, indentCount + 1, false);
                 }
                 break;
-            /*case "ENUM":
+            case "ENUM":
                 EmitFields(sb, type.enumValues, indentCount + 1);
-                break;*/
+                break;
             default:
                 System.out.println("oops");
                 break;
@@ -183,6 +192,20 @@ public class Program {
         sb.append("}\n");
 
         return sb;
+    }
+
+    static void EmitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount)
+    {
+        if (enumValues == null) return;
+        String indentString = new String(new char[indentCount]).replace("\0", "\t");
+        for (int i = 0; i < enumValues.size() - 1; i++)
+        {
+            sb.append("\n");
+            sb.append(indentString);
+            sb.append(enumValues.get(i).name+",");
+        }
+        /*sb.AppendLine(
+                $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");*/
     }
 
     static void EmitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic)
@@ -195,6 +218,7 @@ public class Program {
             field.type = RemapFieldType(field);
             if(field.name.equalsIgnoreCase("abstract"))
                 continue;
+
             if(field.type.name !=null) {
                 sb.append(indentString);
                 sb.append("public " + field.type.name + " " + field.name + ";");
@@ -203,15 +227,32 @@ public class Program {
         }
     }
 
+    static String GetFieldReturnTypeName(GraphQLSchemaTypeInfo type){
+            switch (type.kind)
+            {
+                case "LIST":
+                    return "List<"+type.ofType.name+">";
+                case "Map":
+                    return "IDictionary<"+type.ofType.name+">";
+                default:
+                    return type.name;
+            }
+        }
+
     static GraphQLSchemaTypeInfo RemapFieldType(GraphQLSchemaField field)
     {
         // Just remap itemType and namespaceId(s) from int to use our enum
         // to make things a little nicer to work with.
         GraphQLSchemaTypeInfo graphQLSchemaTypeInfo = new GraphQLSchemaTypeInfo();
-        switch (field.type.kind)
-        {
-            case "Int": {
-                field.type.kind = "int";
+        if(field.type.name!=null){
+            switch (field.type.name)
+            {
+                case "Int": {
+                    field.type.name = "int";
+                }
+                case "Map":{
+                    importBuilder.append("import java.util.Map;");
+                }
             }
         }
         switch (field.name)
