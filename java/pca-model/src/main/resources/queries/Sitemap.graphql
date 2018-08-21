@@ -1,5 +1,5 @@
-query sitemap($namespaceId: Int!, $publicationId: Int!) {
-  sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {
-    ...RecurseItems
-  }
+﻿query sitemap($namespaceId: Int!, $publicationId: Int!) {          
+    sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {
+		...RecurseItems
+    }
 }

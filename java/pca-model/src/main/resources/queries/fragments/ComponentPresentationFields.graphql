@@ -1,0 +1,6 @@
+﻿fragment ComponentPresentationFields on ComponentPresentation {
+    itemType
+	rawContent@renderContentArgs {
+		data 
+	}
+}

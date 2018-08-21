@@ -1,8 +1,9 @@
-﻿fragment RecurseItems on TaxonomySitemapItem {
+﻿rfragment RecurseItems on TaxonomySitemapItem {  
 	...TaxonomyItemFields
     items {		  
 		...on TaxonomySitemapItem {
-			...TaxonomyItemFields
+			...TaxonomyItemFields		
+			...RecurseItems
 		}
 		...on PageSitemapItem {
 			...TaxonomyPageFields

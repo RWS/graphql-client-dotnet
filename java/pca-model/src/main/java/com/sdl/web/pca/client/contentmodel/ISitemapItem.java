@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 /// Sitemap Item
 /// </summary>
-interface ISitemapItem
+public interface ISitemapItem
 {
     String id = null;
     String originalTitle = null;
@@ -12,7 +12,6 @@ interface ISitemapItem
     String type = null;
     String url = null;
     boolean visible = false;
-
 
     String getId();
     void setId(String id);
@@ -34,4 +33,5 @@ interface ISitemapItem
 
     boolean isVisible();
     void setVisible(boolean visible);
+
 }

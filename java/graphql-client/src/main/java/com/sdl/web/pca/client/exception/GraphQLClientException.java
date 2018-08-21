@@ -1,4 +1,4 @@
-package com.sdl.web.pca.client.exceptions;
+package com.sdl.web.pca.client.exception;
 
 public class GraphQLClientException extends Exception {
 

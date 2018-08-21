@@ -3,16 +3,16 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 	/// An edge in a connection
 	/// </summary>
-	class ItemEdge
+	public class ItemEdge
 	{
-		private IItem node;
+		private Node node;
 		private String cursor;
 
-		 public IItem getNode()
+		 public Node getNode()
 		 {
 			 return node;
 		 }
-		 public void setNode(IItem node)
+		 public void setNode(Node node)
 		 {
 			 this.node = node;
 		 }

@@ -1,8 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 /// <summary>
 /// The query root for the GraphQL Public Content API.
 /// </summary>
+@JsonRootName(value = "data")
 public class ContentQuery
 {
     private BinaryComponent binaryComponent;

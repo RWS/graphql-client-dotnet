@@ -1,4 +1,4 @@
-package com.sdl.web.pca.client.serviceplugin;
+package com.sdl.web.pca.client.modelserviceplugin;
 
 public class ModelServiceClaimUris {
     public static final String ContentType = "dxa:modelservice:content:type";

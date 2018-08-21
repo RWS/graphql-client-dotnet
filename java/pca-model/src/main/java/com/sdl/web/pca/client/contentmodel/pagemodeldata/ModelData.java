@@ -1,8 +1,10 @@
 package com.sdl.web.pca.client.contentmodel.pagemodeldata;
 
+
 import java.util.List;
 
 public class ModelData {
+
     private String Id;
     private String Title;
     private Pagetemplate PageTemplate;
