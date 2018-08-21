@@ -1,17 +1,7 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/*[JsonConverter(typeof(StringEnumConverter))]*/
-	enum TaxonomyType
-	{
-		/// <summary>
-		/// KEYWORD
-		/// </summary>
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public enum TaxonomyType{
+
 		KEYWORD,
-
-		/// <summary>
-		/// CATEGORY
-		/// </summary>
-		CATEGORY,
-
-		STRUCTUREGROUP
-	}
+		CATEGORY,	
+}

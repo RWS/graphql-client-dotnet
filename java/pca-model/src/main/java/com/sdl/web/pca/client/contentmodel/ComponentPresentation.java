@@ -1,168 +1,37 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-/// Represents a component presentation which has a component associated with a template.
-/// </summary>
-class ComponentPresentation implements IItem
-{
-    private IContentComponent component;
-    private Template componentTemplate;
-    private IContent content;
-    private String creationDate;
-    private CustomMetaConnection customMetas;
-    private String id;
-    private String initialPublishDate;
-    private int itemId;
-    private int itemType;
-    private String lastPublishDate;
-    private int namespaceId;
-    private int owningPublicationId;
-    private int publicationId;
-    private RawContent rawContent;
-    private String title;
-    private String updatedDate;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*Represents a component presentation which has a component associated with a template.
+*/
+public class ComponentPresentation{
 
-     public IContentComponent getComponent()
-     {
-         return component;
-     }
-     public void setComponent(IContentComponent component)
-     {
-         this.component = component;
-     }
+		public ContentComponent component;
 
-     public Template getComponentTemplate()
-     {
-         return componentTemplate;
-     }
-     public void setComponentTemplate(Template componentTemplate)
-     {
-         this.componentTemplate = componentTemplate;
-     }
+		public Template componentTemplate;
 
-     public IContent getContent()
-     {
-         return content;
-     }
-     public void setContent(IContent content)
-     {
-         this.content = content;
-     }
+		public Content content;
 
-     public String getCreationDate()
-     {
-         return creationDate;
-     }
-     public void setCreationDate(String creationDate)
-     {
-         this.creationDate = creationDate;
-     }
+		public String creationDate;
 
-     public CustomMetaConnection getCustomMetas()
-     {
-         return customMetas;
-     }
-     public void setCustomMetas(CustomMetaConnection customMetas)
-     {
-         this.customMetas = customMetas;
-     }
+		public CustomMetaConnection customMetas;
 
-     public String getId()
-     {
-         return id;
-     }
-     public void setId(String id)
-     {
-         this.id = id;
-     }
 
-     public String getInitialPublishDate()
-     {
-         return initialPublishDate;
-     }
-     public void setInitialPublishDate(String initialPublishDate)
-     {
-         this.initialPublishDate = initialPublishDate;
-     }
+		public String initialPublishDate;
 
-     public int getItemId()
-     {
-         return itemId;
-     }
-     public void setItemId(int itemId)
-     {
-         this.itemId = itemId;
-     }
 
-     public int getItemType()
-     {
-         return itemType;
-     }
-     public void setItemType(int itemType)
-     {
-         this.itemType = itemType;
-     }
+		public ItemType itemType;
 
-     public String getLastPublishDate()
-     {
-         return lastPublishDate;
-     }
-     public void setLastPublishDate(String lastPublishDate)
-     {
-         this.lastPublishDate = lastPublishDate;
-     }
+		public String lastPublishDate;
 
-     public int getNamespaceId()
-     {
-         return namespaceId;
-     }
-     public void setNamespaceId(int namespaceId)
-     {
-         this.namespaceId = namespaceId;
-     }
+		public ContentNamespace namespaceId;
 
-     public int getOwningPublicationId()
-     {
-         return owningPublicationId;
-     }
-     public void setOwningPublicationId(int owningPublicationId)
-     {
-         this.owningPublicationId = owningPublicationId;
-     }
+		public int owningPublicationId;
 
-     public int getPublicationId()
-     {
-         return publicationId;
-     }
-     public void setPublicationId(int publicationId)
-     {
-         this.publicationId = publicationId;
-     }
 
-     public RawContent getRawContent()
-     {
-         return rawContent;
-     }
-     public void setRawContent(RawContent rawContent)
-     {
-         this.rawContent = rawContent;
-     }
+		public RawContent rawContent;
 
-     public String getTitle()
-     {
-         return title;
-     }
-     public void setTitle(String title)
-     {
-         this.title = title;
-     }
+		public String title;
 
-     public String getUpdatedDate()
-     {
-         return updatedDate;
-     }
-     public void setUpdatedDate(String updatedDate)
-     {
-         this.updatedDate = updatedDate;
-     }
+		public String updatedDate;
+	
 }

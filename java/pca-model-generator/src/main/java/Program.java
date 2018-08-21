@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import graphql.introspection.IntrospectionQuery;
@@ -20,7 +21,7 @@ public class Program {
     static StringBuilder  importBuilder = new StringBuilder();
 
     public static void main(String[] args) {
-        System.out.print("Hi");
+        System.out.print("Generate Model Classes \n");
         if (args.length > 0)
         {
             String endpoint = null;
@@ -58,7 +59,7 @@ public class Program {
                 return;
             }
 
-            GraphQLClient client = new GraphQLClient(endpoint, null);
+            GraphQLClient client = new DefaultGraphQLClient(endpoint, null);
 
             try {
                 String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/IntrospectionQuery.graphql"), "UTF-8");
@@ -101,6 +102,8 @@ public class Program {
                 continue;
             if (type.kind.equalsIgnoreCase("SCALAR"))
                 continue;
+            if (type.name.equalsIgnoreCase("NPUT_OBJECT"))
+                continue;
 
             StringBuilder sb = new StringBuilder();
             EmitPackage(sb, ns);
@@ -122,6 +125,7 @@ public class Program {
         try {
             writer = new BufferedWriter(new FileWriter(newfile));
             writer.append(sb);
+
         } finally {
             if (writer != null) writer.close();
         }
@@ -189,6 +193,8 @@ public class Program {
         }
         sb.append(indentString);
         sb.append("\n");
+
+
         sb.append("}\n");
 
         return sb;

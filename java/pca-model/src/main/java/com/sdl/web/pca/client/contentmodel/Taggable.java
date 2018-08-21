@@ -1,8 +1,9 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
-*Represents the type of container.
+*Represents a related set of entities.
 */
-public enum ContainerType{
+public class Taggable{
+
 	
 }

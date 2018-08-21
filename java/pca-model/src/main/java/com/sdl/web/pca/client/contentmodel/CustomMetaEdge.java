@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class CustomMetaEdge
-	{
-		private CustomMeta node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class CustomMetaEdge{
 
-		 public CustomMeta getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(CustomMeta node)
-		 {
-			 this.node = node;
-		 }
+		public CustomMeta node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class BinaryVariantEdge
-	{
-		private BinaryVariant node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class BinaryVariantEdge{
 
-		 public BinaryVariant getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(BinaryVariant node)
-		 {
-			 this.node = node;
-		 }
+		public BinaryVariant node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class StructureGroupEdge
-	{
-		private StructureGroup node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class StructureGroupEdge{
 
-		 public StructureGroup getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(StructureGroup node)
-		 {
-			 this.node = node;
-		 }
+		public StructureGroup node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

@@ -1,7 +1,5 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/*[JsonConverter(typeof(StringEnumConverter))]*/
-enum ContentFilterQueryType
-{
-    CUSTOM_META
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public enum ContentFilterQueryType{
+	
 }

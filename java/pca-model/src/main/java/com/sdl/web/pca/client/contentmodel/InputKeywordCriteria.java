@@ -1,45 +1,13 @@
 package com.sdl.web.pca.client.contentmodel;
 
-class InputKeywordCriteria
-{
-    private int categoryId;
-    private String categoryName;
-    private String key;
-    private int keywordId;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public class InputKeywordCriteria{
 
-     public int getCategoryId()
-     {
-         return categoryId;
-     }
-     public void setCategoryId(int categoryId)
-     {
-         this.categoryId = categoryId;
-     }
+		public int categoryId;
 
-     public String getCategoryName()
-     {
-         return categoryName;
-     }
-     public void setCategoryName(String categoryName)
-     {
-         this.categoryName = categoryName;
-     }
+		public String categoryName;
 
-     public String getKey()
-     {
-         return key;
-     }
-     public void setKey(String key)
-     {
-         this.key = key;
-     }
+		public String key;
 
-     public int getKeywordId()
-     {
-         return keywordId;
-     }
-     public void setKeywordId(int keywordId)
-     {
-         this.keywordId = keywordId;
-     }
+		public int keywordId;
+	
 }

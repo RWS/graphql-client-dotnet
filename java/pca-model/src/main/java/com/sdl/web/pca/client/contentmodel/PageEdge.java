@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class PageEdge
-	{
-		private Page node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class PageEdge{
 
-		 public Page getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(Page node)
-		 {
-			 this.node = node;
-		 }
+		public Page node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

@@ -1,139 +1,28 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public class TaxonomySitemapItem{
 
-import java.util.List;
+		public int classifiedItemsCount;
 
-public class TaxonomySitemapItem implements ISitemapItem
-	{
-		private int classifiedItemsCount;
-		private String description;
-		private String id;
-		private List<TaxonomySitemapItem> items;
-		private String key;
-		private String originalTitle;
-		private String publishedDate;
-		private String title;
-		private String type;
-		private String url;
-		private boolean Abstract;
-		private boolean hasChildNodes;
-		private boolean visible;
+		public String description;
 
-		 public int getClassifiedItemsCount()
-		 {
-			 return classifiedItemsCount;
-		 }
-		 public void setClassifiedItemsCount(int classifiedItemsCount)
-		 {
-			 this.classifiedItemsCount = classifiedItemsCount;
-		 }
 
-		 public String getDescription()
-		 {
-			 return description;
-		 }
-		 public void setDescription(String description)
-		 {
-			 this.description = description;
-		 }
 
-		 public String getId()
-		 {
-			 return id;
-		 }
-		 public void setId(String id)
-		 {
-			 this.id = id;
-		 }
+		public String key;
 
-		 public List<TaxonomySitemapItem> getItems()
-		 {
-			 return items;
-		 }
-		 public void setItems(List<TaxonomySitemapItem> items)
-		 {
-			 this.items = items;
-		 }
+		public String originalTitle;
 
-		 public String getKey()
-		 {
-			 return key;
-		 }
-		 public void setKey(String key)
-		 {
-			 this.key = key;
-		 }
+		public String publishedDate;
 
-		 public String getOriginalTitle()
-		 {
-			 return originalTitle;
-		 }
-		 public void setOriginalTitle(String originalTitle)
-		 {
-			 this.originalTitle = originalTitle;
-		 }
+		public String title;
 
-		 public String getPublishedDate()
-		 {
-			 return publishedDate;
-		 }
-		 public void setPublishedDate(String publishedDate)
-		 {
-			 this.publishedDate = publishedDate;
-		 }
+		public String type;
 
-		 public String getTitle()
-		 {
-			 return title;
-		 }
-		 public void setTitle(String title)
-		 {
-			 this.title = title;
-		 }
+		public String url;
 
-		 public String getType()
-		 {
-			 return type;
-		 }
-		 public void setType(String type)
-		 {
-			 this.type = type;
-		 }
 
-		 public String getUrl()
-		 {
-			 return url;
-		 }
-		 public void setUrl(String url)
-		 {
-			 this.url = url;
-		 }
+		public Boolean hasChildNodes;
 
-		 public boolean isAbstract()
-		 {
-			 return Abstract;
-		 }
-		 public void setAbstract(boolean anAbstract)
-		 {
-			 this.Abstract = anAbstract;
-		 }
-
-		 public boolean isHasChildNodes()
-		 {
-			 return hasChildNodes;
-		 }
-		 public void setHasChildNodes(boolean hasChildNodes)
-		 {
-			 this.hasChildNodes = hasChildNodes;
-		 }
-
-		 public boolean isVisible()
-		 {
-			 return visible;
-		 }
-		 public void setVisible(boolean visible)
-		 {
-			 this.visible = visible;
-		 }
-	}
+		public Boolean visible;
+	
+}

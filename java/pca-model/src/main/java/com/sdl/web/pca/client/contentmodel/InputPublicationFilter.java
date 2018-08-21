@@ -1,38 +1,14 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-/// Represents a filter for a publication query.
-/// </summary>
-class InputPublicationFilter
-{
-    private ContentFilterQueryType queryType;
-    private String value;
-    private CustomMetaValueType valueType;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*Represents a filter for a publication query.
+*/
+public class InputPublicationFilter{
 
-     public ContentFilterQueryType getQueryType()
-     {
-         return queryType;
-     }
-     public void setQueryType(ContentFilterQueryType queryType)
-     {
-         this.queryType = queryType;
-     }
+		public ContentFilterQueryType queryType;
 
-     public String getValue()
-     {
-         return value;
-     }
-     public void setValue(String value)
-     {
-         this.value = value;
-     }
+		public String value;
 
-     public CustomMetaValueType getValueType()
-     {
-         return valueType;
-     }
-     public void setValueType(CustomMetaValueType valueType)
-     {
-         this.valueType = valueType;
-     }
+		public CustomMetaValueType valueType;
+	
 }

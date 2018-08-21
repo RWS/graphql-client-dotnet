@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class KeywordEdge
-	{
-		private Keyword node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class KeywordEdge{
 
-		 public Keyword getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(Keyword node)
-		 {
-			 this.node = node;
-		 }
+		public Keyword node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

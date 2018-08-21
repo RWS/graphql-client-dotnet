@@ -1,9 +1,9 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/**
-*Represents a component which has binary content.
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*Represents an item. The root of all content models.
 */
-public class BinaryComponent{
+public class Item{
 
 		public String creationDate;
 
@@ -22,16 +22,8 @@ public class BinaryComponent{
 		public int owningPublicationId;
 
 
-		public int schemaId;
-
-
 		public String title;
 
-
 		public String updatedDate;
-
-		public BinaryVariantConnection variants;
-
-		public Boolean multiMedia;
 	
 }

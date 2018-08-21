@@ -1,45 +1,13 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum ItemType {
-	/// <summary>
-	/// PUBLICATION
-	/// </summary>
-	PUBLICATION,
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public enum ItemType{
 
-	/// <summary>
-	/// STRUCTURE_GROUP
-	/// </summary>
-	STRUCTURE_GROUP,
-
-	/// <summary>
-	/// COMPONENT
-	/// </summary>
-	COMPONENT,
-
-	/// <summary>
-	/// COMPONENT_TEMPLATE
-	/// </summary>
-	COMPONENT_TEMPLATE,
-
-	/// <summary>
-	/// PAGE
-	/// </summary>
-	PAGE,
-
-	/// <summary>
-	/// PAGE_TEMPLATE
-	/// </summary>
-	PAGE_TEMPLATE,
-
-	/// <summary>
-	/// CATEGORY
-	/// </summary>
-	CATEGORY,
-
-	/// <summary>
-	/// KEYWORD
-	/// </summary>
-	KEYWORD,
-
-	COMPONENT_PRESENTATION
+		PUBLICATION,
+		STRUCTURE_GROUP,
+		COMPONENT,
+		COMPONENT_TEMPLATE,
+		PAGE,
+		PAGE_TEMPLATE,
+		CATEGORY,
+		KEYWORD,	
 }

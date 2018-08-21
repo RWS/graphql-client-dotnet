@@ -1,28 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	class TaxonomyItemEdge
-	{
-		private ITaxonomyItem node;
-		private String cursor;
+import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+*An edge in a connection
+*/
+public class TaxonomyItemEdge{
 
-		 public ITaxonomyItem getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(ITaxonomyItem node)
-		 {
-			 this.node = node;
-		 }
+		public TaxonomyItem node;
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+	
+}

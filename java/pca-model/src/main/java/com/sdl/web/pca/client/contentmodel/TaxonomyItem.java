@@ -1,13 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/**
-*Represents a component which has binary content.
+import java.util.Map;import java.util.Map;import java.util.Map;/**
+*Represents a taxonomy item.
 */
-public class BinaryComponent{
+public class TaxonomyItem{
+
+		public TaxonomyItemConnection children;
 
 		public String creationDate;
 
 		public CustomMetaConnection customMetas;
+
+		public int depth;
 
 
 		public String initialPublishDate;
@@ -15,23 +19,26 @@ public class BinaryComponent{
 
 		public ItemType itemType;
 
+		public String key;
+
 		public String lastPublishDate;
 
 		public ContentNamespace namespaceId;
 
 		public int owningPublicationId;
 
+		public TaxonomyItem parent;
 
-		public int schemaId;
+
 
 
 		public String title;
 
-
 		public String updatedDate;
 
-		public BinaryVariantConnection variants;
+		public Boolean hasChildren;
 
-		public Boolean multiMedia;
+
+		public Boolean navigable;
 	
 }
