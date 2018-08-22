@@ -6,9 +6,7 @@ import java.util.List;
 /// Context Data
 public interface IContextData {
     /// List of claim values to pass to query.
+     List<ClaimValue> getClaimValues();
 
-    List<ClaimValue> ClaimValues = null;
-
-    List<ClaimValue> getClaimValues();
-    void setClaimValues(List<ClaimValue> ClaimValues);
+     void setClaimValues(List<ClaimValue> claimValues);
 }

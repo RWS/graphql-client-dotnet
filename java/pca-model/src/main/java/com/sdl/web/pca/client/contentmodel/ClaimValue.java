@@ -9,7 +9,13 @@ public class ClaimValue
     private String uri;
     private String value;
 
-     public ClaimValueType getType()
+    public ClaimValue(ClaimValueType type, String uri, String value) {
+        this.type = type;
+        this.uri = uri;
+        this.value = value;
+    }
+
+    public ClaimValueType getType()
      {
          return type;
      }

@@ -2,8 +2,8 @@ package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.ItemConnection;
@@ -135,9 +135,8 @@ public class GraphQLClientTest {
 
     @Test
     public void executeGetPageModelData() {
-        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 7, 240,
-                ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, true, null,
-                ContentQuery.class));
+        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 1082, 640,
+                ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, false, new ContextData()));
     }
 
     @Test
@@ -155,6 +154,6 @@ public class GraphQLClientTest {
     @Test
     public void executeGetEntityModelData() {
         assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1,
-                null, null, null, false, null, ContentQuery.class));
+                null, null, null, false, null));
     }
 }

@@ -51,9 +51,7 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
     @Override
     public String execute(String jsonEntity, int timeout) throws GraphQLClientException {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Requested entity: {}" + jsonEntity);
-        }
+        LOG.debug("Requested entity: {}", jsonEntity);
 
         HttpPost httpPost = new HttpPost(endpoint);
         defaultHeaders.forEach((key, value) -> httpPost.addHeader(key, value));
@@ -82,9 +80,7 @@ public class DefaultGraphQLClient implements GraphQLClient {
                 throw new GraphQLClientException("Unable to retrieve requested entity");
             }
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Returned message: {}", contentString);
-            }
+            LOG.debug("Returned message: {}", contentString);
             return contentString;
         } catch (IOException e) {
             throw new GraphQLClientException("Exception during requesting entity: " + jsonEntity, e);

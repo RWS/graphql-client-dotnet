@@ -1,12 +1,12 @@
 package com.sdl.web.pca.client;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.ClaimValue;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import com.sdl.web.pca.client.contentmodel.ContentType;
-import com.sdl.web.pca.client.contentmodel.IContextData;
+import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.IPagination;
 import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
@@ -21,26 +21,34 @@ import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
-import com.sdl.web.pca.client.modelserviceplugin.ModelServicePluginApi;
+import com.sdl.web.pca.client.modelserviceplugin.ClaimHelper;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class DefaultPublicContentApi implements PublicContentApi, ModelServicePluginApi {
-    private static final ObjectMapper MAPPER = new ObjectMapper().enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+public class DefaultPublicContentApi implements PublicContentApi {
+    private static final ObjectMapper MAPPER = new ObjectMapper();//.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
 
     private GraphQLClient client;
     private Map<String, String> queries = new HashMap<>();
     private Map<String, String> fragments = new HashMap<>();
     private int requestTimeout;
+    private ContextData defaultContextData;
 
     public DefaultPublicContentApi(GraphQLClient graphQLClient) {
         client = graphQLClient;
+        defaultContextData = new ContextData();
+        defaultContextData.setClaimValues(Collections.EMPTY_LIST);
     }
 
     public DefaultPublicContentApi(GraphQLClient graphQLClient, int requestTimeout) {
@@ -48,35 +56,42 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
         this.requestTimeout = requestTimeout;
     }
 
-
     @Override
-    public <T> T getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
-                                  DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
-                                  IContextData contextData, Class<T> clazz) throws PublicContentApiException {
+    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
+                                     DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
+                                     ContextData contextData) throws PublicContentApiException {
         //TODO implement
         return null;
     }
 
     @Override
-    public <T> T getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-                                  DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
-                                  IContextData contextData, Class<T> clazz) throws PublicContentApiException {
-        //TODO fix: pageInclusion, modelType, renderContent is not used
+    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+                                     DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
+                                     ContextData contextData) throws PublicContentApiException {
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        List<ClaimValue> claims = Arrays.asList(
+                createClaim(contentType),
+                createClaim(modelType),
+                createClaim(pageInclusion)
+        );
+        mergedData.getClaimValues().addAll(claims);
         String query = getQueryFor("PageModelById");
+        query = QueryUtils.injectRenderContentArgs(query, renderContent);
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
         variables.put("pageId", pageId);
-        variables.put("contextData", contextData);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, clazz);
+
+        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
     }
 
     @Override
-    public <T> T getEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-                                    DataModelType modelType, DcpType dcpType, boolean renderContent,
-                                    IContextData contextData, Class<T> clazz) throws PublicContentApiException {
+    public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
+                                       DataModelType modelType, DcpType dcpType, boolean renderContent,
+                                       ContextData contextData) throws PublicContentApiException {
         //TODO fix: contentType, modoelType, dcpType, renderContent is not used in current implementation
         String query = getQueryFor("EntityModelById");
 
@@ -87,29 +102,30 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
         variables.put("entityId", entityId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, clazz);    }
+        return getJsonResult(graphQLRequest, "????");
+    }
 
-     @Override
+    @Override
     public TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
-                                          IContextData contextData) throws PublicContentApiException {
+                                          ContextData contextData) throws PublicContentApiException {
         //TODO fix: descendsantLevels, contextData is not used in current implementation
-         String query = getQueryFor("Sitemap");
-         query += getFragmentFor("RecurseItems");
-         query += getFragmentFor("TaxonomyItemFields");
-         query += getFragmentFor("TaxonomyPageFields");
+        String query = getQueryFor("Sitemap");
+        query += getFragmentFor("RecurseItems");
+        query += getFragmentFor("TaxonomyItemFields");
+        query += getFragmentFor("TaxonomyPageFields");
 
-         HashMap<String, Object> variables = new HashMap<>();
-         variables.put("namespaceId", ns.getNameSpaceValue());
-         variables.put("publicationId", publicationId);
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
 
-         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-         return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
     }
 
     @Override
     public TaxonomySitemapItem getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
                                                  int descendantLevels, boolean includeAncestors,
-                                                 IContextData contextData) throws PublicContentApiException {
+                                                 ContextData contextData) throws PublicContentApiException {
         //TODO fix: descendantLevels, includeAncestors, contextData is not used in current implementatioon
         String query = getQueryFor("SitemapSubtree");
         query += getFragmentFor("TaxonomyItemFields");
@@ -128,27 +144,27 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
 
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
-                                              IContextData contextData) throws PublicContentApiException {
+                                              ContextData contextData) throws PublicContentApiException {
         //TODO implement
         return null;
     }
 
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url,
-                                              IContextData contextData) throws PublicContentApiException {
+                                              ContextData contextData) throws PublicContentApiException {
         //TODO implement
         return null;
     }
 
     @Override
-    public BinaryComponent getBinaryComponent(CmUri cmUri, IContextData contextData) throws PublicContentApiException {
+    public BinaryComponent getBinaryComponent(CmUri cmUri, ContextData contextData) throws PublicContentApiException {
         //TODO implement
         return null;
     }
 
     @Override
     public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-                                           IContextData contextData, String customMetaFilter,
+                                           ContextData contextData, String customMetaFilter,
                                            boolean renderContent) throws PublicContentApiException {
         //TODO fix: sort, contextData, customMetaFilter is not used in current implementation
         customMetaFilter = "";
@@ -184,13 +200,34 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
     }
 
     @Override
-    public Publication getPublication(ContentNamespace ns, int publicationId, IContextData contextData, String customMetaFilter) throws PublicContentApiException {
+    public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData, String customMetaFilter) throws PublicContentApiException {
         //TODO implement
         return null;
     }
 
     @Override
-    public String resolveLink(CmUri cmUri, boolean resolveToBinary) throws PublicContentApiException {
+    public String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
+        //TODO implement
+        return null;
+    }
+
+    @Override
+    public String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
+                                       Integer excludeComponentTemplateId) throws PublicContentApiException {
+        //TODO implement
+        return null;
+    }
+
+    @Override
+    public String ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
+                                    String variantId) throws PublicContentApiException {
+        //TODO implement
+        return null;
+    }
+
+    @Override
+    public String ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
+                                              int templateId) throws PublicContentApiException {
         //TODO implement
         return null;
     }
@@ -215,8 +252,6 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
 //        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
 //        return getResultForRequest(graphQLRequest, clazz);
 //    }
-
-
 
 
     private String getQueryFor(String queryName) throws PublicContentApiException {
@@ -247,6 +282,31 @@ public class DefaultPublicContentApi implements PublicContentApi, ModelServicePl
         } catch (IOException e) {
             throw new PublicContentApiException("Unable to deserialize result for query " + request, e);
         }
+    }
+
+    private JsonNode getJsonResult(GraphQLRequest request, String path) throws PublicContentApiException {
+        try {
+            String resultString = client.execute(request);
+            JsonNode resultJson = MAPPER.readTree(resultString);
+            return resultJson.at(path);
+        } catch (GraphQLClientException e) {
+            throw new PublicContentApiException("Unable to execute query: " + request, e);
+        } catch (IOException e) {
+            throw new PublicContentApiException("Unable to deserialize result for query " + request, e);
+        }
+    }
+
+    private ContextData mergeContextData(ContextData data1, ContextData data2) {
+        List<ClaimValue> merged = new ArrayList<>();
+        if (data1 != null && data1.getClaimValues() != null) {
+            merged.addAll(data1.getClaimValues());
+        }
+        if (data2 != null && data2.getClaimValues() != null) {
+            merged.addAll(data2.getClaimValues());
+        }
+        ContextData result = new ContextData();
+        result.setClaimValues(merged);
+        return result;
     }
 
     public GraphQLClient getGraphQLClient() {
