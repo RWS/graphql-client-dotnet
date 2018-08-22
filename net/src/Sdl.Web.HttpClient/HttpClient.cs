@@ -171,9 +171,9 @@ namespace Sdl.Web.HttpClient
             requestCopy.Authenticaton?.ApplyManualAuthentication(requestCopy);
             request.Credentials = requestCopy.Authenticaton;
             foreach (var x in Headers)
-                request.Headers[x.Key] = x.Value.ToString();
+                request.Headers[x.Key] = x.Value?.ToString();
             foreach (var x in requestCopy.Headers)
-                request.Headers[x.Key] = x.Value.ToString();
+                request.Headers[x.Key] = x.Value?.ToString();
             if (requestCopy.Method != "POST") return request;
             byte[] serialized = Serialize(requestCopy.Body, requestCopy.ContentType);
             using (Stream requestStream = request.GetRequestStream())
