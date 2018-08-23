@@ -9,6 +9,9 @@ using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
 {
+    /// <summary>
+    /// Predefined GraphQL requests for working with the Public Content Api
+    /// </summary>
     public static class GraphQLRequests
     {
         public static GraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
@@ -104,6 +107,20 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
             };
+
+        public static GraphQLRequest Publications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
+           IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
+           {
+               Query = InjectCustomMetaFilter(Queries.Load("Publications", true), customMetaFilter),
+               Variables = new Dictionary<string, object>
+               {
+                    {"namespaceId", ns},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"filter", filter},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+               }
+           };
 
         public static GraphQLRequest ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
             => new GraphQLRequest
