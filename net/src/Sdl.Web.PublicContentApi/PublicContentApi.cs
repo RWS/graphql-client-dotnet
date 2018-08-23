@@ -147,7 +147,7 @@ namespace Sdl.Web.PublicContentApi
                 var response =
                     _client.Execute(GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId, contentType, modelType,
                         dcpType, renderContent, contextData, GlobalContextData));
-                return response.Data.entity.rawContent.data;
+                return response.Data.componentPresentation.rawContent.data;
             }
             catch (RuntimeBinderException e)
             {

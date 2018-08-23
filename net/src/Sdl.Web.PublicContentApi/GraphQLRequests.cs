@@ -213,7 +213,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"entityId", entityId},
+                    {"componentId", entityId},
                     {"templateId", templateId},
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
