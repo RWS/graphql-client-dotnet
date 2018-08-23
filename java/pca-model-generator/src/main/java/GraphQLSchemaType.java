@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class GraphQLSchemaType {
+public class    GraphQLSchemaType {
     public String kind;
     public String name;
     public String description;

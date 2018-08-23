@@ -1,13 +1,79 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;public class InputKeywordCriteria{
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.Map;
+import java.util.Map;
+public class InputKeywordCriteria{
 
-		public int categoryId;
+		private int categoryId;
 
-		public String categoryName;
+		private String categoryName;
 
-		public String key;
+		private String key;
 
-		public int keywordId;
+		private int keywordId;
+
+
+		public int getCategoryId()
+		{
+			return categoryId;
+		}
+		public void setCategoryId(int categoryId)
+		{
+			this.categoryId = categoryId;
+		}
+
+
+		public String getCategoryName()
+		{
+			return categoryName;
+		}
+		public void setCategoryName(String categoryName)
+		{
+			this.categoryName = categoryName;
+		}
+
+
+		public String getKey()
+		{
+			return key;
+		}
+		public void setKey(String key)
+		{
+			this.key = key;
+		}
+
+
+		public int getKeywordId()
+		{
+			return keywordId;
+		}
+		public void setKeywordId(int keywordId)
+		{
+			this.keywordId = keywordId;
+		}
 	
 }

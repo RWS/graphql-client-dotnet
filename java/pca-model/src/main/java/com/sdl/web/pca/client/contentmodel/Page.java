@@ -1,40 +1,262 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.Map;
+import java.util.Map;
+/**
 *Represents a page.
 */
 public class Page{
 
+		private List<Item> containerItems;
 
-		public Content content;
+		private Content content;
 
-		public String creationDate;
+		private String creationDate;
 
-		public CustomMetaConnection customMetas;
+		private CustomMetaConnection customMetas;
 
-		public String fileName;
+		private String fileName;
+
+		private String id;
+
+		private String initialPublishDate;
+
+		private int itemId;
+
+		private ItemType itemType;
+
+		private String lastPublishDate;
+
+		private ContentNamespace namespaceId;
+
+		private int owningPublicationId;
+
+		private Template pageTemplate;
+
+		private int publicationId;
+
+		private RawContent rawContent;
+
+		private List<TaxonomyItem> taxonomies;
+
+		private String title;
+
+		private String updatedDate;
+
+		private String url;
 
 
-		public String initialPublishDate;
+		public List<Item> getContainerItems()
+		{
+			return containerItems;
+		}
+		public void setContainerItems(List<Item> containerItems)
+		{
+			this.containerItems = containerItems;
+		}
 
 
-		public ItemType itemType;
-
-		public String lastPublishDate;
-
-		public ContentNamespace namespaceId;
-
-		public int owningPublicationId;
-
-		public Template pageTemplate;
-
-
-		public RawContent rawContent;
+		public Content getContent()
+		{
+			return content;
+		}
+		public void setContent(Content content)
+		{
+			this.content = content;
+		}
 
 
-		public String title;
+		public String getCreationDate()
+		{
+			return creationDate;
+		}
+		public void setCreationDate(String creationDate)
+		{
+			this.creationDate = creationDate;
+		}
 
-		public String updatedDate;
 
+		public CustomMetaConnection getCustomMetas()
+		{
+			return customMetas;
+		}
+		public void setCustomMetas(CustomMetaConnection customMetas)
+		{
+			this.customMetas = customMetas;
+		}
+
+
+		public String getFileName()
+		{
+			return fileName;
+		}
+		public void setFileName(String fileName)
+		{
+			this.fileName = fileName;
+		}
+
+
+		public String getId()
+		{
+			return id;
+		}
+		public void setId(String id)
+		{
+			this.id = id;
+		}
+
+
+		public String getInitialPublishDate()
+		{
+			return initialPublishDate;
+		}
+		public void setInitialPublishDate(String initialPublishDate)
+		{
+			this.initialPublishDate = initialPublishDate;
+		}
+
+
+		public int getItemId()
+		{
+			return itemId;
+		}
+		public void setItemId(int itemId)
+		{
+			this.itemId = itemId;
+		}
+
+
+		public ItemType getItemType()
+		{
+			return itemType;
+		}
+		public void setItemType(ItemType itemType)
+		{
+			this.itemType = itemType;
+		}
+
+
+		public String getLastPublishDate()
+		{
+			return lastPublishDate;
+		}
+		public void setLastPublishDate(String lastPublishDate)
+		{
+			this.lastPublishDate = lastPublishDate;
+		}
+
+
+		public ContentNamespace getNamespaceId()
+		{
+			return namespaceId;
+		}
+		public void setNamespaceId(ContentNamespace namespaceId)
+		{
+			this.namespaceId = namespaceId;
+		}
+
+
+		public int getOwningPublicationId()
+		{
+			return owningPublicationId;
+		}
+		public void setOwningPublicationId(int owningPublicationId)
+		{
+			this.owningPublicationId = owningPublicationId;
+		}
+
+
+		public Template getPageTemplate()
+		{
+			return pageTemplate;
+		}
+		public void setPageTemplate(Template pageTemplate)
+		{
+			this.pageTemplate = pageTemplate;
+		}
+
+
+		public int getPublicationId()
+		{
+			return publicationId;
+		}
+		public void setPublicationId(int publicationId)
+		{
+			this.publicationId = publicationId;
+		}
+
+
+		public RawContent getRawContent()
+		{
+			return rawContent;
+		}
+		public void setRawContent(RawContent rawContent)
+		{
+			this.rawContent = rawContent;
+		}
+
+
+		public List<TaxonomyItem> getTaxonomies()
+		{
+			return taxonomies;
+		}
+		public void setTaxonomies(List<TaxonomyItem> taxonomies)
+		{
+			this.taxonomies = taxonomies;
+		}
+
+
+		public String getTitle()
+		{
+			return title;
+		}
+		public void setTitle(String title)
+		{
+			this.title = title;
+		}
+
+
+		public String getUpdatedDate()
+		{
+			return updatedDate;
+		}
+		public void setUpdatedDate(String updatedDate)
+		{
+			this.updatedDate = updatedDate;
+		}
+
+
+		public String getUrl()
+		{
+			return url;
+		}
+		public void setUrl(String url)
+		{
+			this.url = url;
+		}
 	
 }

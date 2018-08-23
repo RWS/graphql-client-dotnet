@@ -1,31 +1,178 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.Map;
+import java.util.Map;
+/**
 *Represents a fragment of content.
 */
 public class ContentFragment{
 
-		public Content content;
+		private Content content;
 
-		public String creationDate;
+		private String creationDate;
 
-		public CustomMetaConnection customMetas;
+		private CustomMetaConnection customMetas;
+
+		private String id;
+
+		private String initialPublishDate;
+
+		private int itemId;
+
+		private ItemType itemType;
+
+		private String lastPublishDate;
+
+		private ContentNamespace namespaceId;
+
+		private int owningPublicationId;
+
+		private int publicationId;
+
+		private String title;
+
+		private String updatedDate;
 
 
-		public String initialPublishDate;
+		public Content getContent()
+		{
+			return content;
+		}
+		public void setContent(Content content)
+		{
+			this.content = content;
+		}
 
 
-		public ItemType itemType;
+		public String getCreationDate()
+		{
+			return creationDate;
+		}
+		public void setCreationDate(String creationDate)
+		{
+			this.creationDate = creationDate;
+		}
 
-		public String lastPublishDate;
 
-		public ContentNamespace namespaceId;
+		public CustomMetaConnection getCustomMetas()
+		{
+			return customMetas;
+		}
+		public void setCustomMetas(CustomMetaConnection customMetas)
+		{
+			this.customMetas = customMetas;
+		}
 
-		public int owningPublicationId;
+
+		public String getId()
+		{
+			return id;
+		}
+		public void setId(String id)
+		{
+			this.id = id;
+		}
 
 
-		public String title;
+		public String getInitialPublishDate()
+		{
+			return initialPublishDate;
+		}
+		public void setInitialPublishDate(String initialPublishDate)
+		{
+			this.initialPublishDate = initialPublishDate;
+		}
 
-		public String updatedDate;
+
+		public int getItemId()
+		{
+			return itemId;
+		}
+		public void setItemId(int itemId)
+		{
+			this.itemId = itemId;
+		}
+
+
+		public ItemType getItemType()
+		{
+			return itemType;
+		}
+		public void setItemType(ItemType itemType)
+		{
+			this.itemType = itemType;
+		}
+
+
+		public String getLastPublishDate()
+		{
+			return lastPublishDate;
+		}
+		public void setLastPublishDate(String lastPublishDate)
+		{
+			this.lastPublishDate = lastPublishDate;
+		}
+
+
+		public ContentNamespace getNamespaceId()
+		{
+			return namespaceId;
+		}
+		public void setNamespaceId(ContentNamespace namespaceId)
+		{
+			this.namespaceId = namespaceId;
+		}
+
+
+		public int getOwningPublicationId()
+		{
+			return owningPublicationId;
+		}
+		public void setOwningPublicationId(int owningPublicationId)
+		{
+			this.owningPublicationId = owningPublicationId;
+		}
+
+
+		public int getPublicationId()
+		{
+			return publicationId;
+		}
+		public void setPublicationId(int publicationId)
+		{
+			this.publicationId = publicationId;
+		}
+
+
+		public String getTitle()
+		{
+			return title;
+		}
+		public void setTitle(String title)
+		{
+			this.title = title;
+		}
+
+
+		public String getUpdatedDate()
+		{
+			return updatedDate;
+		}
+		public void setUpdatedDate(String updatedDate)
+		{
+			this.updatedDate = updatedDate;
+		}
 	
 }

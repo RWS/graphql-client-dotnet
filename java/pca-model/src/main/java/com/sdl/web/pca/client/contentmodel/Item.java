@@ -1,29 +1,162 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;import java.util.Map;/**
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+import java.util.List;
+/**
 *Represents an item. The root of all content models.
 */
 public class Item{
 
-		public String creationDate;
+		private String creationDate;
 
-		public CustomMetaConnection customMetas;
+		private CustomMetaConnection customMetas;
+
+		private String id;
+
+		private String initialPublishDate;
+
+		private int itemId;
+
+		private ItemType itemType;
+
+		private String lastPublishDate;
+
+		private ContentNamespace namespaceId;
+
+		private int owningPublicationId;
+
+		private int publicationId;
+
+		private String title;
+
+		private String updatedDate;
 
 
-		public String initialPublishDate;
+		public String getCreationDate()
+		{
+			return creationDate;
+		}
+		public void setCreationDate(String creationDate)
+		{
+			this.creationDate = creationDate;
+		}
 
 
-		public ItemType itemType;
+		public CustomMetaConnection getCustomMetas()
+		{
+			return customMetas;
+		}
+		public void setCustomMetas(CustomMetaConnection customMetas)
+		{
+			this.customMetas = customMetas;
+		}
 
-		public String lastPublishDate;
 
-		public ContentNamespace namespaceId;
+		public String getId()
+		{
+			return id;
+		}
+		public void setId(String id)
+		{
+			this.id = id;
+		}
 
-		public int owningPublicationId;
+
+		public String getInitialPublishDate()
+		{
+			return initialPublishDate;
+		}
+		public void setInitialPublishDate(String initialPublishDate)
+		{
+			this.initialPublishDate = initialPublishDate;
+		}
 
 
-		public String title;
+		public int getItemId()
+		{
+			return itemId;
+		}
+		public void setItemId(int itemId)
+		{
+			this.itemId = itemId;
+		}
 
-		public String updatedDate;
+
+		public ItemType getItemType()
+		{
+			return itemType;
+		}
+		public void setItemType(ItemType itemType)
+		{
+			this.itemType = itemType;
+		}
+
+
+		public String getLastPublishDate()
+		{
+			return lastPublishDate;
+		}
+		public void setLastPublishDate(String lastPublishDate)
+		{
+			this.lastPublishDate = lastPublishDate;
+		}
+
+
+		public ContentNamespace getNamespaceId()
+		{
+			return namespaceId;
+		}
+		public void setNamespaceId(ContentNamespace namespaceId)
+		{
+			this.namespaceId = namespaceId;
+		}
+
+
+		public int getOwningPublicationId()
+		{
+			return owningPublicationId;
+		}
+		public void setOwningPublicationId(int owningPublicationId)
+		{
+			this.owningPublicationId = owningPublicationId;
+		}
+
+
+		public int getPublicationId()
+		{
+			return publicationId;
+		}
+		public void setPublicationId(int publicationId)
+		{
+			this.publicationId = publicationId;
+		}
+
+
+		public String getTitle()
+		{
+			return title;
+		}
+		public void setTitle(String title)
+		{
+			this.title = title;
+		}
+
+
+		public String getUpdatedDate()
+		{
+			return updatedDate;
+		}
+		public void setUpdatedDate(String updatedDate)
+		{
+			this.updatedDate = updatedDate;
+		}
 	
 }

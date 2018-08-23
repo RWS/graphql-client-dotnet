@@ -1,12 +1,10 @@
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
-import graphql.introspection.IntrospectionQuery;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedWriter;
@@ -102,7 +100,7 @@ public class Program {
                 continue;
             if (type.kind.equalsIgnoreCase("SCALAR"))
                 continue;
-            if (type.name.equalsIgnoreCase("NPUT_OBJECT"))
+            if (type.kind.equalsIgnoreCase("NPUT_OBJECT"))
                 continue;
 
             StringBuilder sb = new StringBuilder();
@@ -191,9 +189,9 @@ public class Program {
                 System.out.println("oops");
                 break;
         }
+
         sb.append(indentString);
         sb.append("\n");
-
 
         sb.append("}\n");
 
@@ -222,16 +220,51 @@ public class Program {
         {
             sb.append("\n");
             field.type = RemapFieldType(field);
+
+            String returnTypeName = GetFieldReturnTypeName(field.type);
             if(field.name.equalsIgnoreCase("abstract"))
                 continue;
 
-            if(field.type.name !=null) {
                 sb.append(indentString);
-                sb.append("public " + field.type.name + " " + field.name + ";");
+                sb.append("private " + returnTypeName + " " + field.name + ";");
                 sb.append("\n");
-            }
+        }
+
+        /*Setter & Getter for Model Class*/
+
+        for (GraphQLSchemaField field : fields){
+            field.type = RemapFieldType(field);
+            String returnTypeName = GetFieldReturnTypeName(field.type);
+            sb.append("\n\n");
+            sb.append(indentString);
+
+            sb.append("public "+ returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) +"()");
+
+            sb.append("\n");
+            sb.append(indentString);
+            sb.append("{\n");
+            sb.append(indentString);
+            sb.append("\t");
+            sb.append("return "+ field.name + ";");
+            sb.append("\n");
+            sb.append(indentString);
+            sb.append("}\n");
+            sb.append(indentString);
+
+            sb.append("public void set"+ field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")");
+
+            sb.append("\n");
+            sb.append(indentString);
+            sb.append("{\n");
+            sb.append(indentString);
+            sb.append("\t");
+            sb.append("this." + field.name + " = " + field.name + ";");
+            sb.append("\n");
+            sb.append(indentString);
+            sb.append("}\n");
         }
     }
+
 
     static String GetFieldReturnTypeName(GraphQLSchemaTypeInfo type){
             switch (type.kind)
@@ -240,6 +273,8 @@ public class Program {
                     return "List<"+type.ofType.name+">";
                 case "Map":
                     return "IDictionary<"+type.ofType.name+">";
+                case "NON_NULL":
+                    return type.ofType.name;
                 default:
                     return type.name;
             }
@@ -255,12 +290,36 @@ public class Program {
             {
                 case "Int": {
                     field.type.name = "int";
+                    break;
+                }
+                case "Boolean": {
+                    field.type.name = "boolean";
+                    break;
                 }
                 case "Map":{
-                    importBuilder.append("import java.util.Map;");
+                    importBuilder.append("import java.util.Map;\n");
+                    break;
+                }
+            }
+
+        }
+
+
+        if (field.type.name == null){
+            switch (field.type.ofType.name){
+                case "Int": {
+                    field.type.ofType.name = "int";
+                }
+            }
+
+            switch (field.type.kind){
+                case "LIST":{
+                    importBuilder.insert(0, "import java.util.List;\n");
+                    break;
                 }
             }
         }
+
         switch (field.name)
         {
             case "namespaceIds":{
@@ -282,6 +341,11 @@ public class Program {
             {
                 graphQLSchemaTypeInfo.kind = "ENUM";
                 graphQLSchemaTypeInfo.name = "ItemType";
+                return graphQLSchemaTypeInfo;
+            }
+            case "id":{
+                graphQLSchemaTypeInfo.kind = "SCALAR";
+                graphQLSchemaTypeInfo.name = "String";
                 return graphQLSchemaTypeInfo;
             }
             default:
