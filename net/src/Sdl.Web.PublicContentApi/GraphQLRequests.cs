@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Sdl.Web.GraphQLClient.Request;
+using Sdl.Web.HttpClient.Utils;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.PublicContentApi.Utils;
 
@@ -25,7 +26,10 @@ namespace Sdl.Web.PublicContentApi
             };
 
         public static GraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, string url,
-            IContextData contextData, IContextData globalContextData) => new GraphQLRequest
+            IContextData contextData, IContextData globalContextData)
+        {
+            url = UrlEncoding.UrlEncodeNonAscii(url);
+            return new GraphQLRequest
             {
                 Query =
                     InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null), url),
@@ -37,6 +41,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
             };
+        }
 
         public static GraphQLRequest BinaryComponent(CmUri cmUri,
             IContextData contextData, IContextData globalContextData) => new GraphQLRequest
@@ -193,7 +198,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"url", url},
+                    {"url", UrlEncoding.UrlEncodeNonAscii(url)},
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 },
                 OperationName = "page"
