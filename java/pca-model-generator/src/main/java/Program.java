@@ -7,10 +7,7 @@ import com.sdl.web.pca.client.GraphQLClient;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Formatter;
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class Program {
                 ObjectMapper objectMapper = new ObjectMapper();
                 GraphQLSchema schema = objectMapper.readValue(dataObject.toString(), GraphQLSchema.class);
 
-                GenerateSchemaClasses(schema, ns,outputFile);
+                generateSchemaClasses(schema, ns,outputFile);
                 System.out.println(schema);
 
             }
@@ -93,22 +90,23 @@ public class Program {
         }
     }
 
-    static void GenerateSchemaClasses(GraphQLSchema schema, String ns, String outputFile) throws IOException {
+    static void generateSchemaClasses(GraphQLSchema schema, String ns, String outputFile) throws IOException {
 
         for (GraphQLSchemaType type : schema.types){
             if(type.name==null || type.name.startsWith("__"))
                 continue;
             if (type.kind.equalsIgnoreCase("SCALAR"))
                 continue;
-            if (type.kind.equalsIgnoreCase("NPUT_OBJECT"))
-                continue;
+            /*if (type.kind.equalsIgnoreCase("INPUT_OBJECT"))
+                continue;*/
 
             StringBuilder sb = new StringBuilder();
             EmitPackage(sb, ns);
 
-            sb.append(importBuilder);
+            EmitImport(sb, type.fields);
+            //sb.append(importBuilder);
 
-            StringBuilder sbuilder = GenerateClass(sb, schema, type, 1);
+            StringBuilder sbuilder = generateClass(sb, schema, type, 1);
             createJavaFile(type, sbuilder,outputFile);
         }
     }
@@ -134,7 +132,7 @@ public class Program {
         if (isNullOrBlank(comment)) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
         sb.append(indentString);
-        sb.append("/**");
+        sb.append("\n/**");
         sb.append("\n");
         sb.append(indentString);
         sb.append("*");
@@ -145,7 +143,7 @@ public class Program {
         sb.append("\n");
     }
 
-    static StringBuilder GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount)
+    static StringBuilder generateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount)
     {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
 
@@ -153,8 +151,10 @@ public class Program {
 
         if(type.kind.equalsIgnoreCase("ENUM"))
             sb.append("public enum "+type.name);
+        else if(type.kind.equalsIgnoreCase("INTERFACE"))
+            sb.append("public interface "+type.name);
         else
-        sb.append("public class "+type.name);
+            sb.append("public class "+ type.name );
         sb.append("{");
         sb.append("\n");
         /* if (type.Interfaces != null && type.Interfaces.Count > 0)
@@ -202,7 +202,7 @@ public class Program {
     {
         if (enumValues == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
-        for (int i = 0; i < enumValues.size() - 1; i++)
+        for (int i = 0; i <= enumValues.size() - 1; i++)
         {
             sb.append("\n");
             sb.append(indentString);
@@ -218,55 +218,69 @@ public class Program {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
         for (GraphQLSchemaField field : fields)
         {
-            sb.append("\n");
+            //sb.append("\n");
             field.type = RemapFieldType(field);
+            String returnTypeName = getFieldReturnTypeName(field.type);
+            String defaultValue = getDefaultValue(returnTypeName);
 
-            String returnTypeName = GetFieldReturnTypeName(field.type);
             if(field.name.equalsIgnoreCase("abstract"))
                 continue;
 
-                sb.append(indentString);
+            sb.append(indentString);
+            if (isPublic)
                 sb.append("private " + returnTypeName + " " + field.name + ";");
-                sb.append("\n");
+            else
+                sb.append(returnTypeName + " " + field.name + " = " + defaultValue + ";");
+            sb.append("\n");
         }
 
         /*Setter & Getter for Model Class*/
 
         for (GraphQLSchemaField field : fields){
             field.type = RemapFieldType(field);
-            String returnTypeName = GetFieldReturnTypeName(field.type);
+            String returnTypeName = getFieldReturnTypeName(field.type);
+            if(field.name.equalsIgnoreCase("abstract"))
+                continue;
+
             sb.append("\n\n");
             sb.append(indentString);
 
-            sb.append("public "+ returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) +"()");
+            if (isPublic) {
+                sb.append("public " + returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "()");
 
-            sb.append("\n");
-            sb.append(indentString);
-            sb.append("{\n");
-            sb.append(indentString);
-            sb.append("\t");
-            sb.append("return "+ field.name + ";");
-            sb.append("\n");
-            sb.append(indentString);
-            sb.append("}\n");
-            sb.append(indentString);
+                sb.append("\n");
+                sb.append(indentString);
+                sb.append("{\n");
+                sb.append(indentString);
+                sb.append("\t");
+                sb.append("return " + field.name + ";");
+                sb.append("\n");
+                sb.append(indentString);
+                sb.append("}\n");
+                sb.append(indentString);
 
-            sb.append("public void set"+ field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")");
+                sb.append("public void set" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")");
 
-            sb.append("\n");
-            sb.append(indentString);
-            sb.append("{\n");
-            sb.append(indentString);
-            sb.append("\t");
-            sb.append("this." + field.name + " = " + field.name + ";");
-            sb.append("\n");
-            sb.append(indentString);
-            sb.append("}\n");
+                sb.append("\n");
+                sb.append(indentString);
+                sb.append("{\n");
+                sb.append(indentString);
+                sb.append("\t");
+                sb.append("this." + field.name + " = " + field.name + ";");
+                sb.append("\n");
+                sb.append(indentString);
+                sb.append("}\n");
+            }else {
+                sb.append(returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "()" + ";");
+                sb.append("\n");
+                sb.append(indentString);
+                sb.append("void set" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")" + ";");
+            }
         }
     }
 
 
-    static String GetFieldReturnTypeName(GraphQLSchemaTypeInfo type){
+    static String getFieldReturnTypeName(GraphQLSchemaTypeInfo type){
             switch (type.kind)
             {
                 case "LIST":
@@ -278,7 +292,33 @@ public class Program {
                 default:
                     return type.name;
             }
+    }
+
+    static String getDefaultValue(String returnType){
+            switch (returnType){
+                case "int":
+                    return "0";
+                case "boolean":
+                    return "false";
+                default:
+                    return "null";
+            }
+    }
+
+    static StringBuilder getImplementation(List<GraphQLSchemaInterface> interfaces){
+        StringBuilder impl = null;
+        if (interfaces.size() != 0){
+            impl = new StringBuilder();
+            impl.append(" implements ");
+            String prefix = "";
+            for (GraphQLSchemaInterface  type : interfaces){
+                impl.append(prefix);
+                prefix = ",";
+                impl.append(type.name);
+            }
         }
+        return impl;
+    }
 
     static GraphQLSchemaTypeInfo RemapFieldType(GraphQLSchemaField field)
     {
@@ -311,13 +351,6 @@ public class Program {
                     field.type.ofType.name = "int";
                 }
             }
-
-            switch (field.type.kind){
-                case "LIST":{
-                    importBuilder.insert(0, "import java.util.List;\n");
-                    break;
-                }
-            }
         }
 
         switch (field.name)
@@ -348,6 +381,11 @@ public class Program {
                 graphQLSchemaTypeInfo.name = "String";
                 return graphQLSchemaTypeInfo;
             }
+            case "data":{
+                graphQLSchemaTypeInfo.kind = "SCALAR";
+                graphQLSchemaTypeInfo.name = "Dictionary";
+                return graphQLSchemaTypeInfo;
+            }
             default:
                 return field.type;
         }
@@ -361,6 +399,30 @@ public class Program {
         sb.append(";");
         sb.append("\n");
         sb.append("\n");
+        return sb;
+    }
+
+    static StringBuilder EmitImport(StringBuilder sb, List<GraphQLSchemaField> fields){
+            if (fields != null){
+            for (GraphQLSchemaField field : fields){
+                if(field.type.kind != null){
+                    switch (field.type.kind){
+                        case "LIST":{
+                            sb.append("import java.util.List;\n");
+                            break;
+                        }
+                    }
+                }
+                if(field.type.name != null){
+                    switch (field.type.name){
+                        case "Map":{
+                            sb.append("import java.util.Dictionary;\n");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         return sb;
     }
 
