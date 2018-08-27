@@ -39,7 +39,7 @@ public interface PublicContentApi {
     Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData,
                                String customMetaFilter) throws PublicContentApiException;
 
-    PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
+    PublicationConnection getPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
                                           IContextData contextData, String customMetaFilter);
 
     String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;

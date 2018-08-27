@@ -232,7 +232,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter, IContextData contextData, String customMetaFilter) {
+    public PublicationConnection getPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter, IContextData contextData, String customMetaFilter) {
         //TODO implement
         return null;
     }
