@@ -7,13 +7,16 @@ import com.sdl.web.pca.client.contentmodel.ClaimValue;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.IContextData;
 import com.sdl.web.pca.client.contentmodel.IPagination;
 import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Publication;
+import com.sdl.web.pca.client.contentmodel.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
@@ -21,7 +24,6 @@ import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
-import com.sdl.web.pca.client.modelserviceplugin.ClaimHelper;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.apache.commons.io.IOUtils;
 
@@ -60,8 +62,25 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
                                      DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
                                      ContextData contextData) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        List<ClaimValue> claims = Arrays.asList(
+                createClaim(contentType),
+                createClaim(modelType),
+                createClaim(pageInclusion)
+        );
+        mergedData.getClaimValues().addAll(claims);
+
+        String query = getQueryFor("PageModelByUrl");
+        query = QueryUtils.injectRenderContentArgs(query, renderContent);
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("url", url);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, "page", requestTimeout);
+
+        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
     }
 
     @Override
@@ -89,20 +108,27 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-                                       DataModelType modelType, DcpType dcpType, boolean renderContent,
-                                       ContextData contextData) throws PublicContentApiException {
-        //TODO fix: contentType, modoelType, dcpType, renderContent is not used in current implementation
+    public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int componentId, int templateId,
+                                       ContentType contentType, DataModelType modelType, DcpType dcpType,
+                                       boolean renderContent, ContextData contextData) throws PublicContentApiException {
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        List<ClaimValue> claims = Arrays.asList(
+                createClaim(contentType),
+                createClaim(modelType),
+                createClaim(dcpType)
+        );
+        mergedData.getClaimValues().addAll(claims);
         String query = getQueryFor("EntityModelById");
-
+        query = QueryUtils.injectRenderContentArgs(query, renderContent);
         HashMap<String, Object> variables = new HashMap<>();
-
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
-        variables.put("entityId", entityId);
+        variables.put("componentId", componentId);
+        variables.put("templateId", templateId);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest, "????");
+        return getJsonResult(graphQLRequest, "/data/componentPresentation/rawContent/data");
     }
 
     @Override
@@ -201,6 +227,12 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData, String customMetaFilter) throws PublicContentApiException {
+        //TODO implement
+        return null;
+    }
+
+    @Override
+    public PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter, IContextData contextData, String customMetaFilter) {
         //TODO implement
         return null;
     }

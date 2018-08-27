@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sdl.web.pca.client.auth.Authentication;
@@ -25,6 +26,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class DefaultGraphQLClient implements GraphQLClient {
     private static final Logger LOG = getLogger(DefaultGraphQLClient.class);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private Authentication auth;
     private CloseableHttpClient httpClient;
@@ -89,12 +91,12 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
     @Override
     public String execute(GraphQLRequest request) throws GraphQLClientException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        ObjectNode jsonObject = mapper.createObjectNode();
-        jsonObject.put("query", request.getQuery());
-        jsonObject.set("variables", mapper.valueToTree(request.getVariables()));
-        return execute(jsonObject.toString(), request.getTimeout());
+        try {
+            String stringRequest = MAPPER.writeValueAsString(request);
+            return execute(stringRequest, request.getTimeout());
+        } catch (JsonProcessingException e) {
+            throw new GraphQLClientException("Unable to serialize request: " + request.toString(), e);
+        }
     }
 
     public void setHttpClient(CloseableHttpClient httpClient) {

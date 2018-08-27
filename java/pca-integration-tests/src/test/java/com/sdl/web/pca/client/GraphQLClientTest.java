@@ -10,6 +10,7 @@ import com.sdl.web.pca.client.contentmodel.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
+import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import org.junit.Before;
@@ -134,9 +135,21 @@ public class GraphQLClientTest {
     }
 
     @Test
-    public void executeGetPageModelData() {
+    public void executeGetPageModelDataById() {
         assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 1082, 640,
+                ContentType.MODEL, DataModelType.DD4T, PageInclusion.INCLUDE, false, new ContextData()));
+    }
+
+    @Test
+    public void executeGetPageModelDataByUri() {
+        assertNotNull(publicContentApi.getPageModelData(ContentNamespace.Sites, 1082, "/example-legacy/index.html",
                 ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE, false, new ContextData()));
+    }
+
+    @Test
+    public void executeGetEntityModelData() {
+        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, 1,
+                ContentType.MODEL, DataModelType.R2, DcpType.DEFAULT, false, new ContextData()));
     }
 
     @Test
@@ -151,9 +164,4 @@ public class GraphQLClientTest {
                 0, true, null));
     }
 
-    @Test
-    public void executeGetEntityModelData() {
-        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1,
-                null, null, null, false, null));
-    }
 }

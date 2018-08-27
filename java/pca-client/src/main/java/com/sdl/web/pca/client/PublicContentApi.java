@@ -8,9 +8,11 @@ import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.IContextData;
 import com.sdl.web.pca.client.contentmodel.IPagination;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.Publication;
+import com.sdl.web.pca.client.contentmodel.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
@@ -37,6 +39,8 @@ public interface PublicContentApi {
     Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData,
                                String customMetaFilter) throws PublicContentApiException;
 
+    PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
+                                          IContextData contextData, String customMetaFilter);
 
     String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
 
@@ -52,19 +56,17 @@ public interface PublicContentApi {
     PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException;
 
     JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
-                           DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
-                           ContextData contextData) throws PublicContentApiException;
+                              DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
+                              ContextData contextData) throws PublicContentApiException;
 
 
     JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
                               DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
                               ContextData contextData) throws PublicContentApiException;
 
-
-    JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, ContentType contentType,
-                             DataModelType modelType, DcpType dcpType, boolean renderContent,
-                             ContextData contextData) throws PublicContentApiException;
-
+    JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
+                                ContentType contentType, DataModelType modelType, DcpType dcpType,
+                                boolean renderContent, ContextData contextData) throws PublicContentApiException;
 
     TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
                                    ContextData contextData) throws PublicContentApiException;

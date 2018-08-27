@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 /// Represents a filter for a publication query.
 /// </summary>
-class InputPublicationFilter
+public class InputPublicationFilter
 {
     private ContentFilterQueryType queryType;
     private String value;
