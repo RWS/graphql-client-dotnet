@@ -57,6 +57,7 @@
     <Compile Include="Response\HttpClientResponse.cs" />
     <Compile Include="Response\IHttpClientResponse.cs" />
     <Compile Include="Utils\UriCreator.cs" />
+    <Compile Include="Utils\UrlEncoding.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

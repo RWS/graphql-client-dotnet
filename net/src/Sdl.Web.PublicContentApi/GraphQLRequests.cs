@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Sdl.Web.GraphQLClient.Request;
+using Sdl.Web.HttpClient.Utils;
 using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
 {
+    /// <summary>
+    /// Predefined GraphQL requests for working with the Public Content Api
+    /// </summary>
     public static class GraphQLRequests
     {
         public static GraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
@@ -25,7 +29,10 @@ namespace Sdl.Web.PublicContentApi
             };
 
         public static GraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, string url,
-            IContextData contextData, IContextData globalContextData) => new GraphQLRequest
+            IContextData contextData, IContextData globalContextData)
+        {
+            url = UrlEncoding.UrlEncodeNonAscii(url);
+            return new GraphQLRequest
             {
                 Query =
                     InjectVariantsArgs(InjectCustomMetaFilter(Queries.Load("BinaryComponentByUrl", true), null), url),
@@ -37,6 +44,7 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
             };
+        }
 
         public static GraphQLRequest BinaryComponent(CmUri cmUri,
             IContextData contextData, IContextData globalContextData) => new GraphQLRequest
@@ -99,6 +107,20 @@ namespace Sdl.Web.PublicContentApi
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
             };
+
+        public static GraphQLRequest Publications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
+           IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
+           {
+               Query = InjectCustomMetaFilter(Queries.Load("Publications", true), customMetaFilter),
+               Variables = new Dictionary<string, object>
+               {
+                    {"namespaceId", ns},
+                    {"first", pagination.First},
+                    {"after", pagination.After},
+                    {"filter", filter},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+               }
+           };
 
         public static GraphQLRequest ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
             => new GraphQLRequest
@@ -193,7 +215,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"url", url},
+                    {"url", UrlEncoding.UrlEncodeNonAscii(url)},
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 },
                 OperationName = "page"
@@ -213,7 +235,7 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"entityId", entityId},
+                    {"componentId", entityId},
                     {"templateId", templateId},
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
                 }
