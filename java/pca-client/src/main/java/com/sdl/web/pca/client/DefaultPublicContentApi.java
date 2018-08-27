@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.BinaryComponent;
@@ -171,20 +172,37 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
                                               ContextData contextData) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        String query = getQueryFor("BinaryComponentById");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("BinaryComponentFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectVariantsArgs(query, null);
+        query = QueryUtils.injectCustomMetaFilter(query, null);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("binaryId", binaryId);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
+        try {
+            return MAPPER.treeToValue(result, BinaryComponent.class);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
+        }
     }
 
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url,
                                               ContextData contextData) throws PublicContentApiException {
-        //TODO implement
         return null;
-    }
+     }
 
     @Override
     public BinaryComponent getBinaryComponent(CmUri cmUri, ContextData contextData) throws PublicContentApiException {
-        //TODO implement
         return null;
     }
 

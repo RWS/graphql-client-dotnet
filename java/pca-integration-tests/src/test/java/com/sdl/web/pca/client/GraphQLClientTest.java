@@ -42,6 +42,12 @@ public class GraphQLClientTest {
     }
 
     @Test
+    public void getBinaryComponentById() throws Exception {
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756, null);
+        assertNotNull(result);
+    }
+
+    @Test
     public void executePublicationsQuery() throws Exception {
 
         String query = prop.getProperty("PUBLICATION_QUERY");
