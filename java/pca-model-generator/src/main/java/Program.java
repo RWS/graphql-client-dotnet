@@ -103,7 +103,7 @@ public class Program {
             StringBuilder sb = new StringBuilder();
             EmitPackage(sb, ns);
 
-            EmitImport(sb, type.fields);
+            EmitImport(sb, type);
             //sb.append(importBuilder);
 
             StringBuilder sbuilder = generateClass(sb, schema, type, 1);
@@ -153,8 +153,11 @@ public class Program {
             sb.append("public enum "+type.name);
         else if(type.kind.equalsIgnoreCase("INTERFACE"))
             sb.append("public interface "+type.name);
+        else if (type.interfaces == null || type.interfaces.size() == 0)
+            sb.append("public class "+ type.name);
         else
-            sb.append("public class "+ type.name );
+            sb.append("public class "+ type.name + getImplementation(type.interfaces));
+
         sb.append("{");
         sb.append("\n");
         /* if (type.Interfaces != null && type.Interfaces.Count > 0)
@@ -284,7 +287,7 @@ public class Program {
             switch (type.kind)
             {
                 case "LIST":
-                    return "List<"+type.ofType.name+">";
+                   return "List<"+type.ofType.name+">";
                 case "Map":
                     return "IDictionary<"+type.ofType.name+">";
                 case "NON_NULL":
@@ -386,6 +389,11 @@ public class Program {
                 graphQLSchemaTypeInfo.name = "Dictionary";
                 return graphQLSchemaTypeInfo;
             }
+            case "publicationIds":{
+                graphQLSchemaTypeInfo.kind = "SCALAR";
+                graphQLSchemaTypeInfo.name = "List<Integer>";
+                return graphQLSchemaTypeInfo;
+            }
             default:
                 return field.type;
         }
@@ -402,13 +410,15 @@ public class Program {
         return sb;
     }
 
-    static StringBuilder EmitImport(StringBuilder sb, List<GraphQLSchemaField> fields){
-            if (fields != null){
-            for (GraphQLSchemaField field : fields){
-                if(field.type.kind != null){
+    static StringBuilder EmitImport(StringBuilder sb, GraphQLSchemaType type){
+        int count = 0;
+            if (type.fields != null){
+            for (GraphQLSchemaField field : type.fields){
+                if(field.type.kind != null && count<=1){
                     switch (field.type.kind){
                         case "LIST":{
                             sb.append("import java.util.List;\n");
+                            count++;
                             break;
                         }
                     }
@@ -422,7 +432,27 @@ public class Program {
                     }
                 }
             }
-        }
+        }else if(type.inputFields != null) {
+                for (GraphQLSchemaField field : type.inputFields) {
+                    if (field.type.kind != null && count<1) {
+                        switch (field.type.kind) {
+                            case "LIST": {
+                                sb.append("import java.util.List;\n");
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                    if (field.type.name != null) {
+                        switch (field.type.name) {
+                            case "Map": {
+                                sb.append("import java.util.Dictionary;\n");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         return sb;
     }
 
