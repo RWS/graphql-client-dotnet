@@ -6,7 +6,6 @@ import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import org.apache.commons.io.IOUtils;
-
 import java.io.*;
 import java.util.Formatter;
 import java.util.List;
@@ -97,14 +96,11 @@ public class Program {
                 continue;
             if (type.kind.equalsIgnoreCase("SCALAR"))
                 continue;
-            /*if (type.kind.equalsIgnoreCase("INPUT_OBJECT"))
-                continue;*/
 
             StringBuilder sb = new StringBuilder();
-            EmitPackage(sb, ns);
+            emitPackage(sb, ns);
 
-            EmitImport(sb, type);
-            //sb.append(importBuilder);
+            emitImport(sb, type);
 
             StringBuilder sbuilder = generateClass(sb, schema, type, 1);
             createJavaFile(type, sbuilder,outputFile);
@@ -127,7 +123,7 @@ public class Program {
         }
     }
 
-    static void EmitComment(StringBuilder sb, String comment, int indentCount)
+    static void emitComment(StringBuilder sb, String comment, int indentCount)
     {
         if (isNullOrBlank(comment)) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
@@ -147,7 +143,7 @@ public class Program {
     {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
 
-        EmitComment(sb, type.description, indentCount-1);
+        emitComment(sb, type.description, indentCount-1);
 
         if(type.kind.equalsIgnoreCase("ENUM"))
             sb.append("public enum "+type.name);
@@ -174,19 +170,19 @@ public class Program {
         switch (type.kind)
         {
             case "OBJECT":
-                EmitFields( sb, type.fields, indentCount + 1, true);
+                emitFields( sb, type.fields, indentCount + 1, true);
                 break;
             case "INPUT_OBJECT":
-                EmitFields( sb, type.inputFields, indentCount + 1, true);
+                emitFields( sb, type.inputFields, indentCount + 1, true);
                 break;
             case "INTERFACE":
                 if (type.possibleTypes != null)
                 {
-                    EmitFields( sb, type.fields, indentCount + 1, false);
+                    emitFields( sb, type.fields, indentCount + 1, false);
                 }
                 break;
             case "ENUM":
-                EmitFields(sb, type.enumValues, indentCount + 1);
+                emitFields(sb, type.enumValues, indentCount + 1);
                 break;
             default:
                 System.out.println("oops");
@@ -201,7 +197,7 @@ public class Program {
         return sb;
     }
 
-    static void EmitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount)
+    static void emitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount)
     {
         if (enumValues == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
@@ -215,14 +211,14 @@ public class Program {
                 $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");*/
     }
 
-    static void EmitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic)
+    static void emitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic)
     {
         if (fields == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
         for (GraphQLSchemaField field : fields)
         {
             //sb.append("\n");
-            field.type = RemapFieldType(field);
+            field.type = remapFieldType(field);
             String returnTypeName = getFieldReturnTypeName(field.type);
             String defaultValue = getDefaultValue(returnTypeName);
 
@@ -237,10 +233,10 @@ public class Program {
             sb.append("\n");
         }
 
-        /*Setter & Getter for Model Class*/
+        //Setter & Getter for Model Class
 
         for (GraphQLSchemaField field : fields){
-            field.type = RemapFieldType(field);
+            field.type = remapFieldType(field);
             String returnTypeName = getFieldReturnTypeName(field.type);
             if(field.name.equalsIgnoreCase("abstract"))
                 continue;
@@ -282,7 +278,6 @@ public class Program {
         }
     }
 
-
     static String getFieldReturnTypeName(GraphQLSchemaTypeInfo type){
             switch (type.kind)
             {
@@ -323,7 +318,7 @@ public class Program {
         return impl;
     }
 
-    static GraphQLSchemaTypeInfo RemapFieldType(GraphQLSchemaField field)
+    static GraphQLSchemaTypeInfo remapFieldType(GraphQLSchemaField field)
     {
         // Just remap itemType and namespaceId(s) from int to use our enum
         // to make things a little nicer to work with.
@@ -346,7 +341,6 @@ public class Program {
             }
 
         }
-
 
         if (field.type.name == null){
             switch (field.type.ofType.name){
@@ -397,10 +391,9 @@ public class Program {
             default:
                 return field.type;
         }
-
     }
 
-    static StringBuilder EmitPackage( StringBuilder sb, String ns)
+    static StringBuilder emitPackage( StringBuilder sb, String ns)
     {
         Formatter fmt = new Formatter(sb);
         fmt.format("package %s", ns);
@@ -410,11 +403,11 @@ public class Program {
         return sb;
     }
 
-    static StringBuilder EmitImport(StringBuilder sb, GraphQLSchemaType type){
+    static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type){
         int count = 0;
             if (type.fields != null){
             for (GraphQLSchemaField field : type.fields){
-                if(field.type.kind != null && count<=1){
+                if(field.type.kind != null && count<=0){
                     switch (field.type.kind){
                         case "LIST":{
                             sb.append("import java.util.List;\n");
@@ -443,19 +436,10 @@ public class Program {
                             }
                         }
                     }
-                    if (field.type.name != null) {
-                        switch (field.type.name) {
-                            case "Map": {
-                                sb.append("import java.util.Dictionary;\n");
-                                break;
-                            }
-                        }
-                    }
                 }
             }
         return sb;
     }
-
     public static boolean isNullOrBlank(String param) {
         return param == null || param.trim().length() == 0;
     }
