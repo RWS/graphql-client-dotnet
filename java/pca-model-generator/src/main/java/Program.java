@@ -3,9 +3,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
 import com.sdl.web.pca.client.contentmodel.ContentQuery;
-import graphql.introspection.IntrospectionQuery;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedWriter;
@@ -58,7 +58,7 @@ public class Program {
                 return;
             }
 
-            GraphQLClient client = new GraphQLClient(endpoint, null);
+            GraphQLClient client = new DefaultGraphQLClient(endpoint, null);
 
             try {
                 String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/IntrospectionQuery.graphql"), "UTF-8");
