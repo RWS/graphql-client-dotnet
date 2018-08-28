@@ -1,60 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Represents an Ambient Data Framework claim value.
 */
 public class ClaimValue{
-
 		private ClaimValueType type;
-
 		private String uri;
-
 		private String value;
 
 

@@ -1,52 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Represents a filter for a publication query.
 */
 public class InputPublicationFilter{
-
 		private ContentFilterQueryType queryType;
-
 		private String value;
-
 		private CustomMetaValueType valueType;
 
 

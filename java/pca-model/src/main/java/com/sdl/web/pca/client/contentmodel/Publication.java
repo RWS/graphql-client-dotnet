@@ -1,78 +1,26 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Represents a publication.
 */
-public class Publication{
-
+public class Publication implements Item{
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String lastPublishDate;
-
 		private String multimediaPath;
-
 		private String multimediaUrl;
-
 		private ContentNamespace namespaceId;
-
 		private int owningPublicationId;
-
 		private int publicationId;
-
 		private String publicationKey;
-
 		private String publicationPath;
-
 		private String publicationUrl;
-
 		private String title;
-
 		private String updatedDate;
 
 

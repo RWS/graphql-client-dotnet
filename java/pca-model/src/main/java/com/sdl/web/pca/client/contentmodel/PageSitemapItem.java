@@ -1,65 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
-import java.util.Map;
-import java.util.Map;
-public class PageSitemapItem{
-
+public class PageSitemapItem implements SitemapItem{
 		private String id;
-
 		private String originalTitle;
-
 		private String publishedDate;
-
 		private String title;
-
 		private String type;
-
 		private String url;
-
 		private boolean visible;
 
 

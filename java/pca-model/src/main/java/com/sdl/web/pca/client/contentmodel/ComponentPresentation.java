@@ -1,52 +1,25 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents a component presentation which has a component associated with a template.
 */
-public class ComponentPresentation{
-
+public class ComponentPresentation implements ContentFragment,Item{
 		private ContentComponent component;
-
 		private Template componentTemplate;
-
 		private Content content;
-
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String lastPublishDate;
-
 		private ContentNamespace namespaceId;
-
 		private int owningPublicationId;
-
 		private int publicationId;
-
 		private RawContent rawContent;
-
 		private String title;
-
 		private String updatedDate;
 
 

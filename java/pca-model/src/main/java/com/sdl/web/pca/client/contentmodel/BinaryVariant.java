@@ -1,32 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents a variant of a binary component.
 */
 public class BinaryVariant{
-
 		private int binaryId;
-
 		private String description;
-
 		private String downloadUrl;
-
 		private String id;
-
 		private String path;
-
 		private String type;
-
 		private String url;
-
 		private String variantId;
 
 

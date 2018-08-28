@@ -1,24 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents an Ambient Data Framework claim value.
 */
 public class InputClaimValue{
-
 		private ClaimValueType type;
-
 		private String uri;
-
 		private String value;
 
 

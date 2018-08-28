@@ -1,48 +1,23 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents a template.
 */
-public class Template{
-
+public class Template implements Item{
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String lastPublishDate;
-
 		private ContentNamespace namespaceId;
-
 		private String outputFormat;
-
 		private int owningPublicationId;
-
 		private int priority;
-
 		private int publicationId;
-
 		private String title;
-
 		private String updatedDate;
 
 

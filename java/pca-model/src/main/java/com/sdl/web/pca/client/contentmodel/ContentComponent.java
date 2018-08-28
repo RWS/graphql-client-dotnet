@@ -1,196 +1,70 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents a component which has content.
 */
-public class ContentComponent{
-
-		private String creationDate;
-
-		private CustomMetaConnection customMetas;
-
-		private String id;
-
-		private String initialPublishDate;
-
-		private int itemId;
-
-		private ItemType itemType;
-
-		private String lastPublishDate;
-
-		private ContentNamespace namespaceId;
-
-		private int owningPublicationId;
-
-		private int publicationId;
-
-		private int schemaId;
-
-		private List<TaxonomyItem> taxonomies;
-
-		private String title;
-
-		private String updatedDate;
-
-		private boolean multiMedia;
+public interface ContentComponent{
+		String creationDate = null;
+		CustomMetaConnection customMetas = null;
+		String id = null;
+		String initialPublishDate = null;
+		int itemId = 0;
+		ItemType itemType = null;
+		String lastPublishDate = null;
+		ContentNamespace namespaceId = null;
+		int owningPublicationId = 0;
+		int publicationId = 0;
+		int schemaId = 0;
+		List<TaxonomyItem> taxonomies = null;
+		String title = null;
+		String updatedDate = null;
+		boolean multiMedia = false;
 
 
-		public String getCreationDate()
-		{
-			return creationDate;
-		}
-		public void setCreationDate(String creationDate)
-		{
-			this.creationDate = creationDate;
-		}
+		String getCreationDate();
+		void setCreationDate(String creationDate);
 
+		CustomMetaConnection getCustomMetas();
+		void setCustomMetas(CustomMetaConnection customMetas);
 
-		public CustomMetaConnection getCustomMetas()
-		{
-			return customMetas;
-		}
-		public void setCustomMetas(CustomMetaConnection customMetas)
-		{
-			this.customMetas = customMetas;
-		}
+		String getId();
+		void setId(String id);
 
+		String getInitialPublishDate();
+		void setInitialPublishDate(String initialPublishDate);
 
-		public String getId()
-		{
-			return id;
-		}
-		public void setId(String id)
-		{
-			this.id = id;
-		}
+		int getItemId();
+		void setItemId(int itemId);
 
+		ItemType getItemType();
+		void setItemType(ItemType itemType);
 
-		public String getInitialPublishDate()
-		{
-			return initialPublishDate;
-		}
-		public void setInitialPublishDate(String initialPublishDate)
-		{
-			this.initialPublishDate = initialPublishDate;
-		}
+		String getLastPublishDate();
+		void setLastPublishDate(String lastPublishDate);
 
+		ContentNamespace getNamespaceId();
+		void setNamespaceId(ContentNamespace namespaceId);
 
-		public int getItemId()
-		{
-			return itemId;
-		}
-		public void setItemId(int itemId)
-		{
-			this.itemId = itemId;
-		}
+		int getOwningPublicationId();
+		void setOwningPublicationId(int owningPublicationId);
 
+		int getPublicationId();
+		void setPublicationId(int publicationId);
 
-		public ItemType getItemType()
-		{
-			return itemType;
-		}
-		public void setItemType(ItemType itemType)
-		{
-			this.itemType = itemType;
-		}
+		int getSchemaId();
+		void setSchemaId(int schemaId);
 
+		List<TaxonomyItem> getTaxonomies();
+		void setTaxonomies(List<TaxonomyItem> taxonomies);
 
-		public String getLastPublishDate()
-		{
-			return lastPublishDate;
-		}
-		public void setLastPublishDate(String lastPublishDate)
-		{
-			this.lastPublishDate = lastPublishDate;
-		}
+		String getTitle();
+		void setTitle(String title);
 
+		String getUpdatedDate();
+		void setUpdatedDate(String updatedDate);
 
-		public ContentNamespace getNamespaceId()
-		{
-			return namespaceId;
-		}
-		public void setNamespaceId(ContentNamespace namespaceId)
-		{
-			this.namespaceId = namespaceId;
-		}
-
-
-		public int getOwningPublicationId()
-		{
-			return owningPublicationId;
-		}
-		public void setOwningPublicationId(int owningPublicationId)
-		{
-			this.owningPublicationId = owningPublicationId;
-		}
-
-
-		public int getPublicationId()
-		{
-			return publicationId;
-		}
-		public void setPublicationId(int publicationId)
-		{
-			this.publicationId = publicationId;
-		}
-
-
-		public int getSchemaId()
-		{
-			return schemaId;
-		}
-		public void setSchemaId(int schemaId)
-		{
-			this.schemaId = schemaId;
-		}
-
-
-		public List<TaxonomyItem> getTaxonomies()
-		{
-			return taxonomies;
-		}
-		public void setTaxonomies(List<TaxonomyItem> taxonomies)
-		{
-			this.taxonomies = taxonomies;
-		}
-
-
-		public String getTitle()
-		{
-			return title;
-		}
-		public void setTitle(String title)
-		{
-			this.title = title;
-		}
-
-
-		public String getUpdatedDate()
-		{
-			return updatedDate;
-		}
-		public void setUpdatedDate(String updatedDate)
-		{
-			this.updatedDate = updatedDate;
-		}
-
-
-		public boolean getMultiMedia()
-		{
-			return multiMedia;
-		}
-		public void setMultiMedia(boolean multiMedia)
-		{
-			this.multiMedia = multiMedia;
-		}
-	
+		boolean getMultiMedia();
+		void setMultiMedia(boolean multiMedia);	
 }

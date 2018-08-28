@@ -1,134 +1,37 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Sitemap Item
 */
-public class SitemapItem{
-
-		private String id;
-
-		private String originalTitle;
-
-		private String publishedDate;
-
-		private String title;
-
-		private String type;
-
-		private String url;
-
-		private boolean visible;
+public interface SitemapItem{
+		String id = null;
+		String originalTitle = null;
+		String publishedDate = null;
+		String title = null;
+		String type = null;
+		String url = null;
+		boolean visible = false;
 
 
-		public String getId()
-		{
-			return id;
-		}
-		public void setId(String id)
-		{
-			this.id = id;
-		}
+		String getId();
+		void setId(String id);
 
+		String getOriginalTitle();
+		void setOriginalTitle(String originalTitle);
 
-		public String getOriginalTitle()
-		{
-			return originalTitle;
-		}
-		public void setOriginalTitle(String originalTitle)
-		{
-			this.originalTitle = originalTitle;
-		}
+		String getPublishedDate();
+		void setPublishedDate(String publishedDate);
 
+		String getTitle();
+		void setTitle(String title);
 
-		public String getPublishedDate()
-		{
-			return publishedDate;
-		}
-		public void setPublishedDate(String publishedDate)
-		{
-			this.publishedDate = publishedDate;
-		}
+		String getType();
+		void setType(String type);
 
+		String getUrl();
+		void setUrl(String url);
 
-		public String getTitle()
-		{
-			return title;
-		}
-		public void setTitle(String title)
-		{
-			this.title = title;
-		}
-
-
-		public String getType()
-		{
-			return type;
-		}
-		public void setType(String type)
-		{
-			this.type = type;
-		}
-
-
-		public String getUrl()
-		{
-			return url;
-		}
-		public void setUrl(String url)
-		{
-			this.url = url;
-		}
-
-
-		public boolean getVisible()
-		{
-			return visible;
-		}
-		public void setVisible(boolean visible)
-		{
-			this.visible = visible;
-		}
-	
+		boolean getVisible();
+		void setVisible(boolean visible);	
 }

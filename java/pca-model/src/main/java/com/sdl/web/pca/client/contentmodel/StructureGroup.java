@@ -1,89 +1,30 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Represents a structure group.
 */
-public class StructureGroup{
-
+public class StructureGroup implements TaxonomyItem,Item{
 		private TaxonomyItemConnection children;
-
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private int depth;
-
 		private String directory;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String key;
-
 		private String lastPublishDate;
-
 		private ContentNamespace namespaceId;
-
 		private int owningPublicationId;
-
 		private TaxonomyItem parent;
-
 		private int publicationId;
-
 		private int taxonomyId;
-
 		private TaxonomyType taxonomyType;
-
 		private String title;
-
 		private String updatedDate;
-
 		private boolean hasChildren;
-
-
 		private boolean navigable;
 
 
@@ -284,16 +225,6 @@ public class StructureGroup{
 		public void setHasChildren(boolean hasChildren)
 		{
 			this.hasChildren = hasChildren;
-		}
-
-
-		public boolean getAbstract()
-		{
-			return abstract;
-		}
-		public void setAbstract(boolean abstract)
-		{
-			this.abstract = abstract;
 		}
 
 

@@ -1,41 +1,13 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-public class Content{
-
-		private String id;
-
-		private String type;
+public interface Content{
+		String id = null;
+		String type = null;
 
 
-		public String getId()
-		{
-			return id;
-		}
-		public void setId(String id)
-		{
-			this.id = id;
-		}
+		String getId();
+		void setId(String id);
 
-
-		public String getType()
-		{
-			return type;
-		}
-		public void setType(String type)
-		{
-			this.type = type;
-		}
-	
+		String getType();
+		void setType(String type);	
 }

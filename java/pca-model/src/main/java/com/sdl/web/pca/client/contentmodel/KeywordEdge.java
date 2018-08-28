@@ -1,24 +1,11 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *An edge in a connection
 */
 public class KeywordEdge{
-
 		private Keyword node;
-
 		private String cursor;
 
 

@@ -1,70 +1,18 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
-public class TaxonomySitemapItem{
-
+public class TaxonomySitemapItem implements SitemapItem{
 		private int classifiedItemsCount;
-
 		private String description;
-
 		private String id;
-
 		private List<SitemapItem> items;
-
 		private String key;
-
 		private String originalTitle;
-
 		private String publishedDate;
-
 		private String title;
-
 		private String type;
-
 		private String url;
-
-
 		private boolean hasChildNodes;
-
 		private boolean visible;
 
 
@@ -165,16 +113,6 @@ public class TaxonomySitemapItem{
 		public void setUrl(String url)
 		{
 			this.url = url;
-		}
-
-
-		public boolean getAbstract()
-		{
-			return abstract;
-		}
-		public void setAbstract(boolean abstract)
-		{
-			this.abstract = abstract;
 		}
 
 

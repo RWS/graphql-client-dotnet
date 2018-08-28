@@ -1,26 +1,16 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents custom metadata.
 */
 public class CustomMeta{
-
 		private String id;
-
 		private int itemId;
-
 		private String key;
-
 		private ContentNamespace namespaceId;
-
 		private int publicationId;
-
 		private String value;
-
 		private CustomMetaValueType valueType;
 
 

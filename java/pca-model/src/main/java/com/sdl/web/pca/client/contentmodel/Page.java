@@ -1,72 +1,29 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Represents a page.
 */
-public class Page{
-
+public class Page implements Container,Taggable,Item{
 		private List<Item> containerItems;
-
 		private Content content;
-
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private String fileName;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String lastPublishDate;
-
 		private ContentNamespace namespaceId;
-
 		private int owningPublicationId;
-
 		private Template pageTemplate;
-
 		private int publicationId;
-
 		private RawContent rawContent;
-
 		private List<TaxonomyItem> taxonomies;
-
 		private String title;
-
 		private String updatedDate;
-
 		private String url;
 
 

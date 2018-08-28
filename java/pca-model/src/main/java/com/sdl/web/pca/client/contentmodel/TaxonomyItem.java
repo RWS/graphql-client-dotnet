@@ -1,263 +1,89 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+
 /**
 *Represents a taxonomy item.
 */
-public class TaxonomyItem{
-
-		private TaxonomyItemConnection children;
-
-		private String creationDate;
-
-		private CustomMetaConnection customMetas;
-
-		private int depth;
-
-		private String id;
-
-		private String initialPublishDate;
-
-		private int itemId;
-
-		private ItemType itemType;
-
-		private String key;
-
-		private String lastPublishDate;
-
-		private ContentNamespace namespaceId;
-
-		private int owningPublicationId;
-
-		private TaxonomyItem parent;
-
-		private int publicationId;
-
-		private int taxonomyId;
-
-		private TaxonomyType taxonomyType;
-
-		private String title;
-
-		private String updatedDate;
-
-		private boolean hasChildren;
+public interface TaxonomyItem{
+		TaxonomyItemConnection children = null;
+		String creationDate = null;
+		CustomMetaConnection customMetas = null;
+		int depth = 0;
+		String id = null;
+		String initialPublishDate = null;
+		int itemId = 0;
+		ItemType itemType = null;
+		String key = null;
+		String lastPublishDate = null;
+		ContentNamespace namespaceId = null;
+		int owningPublicationId = 0;
+		TaxonomyItem parent = null;
+		int publicationId = 0;
+		int taxonomyId = 0;
+		TaxonomyType taxonomyType = null;
+		String title = null;
+		String updatedDate = null;
+		boolean hasChildren = false;
+		boolean navigable = false;
 
 
-		private boolean navigable;
+		TaxonomyItemConnection getChildren();
+		void setChildren(TaxonomyItemConnection children);
 
+		String getCreationDate();
+		void setCreationDate(String creationDate);
 
-		public TaxonomyItemConnection getChildren()
-		{
-			return children;
-		}
-		public void setChildren(TaxonomyItemConnection children)
-		{
-			this.children = children;
-		}
+		CustomMetaConnection getCustomMetas();
+		void setCustomMetas(CustomMetaConnection customMetas);
 
+		int getDepth();
+		void setDepth(int depth);
 
-		public String getCreationDate()
-		{
-			return creationDate;
-		}
-		public void setCreationDate(String creationDate)
-		{
-			this.creationDate = creationDate;
-		}
+		String getId();
+		void setId(String id);
 
+		String getInitialPublishDate();
+		void setInitialPublishDate(String initialPublishDate);
 
-		public CustomMetaConnection getCustomMetas()
-		{
-			return customMetas;
-		}
-		public void setCustomMetas(CustomMetaConnection customMetas)
-		{
-			this.customMetas = customMetas;
-		}
+		int getItemId();
+		void setItemId(int itemId);
 
+		ItemType getItemType();
+		void setItemType(ItemType itemType);
 
-		public int getDepth()
-		{
-			return depth;
-		}
-		public void setDepth(int depth)
-		{
-			this.depth = depth;
-		}
+		String getKey();
+		void setKey(String key);
 
+		String getLastPublishDate();
+		void setLastPublishDate(String lastPublishDate);
 
-		public String getId()
-		{
-			return id;
-		}
-		public void setId(String id)
-		{
-			this.id = id;
-		}
+		ContentNamespace getNamespaceId();
+		void setNamespaceId(ContentNamespace namespaceId);
 
+		int getOwningPublicationId();
+		void setOwningPublicationId(int owningPublicationId);
 
-		public String getInitialPublishDate()
-		{
-			return initialPublishDate;
-		}
-		public void setInitialPublishDate(String initialPublishDate)
-		{
-			this.initialPublishDate = initialPublishDate;
-		}
+		TaxonomyItem getParent();
+		void setParent(TaxonomyItem parent);
 
+		int getPublicationId();
+		void setPublicationId(int publicationId);
 
-		public int getItemId()
-		{
-			return itemId;
-		}
-		public void setItemId(int itemId)
-		{
-			this.itemId = itemId;
-		}
+		int getTaxonomyId();
+		void setTaxonomyId(int taxonomyId);
 
+		TaxonomyType getTaxonomyType();
+		void setTaxonomyType(TaxonomyType taxonomyType);
 
-		public ItemType getItemType()
-		{
-			return itemType;
-		}
-		public void setItemType(ItemType itemType)
-		{
-			this.itemType = itemType;
-		}
+		String getTitle();
+		void setTitle(String title);
 
+		String getUpdatedDate();
+		void setUpdatedDate(String updatedDate);
 
-		public String getKey()
-		{
-			return key;
-		}
-		public void setKey(String key)
-		{
-			this.key = key;
-		}
+		boolean getHasChildren();
+		void setHasChildren(boolean hasChildren);
 
-
-		public String getLastPublishDate()
-		{
-			return lastPublishDate;
-		}
-		public void setLastPublishDate(String lastPublishDate)
-		{
-			this.lastPublishDate = lastPublishDate;
-		}
-
-
-		public ContentNamespace getNamespaceId()
-		{
-			return namespaceId;
-		}
-		public void setNamespaceId(ContentNamespace namespaceId)
-		{
-			this.namespaceId = namespaceId;
-		}
-
-
-		public int getOwningPublicationId()
-		{
-			return owningPublicationId;
-		}
-		public void setOwningPublicationId(int owningPublicationId)
-		{
-			this.owningPublicationId = owningPublicationId;
-		}
-
-
-		public TaxonomyItem getParent()
-		{
-			return parent;
-		}
-		public void setParent(TaxonomyItem parent)
-		{
-			this.parent = parent;
-		}
-
-
-		public int getPublicationId()
-		{
-			return publicationId;
-		}
-		public void setPublicationId(int publicationId)
-		{
-			this.publicationId = publicationId;
-		}
-
-
-		public int getTaxonomyId()
-		{
-			return taxonomyId;
-		}
-		public void setTaxonomyId(int taxonomyId)
-		{
-			this.taxonomyId = taxonomyId;
-		}
-
-
-		public TaxonomyType getTaxonomyType()
-		{
-			return taxonomyType;
-		}
-		public void setTaxonomyType(TaxonomyType taxonomyType)
-		{
-			this.taxonomyType = taxonomyType;
-		}
-
-
-		public String getTitle()
-		{
-			return title;
-		}
-		public void setTitle(String title)
-		{
-			this.title = title;
-		}
-
-
-		public String getUpdatedDate()
-		{
-			return updatedDate;
-		}
-		public void setUpdatedDate(String updatedDate)
-		{
-			this.updatedDate = updatedDate;
-		}
-
-
-		public boolean getHasChildren()
-		{
-			return hasChildren;
-		}
-		public void setHasChildren(boolean hasChildren)
-		{
-			this.hasChildren = hasChildren;
-		}
-
-
-		public boolean getAbstract()
-		{
-			return abstract;
-		}
-		public void setAbstract(boolean abstract)
-		{
-			this.abstract = abstract;
-		}
-
-
-		public boolean getNavigable()
-		{
-			return navigable;
-		}
-		public void setNavigable(boolean navigable)
-		{
-			this.navigable = navigable;
-		}
-	
+		boolean getNavigable();
+		void setNavigable(boolean navigable);	
 }

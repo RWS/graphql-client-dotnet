@@ -1,34 +1,22 @@
 package com.sdl.web.pca.client.contentmodel;
 
+
 /**
 *The query root for the GraphQL Public Content API.
 */
 public class ContentQuery{
-
 		private BinaryComponent binaryComponent;
-
 		private KeywordConnection categories;
-
 		private ComponentPresentation componentPresentation;
-
 		private ItemConnection items;
-
 		private Keyword keyword;
-
 		private Page page;
-
 		private PageConnection pages;
-
 		private Publication publication;
-
 		private PublicationConnection publications;
-
 		private StructureGroup structureGroup;
-
 		private StructureGroupConnection structureGroups;
-
 		private TaxonomySitemapItem sitemap;
-
 		private TaxonomySitemapItem sitemapSubtree;
 
 

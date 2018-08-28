@@ -1,39 +1,18 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.Map;
-import java.util.Map;
+
 /**
 *Item filter
 */
 public class InputItemFilter{
-
 		private List<InputItemFilter> and;
-
 		private InputCustomMetaCriteria customMeta;
-
 		private List<ItemType> itemTypes;
-
 		private InputKeywordCriteria keyword;
-
 		private List<ContentNamespace> namespaceIds;
-
 		private List<InputItemFilter> or;
-
-		private List<int> publicationIds;
+		private List<Integer> publicationIds;
 
 
 		public List<InputItemFilter> getAnd()
@@ -96,11 +75,11 @@ public class InputItemFilter{
 		}
 
 
-		public List<int> getPublicationIds()
+		public List<Integer> getPublicationIds()
 		{
 			return publicationIds;
 		}
-		public void setPublicationIds(List<int> publicationIds)
+		public void setPublicationIds(List<Integer> publicationIds)
 		{
 			this.publicationIds = publicationIds;
 		}

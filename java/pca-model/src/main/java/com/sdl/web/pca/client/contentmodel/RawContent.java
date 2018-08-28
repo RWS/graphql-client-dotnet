@@ -1,28 +1,14 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
-import java.util.List;
+import java.util.Dictionary;
+
 /**
 *Represents an item with content.
 */
 public class RawContent{
-
 		private String charSet;
-
 		private String content;
-
-		private Map data;
-
+		private Dictionary data;
 		private String id;
 
 
@@ -46,11 +32,11 @@ public class RawContent{
 		}
 
 
-		public Map getData()
+		public Dictionary getData()
 		{
 			return data;
 		}
-		public void setData(Map data)
+		public void setData(Dictionary data)
 		{
 			this.data = data;
 		}

@@ -1,42 +1,27 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import java.util.List;
+
 /**
 *Represents a component which has binary content.
 */
-public class BinaryComponent{
-
+public class BinaryComponent implements ContentComponent,Item{
 		private String creationDate;
-
 		private CustomMetaConnection customMetas;
-
 		private String id;
-
 		private String initialPublishDate;
-
 		private int itemId;
-
 		private ItemType itemType;
-
 		private String lastPublishDate;
-
 		private ContentNamespace namespaceId;
-
 		private int owningPublicationId;
-
 		private int publicationId;
-
 		private int schemaId;
-
 		private List<TaxonomyItem> taxonomies;
-
 		private String title;
-
 		private String type;
-
 		private String updatedDate;
-
 		private BinaryVariantConnection variants;
-
 		private boolean multiMedia;
 
 
