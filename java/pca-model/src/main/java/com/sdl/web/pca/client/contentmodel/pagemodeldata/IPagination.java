@@ -1,4 +1,4 @@
-package com.sdl.web.pca.client.contentmodel;
+package com.sdl.web.pca.client.contentmodel.pagemodeldata;
 
 public interface IPagination {
     int First = 0;

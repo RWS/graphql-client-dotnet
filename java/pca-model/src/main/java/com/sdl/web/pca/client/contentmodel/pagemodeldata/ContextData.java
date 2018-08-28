@@ -1,4 +1,7 @@
-package com.sdl.web.pca.client.contentmodel;
+package com.sdl.web.pca.client.contentmodel.pagemodeldata;
+
+import com.sdl.web.pca.client.contentmodel.ClaimValue;
+import com.sdl.web.pca.client.contentmodel.IContextData;
 
 import java.util.List;
 
