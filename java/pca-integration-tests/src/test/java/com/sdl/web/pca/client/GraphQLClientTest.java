@@ -43,7 +43,22 @@ public class GraphQLClientTest {
 
     @Test
     public void getBinaryComponentById() throws Exception {
-        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756, null);
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756,
+                null);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void getBinaryComponentByUrl() throws Exception {
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
+                "/media/balloons_tcm8-756.jpg", null);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void getBinaryCompoonentByCmUri() throws Exception {
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
+                "/media/balloons_tcm8-756.jpg", null);
         assertNotNull(result);
     }
 
@@ -160,14 +175,14 @@ public class GraphQLClientTest {
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 0,
-                null));
+        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
+                new ContextData()));
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320",
-                0, true, null));
+        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
+                2, true, new ContextData()));
     }
 
 }

@@ -40,7 +40,7 @@ import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DefaultPublicContentApi implements PublicContentApi {
-    private static final ObjectMapper MAPPER = new ObjectMapper();//.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private GraphQLClient client;
     private Map<String, String> queries = new HashMap<>();
@@ -135,38 +135,52 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
                                           ContextData contextData) throws PublicContentApiException {
-        //TODO fix: descendsantLevels, contextData is not used in current implementation
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("Sitemap");
-        query += getFragmentFor("RecurseItems");
         query += getFragmentFor("TaxonomyItemFields");
         query += getFragmentFor("TaxonomyPageFields");
+        String recurseItems = getFragmentFor("RecurseItems");
+        query = QueryUtils.expandRecursively(query, recurseItems, descendantLevels);
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
+        JsonNode result = getJsonResult(graphQLRequest, "/data/sitemap");
+        try {
+            return MAPPER.treeToValue(result, TaxonomySitemapItem.class);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to TaxonomySitemapItem: " + result.toString(), e);
+        }
     }
 
     @Override
     public TaxonomySitemapItem getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
                                                  int descendantLevels, boolean includeAncestors,
                                                  ContextData contextData) throws PublicContentApiException {
-        //TODO fix: descendantLevels, includeAncestors, contextData is not used in current implementatioon
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("SitemapSubtree");
         query += getFragmentFor("TaxonomyItemFields");
-        query += getFragmentFor("RecurseItems");
         query += getFragmentFor("TaxonomyPageFields");
+        String recurseItems = getFragmentFor("RecurseItems");
+        query = QueryUtils.expandRecursively(query, recurseItems, descendantLevels);
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
         variables.put("taxonomyNodeId", taxonomyNodeId);
         variables.put("includeAncestors", includeAncestors);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
+        JsonNode result = getJsonResult(graphQLRequest, "/data/sitemap");
+        try {
+            return MAPPER.treeToValue(result, TaxonomySitemapItem.class);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to TaxonomySitemapItem: " + result.toString(), e);
+        }
     }
 
     @Override
@@ -198,12 +212,52 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url,
                                               ContextData contextData) throws PublicContentApiException {
-        return null;
-     }
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        String query = getQueryFor("BinaryComponentByUrl");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("BinaryComponentFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectVariantsArgs(query, url);
+        query = QueryUtils.injectCustomMetaFilter(query, null);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("url", url);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
+        try {
+            return MAPPER.treeToValue(result, BinaryComponent.class);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
+        }
+    }
 
     @Override
     public BinaryComponent getBinaryComponent(CmUri cmUri, ContextData contextData) throws PublicContentApiException {
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        String query = getQueryFor("BinaryComponentByCmUri");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("BinaryComponentFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectVariantsArgs(query, null);
+        query = QueryUtils.injectCustomMetaFilter(query, null);
+
+        HashMap<String, Object> variables = new HashMap<>();
+//        variables.put("namespaceId", cmUri.getNamespaceId());
+//        variables.put("publicationId", cmUri.getPublicationId());
+        variables.put("cmUri", cmUri.toString());
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
+        try {
+            return MAPPER.treeToValue(result, BinaryComponent.class);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
+        }
     }
 
     @Override
