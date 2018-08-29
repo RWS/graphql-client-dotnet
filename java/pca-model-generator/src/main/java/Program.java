@@ -373,7 +373,7 @@ public class Program {
             case "itemType":
             {
                 graphQLSchemaTypeInfo.kind = "ENUM";
-                graphQLSchemaTypeInfo.name = "ItemType";
+                graphQLSchemaTypeInfo.name = "com.sdl.web.pca.client.contentmodel.enums.ItemType";
                 return graphQLSchemaTypeInfo;
             }
             case "id":{

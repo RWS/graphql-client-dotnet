@@ -13,7 +13,7 @@ public class ComponentPresentation implements ContentFragment,Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private ItemType itemType;
+		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
 		private String lastPublishDate;
 		private ContentNamespace namespaceId;
 		private int owningPublicationId;
@@ -103,11 +103,11 @@ public class ComponentPresentation implements ContentFragment,Item{
 		}
 
 
-		public ItemType getItemType()
+		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(ItemType itemType)
+		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
 		{
 			this.itemType = itemType;
 		}

@@ -10,7 +10,7 @@ public interface Item{
 		String id = null;
 		String initialPublishDate = null;
 		int itemId = 0;
-		ItemType itemType = null;
+		com.sdl.web.pca.client.contentmodel.enums.ItemType itemType = null;
 		String lastPublishDate = null;
 		ContentNamespace namespaceId = null;
 		int owningPublicationId = 0;
@@ -34,8 +34,8 @@ public interface Item{
 		int getItemId();
 		void setItemId(int itemId);
 
-		ItemType getItemType();
-		void setItemType(ItemType itemType);
+		com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType();
+		void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType);
 
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);

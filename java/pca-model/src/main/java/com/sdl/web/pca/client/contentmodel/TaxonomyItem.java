@@ -12,7 +12,7 @@ public interface TaxonomyItem{
 		String id = null;
 		String initialPublishDate = null;
 		int itemId = 0;
-		ItemType itemType = null;
+		com.sdl.web.pca.client.contentmodel.enums.ItemType itemType = null;
 		String key = null;
 		String lastPublishDate = null;
 		ContentNamespace namespaceId = null;
@@ -48,8 +48,8 @@ public interface TaxonomyItem{
 		int getItemId();
 		void setItemId(int itemId);
 
-		ItemType getItemType();
-		void setItemType(ItemType itemType);
+		com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType();
+		void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType);
 
 		String getKey();
 		void setKey(String key);

@@ -10,7 +10,7 @@ public class Publication implements Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private ItemType itemType;
+		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
 		private String lastPublishDate;
 		private String multimediaPath;
 		private String multimediaUrl;
@@ -74,11 +74,11 @@ public class Publication implements Item{
 		}
 
 
-		public ItemType getItemType()
+		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(ItemType itemType)
+		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
 		{
 			this.itemType = itemType;
 		}
