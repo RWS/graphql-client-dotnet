@@ -224,11 +224,15 @@ public class DefaultPublicContentApi implements PublicContentApi {
                 String fragment = itemType.name().substring(0, 1).toUpperCase()
                         + itemType.name().substring(1).toLowerCase() + "Fields";
                 query += getFragmentFor(fragment);
+                if(fragment.equals("PageFields"))
+                    query += getFragmentFor("ComponentPresentationFields");
                 fragmentList += "..." + fragment + "\n";
             }
             // Just a quick and easy way to replace markers in our queries with vars here.
             query = query.replace("@fragmentList", fragmentList);
             query = query.replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
+            query = query.replace("@customMetaArgs", customMetaFilter );
+            query = query.replace("@renderContentArgs",  customMetaFilter );
         }
 
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];

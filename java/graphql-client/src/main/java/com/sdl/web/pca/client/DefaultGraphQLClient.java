@@ -93,6 +93,9 @@ public class DefaultGraphQLClient implements GraphQLClient {
     public String execute(GraphQLRequest request) throws GraphQLClientException {
         try {
             String stringRequest = MAPPER.writeValueAsString(request);
+
+            String s = stringRequest.replaceAll("(\\r\\n|\\n)","");
+
             return execute(stringRequest, request.getTimeout());
         } catch (JsonProcessingException e) {
             throw new GraphQLClientException("Unable to serialize request: " + request.toString(), e);
