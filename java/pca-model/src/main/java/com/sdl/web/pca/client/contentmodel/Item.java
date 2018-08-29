@@ -6,19 +6,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 *Represents an item. The root of all content models.
 */
 public interface Item{
-		String creationDate = null;
-		CustomMetaConnection customMetas = null;
-		String id = null;
-		String initialPublishDate = null;
-		int itemId = 0;
-		ItemType itemType = null;
-		String lastPublishDate = null;
-		ContentNamespace namespaceId = null;
-		int owningPublicationId = 0;
-		int publicationId = 0;
-		String title = null;
-		String updatedDate = null;
-
+																								
 
 		String getCreationDate();
 		void setCreationDate(String creationDate);

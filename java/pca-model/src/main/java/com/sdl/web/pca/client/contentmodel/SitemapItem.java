@@ -5,14 +5,7 @@ package com.sdl.web.pca.client.contentmodel;
 *Sitemap Item
 */
 public interface SitemapItem{
-		String id = null;
-		String originalTitle = null;
-		String publishedDate = null;
-		String title = null;
-		String type = null;
-		String url = null;
-		boolean visible = false;
-
+														
 
 		String getId();
 		void setId(String id);

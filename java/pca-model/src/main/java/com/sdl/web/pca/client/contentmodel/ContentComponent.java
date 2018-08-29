@@ -7,22 +7,7 @@ import java.util.List;
 *Represents a component which has content.
 */
 public interface ContentComponent{
-		String creationDate = null;
-		CustomMetaConnection customMetas = null;
-		String id = null;
-		String initialPublishDate = null;
-		int itemId = 0;
-		ItemType itemType = null;
-		String lastPublishDate = null;
-		ContentNamespace namespaceId = null;
-		int owningPublicationId = 0;
-		int publicationId = 0;
-		int schemaId = 0;
-		List<TaxonomyItem> taxonomies = null;
-		String title = null;
-		String updatedDate = null;
-		boolean multiMedia = false;
-
+																														
 
 		String getCreationDate();
 		void setCreationDate(String creationDate);

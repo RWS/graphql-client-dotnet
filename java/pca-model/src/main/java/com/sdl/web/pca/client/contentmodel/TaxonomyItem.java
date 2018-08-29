@@ -6,27 +6,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 *Represents a taxonomy item.
 */
 public interface TaxonomyItem{
-		TaxonomyItemConnection children = null;
-		String creationDate = null;
-		CustomMetaConnection customMetas = null;
-		int depth = 0;
-		String id = null;
-		String initialPublishDate = null;
-		int itemId = 0;
-		ItemType itemType = null;
-		String key = null;
-		String lastPublishDate = null;
-		ContentNamespace namespaceId = null;
-		int owningPublicationId = 0;
-		TaxonomyItem parent = null;
-		int publicationId = 0;
-		int taxonomyId = 0;
-		TaxonomyType taxonomyType = null;
-		String title = null;
-		String updatedDate = null;
-		boolean hasChildren = false;
-		boolean navigable = false;
-
+																																								
 
 		TaxonomyItemConnection getChildren();
 		void setChildren(TaxonomyItemConnection children);

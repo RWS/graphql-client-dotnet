@@ -6,20 +6,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 *Represents a fragment of content.
 */
 public interface ContentFragment{
-		Content content = null;
-		String creationDate = null;
-		CustomMetaConnection customMetas = null;
-		String id = null;
-		String initialPublishDate = null;
-		int itemId = 0;
-		ItemType itemType = null;
-		String lastPublishDate = null;
-		ContentNamespace namespaceId = null;
-		int owningPublicationId = 0;
-		int publicationId = 0;
-		String title = null;
-		String updatedDate = null;
-
+																										
 
 		Content getContent();
 		void setContent(Content content);

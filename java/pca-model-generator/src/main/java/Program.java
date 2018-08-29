@@ -229,11 +229,12 @@ public class Program {
                 continue;
 
             sb.append(indentString);
-            if (isPublic)
+            if (isPublic) {
                 sb.append("private " + returnTypeName + " " + field.name + ";");
-            else
-                sb.append(returnTypeName + " " + field.name + " = " + defaultValue + ";");
-            sb.append("\n");
+                sb.append("\n");
+            }
+            /*else
+                sb.append(returnTypeName + " " + field.name + " = " + defaultValue + ";");*/
         }
 
         //Setter & Getter for Model Class
