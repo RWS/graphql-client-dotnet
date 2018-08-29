@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a publication.
@@ -10,7 +11,7 @@ public class Publication implements Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
+		private ItemType itemType;
 		private String lastPublishDate;
 		private String multimediaPath;
 		private String multimediaUrl;
@@ -74,11 +75,11 @@ public class Publication implements Item{
 		}
 
 
-		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
+		public ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
+		public void setItemType(ItemType itemType)
 		{
 			this.itemType = itemType;
 		}

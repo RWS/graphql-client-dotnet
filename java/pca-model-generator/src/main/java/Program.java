@@ -373,7 +373,7 @@ public class Program {
             case "itemType":
             {
                 graphQLSchemaTypeInfo.kind = "ENUM";
-                graphQLSchemaTypeInfo.name = "com.sdl.web.pca.client.contentmodel.enums.ItemType";
+                graphQLSchemaTypeInfo.name = "ItemType";
                 return graphQLSchemaTypeInfo;
             }
             case "id":{
@@ -407,9 +407,15 @@ public class Program {
     }
 
     static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type){
-        int count = 0;
+        int count = 0, itemtypeCount=0;
         if (type.fields != null){
             for (GraphQLSchemaField field : type.fields){
+
+                if(field.name.equalsIgnoreCase("itemtype") && itemtypeCount==0){
+                    sb.append("import com.sdl.web.pca.client.contentmodel.enums.ItemType;\n");
+                    itemtypeCount++;
+                }
+
                 if(field.type.kind != null && count<=0){
                     switch (field.type.kind){
                         case "LIST":{

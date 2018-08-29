@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a fragment of content.
@@ -11,7 +12,7 @@ public interface ContentFragment{
 		String id = null;
 		String initialPublishDate = null;
 		int itemId = 0;
-		com.sdl.web.pca.client.contentmodel.enums.ItemType itemType = null;
+		ItemType itemType = null;
 		String lastPublishDate = null;
 		ContentNamespace namespaceId = null;
 		int owningPublicationId = 0;
@@ -38,8 +39,8 @@ public interface ContentFragment{
 		int getItemId();
 		void setItemId(int itemId);
 
-		com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType();
-		void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType);
+		ItemType getItemType();
+		void setItemType(ItemType itemType);
 
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);

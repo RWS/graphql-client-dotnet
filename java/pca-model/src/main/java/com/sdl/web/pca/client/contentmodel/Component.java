@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class Component implements ContentComponent,Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
+		private ItemType itemType;
 		private String lastPublishDate;
 		private ContentNamespace namespaceId;
 		private int owningPublicationId;
@@ -73,11 +74,11 @@ public class Component implements ContentComponent,Item{
 		}
 
 
-		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
+		public ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
+		public void setItemType(ItemType itemType)
 		{
 			this.itemType = itemType;
 		}

@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a component presentation which has a component associated with a template.
@@ -13,7 +14,7 @@ public class ComponentPresentation implements ContentFragment,Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
+		private ItemType itemType;
 		private String lastPublishDate;
 		private ContentNamespace namespaceId;
 		private int owningPublicationId;
@@ -103,11 +104,11 @@ public class ComponentPresentation implements ContentFragment,Item{
 		}
 
 
-		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
+		public ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
+		public void setItemType(ItemType itemType)
 		{
 			this.itemType = itemType;
 		}

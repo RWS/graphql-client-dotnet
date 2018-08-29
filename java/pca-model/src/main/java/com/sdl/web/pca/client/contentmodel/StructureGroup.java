@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a structure group.
@@ -13,7 +14,7 @@ public class StructureGroup implements TaxonomyItem,Item{
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private com.sdl.web.pca.client.contentmodel.enums.ItemType itemType;
+		private ItemType itemType;
 		private String key;
 		private String lastPublishDate;
 		private ContentNamespace namespaceId;
@@ -108,11 +109,11 @@ public class StructureGroup implements TaxonomyItem,Item{
 		}
 
 
-		public com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType()
+		public ItemType getItemType()
 		{
 			return itemType;
 		}
-		public void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType)
+		public void setItemType(ItemType itemType)
 		{
 			this.itemType = itemType;
 		}

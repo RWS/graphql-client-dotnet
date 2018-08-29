@@ -112,6 +112,12 @@
                 <module>pca-integration-tests</module>
             </modules>
         </profile>
+        <profile>
+            <id>model-generator</id>
+            <modules>
+                <module>pca-model-generator</module>
+            </modules>
+        </profile>
     </profiles>
 
     <build>

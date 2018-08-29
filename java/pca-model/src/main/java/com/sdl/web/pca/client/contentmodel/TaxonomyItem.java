@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a taxonomy item.
@@ -12,7 +13,7 @@ public interface TaxonomyItem{
 		String id = null;
 		String initialPublishDate = null;
 		int itemId = 0;
-		com.sdl.web.pca.client.contentmodel.enums.ItemType itemType = null;
+		ItemType itemType = null;
 		String key = null;
 		String lastPublishDate = null;
 		ContentNamespace namespaceId = null;
@@ -48,8 +49,8 @@ public interface TaxonomyItem{
 		int getItemId();
 		void setItemId(int itemId);
 
-		com.sdl.web.pca.client.contentmodel.enums.ItemType getItemType();
-		void setItemType(com.sdl.web.pca.client.contentmodel.enums.ItemType itemType);
+		ItemType getItemType();
+		void setItemType(ItemType itemType);
 
 		String getKey();
 		void setKey(String key);
