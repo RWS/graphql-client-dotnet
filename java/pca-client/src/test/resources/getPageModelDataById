@@ -1,0 +1,2479 @@
+{
+	"data": {
+		"page": {
+			"itemId": 640,
+			"rawContent": {
+				"data": {
+					"Id": "tcm:1082-640-64",
+					"Title": "000 Home",
+					"CustomProperties": {},
+					"ExtensionData": null,
+					"RevisionDate": "2017-06-01T08:23:38",
+					"Publication": {
+						"Id": "tcm:0-1082-1",
+						"Title": "500 Example Site (Legacy)",
+						"CustomProperties": {},
+						"ExtensionData": null
+					},
+					"OwningPublication": {
+						"Id": "tcm:0-8-1",
+						"Title": "400 Example Site",
+						"CustomProperties": {},
+						"ExtensionData": null
+					},
+					"Folder": null,
+					"LastPublishedDate": "0001-01-01T00:00:00",
+					"Version": 9,
+					"MetadataFields": {
+						"sitemapKeyword": {
+							"Name": "sitemapKeyword",
+							"Values": [],
+							"NumericValues": [],
+							"DateTimeValues": [],
+							"LinkedComponentValues": [],
+							"EmbeddedValues": null,
+							"FieldType": 3,
+							"XPath": "Metadata/custom:sitemapKeyword",
+							"CategoryName": "Sitemap [Navigation]",
+							"CategoryId": "tcm:1082-2680-512"
+						}
+					},
+					"Categories": null,
+					"Schema": {
+						"Id": "tcm:1082-10015-8",
+						"Title": "Page Navigation Metadata",
+						"CustomProperties": {},
+						"ExtensionData": null,
+						"RevisionDate": null,
+						"Publication": null,
+						"OwningPublication": null,
+						"Folder": null,
+						"LastPublishedDate": null,
+						"Version": 0,
+						"MetadataFields": null,
+						"Categories": null,
+						"Schema": null,
+						"RootElementName": "undefined"
+					},
+					"Filename": "index",
+					"PageTemplate": {
+						"Id": "tcm:1082-131-128",
+						"Title": "Home Page",
+						"CustomProperties": {},
+						"ExtensionData": null,
+						"RevisionDate": "2015-07-15T15:27:56.093",
+						"Publication": null,
+						"OwningPublication": null,
+						"Folder": null,
+						"LastPublishedDate": null,
+						"Version": 0,
+						"MetadataFields": {
+							"includes": {
+								"Name": "includes",
+								"Values": ["system/include/header", "system/include/footer"],
+								"NumericValues": [],
+								"DateTimeValues": [],
+								"LinkedComponentValues": [],
+								"EmbeddedValues": null,
+								"FieldType": 0,
+								"XPath": null,
+								"CategoryId": null,
+								"CategoryName": null
+							},
+							"view": {
+								"Name": "view",
+								"Values": ["GeneralPage"],
+								"NumericValues": [],
+								"DateTimeValues": [],
+								"LinkedComponentValues": [],
+								"EmbeddedValues": null,
+								"FieldType": 0,
+								"XPath": null,
+								"CategoryId": null,
+								"CategoryName": null
+							}
+						},
+						"Categories": null,
+						"Schema": null,
+						"FileExtension": "html"
+					},
+					"ComponentPresentations": [{
+							"Component": {
+								"Id": "tcm:1082-1472",
+								"Title": "Homepage List",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-11-11T11:13:16",
+								"Publication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"OwningPublication": {
+									"Id": "tcm:0-1068-1",
+									"Title": "200 Example Content",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"Folder": {
+									"Id": "tcm:1082-334-2",
+									"Title": "Homepage",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"PublicationId": "tcm:0-1082-1"
+								},
+								"LastPublishedDate": "0001-01-01T00:00:00",
+								"Version": 17,
+								"MetadataFields": {},
+								"Categories": [],
+								"Schema": {
+									"Id": "tcm:1082-139-8",
+									"Title": "Item List",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"RevisionDate": null,
+									"Publication": null,
+									"OwningPublication": null,
+									"Folder": null,
+									"LastPublishedDate": null,
+									"Version": 0,
+									"MetadataFields": null,
+									"Categories": null,
+									"Schema": null,
+									"RootElementName": "ItemList"
+								},
+								"ComponentType": "NORMAL",
+								"Fields": {
+									"itemListElement": {
+										"Name": "itemListElement",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"link": {
+													"Name": "link",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": [{
+															"Schema": null,
+															"linkText": {
+																"Name": "linkText",
+																"Values": ["Discover More"],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [],
+																"EmbeddedValues": null,
+																"FieldType": 0,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:link[1]/custom:linkText",
+																"CategoryId": null,
+																"CategoryName": null
+															},
+															"internalLink": {
+																"Name": "internalLink",
+																"Values": [],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [{
+																		"Id": "tcm:1082-1465",
+																		"Title": "Further Information Intro",
+																		"CustomProperties": {},
+																		"ExtensionData": null,
+																		"RevisionDate": "2016-08-18T13:27:10.13",
+																		"Publication": null,
+																		"OwningPublication": null,
+																		"Folder": null,
+																		"LastPublishedDate": "0001-01-01T00:00:00",
+																		"Version": 8,
+																		"MetadataFields": {
+																			"standardMeta": {
+																				"Name": "standardMeta",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"description": {
+																							"Name": "description",
+																							"Values": ["Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut porttitor nisi nunc. Aenean commodo arcu vehicula enim tincidunt sodales. Proin tristique mi id nisi dignissim, eget congue purus blandit. Vestibulum dignissim sollicitudin sapien, eget pellentesque dui pellentesque sodales. In hac habitasse platea dictumst. Cras placerat at libero at porta. Vivamus eget magna eros. "],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 1,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"introText": {
+																							"Name": "introText",
+																							"Values": ["Useful information about our company "],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-231-8",
+																					"Title": "Standard Metadata",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "StandardMetadata"
+																				}
+																			}
+																		},
+																		"Categories": [],
+																		"Schema": {
+																			"Id": "tcm:1082-80-8",
+																			"Title": "Article",
+																			"CustomProperties": {},
+																			"ExtensionData": null,
+																			"RevisionDate": null,
+																			"Publication": null,
+																			"OwningPublication": null,
+																			"Folder": null,
+																			"LastPublishedDate": null,
+																			"Version": 0,
+																			"MetadataFields": null,
+																			"Categories": null,
+																			"Schema": null,
+																			"RootElementName": "Article"
+																		},
+																		"ComponentType": "NORMAL",
+																		"Fields": {
+																			"headline": {
+																				"Name": "headline",
+																				"Values": ["Further Information"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Article/custom:headline",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"image": {
+																				"Name": "image",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [{
+																						"Id": "tcm:1082-757",
+																						"Title": "blueprint",
+																						"CustomProperties": {},
+																						"ExtensionData": null,
+																						"RevisionDate": "2014-05-28T10:38:02.413",
+																						"Publication": null,
+																						"OwningPublication": null,
+																						"Folder": null,
+																						"LastPublishedDate": "0001-01-01T00:00:00",
+																						"Version": 2,
+																						"MetadataFields": {},
+																						"Categories": [],
+																						"Schema": {
+																							"Id": "tcm:1082-79-8",
+																							"Title": "Image",
+																							"CustomProperties": {},
+																							"ExtensionData": null,
+																							"RevisionDate": null,
+																							"Publication": null,
+																							"OwningPublication": null,
+																							"Folder": null,
+																							"LastPublishedDate": null,
+																							"Version": 0,
+																							"MetadataFields": null,
+																							"Categories": null,
+																							"Schema": null,
+																							"RootElementName": "undefined"
+																						},
+																						"ComponentType": "MULTIMEDIA",
+																						"Fields": {},
+																						"Multimedia": {
+																							"Name": null,
+																							"Values": null,
+																							"NumericValues": null,
+																							"DateTimeValues": null,
+																							"LinkedComponentValues": null,
+																							"EmbeddedValues": null,
+																							"FieldType": null,
+																							"XPath": null,
+																							"Height": 0,
+																							"Width": 0,
+																							"Size": 1200817,
+																							"Alt": null,
+																							"Url": "/example-legacy/media/blueprint_tcm1082-757.jpg",
+																							"MimeType": "image/jpeg",
+																							"FileExtension": "jpg",
+																							"FileName": "blueprint.jpg"
+																						},
+																						"EclId": null
+																					}
+																				],
+																				"EmbeddedValues": null,
+																				"FieldType": 5,
+																				"XPath": "tcm:Content/custom:Article/custom:image"
+																			},
+																			"articleBody": {
+																				"Name": "articleBody",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"content": {
+																							"Name": "content",
+																							"Values": ["<p>Maecenas quis mi ipsum. Morbi dapibus diam fermentum urna porta, a rutrum quam blandit. Phasellus fermentum vitae nisl non lacinia. Nulla in nulla sit amet eros suscipit consectetur a quis orci. Mauris id turpis vitae magna ultricies accumsan. Nunc velit quam, congue vel magna at, mattis dapibus orci. Maecenas quis sem sit amet risus pellentesque laoreet eget at quam. Vivamus eu massa ante.</p><ul><li>Donec vulputate dolor a consequat fermentum.</li><li>Nunc ullamcorper est at rhoncus congue.</li><li>Nullam dignissim nulla at ante semper, non adipiscing ante ullamcorper.</li><li>Nulla nec tellus vitae justo rutrum consectetur vel vitae nisl.</li></ul>"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 2,
+																							"XPath": "tcm:Content/custom:Article/custom:articleBody[1]/custom:content",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Content/custom:Article/custom:articleBody",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-232-8",
+																					"Title": "Paragraph",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "Paragraph"
+																				}
+																			}
+																		},
+																		"Multimedia": null,
+																		"EclId": null
+																	}
+																],
+																"EmbeddedValues": null,
+																"FieldType": 6,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:link[1]/custom:internalLink"
+															}
+														}
+													],
+													"FieldType": 4,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:link",
+													"EmbeddedSchema": {
+														"Id": "tcm:1082-115-8",
+														"Title": "Link",
+														"CustomProperties": {},
+														"ExtensionData": null,
+														"RevisionDate": null,
+														"Publication": null,
+														"OwningPublication": null,
+														"Folder": null,
+														"LastPublishedDate": null,
+														"Version": 0,
+														"MetadataFields": null,
+														"Categories": null,
+														"Schema": null,
+														"RootElementName": "EmbeddedLink"
+													}
+												},
+												"media": {
+													"Name": "media",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [{
+															"Id": "tcm:1082-755",
+															"Title": "ballon-burner",
+															"CustomProperties": {},
+															"ExtensionData": null,
+															"RevisionDate": "2014-05-28T10:38:02.027",
+															"Publication": null,
+															"OwningPublication": null,
+															"Folder": null,
+															"LastPublishedDate": "0001-01-01T00:00:00",
+															"Version": 2,
+															"MetadataFields": {},
+															"Categories": [],
+															"Schema": {
+																"Id": "tcm:1082-79-8",
+																"Title": "Image",
+																"CustomProperties": {},
+																"ExtensionData": null,
+																"RevisionDate": null,
+																"Publication": null,
+																"OwningPublication": null,
+																"Folder": null,
+																"LastPublishedDate": null,
+																"Version": 0,
+																"MetadataFields": null,
+																"Categories": null,
+																"Schema": null,
+																"RootElementName": "undefined"
+															},
+															"ComponentType": "MULTIMEDIA",
+															"Fields": {},
+															"Multimedia": {
+																"Name": null,
+																"Values": null,
+																"NumericValues": null,
+																"DateTimeValues": null,
+																"LinkedComponentValues": null,
+																"EmbeddedValues": null,
+																"FieldType": null,
+																"XPath": null,
+																"Height": 0,
+																"Width": 0,
+																"Size": 883791,
+																"Alt": null,
+																"Url": "/example-legacy/media/ballon-burner_tcm1082-755.jpg",
+																"MimeType": "image/jpeg",
+																"FileExtension": "jpg",
+																"FileName": "ballon-burner.jpg"
+															},
+															"EclId": null
+														}
+													],
+													"EmbeddedValues": null,
+													"FieldType": 5,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:media"
+												},
+												"subheading": {
+													"Name": "subheading",
+													"Values": ["Discover More"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:subheading",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"content": {
+													"Name": "content",
+													"Values": ["Explore a wealth of information on this site"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 2,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[1]/custom:content",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}, {
+												"Schema": null,
+												"link": {
+													"Name": "link",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": [{
+															"Schema": null,
+															"linkText": {
+																"Name": "linkText",
+																"Values": ["View News"],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [],
+																"EmbeddedValues": null,
+																"FieldType": 0,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:link[1]/custom:linkText",
+																"CategoryId": null,
+																"CategoryName": null
+															},
+															"internalLink": {
+																"Name": "internalLink",
+																"Values": [],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [{
+																		"Id": "tcm:1082-1467",
+																		"Title": "News Intro",
+																		"CustomProperties": {},
+																		"ExtensionData": null,
+																		"RevisionDate": "2016-08-18T13:34:31.187",
+																		"Publication": null,
+																		"OwningPublication": null,
+																		"Folder": null,
+																		"LastPublishedDate": "0001-01-01T00:00:00",
+																		"Version": 6,
+																		"MetadataFields": {
+																			"standardMeta": {
+																				"Name": "standardMeta",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"name": {
+																							"Name": "name",
+																							"Values": ["News Index "],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:name",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"description": {
+																							"Name": "description",
+																							"Values": ["Maecenas quis mi ipsum. Morbi dapibus diam fermentum urna porta, a rutrum quam blandit. Phasellus fermentum vitae nisl non lacinia. Nulla in nulla sit amet eros suscipit consectetur a quis orci. Mauris id turpis vitae magna ultricies accumsan. Nunc velit quam, congue vel magna at, mattis dapibus orci. Maecenas quis sem sit amet risus pellentesque laoreet eget at quam. Vivamus eu massa ante "],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 1,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"introText": {
+																							"Name": "introText",
+																							"Values": ["Keep up to date with the latest... "],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-231-8",
+																					"Title": "Standard Metadata",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "StandardMetadata"
+																				}
+																			}
+																		},
+																		"Categories": [],
+																		"Schema": {
+																			"Id": "tcm:1082-80-8",
+																			"Title": "Article",
+																			"CustomProperties": {},
+																			"ExtensionData": null,
+																			"RevisionDate": null,
+																			"Publication": null,
+																			"OwningPublication": null,
+																			"Folder": null,
+																			"LastPublishedDate": null,
+																			"Version": 0,
+																			"MetadataFields": null,
+																			"Categories": null,
+																			"Schema": null,
+																			"RootElementName": "Article"
+																		},
+																		"ComponentType": "NORMAL",
+																		"Fields": {
+																			"headline": {
+																				"Name": "headline",
+																				"Values": ["News"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Article/custom:headline",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"image": {
+																				"Name": "image",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [{
+																						"Id": "tcm:1082-758",
+																						"Title": "bridge",
+																						"CustomProperties": {},
+																						"ExtensionData": null,
+																						"RevisionDate": "2014-05-28T10:37:54.087",
+																						"Publication": null,
+																						"OwningPublication": null,
+																						"Folder": null,
+																						"LastPublishedDate": "0001-01-01T00:00:00",
+																						"Version": 2,
+																						"MetadataFields": {},
+																						"Categories": [],
+																						"Schema": {
+																							"Id": "tcm:1082-79-8",
+																							"Title": "Image",
+																							"CustomProperties": {},
+																							"ExtensionData": null,
+																							"RevisionDate": null,
+																							"Publication": null,
+																							"OwningPublication": null,
+																							"Folder": null,
+																							"LastPublishedDate": null,
+																							"Version": 0,
+																							"MetadataFields": null,
+																							"Categories": null,
+																							"Schema": null,
+																							"RootElementName": "undefined"
+																						},
+																						"ComponentType": "MULTIMEDIA",
+																						"Fields": {},
+																						"Multimedia": {
+																							"Name": null,
+																							"Values": null,
+																							"NumericValues": null,
+																							"DateTimeValues": null,
+																							"LinkedComponentValues": null,
+																							"EmbeddedValues": null,
+																							"FieldType": null,
+																							"XPath": null,
+																							"Height": 0,
+																							"Width": 0,
+																							"Size": 1389961,
+																							"Alt": null,
+																							"Url": "/example-legacy/media/bridge_tcm1082-758.jpg",
+																							"MimeType": "image/jpeg",
+																							"FileExtension": "jpg",
+																							"FileName": "bridge.jpg"
+																						},
+																						"EclId": null
+																					}
+																				],
+																				"EmbeddedValues": null,
+																				"FieldType": 5,
+																				"XPath": "tcm:Content/custom:Article/custom:image"
+																			},
+																			"articleBody": {
+																				"Name": "articleBody",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"content": {
+																							"Name": "content",
+																							"Values": ["<p>Morbi sagittis pellentesque facilisis. Phasellus accumsan, ante non aliquet dignissim, turpis diam placerat odio, sit amet rutrum tortor magna nec diam. Nulla adipiscing in quam sit amet faucibus. Nunc congue velit ac leo sodales, quis mattis massa tincidunt. Nullam fringilla volutpat arcu, vitae ultricies ante lobortis ac. Quisque elementum nunc congue, luctus mi quis, vestibulum lacus. Vestibulum nec dui nibh. Mauris consectetur risus dui, eget ultricies sapien imperdiet vitae. Praesent metus tortor, adipiscing sed feugiat vitae, accumsan vitae ipsum. Morbi sodales, sapien nec vehicula blandit, turpis nisl mattis metus, vel ultrices eros magna sit amet odio. </p><p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut porttitor nisi nunc. Aenean commodo arcu vehicula enim tincidunt sodales. Proin tristique mi id nisi dignissim, eget congue purus blandit. Vestibulum dignissim sollicitudin sapien, eget pellentesque dui pellentesque sodales. In hac habitasse platea dictumst. Cras placerat at libero at porta. Vivamus eget magna eros.</p>"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 2,
+																							"XPath": "tcm:Content/custom:Article/custom:articleBody[1]/custom:content",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Content/custom:Article/custom:articleBody",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-232-8",
+																					"Title": "Paragraph",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "Paragraph"
+																				}
+																			}
+																		},
+																		"Multimedia": null,
+																		"EclId": null
+																	}
+																],
+																"EmbeddedValues": null,
+																"FieldType": 6,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:link[1]/custom:internalLink"
+															}
+														}
+													],
+													"FieldType": 4,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:link",
+													"EmbeddedSchema": {
+														"Id": "tcm:1082-115-8",
+														"Title": "Link",
+														"CustomProperties": {},
+														"ExtensionData": null,
+														"RevisionDate": null,
+														"Publication": null,
+														"OwningPublication": null,
+														"Folder": null,
+														"LastPublishedDate": null,
+														"Version": 0,
+														"MetadataFields": null,
+														"Categories": null,
+														"Schema": null,
+														"RootElementName": "EmbeddedLink"
+													}
+												},
+												"media": {
+													"Name": "media",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [{
+															"Id": "tcm:1082-759",
+															"Title": "bulls-eye",
+															"CustomProperties": {},
+															"ExtensionData": null,
+															"RevisionDate": "2014-05-28T10:37:53.773",
+															"Publication": null,
+															"OwningPublication": null,
+															"Folder": null,
+															"LastPublishedDate": "0001-01-01T00:00:00",
+															"Version": 2,
+															"MetadataFields": {},
+															"Categories": [],
+															"Schema": {
+																"Id": "tcm:1082-79-8",
+																"Title": "Image",
+																"CustomProperties": {},
+																"ExtensionData": null,
+																"RevisionDate": null,
+																"Publication": null,
+																"OwningPublication": null,
+																"Folder": null,
+																"LastPublishedDate": null,
+																"Version": 0,
+																"MetadataFields": null,
+																"Categories": null,
+																"Schema": null,
+																"RootElementName": "undefined"
+															},
+															"ComponentType": "MULTIMEDIA",
+															"Fields": {},
+															"Multimedia": {
+																"Name": null,
+																"Values": null,
+																"NumericValues": null,
+																"DateTimeValues": null,
+																"LinkedComponentValues": null,
+																"EmbeddedValues": null,
+																"FieldType": null,
+																"XPath": null,
+																"Height": 0,
+																"Width": 0,
+																"Size": 1276322,
+																"Alt": null,
+																"Url": "/example-legacy/media/bulls-eye_tcm1082-759.JPG",
+																"MimeType": "image/jpeg",
+																"FileExtension": "JPG",
+																"FileName": "bulls-eye.JPG"
+															},
+															"EclId": null
+														}
+													],
+													"EmbeddedValues": null,
+													"FieldType": 5,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:media"
+												},
+												"subheading": {
+													"Name": "subheading",
+													"Values": ["Stay Informed"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:subheading",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"content": {
+													"Name": "content",
+													"Values": ["Keep up to date with our latest news..."],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 2,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[2]/custom:content",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}, {
+												"Schema": null,
+												"link": {
+													"Name": "link",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": [{
+															"Schema": null,
+															"linkText": {
+																"Name": "linkText",
+																"Values": ["Office Location"],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [],
+																"EmbeddedValues": null,
+																"FieldType": 0,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:link[1]/custom:linkText",
+																"CategoryId": null,
+																"CategoryName": null
+															},
+															"internalLink": {
+																"Name": "internalLink",
+																"Values": [],
+																"NumericValues": [],
+																"DateTimeValues": [],
+																"LinkedComponentValues": [{
+																		"Id": "tcm:1082-4479",
+																		"Title": "Head Office Location",
+																		"CustomProperties": {},
+																		"ExtensionData": null,
+																		"RevisionDate": "2017-10-16T15:12:57.573",
+																		"Publication": null,
+																		"OwningPublication": null,
+																		"Folder": null,
+																		"LastPublishedDate": "0001-01-01T00:00:00",
+																		"Version": 3,
+																		"MetadataFields": {
+																			"location": {
+																				"Name": "location",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"latitude": {
+																							"Name": "latitude",
+																							"Values": [],
+																							"NumericValues": [51.52381],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 8,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:latitude"
+																						},
+																						"query": {
+																							"Name": "query",
+																							"Values": ["221B Baker Street, London, United Kingdom"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:query",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"longitude": {
+																							"Name": "longitude",
+																							"Values": [],
+																							"NumericValues": [-0.158441],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 8,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:longitude"
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:location",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-3282-8",
+																					"Title": "Location Metadata",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "LocationMeta"
+																				}
+																			},
+																			"standardMeta": {
+																				"Name": "standardMeta",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": [{
+																						"Schema": null,
+																						"name": {
+																							"Name": "name",
+																							"Values": ["Head Office"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:name",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"description": {
+																							"Name": "description",
+																							"Values": ["Head office location"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 1,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						},
+																						"introText": {
+																							"Name": "introText",
+																							"Values": ["Head Office Location"],
+																							"NumericValues": [],
+																							"DateTimeValues": [],
+																							"LinkedComponentValues": [],
+																							"EmbeddedValues": null,
+																							"FieldType": 0,
+																							"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+																							"CategoryId": null,
+																							"CategoryName": null
+																						}
+																					}
+																				],
+																				"FieldType": 4,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+																				"EmbeddedSchema": {
+																					"Id": "tcm:1082-231-8",
+																					"Title": "Standard Metadata",
+																					"CustomProperties": {},
+																					"ExtensionData": null,
+																					"RevisionDate": null,
+																					"Publication": null,
+																					"OwningPublication": null,
+																					"Folder": null,
+																					"LastPublishedDate": null,
+																					"Version": 0,
+																					"MetadataFields": null,
+																					"Categories": null,
+																					"Schema": null,
+																					"RootElementName": "StandardMetadata"
+																				}
+																			}
+																		},
+																		"Categories": [],
+																		"Schema": {
+																			"Id": "tcm:1082-3288-8",
+																			"Title": "Place",
+																			"CustomProperties": {},
+																			"ExtensionData": null,
+																			"RevisionDate": null,
+																			"Publication": null,
+																			"OwningPublication": null,
+																			"Folder": null,
+																			"LastPublishedDate": null,
+																			"Version": 0,
+																			"MetadataFields": null,
+																			"Categories": null,
+																			"Schema": null,
+																			"RootElementName": "Place"
+																		},
+																		"ComponentType": "NORMAL",
+																		"Fields": {
+																			"name": {
+																				"Name": "name",
+																				"Values": ["Head Office - London"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Place/custom:name",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"image": {
+																				"Name": "image",
+																				"Values": [],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [{
+																						"Id": "tcm:1082-764",
+																						"Title": "skyscrapers",
+																						"CustomProperties": {},
+																						"ExtensionData": null,
+																						"RevisionDate": "2014-05-28T10:38:10.99",
+																						"Publication": null,
+																						"OwningPublication": null,
+																						"Folder": null,
+																						"LastPublishedDate": "0001-01-01T00:00:00",
+																						"Version": 2,
+																						"MetadataFields": {},
+																						"Categories": [],
+																						"Schema": {
+																							"Id": "tcm:1082-79-8",
+																							"Title": "Image",
+																							"CustomProperties": {},
+																							"ExtensionData": null,
+																							"RevisionDate": null,
+																							"Publication": null,
+																							"OwningPublication": null,
+																							"Folder": null,
+																							"LastPublishedDate": null,
+																							"Version": 0,
+																							"MetadataFields": null,
+																							"Categories": null,
+																							"Schema": null,
+																							"RootElementName": "undefined"
+																						},
+																						"ComponentType": "MULTIMEDIA",
+																						"Fields": {},
+																						"Multimedia": {
+																							"Name": null,
+																							"Values": null,
+																							"NumericValues": null,
+																							"DateTimeValues": null,
+																							"LinkedComponentValues": null,
+																							"EmbeddedValues": null,
+																							"FieldType": null,
+																							"XPath": null,
+																							"Height": 0,
+																							"Width": 0,
+																							"Size": 2119766,
+																							"Alt": null,
+																							"Url": "/example-legacy/media/skyscrapers_tcm1082-764.jpg",
+																							"MimeType": "image/jpeg",
+																							"FileExtension": "jpg",
+																							"FileName": "skyscrapers.jpg"
+																						},
+																						"EclId": null
+																					}
+																				],
+																				"EmbeddedValues": null,
+																				"FieldType": 5,
+																				"XPath": "tcm:Content/custom:Place/custom:image"
+																			},
+																			"address": {
+																				"Name": "address",
+																				"Values": ["<p>221B Baker Street,</p><p>London,</p><p>United Kingdom</p>"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 2,
+																				"XPath": "tcm:Content/custom:Place/custom:address",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"telephone": {
+																				"Name": "telephone",
+																				"Values": ["+44 1234 56789"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Place/custom:telephone",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"faxNumber": {
+																				"Name": "faxNumber",
+																				"Values": ["+44 9876 65432"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Place/custom:faxNumber",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"email": {
+																				"Name": "email",
+																				"Values": ["contact@abcde.fg"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Content/custom:Place/custom:email",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			}
+																		},
+																		"Multimedia": null,
+																		"EclId": null
+																	}
+																],
+																"EmbeddedValues": null,
+																"FieldType": 6,
+																"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:link[1]/custom:internalLink"
+															}
+														}
+													],
+													"FieldType": 4,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:link",
+													"EmbeddedSchema": {
+														"Id": "tcm:1082-115-8",
+														"Title": "Link",
+														"CustomProperties": {},
+														"ExtensionData": null,
+														"RevisionDate": null,
+														"Publication": null,
+														"OwningPublication": null,
+														"Folder": null,
+														"LastPublishedDate": null,
+														"Version": 0,
+														"MetadataFields": null,
+														"Categories": null,
+														"Schema": null,
+														"RootElementName": "EmbeddedLink"
+													}
+												},
+												"media": {
+													"Name": "media",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [{
+															"Id": "tcm:1082-761",
+															"Title": "map",
+															"CustomProperties": {},
+															"ExtensionData": null,
+															"RevisionDate": "2014-05-28T10:37:54.69",
+															"Publication": null,
+															"OwningPublication": null,
+															"Folder": null,
+															"LastPublishedDate": "0001-01-01T00:00:00",
+															"Version": 2,
+															"MetadataFields": {},
+															"Categories": [],
+															"Schema": {
+																"Id": "tcm:1082-79-8",
+																"Title": "Image",
+																"CustomProperties": {},
+																"ExtensionData": null,
+																"RevisionDate": null,
+																"Publication": null,
+																"OwningPublication": null,
+																"Folder": null,
+																"LastPublishedDate": null,
+																"Version": 0,
+																"MetadataFields": null,
+																"Categories": null,
+																"Schema": null,
+																"RootElementName": "undefined"
+															},
+															"ComponentType": "MULTIMEDIA",
+															"Fields": {},
+															"Multimedia": {
+																"Name": null,
+																"Values": null,
+																"NumericValues": null,
+																"DateTimeValues": null,
+																"LinkedComponentValues": null,
+																"EmbeddedValues": null,
+																"FieldType": null,
+																"XPath": null,
+																"Height": 0,
+																"Width": 0,
+																"Size": 1204719,
+																"Alt": null,
+																"Url": "/example-legacy/media/map_tcm1082-761.jpg",
+																"MimeType": "image/jpeg",
+																"FileExtension": "jpg",
+																"FileName": "map.jpg"
+															},
+															"EclId": null
+														}
+													],
+													"EmbeddedValues": null,
+													"FieldType": 5,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:media"
+												},
+												"subheading": {
+													"Name": "subheading",
+													"Values": ["Come Visit!"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:subheading",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"content": {
+													"Name": "content",
+													"Values": ["Come by our office..."],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 2,
+													"XPath": "tcm:Content/custom:ItemList/custom:itemListElement[3]/custom:content",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Content/custom:ItemList/custom:itemListElement",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-3275-8",
+											"Title": "Item List Element",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "LinkedContent"
+										}
+									}
+								},
+								"Multimedia": null,
+								"EclId": null
+							},
+							"ComponentTemplate": {
+								"Id": "tcm:1082-141-32",
+								"Title": "Carousel [Hero]",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-07-29T13:16:00.59",
+								"Publication": null,
+								"OwningPublication": null,
+								"Folder": null,
+								"LastPublishedDate": null,
+								"Version": 0,
+								"MetadataFields": {
+									"view": {
+										"Name": "view",
+										"Values": ["Carousel"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"regionView": {
+										"Name": "regionView",
+										"Values": ["Hero"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": null,
+								"Schema": null,
+								"OutputFormat": "HTML Fragment"
+							},
+							"ExtensionData": null,
+							"IsDynamic": false,
+							"RenderedContent": null,
+							"OrderOnPage": 0,
+							"Conditions": null
+						}, {
+							"Component": {
+								"Id": "tcm:1082-4975",
+								"Title": "Homepage Welcome",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2017-04-03T16:02:01",
+								"Publication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"OwningPublication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"Folder": {
+									"Id": "tcm:1082-334-2",
+									"Title": "Homepage",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"PublicationId": "tcm:0-1082-1"
+								},
+								"LastPublishedDate": "0001-01-01T00:00:00",
+								"Version": 3,
+								"MetadataFields": {
+									"standardMeta": {
+										"Name": "standardMeta",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"name": {
+													"Name": "name",
+													"Values": ["Home"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:name",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"description": {
+													"Name": "description",
+													"Values": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper ex tortor, a ullamcorper sem venenatis sed. In interdum leo eu orci pharetra luctus. Nulla ut blandit urna, ac maximus mauris."],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 1,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"introText": {
+													"Name": "introText",
+													"Values": ["Home page"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-231-8",
+											"Title": "Standard Metadata",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "StandardMetadata"
+										}
+									}
+								},
+								"Categories": [],
+								"Schema": {
+									"Id": "tcm:1082-80-8",
+									"Title": "Article",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"RevisionDate": null,
+									"Publication": null,
+									"OwningPublication": null,
+									"Folder": null,
+									"LastPublishedDate": null,
+									"Version": 0,
+									"MetadataFields": null,
+									"Categories": null,
+									"Schema": null,
+									"RootElementName": "Article"
+								},
+								"ComponentType": "NORMAL",
+								"Fields": {
+									"headline": {
+										"Name": "headline",
+										"Values": ["Welcome"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:Article/custom:headline",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"articleBody": {
+										"Name": "articleBody",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"content": {
+													"Name": "content",
+													"Values": ["<p>Loremus&nbsp;<span>ipsumis dolor sit amet, consectetur adipiscing elit. Ut semper ex tortor, a ullamcorper sem venenatis sed. In interdum leo eu orci pharetra luctus. Nulla ut blandit urna, ac maximus mauris. Cras sapien dolor, blandit eu nisi at, pretium facilisis quam.&nbsp;</span></p><p>Donec ipsum ex, pellentesque id diam a, aliquam commodo nibh. Fusce lacinia arcu lorem, volutpat pulvinar quam scelerisque vel. Etiam auctor pulvinar mi, eget pretium odio. Curabitur iaculis nisl augue, fermentum porta arcu condimentum convallis. Ut sit amet nisi a enim blandit accumsan. Integer scelerisque ac nibh a viverra. Ut sed nisi id velit egestas mollis.</p>"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 2,
+													"XPath": "tcm:Content/custom:Article/custom:articleBody[1]/custom:content",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Content/custom:Article/custom:articleBody",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-232-8",
+											"Title": "Paragraph",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "Paragraph"
+										}
+									}
+								},
+								"Multimedia": null,
+								"EclId": null
+							},
+							"ComponentTemplate": {
+								"Id": "tcm:1082-83-32",
+								"Title": "Article",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2015-07-16T15:20:52.71",
+								"Publication": null,
+								"OwningPublication": null,
+								"Folder": null,
+								"LastPublishedDate": null,
+								"Version": 0,
+								"MetadataFields": {
+									"view": {
+										"Name": "view",
+										"Values": ["Article"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": null,
+								"Schema": null,
+								"OutputFormat": "HTML Fragment"
+							},
+							"ExtensionData": null,
+							"IsDynamic": false,
+							"RenderedContent": null,
+							"OrderOnPage": 0,
+							"Conditions": null
+						}, {
+							"Component": {
+								"Id": "tcm:1082-4479",
+								"Title": "Head Office Location",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2017-10-16T15:12:57",
+								"Publication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"OwningPublication": {
+									"Id": "tcm:0-1068-1",
+									"Title": "200 Example Content",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"Folder": {
+									"Id": "tcm:1082-604-2",
+									"Title": "About",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"PublicationId": "tcm:0-1082-1"
+								},
+								"LastPublishedDate": "0001-01-01T00:00:00",
+								"Version": 3,
+								"MetadataFields": {
+									"location": {
+										"Name": "location",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"latitude": {
+													"Name": "latitude",
+													"Values": [],
+													"NumericValues": [51.52381],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 8,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:latitude"
+												},
+												"query": {
+													"Name": "query",
+													"Values": ["221B Baker Street, London, United Kingdom"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:query",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"longitude": {
+													"Name": "longitude",
+													"Values": [],
+													"NumericValues": [-0.158441],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 8,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:location[1]/custom:longitude"
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:location",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-3282-8",
+											"Title": "Location Metadata",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "LocationMeta"
+										}
+									},
+									"standardMeta": {
+										"Name": "standardMeta",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"name": {
+													"Name": "name",
+													"Values": ["Head Office"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:name",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"description": {
+													"Name": "description",
+													"Values": ["Head office location"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 1,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"introText": {
+													"Name": "introText",
+													"Values": ["Head Office Location"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+													"CategoryId": null,
+													"CategoryName": null
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-231-8",
+											"Title": "Standard Metadata",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "StandardMetadata"
+										}
+									}
+								},
+								"Categories": [],
+								"Schema": {
+									"Id": "tcm:1082-3288-8",
+									"Title": "Place",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"RevisionDate": null,
+									"Publication": null,
+									"OwningPublication": null,
+									"Folder": null,
+									"LastPublishedDate": null,
+									"Version": 0,
+									"MetadataFields": null,
+									"Categories": null,
+									"Schema": null,
+									"RootElementName": "Place"
+								},
+								"ComponentType": "NORMAL",
+								"Fields": {
+									"name": {
+										"Name": "name",
+										"Values": ["Head Office - London"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:Place/custom:name",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"image": {
+										"Name": "image",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [{
+												"Id": "tcm:1082-764",
+												"Title": "skyscrapers",
+												"CustomProperties": {},
+												"ExtensionData": null,
+												"RevisionDate": "2014-05-28T10:38:10.99",
+												"Publication": null,
+												"OwningPublication": null,
+												"Folder": null,
+												"LastPublishedDate": "0001-01-01T00:00:00",
+												"Version": 2,
+												"MetadataFields": {},
+												"Categories": [],
+												"Schema": {
+													"Id": "tcm:1082-79-8",
+													"Title": "Image",
+													"CustomProperties": {},
+													"ExtensionData": null,
+													"RevisionDate": null,
+													"Publication": null,
+													"OwningPublication": null,
+													"Folder": null,
+													"LastPublishedDate": null,
+													"Version": 0,
+													"MetadataFields": null,
+													"Categories": null,
+													"Schema": null,
+													"RootElementName": "undefined"
+												},
+												"ComponentType": "MULTIMEDIA",
+												"Fields": {},
+												"Multimedia": {
+													"Name": null,
+													"Values": null,
+													"NumericValues": null,
+													"DateTimeValues": null,
+													"LinkedComponentValues": null,
+													"EmbeddedValues": null,
+													"FieldType": null,
+													"XPath": null,
+													"Height": 0,
+													"Width": 0,
+													"Size": 2119766,
+													"Alt": null,
+													"Url": "/example-legacy/media/skyscrapers_tcm1082-764.jpg",
+													"MimeType": "image/jpeg",
+													"FileExtension": "jpg",
+													"FileName": "skyscrapers.jpg"
+												},
+												"EclId": null
+											}
+										],
+										"EmbeddedValues": null,
+										"FieldType": 5,
+										"XPath": "tcm:Content/custom:Place/custom:image"
+									},
+									"address": {
+										"Name": "address",
+										"Values": ["<p>221B Baker Street,</p><p>London,</p><p>United Kingdom</p>"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 2,
+										"XPath": "tcm:Content/custom:Place/custom:address",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"telephone": {
+										"Name": "telephone",
+										"Values": ["+44 1234 56789"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:Place/custom:telephone",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"faxNumber": {
+										"Name": "faxNumber",
+										"Values": ["+44 9876 65432"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:Place/custom:faxNumber",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"email": {
+										"Name": "email",
+										"Values": ["contact@abcde.fg"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:Place/custom:email",
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Multimedia": null,
+								"EclId": null
+							},
+							"ComponentTemplate": {
+								"Id": "tcm:1082-3292-32",
+								"Title": "Teaser Map [3-Column]",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-07-31T16:25:08.493",
+								"Publication": null,
+								"OwningPublication": null,
+								"Folder": null,
+								"LastPublishedDate": null,
+								"Version": 0,
+								"MetadataFields": {
+									"view": {
+										"Name": "view",
+										"Values": ["TeaserMap"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"regionView": {
+										"Name": "regionView",
+										"Values": ["3-Column"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": null,
+								"Schema": null,
+								"OutputFormat": "HTML Fragment"
+							},
+							"ExtensionData": null,
+							"IsDynamic": false,
+							"RenderedContent": null,
+							"OrderOnPage": 0,
+							"Conditions": null
+						}, {
+							"Component": {
+								"Id": "tcm:1082-3287",
+								"Title": "Latest News",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-08-18T12:44:03",
+								"Publication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"OwningPublication": {
+									"Id": "tcm:0-1068-1",
+									"Title": "200 Example Content",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"Folder": {
+									"Id": "tcm:1082-330-2",
+									"Title": "Articles",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"PublicationId": "tcm:0-1082-1"
+								},
+								"LastPublishedDate": "0001-01-01T00:00:00",
+								"Version": 10,
+								"MetadataFields": {
+									"contentType": {
+										"Name": "contentType",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 3,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:contentType",
+										"CategoryName": "Content Type",
+										"CategoryId": "tcm:1082-1242-512"
+									},
+									"pageSize": {
+										"Name": "pageSize",
+										"Values": [],
+										"NumericValues": [4.0],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 8,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:pageSize"
+									},
+									"sort": {
+										"Name": "sort",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 3,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:sort",
+										"CategoryName": "List Sort Type",
+										"CategoryId": "tcm:1082-1340-512"
+									}
+								},
+								"Categories": [],
+								"Schema": {
+									"Id": "tcm:1082-3263-8",
+									"Title": "Content Query",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"RevisionDate": null,
+									"Publication": null,
+									"OwningPublication": null,
+									"Folder": null,
+									"LastPublishedDate": null,
+									"Version": 0,
+									"MetadataFields": null,
+									"Categories": null,
+									"Schema": null,
+									"RootElementName": "ContentQuery"
+								},
+								"ComponentType": "NORMAL",
+								"Fields": {
+									"headline": {
+										"Name": "headline",
+										"Values": ["Latest News"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Content/custom:ContentQuery/custom:headline",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"link": {
+										"Name": "link",
+										"Values": [],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": [{
+												"Schema": null,
+												"linkText": {
+													"Name": "linkText",
+													"Values": ["See all news"],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [],
+													"EmbeddedValues": null,
+													"FieldType": 0,
+													"XPath": "tcm:Content/custom:ContentQuery/custom:link[1]/custom:linkText",
+													"CategoryId": null,
+													"CategoryName": null
+												},
+												"internalLink": {
+													"Name": "internalLink",
+													"Values": [],
+													"NumericValues": [],
+													"DateTimeValues": [],
+													"LinkedComponentValues": [{
+															"Id": "tcm:1082-1467",
+															"Title": "News Intro",
+															"CustomProperties": {},
+															"ExtensionData": null,
+															"RevisionDate": "2016-08-18T13:34:31.187",
+															"Publication": null,
+															"OwningPublication": null,
+															"Folder": null,
+															"LastPublishedDate": "0001-01-01T00:00:00",
+															"Version": 6,
+															"MetadataFields": {
+																"standardMeta": {
+																	"Name": "standardMeta",
+																	"Values": [],
+																	"NumericValues": [],
+																	"DateTimeValues": [],
+																	"LinkedComponentValues": [],
+																	"EmbeddedValues": [{
+																			"Schema": null,
+																			"name": {
+																				"Name": "name",
+																				"Values": ["News Index "],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:name",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"description": {
+																				"Name": "description",
+																				"Values": ["Maecenas quis mi ipsum. Morbi dapibus diam fermentum urna porta, a rutrum quam blandit. Phasellus fermentum vitae nisl non lacinia. Nulla in nulla sit amet eros suscipit consectetur a quis orci. Mauris id turpis vitae magna ultricies accumsan. Nunc velit quam, congue vel magna at, mattis dapibus orci. Maecenas quis sem sit amet risus pellentesque laoreet eget at quam. Vivamus eu massa ante "],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 1,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:description",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			},
+																			"introText": {
+																				"Name": "introText",
+																				"Values": ["Keep up to date with the latest... "],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 0,
+																				"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta[1]/custom:introText",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			}
+																		}
+																	],
+																	"FieldType": 4,
+																	"XPath": "tcm:Metadata/custom:Metadata/custom:standardMeta",
+																	"EmbeddedSchema": {
+																		"Id": "tcm:1082-231-8",
+																		"Title": "Standard Metadata",
+																		"CustomProperties": {},
+																		"ExtensionData": null,
+																		"RevisionDate": null,
+																		"Publication": null,
+																		"OwningPublication": null,
+																		"Folder": null,
+																		"LastPublishedDate": null,
+																		"Version": 0,
+																		"MetadataFields": null,
+																		"Categories": null,
+																		"Schema": null,
+																		"RootElementName": "StandardMetadata"
+																	}
+																}
+															},
+															"Categories": [],
+															"Schema": {
+																"Id": "tcm:1082-80-8",
+																"Title": "Article",
+																"CustomProperties": {},
+																"ExtensionData": null,
+																"RevisionDate": null,
+																"Publication": null,
+																"OwningPublication": null,
+																"Folder": null,
+																"LastPublishedDate": null,
+																"Version": 0,
+																"MetadataFields": null,
+																"Categories": null,
+																"Schema": null,
+																"RootElementName": "Article"
+															},
+															"ComponentType": "NORMAL",
+															"Fields": {
+																"headline": {
+																	"Name": "headline",
+																	"Values": ["News"],
+																	"NumericValues": [],
+																	"DateTimeValues": [],
+																	"LinkedComponentValues": [],
+																	"EmbeddedValues": null,
+																	"FieldType": 0,
+																	"XPath": "tcm:Content/custom:Article/custom:headline",
+																	"CategoryId": null,
+																	"CategoryName": null
+																},
+																"image": {
+																	"Name": "image",
+																	"Values": [],
+																	"NumericValues": [],
+																	"DateTimeValues": [],
+																	"LinkedComponentValues": [{
+																			"Id": "tcm:1082-758",
+																			"Title": "bridge",
+																			"CustomProperties": {},
+																			"ExtensionData": null,
+																			"RevisionDate": "2014-05-28T10:37:54.087",
+																			"Publication": null,
+																			"OwningPublication": null,
+																			"Folder": null,
+																			"LastPublishedDate": "0001-01-01T00:00:00",
+																			"Version": 2,
+																			"MetadataFields": {},
+																			"Categories": [],
+																			"Schema": {
+																				"Id": "tcm:1082-79-8",
+																				"Title": "Image",
+																				"CustomProperties": {},
+																				"ExtensionData": null,
+																				"RevisionDate": null,
+																				"Publication": null,
+																				"OwningPublication": null,
+																				"Folder": null,
+																				"LastPublishedDate": null,
+																				"Version": 0,
+																				"MetadataFields": null,
+																				"Categories": null,
+																				"Schema": null,
+																				"RootElementName": "undefined"
+																			},
+																			"ComponentType": "MULTIMEDIA",
+																			"Fields": {},
+																			"Multimedia": {
+																				"Name": null,
+																				"Values": null,
+																				"NumericValues": null,
+																				"DateTimeValues": null,
+																				"LinkedComponentValues": null,
+																				"EmbeddedValues": null,
+																				"FieldType": null,
+																				"XPath": null,
+																				"Height": 0,
+																				"Width": 0,
+																				"Size": 1389961,
+																				"Alt": null,
+																				"Url": "/example-legacy/media/bridge_tcm1082-758.jpg",
+																				"MimeType": "image/jpeg",
+																				"FileExtension": "jpg",
+																				"FileName": "bridge.jpg"
+																			},
+																			"EclId": null
+																		}
+																	],
+																	"EmbeddedValues": null,
+																	"FieldType": 5,
+																	"XPath": "tcm:Content/custom:Article/custom:image"
+																},
+																"articleBody": {
+																	"Name": "articleBody",
+																	"Values": [],
+																	"NumericValues": [],
+																	"DateTimeValues": [],
+																	"LinkedComponentValues": [],
+																	"EmbeddedValues": [{
+																			"Schema": null,
+																			"content": {
+																				"Name": "content",
+																				"Values": ["<p>Morbi sagittis pellentesque facilisis. Phasellus accumsan, ante non aliquet dignissim, turpis diam placerat odio, sit amet rutrum tortor magna nec diam. Nulla adipiscing in quam sit amet faucibus. Nunc congue velit ac leo sodales, quis mattis massa tincidunt. Nullam fringilla volutpat arcu, vitae ultricies ante lobortis ac. Quisque elementum nunc congue, luctus mi quis, vestibulum lacus. Vestibulum nec dui nibh. Mauris consectetur risus dui, eget ultricies sapien imperdiet vitae. Praesent metus tortor, adipiscing sed feugiat vitae, accumsan vitae ipsum. Morbi sodales, sapien nec vehicula blandit, turpis nisl mattis metus, vel ultrices eros magna sit amet odio. </p><p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut porttitor nisi nunc. Aenean commodo arcu vehicula enim tincidunt sodales. Proin tristique mi id nisi dignissim, eget congue purus blandit. Vestibulum dignissim sollicitudin sapien, eget pellentesque dui pellentesque sodales. In hac habitasse platea dictumst. Cras placerat at libero at porta. Vivamus eget magna eros.</p>"],
+																				"NumericValues": [],
+																				"DateTimeValues": [],
+																				"LinkedComponentValues": [],
+																				"EmbeddedValues": null,
+																				"FieldType": 2,
+																				"XPath": "tcm:Content/custom:Article/custom:articleBody[1]/custom:content",
+																				"CategoryId": null,
+																				"CategoryName": null
+																			}
+																		}
+																	],
+																	"FieldType": 4,
+																	"XPath": "tcm:Content/custom:Article/custom:articleBody",
+																	"EmbeddedSchema": {
+																		"Id": "tcm:1082-232-8",
+																		"Title": "Paragraph",
+																		"CustomProperties": {},
+																		"ExtensionData": null,
+																		"RevisionDate": null,
+																		"Publication": null,
+																		"OwningPublication": null,
+																		"Folder": null,
+																		"LastPublishedDate": null,
+																		"Version": 0,
+																		"MetadataFields": null,
+																		"Categories": null,
+																		"Schema": null,
+																		"RootElementName": "Paragraph"
+																	}
+																}
+															},
+															"Multimedia": null,
+															"EclId": null
+														}
+													],
+													"EmbeddedValues": null,
+													"FieldType": 6,
+													"XPath": "tcm:Content/custom:ContentQuery/custom:link[1]/custom:internalLink"
+												}
+											}
+										],
+										"FieldType": 4,
+										"XPath": "tcm:Content/custom:ContentQuery/custom:link",
+										"EmbeddedSchema": {
+											"Id": "tcm:1082-115-8",
+											"Title": "Link",
+											"CustomProperties": {},
+											"ExtensionData": null,
+											"RevisionDate": null,
+											"Publication": null,
+											"OwningPublication": null,
+											"Folder": null,
+											"LastPublishedDate": null,
+											"Version": 0,
+											"MetadataFields": null,
+											"Categories": null,
+											"Schema": null,
+											"RootElementName": "EmbeddedLink"
+										}
+									}
+								},
+								"Multimedia": null,
+								"EclId": null
+							},
+							"ComponentTemplate": {
+								"Id": "tcm:1082-3265-32",
+								"Title": "List [3-Column]",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-06-25T14:33:22.393",
+								"Publication": null,
+								"OwningPublication": null,
+								"Folder": null,
+								"LastPublishedDate": null,
+								"Version": 0,
+								"MetadataFields": {
+									"controller": {
+										"Name": "controller",
+										"Values": ["List"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"action": {
+										"Name": "action",
+										"Values": ["List"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"view": {
+										"Name": "view",
+										"Values": ["List"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"regionView": {
+										"Name": "regionView",
+										"Values": ["3-Column"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": null,
+								"Schema": null,
+								"OutputFormat": "HTML Fragment"
+							},
+							"ExtensionData": null,
+							"IsDynamic": false,
+							"RenderedContent": null,
+							"OrderOnPage": 0,
+							"Conditions": null
+						}, {
+							"Component": {
+								"Id": "tcm:1082-4480",
+								"Title": "Company News Media Manager Video",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-10-30T18:32:27",
+								"Publication": {
+									"Id": "tcm:0-1082-1",
+									"Title": "500 Example Site (Legacy)",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"OwningPublication": {
+									"Id": "tcm:0-1068-1",
+									"Title": "200 Example Content",
+									"CustomProperties": {},
+									"ExtensionData": null
+								},
+								"Folder": {
+									"Id": "tcm:1082-1313-2",
+									"Title": "Video",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"PublicationId": "tcm:0-1082-1"
+								},
+								"LastPublishedDate": "0001-01-01T00:00:00",
+								"Version": 5,
+								"MetadataFields": {
+									"youTubeId": {
+										"Name": "youTubeId",
+										"Values": ["2YBtspm8j8M"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:youTubeId",
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"headline": {
+										"Name": "headline",
+										"Values": ["Company News"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": "tcm:Metadata/custom:Metadata/custom:headline",
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": [],
+								"Schema": {
+									"Id": "tcm:1082-2829-8",
+									"Title": "YouTube Video",
+									"CustomProperties": {},
+									"ExtensionData": null,
+									"RevisionDate": null,
+									"Publication": null,
+									"OwningPublication": null,
+									"Folder": null,
+									"LastPublishedDate": null,
+									"Version": 0,
+									"MetadataFields": null,
+									"Categories": null,
+									"Schema": null,
+									"RootElementName": "undefined"
+								},
+								"ComponentType": "MULTIMEDIA",
+								"Fields": {},
+								"Multimedia": {
+									"Name": null,
+									"Values": null,
+									"NumericValues": null,
+									"DateTimeValues": null,
+									"LinkedComponentValues": null,
+									"EmbeddedValues": null,
+									"FieldType": null,
+									"XPath": null,
+									"Height": 0,
+									"Width": 0,
+									"Size": 674712,
+									"Alt": null,
+									"Url": "/example-legacy/media/company-news-placeholder_tcm1082-4480.png",
+									"MimeType": "image/png",
+									"FileExtension": "png",
+									"FileName": "company-news-placeholder.png"
+								},
+								"EclId": null
+							},
+							"ComponentTemplate": {
+								"Id": "tcm:1082-3295-32",
+								"Title": "YouTube Video [3-Column]",
+								"CustomProperties": {},
+								"ExtensionData": null,
+								"RevisionDate": "2014-07-31T16:25:44.567",
+								"Publication": null,
+								"OwningPublication": null,
+								"Folder": null,
+								"LastPublishedDate": null,
+								"Version": 0,
+								"MetadataFields": {
+									"view": {
+										"Name": "view",
+										"Values": ["YouTubeVideo"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									},
+									"regionView": {
+										"Name": "regionView",
+										"Values": ["3-Column"],
+										"NumericValues": [],
+										"DateTimeValues": [],
+										"LinkedComponentValues": [],
+										"EmbeddedValues": null,
+										"FieldType": 0,
+										"XPath": null,
+										"CategoryId": null,
+										"CategoryName": null
+									}
+								},
+								"Categories": null,
+								"Schema": null,
+								"OutputFormat": "HTML Fragment"
+							},
+							"ExtensionData": null,
+							"IsDynamic": false,
+							"RenderedContent": null,
+							"OrderOnPage": 0,
+							"Conditions": null
+						}
+					],
+					"StructureGroup": {
+						"Id": "tcm:1082-3-4",
+						"Title": "Home",
+						"CustomProperties": {},
+						"ExtensionData": null,
+						"PublicationId": "tcm:0-1082-1"
+					},
+					"Url": null
+				}
+			}
+		}
+	}
+}

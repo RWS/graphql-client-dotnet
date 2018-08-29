@@ -26,6 +26,8 @@ import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.util.CmUri;
+import com.sdl.web.pca.client.util.QueryUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -49,14 +51,14 @@ public class DefaultPublicContentApi implements PublicContentApi {
     private ContextData defaultContextData;
 
     public DefaultPublicContentApi(GraphQLClient graphQLClient) {
-        client = graphQLClient;
-        defaultContextData = new ContextData();
-        defaultContextData.setClaimValues(Collections.EMPTY_LIST);
+        this(graphQLClient, 0);
     }
 
     public DefaultPublicContentApi(GraphQLClient graphQLClient, int requestTimeout) {
-        this(graphQLClient);
+        this.client = graphQLClient;
         this.requestTimeout = requestTimeout;
+        this.defaultContextData = new ContextData();
+        this.defaultContextData.setClaimValues(Collections.EMPTY_LIST);
     }
 
     @Override
@@ -148,12 +150,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        JsonNode result = getJsonResult(graphQLRequest, "/data/sitemap");
-        try {
-            return MAPPER.treeToValue(result, TaxonomySitemapItem.class);
-        } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to TaxonomySitemapItem: " + result.toString(), e);
-        }
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemap");
     }
 
     @Override
@@ -175,12 +172,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        JsonNode result = getJsonResult(graphQLRequest, "/data/sitemap");
-        try {
-            return MAPPER.treeToValue(result, TaxonomySitemapItem.class);
-        } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to TaxonomySitemapItem: " + result.toString(), e);
-        }
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemapSubtree");
     }
 
     @Override
@@ -201,12 +193,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
-        try {
-            return MAPPER.treeToValue(result, BinaryComponent.class);
-        } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
-        }
+        return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
@@ -227,12 +214,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
-        try {
-            return MAPPER.treeToValue(result, BinaryComponent.class);
-        } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
-        }
+        return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
@@ -246,18 +228,13 @@ public class DefaultPublicContentApi implements PublicContentApi {
         query = QueryUtils.injectCustomMetaFilter(query, null);
 
         HashMap<String, Object> variables = new HashMap<>();
-//        variables.put("namespaceId", cmUri.getNamespaceId());
-//        variables.put("publicationId", cmUri.getPublicationId());
+        variables.put("namespaceId", cmUri.getNamespaceId());
+        variables.put("publicationId", cmUri.getPublicationId());
         variables.put("cmUri", cmUri.toString());
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        JsonNode result = getJsonResult(graphQLRequest, "/data/binaryComponent");
-        try {
-            return MAPPER.treeToValue(result, BinaryComponent.class);
-        } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to BinaryComponent: " + result.toString(), e);
-        }
+        return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
@@ -342,22 +319,6 @@ public class DefaultPublicContentApi implements PublicContentApi {
         return null;
     }
 
-//    @Override
-//    public <T> T executeSiteMap(Page page, Class<T> clazz) throws PublicContentApiException {
-//        String query = getQueryFor(SITEMAP);
-//        query += getQueryFor("RecurseItems");
-//        query += getQueryFor("TaxonomyItemFields");
-//        query += getQueryFor("TaxonomyPageFields");
-//
-//        HashMap<String, Object> variables = new HashMap<>();
-//        variables.put("namespaceId", page.getNamespaceId());
-//        variables.put("publicationId", page.getPublicationId());
-//
-//        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-//        return getResultForRequest(graphQLRequest, clazz);
-//    }
-
-
     private String getQueryFor(String queryName) throws PublicContentApiException {
         return queries.computeIfAbsent(queryName,
                 s -> loadQueryFromResourcefile("queries/" + s));
@@ -385,6 +346,15 @@ public class DefaultPublicContentApi implements PublicContentApi {
             throw new PublicContentApiException("Unable to execute query: " + request, e);
         } catch (IOException e) {
             throw new PublicContentApiException("Unable to deserialize result for query " + request, e);
+        }
+    }
+
+    private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz, String path) throws PublicContentApiException {
+        JsonNode result = getJsonResult(request, path);
+        try {
+            return MAPPER.treeToValue(result, clazz);
+        } catch (JsonProcessingException e) {
+            throw new PublicContentApiException("Unable map result to " + clazz.getName() + ": " + result.toString(), e);
         }
     }
 

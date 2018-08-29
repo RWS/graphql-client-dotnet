@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 	/// An edge in a connection
 	/// </summary>
-	class BinaryVariantEdge
+	public class BinaryVariantEdge
 	{
 		private BinaryVariant node;
 		private String cursor;

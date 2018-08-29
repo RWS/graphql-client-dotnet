@@ -19,6 +19,7 @@ import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.util.CmUri;
 
 /**
  * This interface enables java clients to connect to the GraphQL Service

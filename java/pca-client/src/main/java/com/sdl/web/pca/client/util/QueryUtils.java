@@ -1,4 +1,4 @@
-package com.sdl.web.pca.client;
+package com.sdl.web.pca.client.util;
 
 
 import org.slf4j.Logger;

@@ -1,0 +1,189 @@
+{
+	"data": {
+		"sitemap": {
+			"id": "t2680",
+			"title": "Sitemap [Navigation]",
+			"originalTitle": "Sitemap [Navigation]",
+			"url": null,
+			"type": "TaxonomyNode",
+			"publishedDate": null,
+			"visible": false,
+			"description": "Used for Taxonomy-based Navigation purposes",
+			"key": "",
+			"abstract": true,
+			"hasChildNodes": true,
+			"classifiedItemsCount": 17,
+			"items": [{
+					"id": "t2680-k10018",
+					"title": "Further Information",
+					"originalTitle": "020 Further Information",
+					"url": "/further-information",
+					"type": "TaxonomyNode",
+					"publishedDate": null,
+					"visible": true,
+					"description": "",
+					"key": "",
+					"abstract": false,
+					"hasChildNodes": true,
+					"classifiedItemsCount": 4,
+					"items": [{
+							"id": "t2680-p644",
+							"title": "Index",
+							"originalTitle": "000 Index",
+							"url": "/further-information/index",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:16.95+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p645",
+							"title": "FAQ",
+							"originalTitle": "010 FAQ",
+							"url": "/further-information/faq",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:16.977+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p646",
+							"title": "Image Library",
+							"originalTitle": "020 Image Library",
+							"url": "/further-information/image-library",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.013+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p647",
+							"title": "Downloads",
+							"originalTitle": "030 Downloads",
+							"url": "/further-information/downloads",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.037+03:00",
+							"visible": true
+						}
+					]
+				}, {
+					"id": "t2680-k10019",
+					"title": "About",
+					"originalTitle": "About",
+					"url": "/about",
+					"type": "TaxonomyNode",
+					"publishedDate": null,
+					"visible": false,
+					"description": "",
+					"key": "",
+					"abstract": false,
+					"hasChildNodes": true,
+					"classifiedItemsCount": 5,
+					"items": [{
+							"id": "t2680-p648",
+							"title": "Company Information",
+							"originalTitle": "000 Company Information",
+							"url": "/about/index",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.067+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p649",
+							"title": "Office Location",
+							"originalTitle": "020 Office Location",
+							"url": "/about/office-location",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.097+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p650",
+							"title": "Contact",
+							"originalTitle": "030 Contact",
+							"url": "/about/contact",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.133+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p651",
+							"title": "Terms of use",
+							"originalTitle": "040 Terms of use",
+							"url": "/about/terms",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.157+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p652",
+							"title": "Privacy Policy",
+							"originalTitle": "050 Privacy Policy",
+							"url": "/about/privacy",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:17.207+03:00",
+							"visible": true
+						}
+					]
+				}, {
+					"id": "t2680-k10021",
+					"title": "Home",
+					"originalTitle": "000 Home",
+					"url": "/",
+					"type": "TaxonomyNode",
+					"publishedDate": null,
+					"visible": true,
+					"description": "",
+					"key": "",
+					"abstract": false,
+					"hasChildNodes": true,
+					"classifiedItemsCount": 1,
+					"items": [{
+							"id": "t2680-p640",
+							"title": "Home",
+							"originalTitle": "000 Home",
+							"url": "/index",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:15.377+03:00",
+							"visible": true
+						}
+					]
+				}, {
+					"id": "t2680-k10017",
+					"title": "Articles",
+					"originalTitle": "010 Articles",
+					"url": "/articles",
+					"type": "TaxonomyNode",
+					"publishedDate": null,
+					"visible": true,
+					"description": "",
+					"key": "",
+					"abstract": false,
+					"hasChildNodes": true,
+					"classifiedItemsCount": 7,
+					"items": [{
+							"id": "t2680-k10020",
+							"title": "News",
+							"originalTitle": "010 News",
+							"url": "/articles/news",
+							"type": "TaxonomyNode",
+							"publishedDate": null,
+							"visible": true,
+							"description": "",
+							"key": "",
+							"abstract": false,
+							"hasChildNodes": true,
+							"classifiedItemsCount": 5
+						}, {
+							"id": "t2680-p643",
+							"title": "Articles Index",
+							"originalTitle": "000 Articles Index",
+							"url": "/articles/index",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:16.32+03:00",
+							"visible": true
+						}, {
+							"id": "t2680-p4574",
+							"title": "All Articles",
+							"originalTitle": "010 All Articles",
+							"url": "/articles/all-articles",
+							"type": "Page",
+							"publishedDate": "2018-06-25T14:01:16.417+03:00",
+							"visible": true
+						}
+					]
+				}
+			]
+		}
+	}
+}
