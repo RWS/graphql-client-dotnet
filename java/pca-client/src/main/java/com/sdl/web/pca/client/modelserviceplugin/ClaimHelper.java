@@ -14,19 +14,35 @@ import java.util.List;
 public class ClaimHelper {
 
     public static ClaimValue createClaim(ContentType contentType) {
-        return new ClaimValue(ClaimValueType.STRING, ModelServiceClaimUris.CONTENT_TYPE, contentType.name());
+        ClaimValue cValue = new ClaimValue();
+        cValue.setType(ClaimValueType.STRING);
+        cValue.setUri(ModelServiceClaimUris.CONTENT_TYPE);
+        cValue.setValue(contentType.name());
+        return cValue;
     }
 
     public static ClaimValue createClaim(DataModelType dataModelType) {
-        return new ClaimValue(ClaimValueType.STRING, ModelServiceClaimUris.MODEL_TYPE, dataModelType.name());
+        ClaimValue cValue = new ClaimValue();
+        cValue.setType(ClaimValueType.STRING);
+        cValue.setUri(ModelServiceClaimUris.MODEL_TYPE);
+        cValue.setValue(dataModelType.name());
+        return cValue;
     }
 
     public static ClaimValue createClaim(PageInclusion pageInclusion) {
-        return new ClaimValue(ClaimValueType.STRING, ModelServiceClaimUris.PAGE_INCLUDE_REGIONS, pageInclusion.name());
+        ClaimValue cValue = new ClaimValue();
+        cValue.setType(ClaimValueType.STRING);
+        cValue.setUri(ModelServiceClaimUris.PAGE_INCLUDE_REGIONS);
+        cValue.setValue(pageInclusion.name());
+        return cValue;
     }
 
     public static ClaimValue createClaim(DcpType dcpType) {
-        return new ClaimValue(ClaimValueType.STRING, ModelServiceClaimUris.ENTITY_DCP_TYPE, dcpType.name());
+        ClaimValue cValue = new ClaimValue();
+        cValue.setType(ClaimValueType.STRING);
+        cValue.setUri(ModelServiceClaimUris.ENTITY_DCP_TYPE);
+        cValue.setValue(dcpType.name());
+        return cValue;
     }
 
     public static ContextData createContextData(ContentType contentType, DataModelType modelType, PageInclusion pageInclusion) {
