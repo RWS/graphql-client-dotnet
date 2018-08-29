@@ -1,4 +1,4 @@
-package com.sdl.web.pca.client.contentmodel.enums;
+package com.sdl.web.pca.client.contentmodel;
 
 public enum ContentNamespace {
     Sites(1), Docs(2);
