@@ -1,5 +1,5 @@
-﻿query pageLink($namespaceId: Int!, $publicationId: Int!, $pageId: Int!) {
-	pageLink(namespaceId: $namespaceId, publicationId: $publicationId, pageId: $pageId) {
+﻿query pageLink($namespaceId: Int!, $publicationId: Int!, $pageId: Int!, $renderRelativeLink: Boolean) {
+	pageLink(namespaceId: $namespaceId, publicationId: $publicationId, pageId: $pageId, renderRelativeLink: $renderRelativeLink) {
 		url
 	}
 }

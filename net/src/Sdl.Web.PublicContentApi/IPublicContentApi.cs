@@ -26,15 +26,15 @@ namespace Sdl.Web.PublicContentApi
         PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
             IContextData contextData, string customMetaFilter);
 
-        string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId);
+        string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink);
 
         string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
-            int? excludeComponentTemplateId);
+            int? excludeComponentTemplateId, bool renderRelativeLink);
 
-        string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId);
+        string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId, bool renderRelativeLink);
 
         string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-            int templateId);
+            int templateId, bool renderRelativeLink);
 
         PublicationMapping GetPublicationMapping(ContentNamespace ns, string url);
 
