@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
+import static com.sdl.web.pca.client.util.ItemTypes.COMPONENT;
+import static com.sdl.web.pca.client.util.ItemTypes.IDNULL;
+import static com.sdl.web.pca.client.util.ItemTypes.NULL;
 import static java.util.Comparator.comparing;
 
 /**
@@ -54,10 +57,10 @@ public class CmUri implements Comparable<CmUri> {
      */
     public CmUri(String uri) throws ParseException {
         this.namespace = null;
-        this.itemType = ItemTypes.NULL;
-        this.itemId = ItemTypes.IDNULL;
-        this.pubId = ItemTypes.IDNULL;
-        this.version = ItemTypes.IDNULL;
+        this.itemType = NULL.getValue();
+        this.itemId = IDNULL.getValue();
+        this.pubId = IDNULL.getValue();
+        this.version = IDNULL.getValue();
         this.load(uri);
     }
 
@@ -96,7 +99,7 @@ public class CmUri implements Comparable<CmUri> {
                 this.itemId = Integer.parseInt(token);
 
                 if (!st.hasMoreTokens()) { //if we only have two tokens, then assume component
-                    this.itemType = ItemTypes.COMPONENT;
+                    this.itemType = COMPONENT.getValue();
                 } else {
                     token = st.nextToken();
                     currentPosition += token.length();
@@ -104,7 +107,7 @@ public class CmUri implements Comparable<CmUri> {
                         this.itemType = Integer.parseInt(token);
                     } else { //version for component
                         this.version = Integer.parseInt(token.substring(1, token.length()));
-                        this.itemType = ItemTypes.COMPONENT;
+                        this.itemType = COMPONENT.getValue();
                     }
 
                     if (st.hasMoreTokens()) { //version for non component

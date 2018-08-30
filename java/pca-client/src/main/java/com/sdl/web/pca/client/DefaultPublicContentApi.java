@@ -383,10 +383,6 @@ public class DefaultPublicContentApi implements PublicContentApi {
         return result;
     }
 
-    public GraphQLClient getGraphQLClient() {
-        return client;
-    }
-
     public void setGraphQLClient(GraphQLClient client) {
         this.client = client;
     }
