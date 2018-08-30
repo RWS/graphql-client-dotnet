@@ -5,7 +5,7 @@ import java.util.List;
 /// <summary>
 /// A connection to a list of items.
 /// </summary>
-class BinaryVariantConnection
+public class BinaryVariantConnection
 {
     private List<BinaryVariantEdge> edges;
 

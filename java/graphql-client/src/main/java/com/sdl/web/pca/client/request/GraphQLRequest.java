@@ -1,15 +1,23 @@
 package com.sdl.web.pca.client.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.HashMap;
 import java.util.Objects;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+@JsonInclude(NON_NULL)
 public final class GraphQLRequest {
     private final String query;
     private final HashMap<String, Object> variables;
+    private final String operationName;
 
     /**
      * request timeout in milliseconds.
      */
+    @JsonIgnore
     private final int timeout;
 
     public GraphQLRequest(String query, HashMap<String, Object> variables) {
@@ -17,8 +25,14 @@ public final class GraphQLRequest {
     }
 
     public GraphQLRequest(String query, HashMap<String, Object> variables, int timeout) {
+        this(query, variables, null, 0);
+    }
+
+
+    public GraphQLRequest(String query, HashMap<String, Object> variables, String operationName, int timeout) {
         this.query = query;
         this.variables = variables;
+        this.operationName = operationName;
         this.timeout = timeout;
     }
 
@@ -28,6 +42,10 @@ public final class GraphQLRequest {
 
     public HashMap<String, Object> getVariables() {
         return variables;
+    }
+
+    public String getOperationName() {
+        return operationName;
     }
 
     public int getTimeout() {
@@ -41,12 +59,13 @@ public final class GraphQLRequest {
         GraphQLRequest that = (GraphQLRequest) o;
         return timeout == that.timeout &&
                 Objects.equals(query, that.query) &&
-                Objects.equals(variables, that.variables);
+                Objects.equals(variables, that.variables) &&
+                Objects.equals(operationName, that.operationName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(query, variables, timeout);
+        return Objects.hash(query, variables, operationName, timeout);
     }
 
     @Override
@@ -54,6 +73,7 @@ public final class GraphQLRequest {
         return "GraphQLRequest{" +
                 "query='" + query + '\'' +
                 ", variables=" + variables +
+                ", operationName='" + operationName + '\'' +
                 ", timeout=" + timeout +
                 '}';
     }

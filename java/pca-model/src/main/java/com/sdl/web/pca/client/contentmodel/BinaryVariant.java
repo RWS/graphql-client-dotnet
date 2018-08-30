@@ -3,7 +3,7 @@ package com.sdl.web.pca.client.contentmodel;
 /// <summary>
 /// Represents a variant of a binary component.
 /// </summary>
-class BinaryVariant
+public class BinaryVariant
 {
     private int binaryId;
     private String description;

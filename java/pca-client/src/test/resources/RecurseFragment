@@ -1,0 +1,12 @@
+rfragment RecurseItems on TaxonomySitemapItem {
+	...TaxonomyItemFields
+    items {
+		...on TaxonomySitemapItem {
+			...TaxonomyItemFields
+			...RecurseItems
+		}
+		...on PageSitemapItem {
+			...TaxonomyPageFields
+		}
+    }
+}
