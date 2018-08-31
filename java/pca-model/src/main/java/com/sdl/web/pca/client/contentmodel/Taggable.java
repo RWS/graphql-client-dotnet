@@ -5,7 +5,7 @@ import java.util.List;
 /**
 *Represents a related set of entities.
 */
-public interface Taggable{
+public interface Taggable {
 		
 
 		List<TaxonomyItem> getTaxonomies();

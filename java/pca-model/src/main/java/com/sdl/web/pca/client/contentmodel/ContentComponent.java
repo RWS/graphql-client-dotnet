@@ -6,7 +6,7 @@ import java.util.List;
 /**
 *Represents a component which has content.
 */
-public interface ContentComponent{
+public interface ContentComponent {
 																														
 
 		String getCreationDate();

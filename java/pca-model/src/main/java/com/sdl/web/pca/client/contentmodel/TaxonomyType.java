@@ -1,8 +1,8 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum TaxonomyType{
+public enum TaxonomyType {
 
 		KEYWORD,
 		CATEGORY,
-		STRUCTUREGROUP,	
+		STRUCTUREGROUP	
 }

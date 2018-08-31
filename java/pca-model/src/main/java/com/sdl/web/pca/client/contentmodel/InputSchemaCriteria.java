@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public class InputSchemaCriteria{
+public class InputSchemaCriteria {
 		private String id;
 		private String title;
 

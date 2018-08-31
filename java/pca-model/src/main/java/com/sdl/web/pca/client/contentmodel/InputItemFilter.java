@@ -5,7 +5,7 @@ import java.util.List;
 /**
 *Item filter for the items root query. When the filter is applied, only the items matching the filter will be in the query result
 */
-public class InputItemFilter{
+public class InputItemFilter {
 		private List<InputItemFilter> and;
 		private InputCustomMetaCriteria customMeta;
 		private List<ItemType> itemTypes;

@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents custom metadata.
 */
-public class CustomMeta{
+public class CustomMeta {
 		private String id;
 		private int itemId;
 		private String key;

@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public class InputCustomMetaCriteria{
+public class InputCustomMetaCriteria {
 		private String key;
 		private CriteriaScope scope;
 		private String value;

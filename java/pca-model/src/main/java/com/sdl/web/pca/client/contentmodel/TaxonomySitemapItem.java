@@ -1,7 +1,7 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-public class TaxonomySitemapItem implements SitemapItem{
+public class TaxonomySitemapItem implements SitemapItem {
 		private Integer classifiedItemsCount;
 		private String description;
 		private String id;

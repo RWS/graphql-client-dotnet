@@ -6,7 +6,7 @@ import java.util.List;
 /**
 *Represents a regular component.
 */
-public class Component implements ContentComponent,Item{
+public class Component implements ContentComponent,Item {
 		private String creationDate;
 		private CustomMetaConnection customMetas;
 		private String id;

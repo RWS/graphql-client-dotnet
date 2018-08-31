@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public class InputKeywordCriteria{
+public class InputKeywordCriteria {
 		private Integer categoryId;
 		private String categoryName;
 		private String key;

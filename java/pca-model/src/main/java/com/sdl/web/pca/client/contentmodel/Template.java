@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a template.
 */
-public class Template implements Item{
+public class Template implements Item {
 		private String creationDate;
 		private CustomMetaConnection customMetas;
 		private String id;

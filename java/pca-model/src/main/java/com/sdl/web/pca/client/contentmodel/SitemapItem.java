@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Sitemap Item
 */
-public interface SitemapItem{
+public interface SitemapItem {
 														
 
 		String getId();

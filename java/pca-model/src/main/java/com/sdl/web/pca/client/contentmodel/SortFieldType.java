@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *These are the fields that allow sorting
 */
-public enum SortFieldType{
+public enum SortFieldType {
 
 		CREATION_DATE,
 		INITIAL_PUBLISH_DATE,
@@ -15,5 +15,5 @@ public enum SortFieldType{
 		OWNING_PUBLICATION_ID,
 		PUBLICATION_ID,
 		TITLE,
-		UPDATED_DATE,	
+		UPDATED_DATE	
 }

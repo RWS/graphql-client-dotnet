@@ -157,7 +157,7 @@ public class Program {
         else
             sb.append("public class "+ type.name + getImplementation(type.interfaces));
 
-        sb.append("{");
+        sb.append(" {");
         sb.append("\n");
         /* if (type.Interfaces != null && type.Interfaces.Count > 0)
         {
@@ -208,7 +208,10 @@ public class Program {
         {
             sb.append("\n");
             sb.append(indentString);
-            sb.append(enumValues.get(i).name+",");
+            if (i >= enumValues.size() - 1)
+                sb.append(enumValues.get(i).name);
+            else
+                sb.append(enumValues.get(i).name+",");
         }
         /*sb.AppendLine(
                 $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");*/

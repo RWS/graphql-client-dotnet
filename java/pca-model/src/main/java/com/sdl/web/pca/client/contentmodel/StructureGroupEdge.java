@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *An edge in a connection
 */
-public class StructureGroupEdge{
+public class StructureGroupEdge {
 		private StructureGroup node;
 		private String cursor;
 

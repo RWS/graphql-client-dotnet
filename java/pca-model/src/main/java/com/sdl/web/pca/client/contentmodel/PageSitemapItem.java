@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public class PageSitemapItem implements SitemapItem{
+public class PageSitemapItem implements SitemapItem {
 		private String id;
 		private String originalTitle;
 		private String publishedDate;

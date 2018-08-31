@@ -5,7 +5,7 @@ import java.util.List;
 /**
 *A connection to a list of items.
 */
-public class StructureGroupConnection{
+public class StructureGroupConnection {
 		private List<StructureGroupEdge> edges;
 
 

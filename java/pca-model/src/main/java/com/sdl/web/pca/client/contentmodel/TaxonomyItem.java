@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a taxonomy item.
 */
-public interface TaxonomyItem{
+public interface TaxonomyItem {
 																																								
 
 		TaxonomyItemConnection getChildren();

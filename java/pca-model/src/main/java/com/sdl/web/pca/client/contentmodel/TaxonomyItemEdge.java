@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *An edge in a connection
 */
-public class TaxonomyItemEdge{
+public class TaxonomyItemEdge {
 		private TaxonomyItem node;
 		private String cursor;
 

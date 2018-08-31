@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum ContentFilterQueryType{
+public enum ContentFilterQueryType {
 
-		CUSTOM_META,	
+		CUSTOM_META	
 }

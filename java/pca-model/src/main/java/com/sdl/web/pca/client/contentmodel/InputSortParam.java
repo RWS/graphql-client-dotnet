@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a typical sort type. When used, the default sorting mechanism (by namespace and by id) is overridden
 */
-public class InputSortParam{
+public class InputSortParam {
 		private SortOrderType order;
 		private SortFieldType sortBy;
 

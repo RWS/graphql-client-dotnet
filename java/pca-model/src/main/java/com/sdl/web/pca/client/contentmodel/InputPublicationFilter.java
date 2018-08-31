@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a filter for a publication query.
 */
-public class InputPublicationFilter{
+public class InputPublicationFilter {
 		private ContentFilterQueryType queryType;
 		private String value;
 		private CustomMetaValueType valueType;

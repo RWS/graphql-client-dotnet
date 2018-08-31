@@ -5,7 +5,7 @@ import java.util.Dictionary;
 /**
 *Untyped content where all data is available in a Map structure.
 */
-public class UntypedContent implements Content{
+public class UntypedContent implements Content {
 		private Dictionary data;
 		private String id;
 		private String type;

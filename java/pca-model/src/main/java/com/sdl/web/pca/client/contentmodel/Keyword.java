@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a keyword taxonomy item.
 */
-public class Keyword implements TaxonomyItem,Item{
+public class Keyword implements TaxonomyItem,Item {
 		private TaxonomyItemConnection children;
 		private String creationDate;
 		private CustomMetaConnection customMetas;

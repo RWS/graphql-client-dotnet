@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a fragment of content.
 */
-public interface ContentFragment{
+public interface ContentFragment {
 																										
 
 		Content getContent();

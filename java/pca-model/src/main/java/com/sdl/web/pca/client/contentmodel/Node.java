@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a node.
 */
-public class Node{
+public class Node {
 		private String id;
 
 

@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a Link.
 */
-public class Link{
+public class Link {
 		private int itemId;
 		private Integer namespaceId;
 		private int publicationId;

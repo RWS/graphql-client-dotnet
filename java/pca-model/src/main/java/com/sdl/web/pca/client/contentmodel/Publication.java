@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a publication.
 */
-public class Publication implements Item{
+public class Publication implements Item {
 		private String creationDate;
 		private CustomMetaConnection customMetas;
 		private String id;

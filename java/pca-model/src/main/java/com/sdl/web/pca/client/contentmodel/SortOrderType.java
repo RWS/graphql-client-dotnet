@@ -4,8 +4,8 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a type of natural sort: descending or ascending
 */
-public enum SortOrderType{
+public enum SortOrderType {
 
 		Ascending,
-		Descending,	
+		Descending	
 }

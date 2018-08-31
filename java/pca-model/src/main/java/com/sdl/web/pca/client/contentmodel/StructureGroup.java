@@ -5,7 +5,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a structure group.
 */
-public class StructureGroup implements TaxonomyItem,Item{
+public class StructureGroup implements TaxonomyItem,Item {
 		private TaxonomyItemConnection children;
 		private String creationDate;
 		private CustomMetaConnection customMetas;

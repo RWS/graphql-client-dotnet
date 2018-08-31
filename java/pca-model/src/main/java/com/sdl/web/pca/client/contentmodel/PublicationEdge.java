@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *An edge in a connection
 */
-public class PublicationEdge{
+public class PublicationEdge {
 		private Publication node;
 		private String cursor;
 

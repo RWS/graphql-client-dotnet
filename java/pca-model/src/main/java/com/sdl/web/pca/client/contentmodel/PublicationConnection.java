@@ -5,7 +5,7 @@ import java.util.List;
 /**
 *A connection to a list of items.
 */
-public class PublicationConnection{
+public class PublicationConnection {
 		private List<PublicationEdge> edges;
 
 

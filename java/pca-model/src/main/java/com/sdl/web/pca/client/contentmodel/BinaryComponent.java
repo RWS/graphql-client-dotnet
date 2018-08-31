@@ -6,7 +6,7 @@ import java.util.List;
 /**
 *Represents a component which has binary content.
 */
-public class BinaryComponent implements ContentComponent,Item{
+public class BinaryComponent implements ContentComponent,Item {
 		private String creationDate;
 		private CustomMetaConnection customMetas;
 		private String id;

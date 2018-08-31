@@ -5,7 +5,7 @@ import java.util.Dictionary;
 /**
 *Represents an item with content.
 */
-public class RawContent{
+public class RawContent {
 		private String charSet;
 		private String content;
 		private Dictionary data;

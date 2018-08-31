@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public interface Content{
+public interface Content {
 				
 
 		String getId();

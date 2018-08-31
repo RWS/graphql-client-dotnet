@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents a publication mapping.
 */
-public class PublicationMapping{
+public class PublicationMapping {
 		private String domain;
 		private Integer namespaceId;
 		private String path;

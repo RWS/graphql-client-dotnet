@@ -5,7 +5,7 @@ import java.util.List;
 /**
 *Represents a container for items.
 */
-public interface Container{
+public interface Container {
 		
 
 		List<Item> getContainerItems();

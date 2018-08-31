@@ -4,7 +4,7 @@ package com.sdl.web.pca.client.contentmodel;
 /**
 *Represents an Ambient Data Framework claim value.
 */
-public class ClaimValue{
+public class ClaimValue {
 		private ClaimValueType type;
 		private String uri;
 		private String value;

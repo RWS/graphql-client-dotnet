@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum ItemType{
+public enum ItemType {
 
 		PUBLICATION,
 		STRUCTURE_GROUP,
@@ -10,5 +10,5 @@ public enum ItemType{
 		PAGE_TEMPLATE,
 		CATEGORY,
 		KEYWORD,
-		COMPONENT_PRESENTATION,	
+		COMPONENT_PRESENTATION	
 }

@@ -6,7 +6,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 /**
 *Represents a page.
 */
-public class Page implements Container,Taggable,Item{
+public class Page implements Container,Taggable,Item {
 		private List<Item> containerItems;
 		private Content content;
 		private String creationDate;
