@@ -10,7 +10,7 @@ public class InputItemFilter{
 		private InputCustomMetaCriteria customMeta;
 		private List<ItemType> itemTypes;
 		private InputKeywordCriteria keyword;
-		private List<ContentNamespace> namespaceIds;
+		private List<Integer> namespaceIds;
 		private List<InputItemFilter> or;
 		private List<Integer> publicationIds;
 		private InputSchemaCriteria schema;
@@ -56,11 +56,11 @@ public class InputItemFilter{
 		}
 
 
-		public List<ContentNamespace> getNamespaceIds()
+		public List<Integer> getNamespaceIds()
 		{
 			return namespaceIds;
 		}
-		public void setNamespaceIds(List<ContentNamespace> namespaceIds)
+		public void setNamespaceIds(List<Integer> namespaceIds)
 		{
 			this.namespaceIds = namespaceIds;
 		}

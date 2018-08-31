@@ -9,7 +9,7 @@ public class Keyword implements TaxonomyItem,Item{
 		private TaxonomyItemConnection children;
 		private String creationDate;
 		private CustomMetaConnection customMetas;
-		private int depth;
+		private Integer depth;
 		private String description;
 		private String id;
 		private String initialPublishDate;
@@ -18,14 +18,14 @@ public class Keyword implements TaxonomyItem,Item{
 		private String key;
 		private String lastPublishDate;
 		private String name;
-		private ContentNamespace namespaceId;
-		private int owningPublicationId;
+		private Integer namespaceId;
+		private Integer owningPublicationId;
 		private TaxonomyItem parent;
 		private int publicationId;
 		private int taxonomyId;
 		private TaxonomyType taxonomyType;
 		private String title;
-		private int totalRelatedItems;
+		private Integer totalRelatedItems;
 		private String updatedDate;
 		private boolean hasChildren;
 		private boolean navigable;
@@ -62,11 +62,11 @@ public class Keyword implements TaxonomyItem,Item{
 		}
 
 
-		public int getDepth()
+		public Integer getDepth()
 		{
 			return depth;
 		}
-		public void setDepth(int depth)
+		public void setDepth(Integer depth)
 		{
 			this.depth = depth;
 		}
@@ -152,21 +152,21 @@ public class Keyword implements TaxonomyItem,Item{
 		}
 
 
-		public ContentNamespace getNamespaceId()
+		public Integer getNamespaceId()
 		{
 			return namespaceId;
 		}
-		public void setNamespaceId(ContentNamespace namespaceId)
+		public void setNamespaceId(Integer namespaceId)
 		{
 			this.namespaceId = namespaceId;
 		}
 
 
-		public int getOwningPublicationId()
+		public Integer getOwningPublicationId()
 		{
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(int owningPublicationId)
+		public void setOwningPublicationId(Integer owningPublicationId)
 		{
 			this.owningPublicationId = owningPublicationId;
 		}
@@ -222,11 +222,11 @@ public class Keyword implements TaxonomyItem,Item{
 		}
 
 
-		public int getTotalRelatedItems()
+		public Integer getTotalRelatedItems()
 		{
 			return totalRelatedItems;
 		}
-		public void setTotalRelatedItems(int totalRelatedItems)
+		public void setTotalRelatedItems(Integer totalRelatedItems)
 		{
 			this.totalRelatedItems = totalRelatedItems;
 		}

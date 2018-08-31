@@ -1,14 +1,7 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
-import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.ItemType;
-import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
@@ -83,7 +76,7 @@ public class GraphQLClientTest {
     public void executePageItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.values()[0]));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -99,7 +92,7 @@ public class GraphQLClientTest {
     public void executeComponentItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.values()[0]));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -115,7 +108,7 @@ public class GraphQLClientTest {
     public void executeKeywordItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.values()[1]));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -130,7 +123,7 @@ public class GraphQLClientTest {
     public void executePublicationItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.values()[0]));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 

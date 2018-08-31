@@ -331,7 +331,7 @@ public class Program {
             switch (field.type.name)
             {
                 case "Int": {
-                    field.type.name = "int";
+                    field.type.name = "Integer";
                     break;
                 }
                 case "Boolean": {
@@ -358,8 +358,8 @@ public class Program {
         {
             case "namespaceIds":{
                 GraphQLSchemaTypeInfo ofType = new GraphQLSchemaTypeInfo();
-                ofType.kind = "ENUM";
-                ofType.name = "ContentNamespace";
+                ofType.kind = "SCALAR";
+                ofType.name = "Integer";
 
                 graphQLSchemaTypeInfo.kind = "LIST";
                 graphQLSchemaTypeInfo.ofType = ofType;
@@ -367,8 +367,8 @@ public class Program {
             }
             case "namespaceId":
             {
-                graphQLSchemaTypeInfo.kind = "ENUM";
-                graphQLSchemaTypeInfo.name = "ContentNamespace";
+                graphQLSchemaTypeInfo.kind = "SCALAR";
+                graphQLSchemaTypeInfo.name = "Integer";
                 return graphQLSchemaTypeInfo;
             }
             case "itemType":

@@ -1,17 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
 public class InputKeywordCriteria{
-		private int categoryId;
+		private Integer categoryId;
 		private String categoryName;
 		private String key;
-		private int keywordId;
+		private Integer keywordId;
 
 
-		public int getCategoryId()
+		public Integer getCategoryId()
 		{
 			return categoryId;
 		}
-		public void setCategoryId(int categoryId)
+		public void setCategoryId(Integer categoryId)
 		{
 			this.categoryId = categoryId;
 		}
@@ -37,11 +37,11 @@ public class InputKeywordCriteria{
 		}
 
 
-		public int getKeywordId()
+		public Integer getKeywordId()
 		{
 			return keywordId;
 		}
-		public void setKeywordId(int keywordId)
+		public void setKeywordId(Integer keywordId)
 		{
 			this.keywordId = keywordId;
 		}

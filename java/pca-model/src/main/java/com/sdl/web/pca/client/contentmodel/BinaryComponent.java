@@ -14,10 +14,10 @@ public class BinaryComponent implements ContentComponent,Item{
 		private int itemId;
 		private ItemType itemType;
 		private String lastPublishDate;
-		private ContentNamespace namespaceId;
-		private int owningPublicationId;
+		private Integer namespaceId;
+		private Integer owningPublicationId;
 		private int publicationId;
-		private int schemaId;
+		private Integer schemaId;
 		private List<TaxonomyItem> taxonomies;
 		private String title;
 		private String type;
@@ -96,21 +96,21 @@ public class BinaryComponent implements ContentComponent,Item{
 		}
 
 
-		public ContentNamespace getNamespaceId()
+		public Integer getNamespaceId()
 		{
 			return namespaceId;
 		}
-		public void setNamespaceId(ContentNamespace namespaceId)
+		public void setNamespaceId(Integer namespaceId)
 		{
 			this.namespaceId = namespaceId;
 		}
 
 
-		public int getOwningPublicationId()
+		public Integer getOwningPublicationId()
 		{
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(int owningPublicationId)
+		public void setOwningPublicationId(Integer owningPublicationId)
 		{
 			this.owningPublicationId = owningPublicationId;
 		}
@@ -126,11 +126,11 @@ public class BinaryComponent implements ContentComponent,Item{
 		}
 
 
-		public int getSchemaId()
+		public Integer getSchemaId()
 		{
 			return schemaId;
 		}
-		public void setSchemaId(int schemaId)
+		public void setSchemaId(Integer schemaId)
 		{
 			this.schemaId = schemaId;
 		}

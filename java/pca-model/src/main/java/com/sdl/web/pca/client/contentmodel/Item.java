@@ -29,11 +29,11 @@ public interface Item{
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);
 
-		ContentNamespace getNamespaceId();
-		void setNamespaceId(ContentNamespace namespaceId);
+		Integer getNamespaceId();
+		void setNamespaceId(Integer namespaceId);
 
-		int getOwningPublicationId();
-		void setOwningPublicationId(int owningPublicationId);
+		Integer getOwningPublicationId();
+		void setOwningPublicationId(Integer owningPublicationId);
 
 		int getPublicationId();
 		void setPublicationId(int publicationId);

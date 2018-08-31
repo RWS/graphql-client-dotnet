@@ -3,6 +3,9 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sdl.web.pca.client.contentmodel.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.ClaimValue;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
@@ -26,6 +29,7 @@ import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import netscape.javascript.JSObject;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -146,7 +150,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("publicationId", publicationId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "sitemap");
     }
 
     @Override
@@ -166,7 +170,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("includeAncestors", includeAncestors);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class);
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "sitemapSubtree");
     }
 
     @Override
@@ -244,7 +248,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", inputClaimValues);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, ItemConnection.class);
+        return getResultForRequest(graphQLRequest, ItemConnection.class, "items");
     }
 
     @Override
@@ -327,10 +331,15 @@ public class DefaultPublicContentApi implements PublicContentApi {
         }
     }
 
-    private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz) throws PublicContentApiException {
+    private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz, String subroot) throws PublicContentApiException {
         try {
             String contentQuery = client.execute(request);
-            return MAPPER.readValue(contentQuery, clazz);
+
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = (JsonObject)parser.parse(contentQuery);
+            JsonObject dataObject = jsonObject.getAsJsonObject("data").getAsJsonObject(subroot);
+
+            return MAPPER.readValue(dataObject.toString(), clazz);
         } catch (GraphQLClientException e) {
             throw new PublicContentApiException("Unable to execute query: " + request, e);
         } catch (IOException e) {

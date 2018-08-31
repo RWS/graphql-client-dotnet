@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.sdl.web.pca.client.contentmodel.ItemTypes;
 
 public enum ItemType {
@@ -35,8 +36,9 @@ public enum ItemType {
 		this.itemType = itemType;
 	}
 
+	@JsonCreator
 	public int getNameSpaceValue(){
-		return itemType;
+		return this.itemType;
 	}
 
 	//pragma warning restore 1591
