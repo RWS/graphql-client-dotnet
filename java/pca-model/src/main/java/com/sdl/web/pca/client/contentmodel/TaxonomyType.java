@@ -1,8 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum TaxonomyType {
-
+/*[JsonConverter(typeof(StringEnumConverter))]*/
+	enum TaxonomyType
+	{
+		/// <summary>
+		/// KEYWORD
+		/// </summary>
 		KEYWORD,
+
+		/// <summary>
+		/// CATEGORY
+		/// </summary>
 		CATEGORY,
-		STRUCTUREGROUP	
-}
+
+		STRUCTUREGROUP
+	}

@@ -1,46 +1,51 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.pagemodeldata.ModelData;
+
 import java.util.Dictionary;
 
-/**
-*Represents an item with content.
-*/
-public class RawContent {
+/// <summary>
+	/// Represents an item with content.
+	/// </summary>
+	class RawContent
+	{
 		private String charSet;
 		private String content;
-		private Dictionary data;
+		private ModelData data;
 		private String id;
 
+		 public String getCharSet()
+		 {
+			 return charSet;
+		 }
+		 public void setCharSet(String charSet)
+		 {
+			 this.charSet = charSet;
+		 }
 
-		public String getCharSet(){
-			return charSet;
-		}
-		public void setCharSet(String charSet){
-			this.charSet = charSet;
-		}
+		 public String getContent()
+		 {
+			 return content;
+		 }
+		 public void setContent(String content)
+		 {
+			 this.content = content;
+		 }
 
-
-		public String getContent(){
-			return content;
-		}
-		public void setContent(String content){
-			this.content = content;
-		}
-
-
-		public Dictionary getData(){
+		public ModelData getData() {
 			return data;
 		}
-		public void setData(Dictionary data){
+
+		public void setData(ModelData data) {
 			this.data = data;
 		}
 
-
-		public String getId(){
-			return id;
-		}
-		public void setId(String id){
-			this.id = id;
-		}
-	
-}
+		public String getId()
+		 {
+			 return id;
+		 }
+		 public void setId(String id)
+		 {
+			 this.id = id;
+		 }
+	}

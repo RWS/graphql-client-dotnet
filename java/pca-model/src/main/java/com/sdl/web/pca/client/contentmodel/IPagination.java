@@ -1,10 +1,12 @@
 package com.sdl.web.pca.client.contentmodel;
 
 public interface IPagination {
+    int First = 0;
+    String After = null;
 
-    int getFirst();
-    void setFirst(int first);
+    public int getFirst();
+    public void setFirst(int first);
 
-    String getAfter();
-    void setAfter(String after);
+    public String getAfter();
+    public void setAfter(String after);
 }
