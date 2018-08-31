@@ -12,42 +12,34 @@ public class RawContent {
 		private String id;
 
 
-		public String getCharSet()
-		{
+		public String getCharSet(){
 			return charSet;
 		}
-		public void setCharSet(String charSet)
-		{
+		public void setCharSet(String charSet){
 			this.charSet = charSet;
 		}
 
 
-		public String getContent()
-		{
+		public String getContent(){
 			return content;
 		}
-		public void setContent(String content)
-		{
+		public void setContent(String content){
 			this.content = content;
 		}
 
 
-		public Dictionary getData()
-		{
+		public Dictionary getData(){
 			return data;
 		}
-		public void setData(Dictionary data)
-		{
+		public void setData(Dictionary data){
 			this.data = data;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 	

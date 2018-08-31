@@ -9,22 +9,18 @@ public class KeywordEdge {
 		private String cursor;
 
 
-		public Keyword getNode()
-		{
+		public Keyword getNode(){
 			return node;
 		}
-		public void setNode(Keyword node)
-		{
+		public void setNode(Keyword node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	

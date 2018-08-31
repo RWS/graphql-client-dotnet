@@ -254,8 +254,8 @@ public class Program {
             if (isPublic) {
                 sb.append("public " + returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "()");
 
-                sb.append("\n");
-                sb.append(indentString);
+               /* sb.append("\n");
+                sb.append(indentString);*/
                 sb.append("{\n");
                 sb.append(indentString);
                 sb.append("\t");
@@ -267,8 +267,8 @@ public class Program {
 
                 sb.append("public void set" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")");
 
-                sb.append("\n");
-                sb.append(indentString);
+               /* sb.append("\n");
+                sb.append(indentString);*/
                 sb.append("{\n");
                 sb.append(indentString);
                 sb.append("\t");

@@ -9,12 +9,10 @@ public class ItemConnection {
 		private List<ItemEdge> edges;
 
 
-		public List<ItemEdge> getEdges()
-		{
+		public List<ItemEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<ItemEdge> edges)
-		{
+		public void setEdges(List<ItemEdge> edges){
 			this.edges = edges;
 		}
 	

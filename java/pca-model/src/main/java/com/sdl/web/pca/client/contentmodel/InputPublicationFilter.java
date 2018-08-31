@@ -10,32 +10,26 @@ public class InputPublicationFilter {
 		private CustomMetaValueType valueType;
 
 
-		public ContentFilterQueryType getQueryType()
-		{
+		public ContentFilterQueryType getQueryType(){
 			return queryType;
 		}
-		public void setQueryType(ContentFilterQueryType queryType)
-		{
+		public void setQueryType(ContentFilterQueryType queryType){
 			this.queryType = queryType;
 		}
 
 
-		public String getValue()
-		{
+		public String getValue(){
 			return value;
 		}
-		public void setValue(String value)
-		{
+		public void setValue(String value){
 			this.value = value;
 		}
 
 
-		public CustomMetaValueType getValueType()
-		{
+		public CustomMetaValueType getValueType(){
 			return valueType;
 		}
-		public void setValueType(CustomMetaValueType valueType)
-		{
+		public void setValueType(CustomMetaValueType valueType){
 			this.valueType = valueType;
 		}
 	

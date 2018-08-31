@@ -9,12 +9,10 @@ public class PageConnection {
 		private List<PageEdge> edges;
 
 
-		public List<PageEdge> getEdges()
-		{
+		public List<PageEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<PageEdge> edges)
-		{
+		public void setEdges(List<PageEdge> edges){
 			this.edges = edges;
 		}
 	

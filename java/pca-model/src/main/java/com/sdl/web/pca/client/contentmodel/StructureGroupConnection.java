@@ -9,12 +9,10 @@ public class StructureGroupConnection {
 		private List<StructureGroupEdge> edges;
 
 
-		public List<StructureGroupEdge> getEdges()
-		{
+		public List<StructureGroupEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<StructureGroupEdge> edges)
-		{
+		public void setEdges(List<StructureGroupEdge> edges){
 			this.edges = edges;
 		}
 	

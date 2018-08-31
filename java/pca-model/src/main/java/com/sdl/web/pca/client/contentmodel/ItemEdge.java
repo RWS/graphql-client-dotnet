@@ -9,22 +9,18 @@ public class ItemEdge {
 		private String cursor;
 
 
-		public Item getNode()
-		{
+		public Item getNode(){
 			return node;
 		}
-		public void setNode(Item node)
-		{
+		public void setNode(Item node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	

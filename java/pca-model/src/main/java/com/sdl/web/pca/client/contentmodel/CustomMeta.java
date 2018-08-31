@@ -14,72 +14,58 @@ public class CustomMeta {
 		private CustomMetaValueType valueType;
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public int getItemId()
-		{
+		public int getItemId(){
 			return itemId;
 		}
-		public void setItemId(int itemId)
-		{
+		public void setItemId(int itemId){
 			this.itemId = itemId;
 		}
 
 
-		public String getKey()
-		{
+		public String getKey(){
 			return key;
 		}
-		public void setKey(String key)
-		{
+		public void setKey(String key){
 			this.key = key;
 		}
 
 
-		public Integer getNamespaceId()
-		{
+		public Integer getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId)
-		{
+		public void setNamespaceId(Integer namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public int getPublicationId()
-		{
+		public int getPublicationId(){
 			return publicationId;
 		}
-		public void setPublicationId(int publicationId)
-		{
+		public void setPublicationId(int publicationId){
 			this.publicationId = publicationId;
 		}
 
 
-		public String getValue()
-		{
+		public String getValue(){
 			return value;
 		}
-		public void setValue(String value)
-		{
+		public void setValue(String value){
 			this.value = value;
 		}
 
 
-		public CustomMetaValueType getValueType()
-		{
+		public CustomMetaValueType getValueType(){
 			return valueType;
 		}
-		public void setValueType(CustomMetaValueType valueType)
-		{
+		public void setValueType(CustomMetaValueType valueType){
 			this.valueType = valueType;
 		}
 	

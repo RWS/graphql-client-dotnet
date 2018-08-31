@@ -16,122 +16,98 @@ public class TaxonomySitemapItem implements SitemapItem {
 		private boolean visible;
 
 
-		public Integer getClassifiedItemsCount()
-		{
+		public Integer getClassifiedItemsCount(){
 			return classifiedItemsCount;
 		}
-		public void setClassifiedItemsCount(Integer classifiedItemsCount)
-		{
+		public void setClassifiedItemsCount(Integer classifiedItemsCount){
 			this.classifiedItemsCount = classifiedItemsCount;
 		}
 
 
-		public String getDescription()
-		{
+		public String getDescription(){
 			return description;
 		}
-		public void setDescription(String description)
-		{
+		public void setDescription(String description){
 			this.description = description;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public List<SitemapItem> getItems()
-		{
+		public List<SitemapItem> getItems(){
 			return items;
 		}
-		public void setItems(List<SitemapItem> items)
-		{
+		public void setItems(List<SitemapItem> items){
 			this.items = items;
 		}
 
 
-		public String getKey()
-		{
+		public String getKey(){
 			return key;
 		}
-		public void setKey(String key)
-		{
+		public void setKey(String key){
 			this.key = key;
 		}
 
 
-		public String getOriginalTitle()
-		{
+		public String getOriginalTitle(){
 			return originalTitle;
 		}
-		public void setOriginalTitle(String originalTitle)
-		{
+		public void setOriginalTitle(String originalTitle){
 			this.originalTitle = originalTitle;
 		}
 
 
-		public String getPublishedDate()
-		{
+		public String getPublishedDate(){
 			return publishedDate;
 		}
-		public void setPublishedDate(String publishedDate)
-		{
+		public void setPublishedDate(String publishedDate){
 			this.publishedDate = publishedDate;
 		}
 
 
-		public String getTitle()
-		{
+		public String getTitle(){
 			return title;
 		}
-		public void setTitle(String title)
-		{
+		public void setTitle(String title){
 			this.title = title;
 		}
 
 
-		public String getType()
-		{
+		public String getType(){
 			return type;
 		}
-		public void setType(String type)
-		{
+		public void setType(String type){
 			this.type = type;
 		}
 
 
-		public String getUrl()
-		{
+		public String getUrl(){
 			return url;
 		}
-		public void setUrl(String url)
-		{
+		public void setUrl(String url){
 			this.url = url;
 		}
 
 
-		public boolean getHasChildNodes()
-		{
+		public boolean getHasChildNodes(){
 			return hasChildNodes;
 		}
-		public void setHasChildNodes(boolean hasChildNodes)
-		{
+		public void setHasChildNodes(boolean hasChildNodes){
 			this.hasChildNodes = hasChildNodes;
 		}
 
 
-		public boolean getVisible()
-		{
+		public boolean getVisible(){
 			return visible;
 		}
-		public void setVisible(boolean visible)
-		{
+		public void setVisible(boolean visible){
 			this.visible = visible;
 		}
 	

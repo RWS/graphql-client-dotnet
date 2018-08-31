@@ -9,12 +9,10 @@ public class PublicationConnection {
 		private List<PublicationEdge> edges;
 
 
-		public List<PublicationEdge> getEdges()
-		{
+		public List<PublicationEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<PublicationEdge> edges)
-		{
+		public void setEdges(List<PublicationEdge> edges){
 			this.edges = edges;
 		}
 	

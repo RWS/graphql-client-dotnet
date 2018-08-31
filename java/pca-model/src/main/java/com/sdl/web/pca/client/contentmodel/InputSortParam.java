@@ -9,22 +9,18 @@ public class InputSortParam {
 		private SortFieldType sortBy;
 
 
-		public SortOrderType getOrder()
-		{
+		public SortOrderType getOrder(){
 			return order;
 		}
-		public void setOrder(SortOrderType order)
-		{
+		public void setOrder(SortOrderType order){
 			this.order = order;
 		}
 
 
-		public SortFieldType getSortBy()
-		{
+		public SortFieldType getSortBy(){
 			return sortBy;
 		}
-		public void setSortBy(SortFieldType sortBy)
-		{
+		public void setSortBy(SortFieldType sortBy){
 			this.sortBy = sortBy;
 		}
 	

@@ -9,12 +9,10 @@ public class TaxonomyItemConnection {
 		private List<TaxonomyItemEdge> edges;
 
 
-		public List<TaxonomyItemEdge> getEdges()
-		{
+		public List<TaxonomyItemEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<TaxonomyItemEdge> edges)
-		{
+		public void setEdges(List<TaxonomyItemEdge> edges){
 			this.edges = edges;
 		}
 	

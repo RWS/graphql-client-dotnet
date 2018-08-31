@@ -15,82 +15,66 @@ public class BinaryVariant {
 		private String variantId;
 
 
-		public int getBinaryId()
-		{
+		public int getBinaryId(){
 			return binaryId;
 		}
-		public void setBinaryId(int binaryId)
-		{
+		public void setBinaryId(int binaryId){
 			this.binaryId = binaryId;
 		}
 
 
-		public String getDescription()
-		{
+		public String getDescription(){
 			return description;
 		}
-		public void setDescription(String description)
-		{
+		public void setDescription(String description){
 			this.description = description;
 		}
 
 
-		public String getDownloadUrl()
-		{
+		public String getDownloadUrl(){
 			return downloadUrl;
 		}
-		public void setDownloadUrl(String downloadUrl)
-		{
+		public void setDownloadUrl(String downloadUrl){
 			this.downloadUrl = downloadUrl;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public String getPath()
-		{
+		public String getPath(){
 			return path;
 		}
-		public void setPath(String path)
-		{
+		public void setPath(String path){
 			this.path = path;
 		}
 
 
-		public String getType()
-		{
+		public String getType(){
 			return type;
 		}
-		public void setType(String type)
-		{
+		public void setType(String type){
 			this.type = type;
 		}
 
 
-		public String getUrl()
-		{
+		public String getUrl(){
 			return url;
 		}
-		public void setUrl(String url)
-		{
+		public void setUrl(String url){
 			this.url = url;
 		}
 
 
-		public String getVariantId()
-		{
+		public String getVariantId(){
 			return variantId;
 		}
-		public void setVariantId(String variantId)
-		{
+		public void setVariantId(String variantId){
 			this.variantId = variantId;
 		}
 	

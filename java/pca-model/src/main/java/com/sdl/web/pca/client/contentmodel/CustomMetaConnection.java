@@ -9,12 +9,10 @@ public class CustomMetaConnection {
 		private List<CustomMetaEdge> edges;
 
 
-		public List<CustomMetaEdge> getEdges()
-		{
+		public List<CustomMetaEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<CustomMetaEdge> edges)
-		{
+		public void setEdges(List<CustomMetaEdge> edges){
 			this.edges = edges;
 		}
 	

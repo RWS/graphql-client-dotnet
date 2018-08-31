@@ -16,82 +16,66 @@ public class InputItemFilter {
 		private InputSchemaCriteria schema;
 
 
-		public List<InputItemFilter> getAnd()
-		{
+		public List<InputItemFilter> getAnd(){
 			return and;
 		}
-		public void setAnd(List<InputItemFilter> and)
-		{
+		public void setAnd(List<InputItemFilter> and){
 			this.and = and;
 		}
 
 
-		public InputCustomMetaCriteria getCustomMeta()
-		{
+		public InputCustomMetaCriteria getCustomMeta(){
 			return customMeta;
 		}
-		public void setCustomMeta(InputCustomMetaCriteria customMeta)
-		{
+		public void setCustomMeta(InputCustomMetaCriteria customMeta){
 			this.customMeta = customMeta;
 		}
 
 
-		public List<ItemType> getItemTypes()
-		{
+		public List<ItemType> getItemTypes(){
 			return itemTypes;
 		}
-		public void setItemTypes(List<ItemType> itemTypes)
-		{
+		public void setItemTypes(List<ItemType> itemTypes){
 			this.itemTypes = itemTypes;
 		}
 
 
-		public InputKeywordCriteria getKeyword()
-		{
+		public InputKeywordCriteria getKeyword(){
 			return keyword;
 		}
-		public void setKeyword(InputKeywordCriteria keyword)
-		{
+		public void setKeyword(InputKeywordCriteria keyword){
 			this.keyword = keyword;
 		}
 
 
-		public List<Integer> getNamespaceIds()
-		{
+		public List<Integer> getNamespaceIds(){
 			return namespaceIds;
 		}
-		public void setNamespaceIds(List<Integer> namespaceIds)
-		{
+		public void setNamespaceIds(List<Integer> namespaceIds){
 			this.namespaceIds = namespaceIds;
 		}
 
 
-		public List<InputItemFilter> getOr()
-		{
+		public List<InputItemFilter> getOr(){
 			return or;
 		}
-		public void setOr(List<InputItemFilter> or)
-		{
+		public void setOr(List<InputItemFilter> or){
 			this.or = or;
 		}
 
 
-		public List<Integer> getPublicationIds()
-		{
+		public List<Integer> getPublicationIds(){
 			return publicationIds;
 		}
-		public void setPublicationIds(List<Integer> publicationIds)
-		{
+		public void setPublicationIds(List<Integer> publicationIds){
 			this.publicationIds = publicationIds;
 		}
 
 
-		public InputSchemaCriteria getSchema()
-		{
+		public InputSchemaCriteria getSchema(){
 			return schema;
 		}
-		public void setSchema(InputSchemaCriteria schema)
-		{
+		public void setSchema(InputSchemaCriteria schema){
 			this.schema = schema;
 		}
 	

@@ -32,242 +32,194 @@ public class Keyword implements TaxonomyItem,Item {
 		private boolean usedForIdentification;
 
 
-		public TaxonomyItemConnection getChildren()
-		{
+		public TaxonomyItemConnection getChildren(){
 			return children;
 		}
-		public void setChildren(TaxonomyItemConnection children)
-		{
+		public void setChildren(TaxonomyItemConnection children){
 			this.children = children;
 		}
 
 
-		public String getCreationDate()
-		{
+		public String getCreationDate(){
 			return creationDate;
 		}
-		public void setCreationDate(String creationDate)
-		{
+		public void setCreationDate(String creationDate){
 			this.creationDate = creationDate;
 		}
 
 
-		public CustomMetaConnection getCustomMetas()
-		{
+		public CustomMetaConnection getCustomMetas(){
 			return customMetas;
 		}
-		public void setCustomMetas(CustomMetaConnection customMetas)
-		{
+		public void setCustomMetas(CustomMetaConnection customMetas){
 			this.customMetas = customMetas;
 		}
 
 
-		public Integer getDepth()
-		{
+		public Integer getDepth(){
 			return depth;
 		}
-		public void setDepth(Integer depth)
-		{
+		public void setDepth(Integer depth){
 			this.depth = depth;
 		}
 
 
-		public String getDescription()
-		{
+		public String getDescription(){
 			return description;
 		}
-		public void setDescription(String description)
-		{
+		public void setDescription(String description){
 			this.description = description;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public String getInitialPublishDate()
-		{
+		public String getInitialPublishDate(){
 			return initialPublishDate;
 		}
-		public void setInitialPublishDate(String initialPublishDate)
-		{
+		public void setInitialPublishDate(String initialPublishDate){
 			this.initialPublishDate = initialPublishDate;
 		}
 
 
-		public int getItemId()
-		{
+		public int getItemId(){
 			return itemId;
 		}
-		public void setItemId(int itemId)
-		{
+		public void setItemId(int itemId){
 			this.itemId = itemId;
 		}
 
 
-		public ItemType getItemType()
-		{
+		public ItemType getItemType(){
 			return itemType;
 		}
-		public void setItemType(ItemType itemType)
-		{
+		public void setItemType(ItemType itemType){
 			this.itemType = itemType;
 		}
 
 
-		public String getKey()
-		{
+		public String getKey(){
 			return key;
 		}
-		public void setKey(String key)
-		{
+		public void setKey(String key){
 			this.key = key;
 		}
 
 
-		public String getLastPublishDate()
-		{
+		public String getLastPublishDate(){
 			return lastPublishDate;
 		}
-		public void setLastPublishDate(String lastPublishDate)
-		{
+		public void setLastPublishDate(String lastPublishDate){
 			this.lastPublishDate = lastPublishDate;
 		}
 
 
-		public String getName()
-		{
+		public String getName(){
 			return name;
 		}
-		public void setName(String name)
-		{
+		public void setName(String name){
 			this.name = name;
 		}
 
 
-		public Integer getNamespaceId()
-		{
+		public Integer getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId)
-		{
+		public void setNamespaceId(Integer namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId()
-		{
+		public Integer getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId)
-		{
+		public void setOwningPublicationId(Integer owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 
 
-		public TaxonomyItem getParent()
-		{
+		public TaxonomyItem getParent(){
 			return parent;
 		}
-		public void setParent(TaxonomyItem parent)
-		{
+		public void setParent(TaxonomyItem parent){
 			this.parent = parent;
 		}
 
 
-		public int getPublicationId()
-		{
+		public int getPublicationId(){
 			return publicationId;
 		}
-		public void setPublicationId(int publicationId)
-		{
+		public void setPublicationId(int publicationId){
 			this.publicationId = publicationId;
 		}
 
 
-		public int getTaxonomyId()
-		{
+		public int getTaxonomyId(){
 			return taxonomyId;
 		}
-		public void setTaxonomyId(int taxonomyId)
-		{
+		public void setTaxonomyId(int taxonomyId){
 			this.taxonomyId = taxonomyId;
 		}
 
 
-		public TaxonomyType getTaxonomyType()
-		{
+		public TaxonomyType getTaxonomyType(){
 			return taxonomyType;
 		}
-		public void setTaxonomyType(TaxonomyType taxonomyType)
-		{
+		public void setTaxonomyType(TaxonomyType taxonomyType){
 			this.taxonomyType = taxonomyType;
 		}
 
 
-		public String getTitle()
-		{
+		public String getTitle(){
 			return title;
 		}
-		public void setTitle(String title)
-		{
+		public void setTitle(String title){
 			this.title = title;
 		}
 
 
-		public Integer getTotalRelatedItems()
-		{
+		public Integer getTotalRelatedItems(){
 			return totalRelatedItems;
 		}
-		public void setTotalRelatedItems(Integer totalRelatedItems)
-		{
+		public void setTotalRelatedItems(Integer totalRelatedItems){
 			this.totalRelatedItems = totalRelatedItems;
 		}
 
 
-		public String getUpdatedDate()
-		{
+		public String getUpdatedDate(){
 			return updatedDate;
 		}
-		public void setUpdatedDate(String updatedDate)
-		{
+		public void setUpdatedDate(String updatedDate){
 			this.updatedDate = updatedDate;
 		}
 
 
-		public boolean getHasChildren()
-		{
+		public boolean getHasChildren(){
 			return hasChildren;
 		}
-		public void setHasChildren(boolean hasChildren)
-		{
+		public void setHasChildren(boolean hasChildren){
 			this.hasChildren = hasChildren;
 		}
 
 
-		public boolean getNavigable()
-		{
+		public boolean getNavigable(){
 			return navigable;
 		}
-		public void setNavigable(boolean navigable)
-		{
+		public void setNavigable(boolean navigable){
 			this.navigable = navigable;
 		}
 
 
-		public boolean getUsedForIdentification()
-		{
+		public boolean getUsedForIdentification(){
 			return usedForIdentification;
 		}
-		public void setUsedForIdentification(boolean usedForIdentification)
-		{
+		public void setUsedForIdentification(boolean usedForIdentification){
 			this.usedForIdentification = usedForIdentification;
 		}
 	

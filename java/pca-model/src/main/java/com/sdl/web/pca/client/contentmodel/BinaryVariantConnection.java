@@ -9,12 +9,10 @@ public class BinaryVariantConnection {
 		private List<BinaryVariantEdge> edges;
 
 
-		public List<BinaryVariantEdge> getEdges()
-		{
+		public List<BinaryVariantEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<BinaryVariantEdge> edges)
-		{
+		public void setEdges(List<BinaryVariantEdge> edges){
 			this.edges = edges;
 		}
 	

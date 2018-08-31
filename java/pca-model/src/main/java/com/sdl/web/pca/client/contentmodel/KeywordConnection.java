@@ -9,12 +9,10 @@ public class KeywordConnection {
 		private List<KeywordEdge> edges;
 
 
-		public List<KeywordEdge> getEdges()
-		{
+		public List<KeywordEdge> getEdges(){
 			return edges;
 		}
-		public void setEdges(List<KeywordEdge> edges)
-		{
+		public void setEdges(List<KeywordEdge> edges){
 			this.edges = edges;
 		}
 	

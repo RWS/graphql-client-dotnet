@@ -10,32 +10,26 @@ public class InputClaimValue {
 		private String value;
 
 
-		public ClaimValueType getType()
-		{
+		public ClaimValueType getType(){
 			return type;
 		}
-		public void setType(ClaimValueType type)
-		{
+		public void setType(ClaimValueType type){
 			this.type = type;
 		}
 
 
-		public String getUri()
-		{
+		public String getUri(){
 			return uri;
 		}
-		public void setUri(String uri)
-		{
+		public void setUri(String uri){
 			this.uri = uri;
 		}
 
 
-		public String getValue()
-		{
+		public String getValue(){
 			return value;
 		}
-		public void setValue(String value)
-		{
+		public void setValue(String value){
 			this.value = value;
 		}
 	

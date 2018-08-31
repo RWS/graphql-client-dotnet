@@ -28,192 +28,154 @@ public class Page implements Container,Taggable,Item {
 		private String url;
 
 
-		public List<Item> getContainerItems()
-		{
+		public List<Item> getContainerItems(){
 			return containerItems;
 		}
-		public void setContainerItems(List<Item> containerItems)
-		{
+		public void setContainerItems(List<Item> containerItems){
 			this.containerItems = containerItems;
 		}
 
 
-		public Content getContent()
-		{
+		public Content getContent(){
 			return content;
 		}
-		public void setContent(Content content)
-		{
+		public void setContent(Content content){
 			this.content = content;
 		}
 
 
-		public String getCreationDate()
-		{
+		public String getCreationDate(){
 			return creationDate;
 		}
-		public void setCreationDate(String creationDate)
-		{
+		public void setCreationDate(String creationDate){
 			this.creationDate = creationDate;
 		}
 
 
-		public CustomMetaConnection getCustomMetas()
-		{
+		public CustomMetaConnection getCustomMetas(){
 			return customMetas;
 		}
-		public void setCustomMetas(CustomMetaConnection customMetas)
-		{
+		public void setCustomMetas(CustomMetaConnection customMetas){
 			this.customMetas = customMetas;
 		}
 
 
-		public String getFileName()
-		{
+		public String getFileName(){
 			return fileName;
 		}
-		public void setFileName(String fileName)
-		{
+		public void setFileName(String fileName){
 			this.fileName = fileName;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public String getInitialPublishDate()
-		{
+		public String getInitialPublishDate(){
 			return initialPublishDate;
 		}
-		public void setInitialPublishDate(String initialPublishDate)
-		{
+		public void setInitialPublishDate(String initialPublishDate){
 			this.initialPublishDate = initialPublishDate;
 		}
 
 
-		public int getItemId()
-		{
+		public int getItemId(){
 			return itemId;
 		}
-		public void setItemId(int itemId)
-		{
+		public void setItemId(int itemId){
 			this.itemId = itemId;
 		}
 
 
-		public ItemType getItemType()
-		{
+		public ItemType getItemType(){
 			return itemType;
 		}
-		public void setItemType(ItemType itemType)
-		{
+		public void setItemType(ItemType itemType){
 			this.itemType = itemType;
 		}
 
 
-		public String getLastPublishDate()
-		{
+		public String getLastPublishDate(){
 			return lastPublishDate;
 		}
-		public void setLastPublishDate(String lastPublishDate)
-		{
+		public void setLastPublishDate(String lastPublishDate){
 			this.lastPublishDate = lastPublishDate;
 		}
 
 
-		public Integer getNamespaceId()
-		{
+		public Integer getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId)
-		{
+		public void setNamespaceId(Integer namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId()
-		{
+		public Integer getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId)
-		{
+		public void setOwningPublicationId(Integer owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 
 
-		public Template getPageTemplate()
-		{
+		public Template getPageTemplate(){
 			return pageTemplate;
 		}
-		public void setPageTemplate(Template pageTemplate)
-		{
+		public void setPageTemplate(Template pageTemplate){
 			this.pageTemplate = pageTemplate;
 		}
 
 
-		public int getPublicationId()
-		{
+		public int getPublicationId(){
 			return publicationId;
 		}
-		public void setPublicationId(int publicationId)
-		{
+		public void setPublicationId(int publicationId){
 			this.publicationId = publicationId;
 		}
 
 
-		public RawContent getRawContent()
-		{
+		public RawContent getRawContent(){
 			return rawContent;
 		}
-		public void setRawContent(RawContent rawContent)
-		{
+		public void setRawContent(RawContent rawContent){
 			this.rawContent = rawContent;
 		}
 
 
-		public List<TaxonomyItem> getTaxonomies()
-		{
+		public List<TaxonomyItem> getTaxonomies(){
 			return taxonomies;
 		}
-		public void setTaxonomies(List<TaxonomyItem> taxonomies)
-		{
+		public void setTaxonomies(List<TaxonomyItem> taxonomies){
 			this.taxonomies = taxonomies;
 		}
 
 
-		public String getTitle()
-		{
+		public String getTitle(){
 			return title;
 		}
-		public void setTitle(String title)
-		{
+		public void setTitle(String title){
 			this.title = title;
 		}
 
 
-		public String getUpdatedDate()
-		{
+		public String getUpdatedDate(){
 			return updatedDate;
 		}
-		public void setUpdatedDate(String updatedDate)
-		{
+		public void setUpdatedDate(String updatedDate){
 			this.updatedDate = updatedDate;
 		}
 
 
-		public String getUrl()
-		{
+		public String getUrl(){
 			return url;
 		}
-		public void setUrl(String url)
-		{
+		public void setUrl(String url){
 			this.url = url;
 		}
 	

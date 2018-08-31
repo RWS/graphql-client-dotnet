@@ -14,72 +14,58 @@ public class PublicationMapping {
 		private int publicationId;
 
 
-		public String getDomain()
-		{
+		public String getDomain(){
 			return domain;
 		}
-		public void setDomain(String domain)
-		{
+		public void setDomain(String domain){
 			this.domain = domain;
 		}
 
 
-		public Integer getNamespaceId()
-		{
+		public Integer getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId)
-		{
+		public void setNamespaceId(Integer namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public String getPath()
-		{
+		public String getPath(){
 			return path;
 		}
-		public void setPath(String path)
-		{
+		public void setPath(String path){
 			this.path = path;
 		}
 
 
-		public Integer getPathScanDepth()
-		{
+		public Integer getPathScanDepth(){
 			return pathScanDepth;
 		}
-		public void setPathScanDepth(Integer pathScanDepth)
-		{
+		public void setPathScanDepth(Integer pathScanDepth){
 			this.pathScanDepth = pathScanDepth;
 		}
 
 
-		public String getPort()
-		{
+		public String getPort(){
 			return port;
 		}
-		public void setPort(String port)
-		{
+		public void setPort(String port){
 			this.port = port;
 		}
 
 
-		public String getProtocol()
-		{
+		public String getProtocol(){
 			return protocol;
 		}
-		public void setProtocol(String protocol)
-		{
+		public void setProtocol(String protocol){
 			this.protocol = protocol;
 		}
 
 
-		public int getPublicationId()
-		{
+		public int getPublicationId(){
 			return publicationId;
 		}
-		public void setPublicationId(int publicationId)
-		{
+		public void setPublicationId(int publicationId){
 			this.publicationId = publicationId;
 		}
 	

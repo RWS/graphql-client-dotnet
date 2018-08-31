@@ -11,32 +11,26 @@ public class UntypedContent implements Content {
 		private String type;
 
 
-		public Dictionary getData()
-		{
+		public Dictionary getData(){
 			return data;
 		}
-		public void setData(Dictionary data)
-		{
+		public void setData(Dictionary data){
 			this.data = data;
 		}
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public String getType()
-		{
+		public String getType(){
 			return type;
 		}
-		public void setType(String type)
-		{
+		public void setType(String type){
 			this.type = type;
 		}
 	

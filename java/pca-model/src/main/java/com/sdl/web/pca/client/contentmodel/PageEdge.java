@@ -9,22 +9,18 @@ public class PageEdge {
 		private String cursor;
 
 
-		public Page getNode()
-		{
+		public Page getNode(){
 			return node;
 		}
-		public void setNode(Page node)
-		{
+		public void setNode(Page node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	

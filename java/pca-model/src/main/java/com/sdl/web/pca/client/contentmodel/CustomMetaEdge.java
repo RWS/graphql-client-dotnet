@@ -9,22 +9,18 @@ public class CustomMetaEdge {
 		private String cursor;
 
 
-		public CustomMeta getNode()
-		{
+		public CustomMeta getNode(){
 			return node;
 		}
-		public void setNode(CustomMeta node)
-		{
+		public void setNode(CustomMeta node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	

@@ -10,72 +10,58 @@ public class PageSitemapItem implements SitemapItem {
 		private boolean visible;
 
 
-		public String getId()
-		{
+		public String getId(){
 			return id;
 		}
-		public void setId(String id)
-		{
+		public void setId(String id){
 			this.id = id;
 		}
 
 
-		public String getOriginalTitle()
-		{
+		public String getOriginalTitle(){
 			return originalTitle;
 		}
-		public void setOriginalTitle(String originalTitle)
-		{
+		public void setOriginalTitle(String originalTitle){
 			this.originalTitle = originalTitle;
 		}
 
 
-		public String getPublishedDate()
-		{
+		public String getPublishedDate(){
 			return publishedDate;
 		}
-		public void setPublishedDate(String publishedDate)
-		{
+		public void setPublishedDate(String publishedDate){
 			this.publishedDate = publishedDate;
 		}
 
 
-		public String getTitle()
-		{
+		public String getTitle(){
 			return title;
 		}
-		public void setTitle(String title)
-		{
+		public void setTitle(String title){
 			this.title = title;
 		}
 
 
-		public String getType()
-		{
+		public String getType(){
 			return type;
 		}
-		public void setType(String type)
-		{
+		public void setType(String type){
 			this.type = type;
 		}
 
 
-		public String getUrl()
-		{
+		public String getUrl(){
 			return url;
 		}
-		public void setUrl(String url)
-		{
+		public void setUrl(String url){
 			this.url = url;
 		}
 
 
-		public boolean getVisible()
-		{
+		public boolean getVisible(){
 			return visible;
 		}
-		public void setVisible(boolean visible)
-		{
+		public void setVisible(boolean visible){
 			this.visible = visible;
 		}
 	

@@ -9,22 +9,18 @@ public class StructureGroupEdge {
 		private String cursor;
 
 
-		public StructureGroup getNode()
-		{
+		public StructureGroup getNode(){
 			return node;
 		}
-		public void setNode(StructureGroup node)
-		{
+		public void setNode(StructureGroup node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	

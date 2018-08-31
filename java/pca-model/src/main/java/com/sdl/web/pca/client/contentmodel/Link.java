@@ -12,52 +12,42 @@ public class Link {
 		private String url;
 
 
-		public int getItemId()
-		{
+		public int getItemId(){
 			return itemId;
 		}
-		public void setItemId(int itemId)
-		{
+		public void setItemId(int itemId){
 			this.itemId = itemId;
 		}
 
 
-		public Integer getNamespaceId()
-		{
+		public Integer getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId)
-		{
+		public void setNamespaceId(Integer namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public int getPublicationId()
-		{
+		public int getPublicationId(){
 			return publicationId;
 		}
-		public void setPublicationId(int publicationId)
-		{
+		public void setPublicationId(int publicationId){
 			this.publicationId = publicationId;
 		}
 
 
-		public LinkType getType()
-		{
+		public LinkType getType(){
 			return type;
 		}
-		public void setType(LinkType type)
-		{
+		public void setType(LinkType type){
 			this.type = type;
 		}
 
 
-		public String getUrl()
-		{
+		public String getUrl(){
 			return url;
 		}
-		public void setUrl(String url)
-		{
+		public void setUrl(String url){
 			this.url = url;
 		}
 	

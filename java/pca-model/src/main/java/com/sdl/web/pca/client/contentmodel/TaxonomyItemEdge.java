@@ -9,22 +9,18 @@ public class TaxonomyItemEdge {
 		private String cursor;
 
 
-		public TaxonomyItem getNode()
-		{
+		public TaxonomyItem getNode(){
 			return node;
 		}
-		public void setNode(TaxonomyItem node)
-		{
+		public void setNode(TaxonomyItem node){
 			this.node = node;
 		}
 
 
-		public String getCursor()
-		{
+		public String getCursor(){
 			return cursor;
 		}
-		public void setCursor(String cursor)
-		{
+		public void setCursor(String cursor){
 			this.cursor = cursor;
 		}
 	
