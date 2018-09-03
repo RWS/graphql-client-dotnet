@@ -1,23 +1,8 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sdl.web.pca.client.contentmodel.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
-import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.IContextData;
-import com.sdl.web.pca.client.contentmodel.IPagination;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
-import com.sdl.web.pca.client.contentmodel.InputSortParam;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.Publication;
-import com.sdl.web.pca.client.contentmodel.PublicationConnection;
-import com.sdl.web.pca.client.contentmodel.PublicationMapping;
-import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
-import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
-import com.sdl.web.pca.client.contentmodel.enums.DcpType;
-import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.contentmodel.enums.*;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 
 /**
