@@ -1,7 +1,12 @@
 package com.sdl.web.pca.client.modelserviceplugin;
 
-import com.sdl.web.pca.client.contentmodel.*;
-import com.sdl.web.pca.client.contentmodel.enums.*;
+import com.sdl.web.pca.client.contentmodel.ClaimValue;
+import com.sdl.web.pca.client.contentmodel.ClaimValueType;
+import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
+import com.sdl.web.pca.client.contentmodel.enums.DcpType;
+import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 
 import java.util.Arrays;
 import java.util.List;

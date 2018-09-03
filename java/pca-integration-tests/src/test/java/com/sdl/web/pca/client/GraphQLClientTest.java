@@ -1,7 +1,14 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.*;
+import com.sdl.web.pca.client.contentmodel.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.ItemType;
+import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
@@ -12,7 +19,6 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertNotNull;
