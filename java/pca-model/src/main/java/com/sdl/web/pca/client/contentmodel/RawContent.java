@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 /**
 *Represents an item with content.
@@ -8,7 +8,7 @@ import java.util.Dictionary;
 public class RawContent {
 		private String charSet;
 		private String content;
-		private Dictionary data;
+		private Map data;
 		private String id;
 
 
@@ -28,10 +28,10 @@ public class RawContent {
 		}
 
 
-		public Dictionary getData(){
+		public Map getData(){
 			return data;
 		}
-		public void setData(Dictionary data){
+		public void setData(Map data){
 			this.data = data;
 		}
 

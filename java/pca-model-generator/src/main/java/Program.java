@@ -19,16 +19,13 @@ public class Program {
 
     public static void main(String[] args) {
         System.out.print("Generate Model Classes \n");
-        if (args.length > 0)
-        {
+        if (args.length > 0) {
             String endpoint = null;
             String outputFile = null;
             String ns = null;
-            for (int i = 0; i < args.length; i+=2)
-            {
+            for (int i = 0; i < args.length; i+=2) {
                 String argumt = args[i].toLowerCase();
-                switch (argumt)
-                {
+                switch (argumt) {
                     case "-ns":
                         ns = args[i + 1];
                         break;
@@ -40,18 +37,15 @@ public class Program {
                         break;
                 }
             }
-            if (isNullOrBlank(endpoint))
-            {
+            if (isNullOrBlank(endpoint)) {
                 System.out.println("Specify GraphQL endpoint address.");
                 return;
             }
-            if (isNullOrBlank(outputFile))
-            {
+            if (isNullOrBlank(outputFile)) {
                 System.out.println("Specify output file.");
                 return;
             }
-            if (isNullOrBlank(ns))
-            {
+            if (isNullOrBlank(ns)) {
                 System.out.println("Specify namespace.");
                 return;
             }
@@ -62,31 +56,23 @@ public class Program {
                 String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/IntrospectionQuery.graphql"), "UTF-8");
                 JsonObject body = new JsonObject();
                 body.addProperty("query", query);
-
-
                 String jsonresponse = client.execute(body.toString());
                 JsonParser parser = new JsonParser();
                 JsonObject jsonObject = (JsonObject)parser.parse(jsonresponse);
                 JsonObject dataObject = jsonObject.getAsJsonObject("data").getAsJsonObject("__schema");
-
-
-
                 ObjectMapper objectMapper = new ObjectMapper();
                 GraphQLSchema schema = objectMapper.readValue(dataObject.toString(), GraphQLSchema.class);
 
                 generateSchemaClasses(schema, ns,outputFile);
                 System.out.println(schema);
-
             }
-            catch(JsonMappingException e)
-            {
+            catch(JsonMappingException e) {
                 e.getStackTrace();
             }
-            catch(IOException e)
-            {
+            catch(IOException e) {
+                e.getStackTrace();
             }
-            catch(Exception e)
-            {
+            catch(Exception e) {
                 e.getStackTrace();
             }
         }
@@ -126,8 +112,7 @@ public class Program {
         }
     }
 
-    static void emitComment(StringBuilder sb, String comment, int indentCount)
-    {
+    static void emitComment(StringBuilder sb, String comment, int indentCount) {
         if (isNullOrBlank(comment)) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
         sb.append(indentString);
@@ -142,8 +127,7 @@ public class Program {
         sb.append("\n");
     }
 
-    static StringBuilder generateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount)
-    {
+    static StringBuilder generateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount) {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
 
         emitComment(sb, type.description, indentCount-1);
@@ -156,22 +140,10 @@ public class Program {
             sb.append("public class "+ type.name);
         else
             sb.append("public class "+ type.name + getImplementation(type.interfaces));
-
         sb.append(" {");
         sb.append("\n");
-        /* if (type.Interfaces != null && type.Interfaces.Count > 0)
-        {
-            sb.Append(" : ");
-            for (int i = 0; i < type.Interfaces.Count - 2; i++)
-            {
-                sb.Append($"{type.Interfaces[i].TypeName()}, ");
-            }
-            sb.Append($"{type.Interfaces[type.Interfaces.Count - 1].TypeName()}");
-        }
-        sb.Append($"\n{Indent(indent)}{{");
-        */
-        switch (type.kind)
-        {
+
+        switch (type.kind) {
             case "OBJECT":
                 emitFields( sb, type.fields, indentCount + 1, true);
                 break;
@@ -179,8 +151,7 @@ public class Program {
                 emitFields( sb, type.inputFields, indentCount + 1, true);
                 break;
             case "INTERFACE":
-                if (type.possibleTypes != null)
-                {
+                if (type.possibleTypes != null) {
                     emitFields( sb, type.fields, indentCount + 1, false);
                 }
                 break;
@@ -194,18 +165,14 @@ public class Program {
 
         sb.append(indentString);
         sb.append("\n");
-
         sb.append("}\n");
-
         return sb;
     }
 
-    static void emitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount)
-    {
+    static void emitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount) {
         if (enumValues == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
-        for (int i = 0; i <= enumValues.size() - 1; i++)
-        {
+        for (int i = 0; i <= enumValues.size() - 1; i++) {
             sb.append("\n");
             sb.append(indentString);
             if (i >= enumValues.size() - 1)
@@ -213,17 +180,12 @@ public class Program {
             else
                 sb.append(enumValues.get(i).name+",");
         }
-        /*sb.AppendLine(
-                $"\n{Indent(indent)}{enumValues[enumValues.Count - 1].Name.PascalCase()}");*/
     }
 
-    static void emitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic)
-    {
+    static void emitFields(StringBuilder sb, List<GraphQLSchemaField> fields, int indentCount, Boolean isPublic) {
         if (fields == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
-        for (GraphQLSchemaField field : fields)
-        {
-            //sb.append("\n");
+        for (GraphQLSchemaField field : fields) {
             field.type = remapFieldType(field);
             String returnTypeName = getFieldReturnTypeName(field.type);
             String defaultValue = getDefaultValue(returnTypeName);
@@ -236,11 +198,9 @@ public class Program {
                 sb.append("private " + returnTypeName + " " + field.name + ";");
                 sb.append("\n");
             }
-            /*else
-                sb.append(returnTypeName + " " + field.name + " = " + defaultValue + ";");*/
         }
 
-        //Setter & Getter for Model Class
+        /*Setter & Getter for Model Class*/
 
         for (GraphQLSchemaField field : fields){
             field.type = remapFieldType(field);
@@ -286,12 +246,11 @@ public class Program {
     }
 
     static String getFieldReturnTypeName(GraphQLSchemaTypeInfo type){
-        switch (type.kind)
-        {
+        switch (type.kind) {
             case "LIST":
                 return "List<"+type.ofType.name+">";
             case "Map":
-                return "IDictionary<"+type.ofType.name+">";
+                return "Map<"+type.ofType.name+">";
             case "NON_NULL":
                 return type.ofType.name;
             default:
@@ -325,16 +284,14 @@ public class Program {
         return impl;
     }
 
-    static GraphQLSchemaTypeInfo remapFieldType(GraphQLSchemaField field)
-    {
+    static GraphQLSchemaTypeInfo remapFieldType(GraphQLSchemaField field) {
         // Just remap itemType and namespaceId(s) from int to use our enum
         // to make things a little nicer to work with.
         GraphQLSchemaTypeInfo graphQLSchemaTypeInfo = new GraphQLSchemaTypeInfo();
         if(field.type.name!=null){
-            switch (field.type.name)
-            {
+            switch (field.type.name) {
                 case "Int": {
-                    field.type.name = "Integer";
+                    field.type.name = "int";
                     break;
                 }
                 case "Boolean": {
@@ -357,8 +314,7 @@ public class Program {
             }
         }
 
-        switch (field.name)
-        {
+        switch (field.name) {
             case "namespaceIds":{
                 GraphQLSchemaTypeInfo ofType = new GraphQLSchemaTypeInfo();
                 ofType.kind = "SCALAR";
@@ -368,14 +324,12 @@ public class Program {
                 graphQLSchemaTypeInfo.ofType = ofType;
                 return graphQLSchemaTypeInfo;
             }
-            case "namespaceId":
-            {
+            case "namespaceId": {
                 graphQLSchemaTypeInfo.kind = "SCALAR";
-                graphQLSchemaTypeInfo.name = "Integer";
+                graphQLSchemaTypeInfo.name = "int";
                 return graphQLSchemaTypeInfo;
             }
-            case "itemType":
-            {
+            case "itemType": {
                 graphQLSchemaTypeInfo.kind = "ENUM";
                 graphQLSchemaTypeInfo.name = "ItemType";
                 return graphQLSchemaTypeInfo;
@@ -387,7 +341,7 @@ public class Program {
             }
             case "data":{
                 graphQLSchemaTypeInfo.kind = "SCALAR";
-                graphQLSchemaTypeInfo.name = "Dictionary";
+                graphQLSchemaTypeInfo.name = "Map";
                 return graphQLSchemaTypeInfo;
             }
             case "publicationIds":{
@@ -400,8 +354,7 @@ public class Program {
         }
     }
 
-    static StringBuilder emitPackage( StringBuilder sb, String ns)
-    {
+    static StringBuilder emitPackage( StringBuilder sb, String ns) {
         Formatter fmt = new Formatter(sb);
         fmt.format("package %s", ns);
         sb.append(";");
@@ -432,7 +385,7 @@ public class Program {
                 if(field.type.name != null){
                     switch (field.type.name){
                         case "Map":{
-                            sb.append("import java.util.Dictionary;\n");
+                            sb.append("import java.util.Map;\n");
                             break;
                         }
                     }

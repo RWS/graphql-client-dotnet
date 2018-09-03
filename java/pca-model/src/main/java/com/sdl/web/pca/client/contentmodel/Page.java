@@ -17,8 +17,8 @@ public class Page implements Container,Taggable,Item {
 		private int itemId;
 		private ItemType itemType;
 		private String lastPublishDate;
-		private Integer namespaceId;
-		private Integer owningPublicationId;
+		private int namespaceId;
+		private int owningPublicationId;
 		private Template pageTemplate;
 		private int publicationId;
 		private RawContent rawContent;
@@ -108,18 +108,18 @@ public class Page implements Container,Taggable,Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 

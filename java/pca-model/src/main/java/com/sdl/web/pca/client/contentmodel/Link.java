@@ -6,7 +6,7 @@ package com.sdl.web.pca.client.contentmodel;
 */
 public class Link {
 		private int itemId;
-		private Integer namespaceId;
+		private int namespaceId;
 		private int publicationId;
 		private LinkType type;
 		private String url;
@@ -20,10 +20,10 @@ public class Link {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 

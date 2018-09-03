@@ -8,7 +8,7 @@ public class CustomMeta {
 		private String id;
 		private int itemId;
 		private String key;
-		private Integer namespaceId;
+		private int namespaceId;
 		private int publicationId;
 		private String value;
 		private CustomMetaValueType valueType;
@@ -38,10 +38,10 @@ public class CustomMeta {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 

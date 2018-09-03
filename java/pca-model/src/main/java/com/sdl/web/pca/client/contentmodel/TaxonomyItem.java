@@ -17,8 +17,8 @@ public interface TaxonomyItem {
 		CustomMetaConnection getCustomMetas();
 		void setCustomMetas(CustomMetaConnection customMetas);
 
-		Integer getDepth();
-		void setDepth(Integer depth);
+		int getDepth();
+		void setDepth(int depth);
 
 		String getId();
 		void setId(String id);
@@ -38,11 +38,11 @@ public interface TaxonomyItem {
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);
 
-		Integer getNamespaceId();
-		void setNamespaceId(Integer namespaceId);
+		int getNamespaceId();
+		void setNamespaceId(int namespaceId);
 
-		Integer getOwningPublicationId();
-		void setOwningPublicationId(Integer owningPublicationId);
+		int getOwningPublicationId();
+		void setOwningPublicationId(int owningPublicationId);
 
 		TaxonomyItem getParent();
 		void setParent(TaxonomyItem parent);

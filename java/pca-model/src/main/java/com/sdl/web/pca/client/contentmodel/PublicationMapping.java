@@ -6,9 +6,9 @@ package com.sdl.web.pca.client.contentmodel;
 */
 public class PublicationMapping {
 		private String domain;
-		private Integer namespaceId;
+		private int namespaceId;
 		private String path;
-		private Integer pathScanDepth;
+		private int pathScanDepth;
 		private String port;
 		private String protocol;
 		private int publicationId;
@@ -22,10 +22,10 @@ public class PublicationMapping {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
@@ -38,10 +38,10 @@ public class PublicationMapping {
 		}
 
 
-		public Integer getPathScanDepth(){
+		public int getPathScanDepth(){
 			return pathScanDepth;
 		}
-		public void setPathScanDepth(Integer pathScanDepth){
+		public void setPathScanDepth(int pathScanDepth){
 			this.pathScanDepth = pathScanDepth;
 		}
 

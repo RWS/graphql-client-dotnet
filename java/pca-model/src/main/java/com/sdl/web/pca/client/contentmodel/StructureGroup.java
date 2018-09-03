@@ -9,7 +9,7 @@ public class StructureGroup implements TaxonomyItem,Item {
 		private TaxonomyItemConnection children;
 		private String creationDate;
 		private CustomMetaConnection customMetas;
-		private Integer depth;
+		private int depth;
 		private String directory;
 		private String id;
 		private String initialPublishDate;
@@ -17,8 +17,8 @@ public class StructureGroup implements TaxonomyItem,Item {
 		private ItemType itemType;
 		private String key;
 		private String lastPublishDate;
-		private Integer namespaceId;
-		private Integer owningPublicationId;
+		private int namespaceId;
+		private int owningPublicationId;
 		private TaxonomyItem parent;
 		private int publicationId;
 		private int taxonomyId;
@@ -53,10 +53,10 @@ public class StructureGroup implements TaxonomyItem,Item {
 		}
 
 
-		public Integer getDepth(){
+		public int getDepth(){
 			return depth;
 		}
-		public void setDepth(Integer depth){
+		public void setDepth(int depth){
 			this.depth = depth;
 		}
 
@@ -117,18 +117,18 @@ public class StructureGroup implements TaxonomyItem,Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 

@@ -13,10 +13,10 @@ public class Template implements Item {
 		private int itemId;
 		private ItemType itemType;
 		private String lastPublishDate;
-		private Integer namespaceId;
+		private int namespaceId;
 		private String outputFormat;
-		private Integer owningPublicationId;
-		private Integer priority;
+		private int owningPublicationId;
+		private int priority;
 		private int publicationId;
 		private String title;
 		private String updatedDate;
@@ -78,10 +78,10 @@ public class Template implements Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
@@ -94,18 +94,18 @@ public class Template implements Item {
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 
 
-		public Integer getPriority(){
+		public int getPriority(){
 			return priority;
 		}
-		public void setPriority(Integer priority){
+		public void setPriority(int priority){
 			this.priority = priority;
 		}
 

@@ -1,20 +1,20 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 /**
 *Untyped content where all data is available in a Map structure.
 */
 public class UntypedContent implements Content {
-		private Dictionary data;
+		private Map data;
 		private String id;
 		private String type;
 
 
-		public Dictionary getData(){
+		public Map getData(){
 			return data;
 		}
-		public void setData(Dictionary data){
+		public void setData(Map data){
 			this.data = data;
 		}
 

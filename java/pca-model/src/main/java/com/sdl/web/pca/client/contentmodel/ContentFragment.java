@@ -32,11 +32,11 @@ public interface ContentFragment {
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);
 
-		Integer getNamespaceId();
-		void setNamespaceId(Integer namespaceId);
+		int getNamespaceId();
+		void setNamespaceId(int namespaceId);
 
-		Integer getOwningPublicationId();
-		void setOwningPublicationId(Integer owningPublicationId);
+		int getOwningPublicationId();
+		void setOwningPublicationId(int owningPublicationId);
 
 		int getPublicationId();
 		void setPublicationId(int publicationId);

@@ -9,7 +9,7 @@ public class Keyword implements TaxonomyItem,Item {
 		private TaxonomyItemConnection children;
 		private String creationDate;
 		private CustomMetaConnection customMetas;
-		private Integer depth;
+		private int depth;
 		private String description;
 		private String id;
 		private String initialPublishDate;
@@ -18,14 +18,14 @@ public class Keyword implements TaxonomyItem,Item {
 		private String key;
 		private String lastPublishDate;
 		private String name;
-		private Integer namespaceId;
-		private Integer owningPublicationId;
+		private int namespaceId;
+		private int owningPublicationId;
 		private TaxonomyItem parent;
 		private int publicationId;
 		private int taxonomyId;
 		private TaxonomyType taxonomyType;
 		private String title;
-		private Integer totalRelatedItems;
+		private int totalRelatedItems;
 		private String updatedDate;
 		private boolean hasChildren;
 		private boolean navigable;
@@ -56,10 +56,10 @@ public class Keyword implements TaxonomyItem,Item {
 		}
 
 
-		public Integer getDepth(){
+		public int getDepth(){
 			return depth;
 		}
-		public void setDepth(Integer depth){
+		public void setDepth(int depth){
 			this.depth = depth;
 		}
 
@@ -128,18 +128,18 @@ public class Keyword implements TaxonomyItem,Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 
@@ -184,10 +184,10 @@ public class Keyword implements TaxonomyItem,Item {
 		}
 
 
-		public Integer getTotalRelatedItems(){
+		public int getTotalRelatedItems(){
 			return totalRelatedItems;
 		}
-		public void setTotalRelatedItems(Integer totalRelatedItems){
+		public void setTotalRelatedItems(int totalRelatedItems){
 			this.totalRelatedItems = totalRelatedItems;
 		}
 

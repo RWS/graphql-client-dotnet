@@ -14,10 +14,10 @@ public class Component implements ContentComponent,Item {
 		private int itemId;
 		private ItemType itemType;
 		private String lastPublishDate;
-		private Integer namespaceId;
-		private Integer owningPublicationId;
+		private int namespaceId;
+		private int owningPublicationId;
 		private int publicationId;
-		private Integer schemaId;
+		private int schemaId;
 		private List<TaxonomyItem> taxonomies;
 		private String title;
 		private String updatedDate;
@@ -80,18 +80,18 @@ public class Component implements ContentComponent,Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 
@@ -104,10 +104,10 @@ public class Component implements ContentComponent,Item {
 		}
 
 
-		public Integer getSchemaId(){
+		public int getSchemaId(){
 			return schemaId;
 		}
-		public void setSchemaId(Integer schemaId){
+		public void setSchemaId(int schemaId){
 			this.schemaId = schemaId;
 		}
 

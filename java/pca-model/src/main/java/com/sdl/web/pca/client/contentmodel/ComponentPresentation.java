@@ -16,8 +16,8 @@ public class ComponentPresentation implements ContentFragment,Item {
 		private int itemId;
 		private ItemType itemType;
 		private String lastPublishDate;
-		private Integer namespaceId;
-		private Integer owningPublicationId;
+		private int namespaceId;
+		private int owningPublicationId;
 		private int publicationId;
 		private RawContent rawContent;
 		private String title;
@@ -104,18 +104,18 @@ public class ComponentPresentation implements ContentFragment,Item {
 		}
 
 
-		public Integer getNamespaceId(){
+		public int getNamespaceId(){
 			return namespaceId;
 		}
-		public void setNamespaceId(Integer namespaceId){
+		public void setNamespaceId(int namespaceId){
 			this.namespaceId = namespaceId;
 		}
 
 
-		public Integer getOwningPublicationId(){
+		public int getOwningPublicationId(){
 			return owningPublicationId;
 		}
-		public void setOwningPublicationId(Integer owningPublicationId){
+		public void setOwningPublicationId(int owningPublicationId){
 			this.owningPublicationId = owningPublicationId;
 		}
 

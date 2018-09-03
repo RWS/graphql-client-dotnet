@@ -2,7 +2,7 @@ package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
 public class TaxonomySitemapItem implements SitemapItem {
-		private Integer classifiedItemsCount;
+		private int classifiedItemsCount;
 		private String description;
 		private String id;
 		private List<SitemapItem> items;
@@ -16,10 +16,10 @@ public class TaxonomySitemapItem implements SitemapItem {
 		private boolean visible;
 
 
-		public Integer getClassifiedItemsCount(){
+		public int getClassifiedItemsCount(){
 			return classifiedItemsCount;
 		}
-		public void setClassifiedItemsCount(Integer classifiedItemsCount){
+		public void setClassifiedItemsCount(int classifiedItemsCount){
 			this.classifiedItemsCount = classifiedItemsCount;
 		}
 

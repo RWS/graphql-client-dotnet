@@ -30,17 +30,17 @@ public interface ContentComponent {
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);
 
-		Integer getNamespaceId();
-		void setNamespaceId(Integer namespaceId);
+		int getNamespaceId();
+		void setNamespaceId(int namespaceId);
 
-		Integer getOwningPublicationId();
-		void setOwningPublicationId(Integer owningPublicationId);
+		int getOwningPublicationId();
+		void setOwningPublicationId(int owningPublicationId);
 
 		int getPublicationId();
 		void setPublicationId(int publicationId);
 
-		Integer getSchemaId();
-		void setSchemaId(Integer schemaId);
+		int getSchemaId();
+		void setSchemaId(int schemaId);
 
 		List<TaxonomyItem> getTaxonomies();
 		void setTaxonomies(List<TaxonomyItem> taxonomies);
