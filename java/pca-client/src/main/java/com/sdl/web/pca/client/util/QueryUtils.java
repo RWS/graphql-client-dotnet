@@ -3,6 +3,8 @@ package com.sdl.web.pca.client.util;
 
 import org.slf4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +35,7 @@ public class QueryUtils {
 
     public static String injectVariantsArgs(String query, String url) {
         return query.replace("@variantsArgs", isNullOrEmpty(url) ? "" : ("(url: \"" + url + "\")"));
-   }
+    }
 
     public static String injectCustomMetaFilter(String query, String customMetaFilter) {
         return query.replace("@customMetaArgs", isNullOrEmpty(customMetaFilter) ? "" : ("filter: " + customMetaFilter));
@@ -60,7 +62,6 @@ public class QueryUtils {
     private static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
-
 
 
 }

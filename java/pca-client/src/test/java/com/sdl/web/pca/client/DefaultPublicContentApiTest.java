@@ -5,6 +5,8 @@ import com.sdl.web.pca.client.contentmodel.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
@@ -16,6 +18,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static com.sdl.web.pca.client.TestUtils.assertEqualsIgnoreSpaces;
 import static com.sdl.web.pca.client.TestUtils.loadFromResource;
@@ -136,5 +141,15 @@ public class DefaultPublicContentApiTest {
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
         assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0)
                 .getNode().getDownloadUrl());
+    }
+
+    @Test
+    public void testMapToFragmentList() {
+        InputItemFilter filter = new InputItemFilter();
+        filter.setItemTypes(Arrays.asList(ItemType.CATEGORY, ItemType.COMPONENT_PRESENTATION, ItemType.STRUCTURE_GROUP,
+                ItemType.PAGE));
+        List<String> expected = Arrays.asList("CategoryFields", "ComponentPresentationFields", "StructureGroupFields", "PageFields");
+
+        assertEquals(expected, publicContentApi.mapToFragmentList(filter));
     }
 }

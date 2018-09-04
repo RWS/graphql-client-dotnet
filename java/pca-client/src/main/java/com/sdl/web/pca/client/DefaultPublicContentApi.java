@@ -10,12 +10,10 @@ import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.IContextData;
 import com.sdl.web.pca.client.contentmodel.IPagination;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Publication;
 import com.sdl.web.pca.client.contentmodel.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.PublicationMapping;
@@ -37,12 +35,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.regex.Pattern.DOTALL;
+import static java.util.regex.Pattern.MULTILINE;
 
 public class DefaultPublicContentApi implements PublicContentApi {
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final Pattern FRAGMENT_NAMES_FROM_BODY = Pattern.compile("^\\s*[.]{3}(?<fragmentName>\\w*)\\s*$",
+            DOTALL | MULTILINE);
+
 
     private GraphQLClient client;
     private Map<String, String> queries = new HashMap<>();
@@ -241,37 +247,42 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
                                            ContextData contextData, String customMetaFilter,
                                            boolean renderContent) throws PublicContentApiException {
-        //TODO fix: sort, contextData, customMetaFilter is not used in current implementation
-        customMetaFilter = "";
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("ItemQuery");
-        query += getFragmentFor("ItemFields");
-        query += getFragmentFor("CustomMetaFields");
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
-        if (filter.getItemTypes() != null) {
-            String fragmentList = "";
-            for (ItemType itemType : filter.getItemTypes()) {
-                String fragment = itemType.name().substring(0, 1).toUpperCase()
-                        + itemType.name().substring(1).toLowerCase() + "Fields";
-                query += getFragmentFor(fragment);
-                fragmentList += "..." + fragment + "\n";
-            }
-            // Just a quick and easy way to replace markers in our queries with vars here.
-            query = query.replace("@fragmentList", fragmentList);
-            query = query.replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
-        }
+        if (filter != null && filter.getItemTypes() != null) {
+            List<String> fragments = mapToFragmentList(filter);
+            // generate list of fragments
+            String fragmentList = fragments.stream()
+                    .map(fragment -> "..." + fragment + "\n")
+                    .reduce("", String::concat);
 
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
+            query = query.replace("@fragmentList", fragmentList);
+        }
+        query = updateQueryWithFragments(query);
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+        query = QueryUtils.injectRenderContentArgs(query, renderContent);
+
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("first", pagination.getFirst());
         variables.put("after", pagination.getAfter());
         variables.put("filter", filter);
-        variables.put("contextData", inputClaimValues);
+        variables.put("sort", sort);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
         return getResultForRequest(graphQLRequest, ItemConnection.class);
+    }
+
+    List<String> mapToFragmentList(InputItemFilter filter) {
+        return filter.getItemTypes().stream().map(type -> Arrays.stream(type.toString().split("_"))
+                .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase())
+                .reduce("", String::concat)
+                + "Fields"
+        ).collect(Collectors.toList());
     }
 
     @Override
@@ -317,6 +328,27 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
         //TODO implement
         return null;
+    }
+
+    String updateQueryWithFragments(String query) {
+        Map<String, String> fragments = new HashMap<>();
+        fragments = loadFragmentsRecursively(fragments, query);
+        return fragments.values().stream().reduce(query, String::concat);
+    }
+
+    Map<String, String> loadFragmentsRecursively(Map<String, String> loadedFragments, String queryPart) {
+        Matcher matcher = FRAGMENT_NAMES_FROM_BODY.matcher(queryPart);
+        while (matcher.find()) {
+            String fragmentName = matcher.group("fragmentName");
+            if (!loadedFragments.containsKey(fragmentName)) {
+                String fragmentBody = getFragmentFor(fragmentName);
+                loadedFragments.put(fragmentName, fragmentBody);
+                loadFragmentsRecursively(loadedFragments, fragmentBody);
+            }
+            String fragmentBody = getFragmentFor(fragmentName);
+            loadFragmentsRecursively(loadedFragments, fragmentBody);
+        }
+        return loadedFragments;
     }
 
     private String getQueryFor(String queryName) throws PublicContentApiException {
