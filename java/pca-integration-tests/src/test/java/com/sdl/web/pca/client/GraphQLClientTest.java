@@ -97,7 +97,7 @@ public class GraphQLClientTest {
     public void executePageItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -113,7 +113,7 @@ public class GraphQLClientTest {
     public void executeComponentItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -129,7 +129,7 @@ public class GraphQLClientTest {
     public void executeKeywordItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -144,7 +144,7 @@ public class GraphQLClientTest {
     public void executePublicationItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 

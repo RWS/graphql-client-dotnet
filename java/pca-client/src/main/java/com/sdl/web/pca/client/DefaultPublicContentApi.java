@@ -31,12 +31,7 @@ import com.sdl.web.pca.client.util.QueryUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
