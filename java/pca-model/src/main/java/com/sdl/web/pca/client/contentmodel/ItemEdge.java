@@ -1,28 +1,27 @@
 package com.sdl.web.pca.client.contentmodel;
 
-/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	public class ItemEdge
-	{
-		private Node node;
+
+/**
+*An edge in a connection
+*/
+public class ItemEdge {
+		private Item node;
 		private String cursor;
 
-		 public Node getNode()
-		 {
-			 return node;
-		 }
-		 public void setNode(Node node)
-		 {
-			 this.node = node;
-		 }
 
-		 public String getCursor()
-		 {
-			 return cursor;
-		 }
-		 public void setCursor(String cursor)
-		 {
-			 this.cursor = cursor;
-		 }
-	}
+		public Item getNode(){
+			return node;
+		}
+		public void setNode(Item node){
+			this.node = node;
+		}
+
+
+		public String getCursor(){
+			return cursor;
+		}
+		public void setCursor(String cursor){
+			this.cursor = cursor;
+		}
+	
+}

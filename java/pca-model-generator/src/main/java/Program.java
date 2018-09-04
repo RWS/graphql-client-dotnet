@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
+import com.sdl.web.pca.client.exception.GraphQLClientException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 
@@ -20,7 +21,7 @@ public class Program {
     private static final Logger LOG = getLogger(Program.class);
     static StringBuilder  importBuilder = new StringBuilder();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GraphQLClientException {
         System.out.print("Generate Model Classes \n");
         if (args.length > 0) {
             String endpoint = null;
@@ -67,16 +68,16 @@ public class Program {
                 GraphQLSchema schema = objectMapper.readValue(dataObject.toString(), GraphQLSchema.class);
 
                 generateSchemaClasses(schema, ns,outputFile);
-                LOG.debug(schema.toString());
+                LOG.debug("GraphQL Schema : "+schema.toString());
             }
             catch(JsonMappingException e) {
-                e.getStackTrace();
+                throw new GraphQLClientException("JSON Mapping Exception : ",  e);
             }
             catch(IOException e) {
-                e.getStackTrace();
+                throw new GraphQLClientException("Missing required file : ",  e);
             }
             catch(Exception e) {
-                e.getStackTrace();
+                throw new GraphQLClientException("Exception : ",  e);
             }
         }
     }
@@ -92,7 +93,7 @@ public class Program {
             StringBuilder sb = new StringBuilder();
             emitPackage(sb, ns);
 
-            emitImport(sb, type);
+            emitImport(sb, type, ns);
 
             StringBuilder sbuilder = generateClass(sb, schema, type, 1);
             createJavaFile(type, sbuilder,outputFile);
@@ -109,6 +110,7 @@ public class Program {
         try {
             writer = new BufferedWriter(new FileWriter(newfile));
             writer.append(sb);
+            LOG.debug("Create Java files in location : "+ outputFilePath+type.name+".java");
 
         } finally {
             if (writer != null) writer.close();
@@ -248,8 +250,6 @@ public class Program {
         switch (type.kind) {
             case "LIST":
                 return "List<"+type.ofType.name+">";
-            case "Map":
-                return "Map<"+type.ofType.name+">";
             case "NON_NULL":
                 return type.ofType.name;
             default:
@@ -362,13 +362,13 @@ public class Program {
         return sb;
     }
 
-    static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type){
+    static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type, String ns){
         int count = 0, itemtypeCount=0;
         if (type.fields != null){
             for (GraphQLSchemaField field : type.fields){
 
                 if(field.name.equalsIgnoreCase("itemtype") && itemtypeCount==0){
-                    sb.append("import com.sdl.web.pca.client.contentmodel.enums.ItemType;\n");
+                    sb.append("import "+ ns +".enums.ItemType;\n");
                     itemtypeCount++;
                 }
 
