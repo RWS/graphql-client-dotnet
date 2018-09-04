@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sdl.web.pca.client.contentmodel.*;
 import com.sdl.web.pca.client.contentmodel.enums.*;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.util.CmUri;
 
 /**
  * This interface enables java clients to connect to the GraphQL Service

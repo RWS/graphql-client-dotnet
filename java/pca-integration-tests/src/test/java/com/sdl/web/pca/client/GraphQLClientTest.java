@@ -13,6 +13,7 @@ import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.util.CmUri;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +44,21 @@ public class GraphQLClientTest {
 
     @Test
     public void getBinaryComponentById() throws Exception {
-        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756, null);
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756,
+                null);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void getBinaryComponentByUrl() throws Exception {
+        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
+                "/media/balloons_tcm8-756.jpg", null);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void getBinaryCompoonentByCmUri() throws Exception {
+        Object result = publicContentApi.getBinaryComponent(new CmUri("tcm:8-756-16"), new ContextData());
         assertNotNull(result);
     }
 
@@ -154,20 +169,20 @@ public class GraphQLClientTest {
 
     @Test
     public void executeGetEntityModelData() {
-        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 5, 1, 1,
+        assertNotNull(publicContentApi.getEntityModelData(ContentNamespace.Sites, 8, 1458, 9195,
                 ContentType.MODEL, DataModelType.R2, DcpType.DEFAULT, false, new ContextData()));
     }
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 0,
-                null));
+        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
+                new ContextData()));
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 5, "t51-k320",
-                0, true, null));
+        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
+                2, true, new ContextData()));
     }
 
 }

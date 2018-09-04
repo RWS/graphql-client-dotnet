@@ -26,6 +26,8 @@ import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.util.CmUri;
+import com.sdl.web.pca.client.util.QueryUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
