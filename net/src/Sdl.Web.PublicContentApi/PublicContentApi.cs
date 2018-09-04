@@ -194,7 +194,7 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+        public List<TaxonomySitemapItem> GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
             int descendantLevels, bool includeAncestors,
             IContextData contextData)
         {
@@ -384,7 +384,7 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
+        public async Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
             string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {

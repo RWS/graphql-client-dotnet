@@ -7,6 +7,7 @@ namespace Sdl.Web.PublicContentApi.Utils
         public static void ExpandRecursiveFragment(ref string query, string fragmentToExpand, int decendentLevel)
         {
             int rFragIndex = query.IndexOf("rfragment");
+            if (rFragIndex == -1) return;
             do
             {
                 int s = query.IndexOf(" ", rFragIndex);

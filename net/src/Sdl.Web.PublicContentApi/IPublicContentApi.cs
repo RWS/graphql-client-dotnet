@@ -1,4 +1,5 @@
-﻿using Sdl.Web.PublicContentApi.ContentModel;
+﻿using System.Collections.Generic;
+using Sdl.Web.PublicContentApi.ContentModel;
 using Sdl.Web.PublicContentApi.Utils;
 
 namespace Sdl.Web.PublicContentApi
@@ -51,7 +52,7 @@ namespace Sdl.Web.PublicContentApi
         TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData);
 
-        TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+        List<TaxonomySitemapItem> GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
             int descendantLevels, bool includeAncestors,
             IContextData contextData);
     }

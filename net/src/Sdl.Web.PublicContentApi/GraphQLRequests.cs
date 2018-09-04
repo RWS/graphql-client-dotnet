@@ -274,8 +274,17 @@ namespace Sdl.Web.PublicContentApi
             int descendantLevels, bool includeAncestors,
             IContextData contextData, IContextData globalContextData)
         {
-            string query = Queries.Load("SitemapSubtree", true);
-            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
+            string query;
+            if (descendantLevels == 0)
+            {
+                query = Queries.Load("SitemapSubtreeNoRecurse", true);                
+            }
+            else
+            {
+                query = Queries.Load("SitemapSubtree", true);
+                QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
+            }
+
             return new GraphQLRequest
             {
                 Query = query,
