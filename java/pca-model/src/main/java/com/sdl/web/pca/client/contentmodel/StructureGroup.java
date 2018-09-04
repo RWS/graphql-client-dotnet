@@ -13,7 +13,7 @@ public class StructureGroup implements TaxonomyItem,Item {
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private ItemType itemType;
+		private int itemType;
 		private String key;
 		private String lastPublishDate;
 		private int namespaceId;
@@ -92,10 +92,10 @@ public class StructureGroup implements TaxonomyItem,Item {
 		}
 
 
-		public ItemType getItemType(){
+		public int getItemType(){
 			return itemType;
 		}
-		public void setItemType(ItemType itemType){
+		public void setItemType(int itemType){
 			this.itemType = itemType;
 		}
 

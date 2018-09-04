@@ -25,8 +25,8 @@ public interface ContentFragment {
 		int getItemId();
 		void setItemId(int itemId);
 
-		ItemType getItemType();
-		void setItemType(ItemType itemType);
+		int getItemType();
+		void setItemType(int itemType);
 
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);

@@ -10,7 +10,7 @@ public class Template implements Item {
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private ItemType itemType;
+		private int itemType;
 		private String lastPublishDate;
 		private int namespaceId;
 		private String outputFormat;
@@ -61,10 +61,10 @@ public class Template implements Item {
 		}
 
 
-		public ItemType getItemType(){
+		public int getItemType(){
 			return itemType;
 		}
-		public void setItemType(ItemType itemType){
+		public void setItemType(int itemType){
 			this.itemType = itemType;
 		}
 

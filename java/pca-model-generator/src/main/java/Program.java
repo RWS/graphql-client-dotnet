@@ -19,7 +19,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class Program {
     private static final Logger LOG = getLogger(Program.class);
-    static StringBuilder  importBuilder = new StringBuilder();
+    static StringBuilder importBuilder = new StringBuilder();
 
     public static void main(String[] args) throws GraphQLClientException {
         System.out.print("Generate Model Classes \n");
@@ -27,7 +27,7 @@ public class Program {
             String endpoint = null;
             String outputFile = null;
             String ns = null;
-            for (int i = 0; i < args.length; i+=2) {
+            for (int i = 0; i < args.length; i += 2) {
                 String argumt = args[i].toLowerCase();
                 switch (argumt) {
                     case "-ns":
@@ -62,30 +62,27 @@ public class Program {
                 body.addProperty("query", query);
                 String jsonresponse = client.execute(body.toString());
                 JsonParser parser = new JsonParser();
-                JsonObject jsonObject = (JsonObject)parser.parse(jsonresponse);
+                JsonObject jsonObject = (JsonObject) parser.parse(jsonresponse);
                 JsonObject dataObject = jsonObject.getAsJsonObject("data").getAsJsonObject("__schema");
                 ObjectMapper objectMapper = new ObjectMapper();
                 GraphQLSchema schema = objectMapper.readValue(dataObject.toString(), GraphQLSchema.class);
 
-                generateSchemaClasses(schema, ns,outputFile);
-                LOG.debug("GraphQL Schema : "+schema.toString());
-            }
-            catch(JsonMappingException e) {
-                throw new GraphQLClientException("JSON Mapping Exception : ",  e);
-            }
-            catch(IOException e) {
-                throw new GraphQLClientException("Missing required file : ",  e);
-            }
-            catch(Exception e) {
-                throw new GraphQLClientException("Exception : ",  e);
+                generateSchemaClasses(schema, ns, outputFile);
+                LOG.debug("GraphQL Schema : " + schema.toString());
+            } catch (JsonMappingException e) {
+                throw new GraphQLClientException("JSON Mapping Exception : ", e);
+            } catch (IOException e) {
+                throw new GraphQLClientException("Missing required file : ", e);
+            } catch (Exception e) {
+                throw new GraphQLClientException("Exception : ", e);
             }
         }
     }
 
     static void generateSchemaClasses(GraphQLSchema schema, String ns, String outputFile) throws IOException {
 
-        for (GraphQLSchemaType type : schema.types){
-            if(type.name==null || type.name.startsWith("__"))
+        for (GraphQLSchemaType type : schema.types) {
+            if (type.name == null || type.name.startsWith("__"))
                 continue;
             if (type.kind.equalsIgnoreCase("SCALAR"))
                 continue;
@@ -96,21 +93,25 @@ public class Program {
             emitImport(sb, type, ns);
 
             StringBuilder sbuilder = generateClass(sb, schema, type, 1);
-            createJavaFile(type, sbuilder,outputFile);
+            createJavaFile(type, sbuilder, outputFile);
         }
     }
 
     static void createJavaFile(GraphQLSchemaType type, StringBuilder sb, String outputFilePath) throws IOException {
-        File file = new File(outputFilePath+type.name+".java");
-        if(file.exists())
+        String filePath = outputFilePath + type.name + ".java";
+        File file = new File(filePath);
+        if (file.exists())
             file.delete();
 
-        File newfile = new File(outputFilePath+type.name+".java");
+        File newfile = new File(filePath);
+        if (!newfile.getParentFile().exists()) {
+            newfile.getParentFile().mkdir();
+        }
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(newfile));
             writer.append(sb);
-            LOG.debug("Create Java files in location : "+ outputFilePath+type.name+".java");
+            LOG.debug("Create Java files in location : " + filePath);
 
         } finally {
             if (writer != null) writer.close();
@@ -135,29 +136,29 @@ public class Program {
     static StringBuilder generateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indentCount) {
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
 
-        emitComment(sb, type.description, indentCount-1);
+        emitComment(sb, type.description, indentCount - 1);
 
-        if(type.kind.equalsIgnoreCase("ENUM"))
-            sb.append("public enum "+type.name);
-        else if(type.kind.equalsIgnoreCase("INTERFACE"))
-            sb.append("public interface "+type.name);
+        if (type.kind.equalsIgnoreCase("ENUM"))
+            sb.append("public enum " + type.name);
+        else if (type.kind.equalsIgnoreCase("INTERFACE"))
+            sb.append("public interface " + type.name);
         else if (type.interfaces == null || type.interfaces.size() == 0)
-            sb.append("public class "+ type.name);
+            sb.append("public class " + type.name);
         else
-            sb.append("public class "+ type.name + getImplementation(type.interfaces));
+            sb.append("public class " + type.name + getImplementation(type.interfaces));
         sb.append(" {");
         sb.append("\n");
 
         switch (type.kind) {
             case "OBJECT":
-                emitFields( sb, type.fields, indentCount + 1, true);
+                emitFields(sb, type.fields, indentCount + 1, true);
                 break;
             case "INPUT_OBJECT":
-                emitFields( sb, type.inputFields, indentCount + 1, true);
+                emitFields(sb, type.inputFields, indentCount + 1, true);
                 break;
             case "INTERFACE":
                 if (type.possibleTypes != null) {
-                    emitFields( sb, type.fields, indentCount + 1, false);
+                    emitFields(sb, type.fields, indentCount + 1, false);
                 }
                 break;
             case "ENUM":
@@ -174,7 +175,7 @@ public class Program {
         return sb;
     }
 
-    static void emitFields( StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount) {
+    static void emitFields(StringBuilder sb, List<GraphQLSchemaEnum> enumValues, int indentCount) {
         if (enumValues == null) return;
         String indentString = new String(new char[indentCount]).replace("\0", "\t");
         for (int i = 0; i <= enumValues.size() - 1; i++) {
@@ -183,7 +184,7 @@ public class Program {
             if (i >= enumValues.size() - 1)
                 sb.append(enumValues.get(i).name);
             else
-                sb.append(enumValues.get(i).name+",");
+                sb.append(enumValues.get(i).name + ",");
         }
     }
 
@@ -195,7 +196,7 @@ public class Program {
             String returnTypeName = getFieldReturnTypeName(field.type);
             String defaultValue = getDefaultValue(returnTypeName);
 
-            if(field.name.equalsIgnoreCase("abstract"))
+            if (field.name.equalsIgnoreCase("abstract"))
                 continue;
 
             sb.append(indentString);
@@ -207,10 +208,10 @@ public class Program {
 
         /*Setter & Getter for Model Class*/
 
-        for (GraphQLSchemaField field : fields){
+        for (GraphQLSchemaField field : fields) {
             field.type = remapFieldType(field);
             String returnTypeName = getFieldReturnTypeName(field.type);
-            if(field.name.equalsIgnoreCase("abstract"))
+            if (field.name.equalsIgnoreCase("abstract"))
                 continue;
 
             sb.append("\n\n");
@@ -237,7 +238,7 @@ public class Program {
                 sb.append("\n");
                 sb.append(indentString);
                 sb.append("}\n");
-            }else {
+            } else {
                 sb.append(returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "()" + ";");
                 sb.append("\n");
                 sb.append(indentString);
@@ -246,10 +247,10 @@ public class Program {
         }
     }
 
-    static String getFieldReturnTypeName(GraphQLSchemaTypeInfo type){
+    static String getFieldReturnTypeName(GraphQLSchemaTypeInfo type) {
         switch (type.kind) {
             case "LIST":
-                return "List<"+type.ofType.name+">";
+                return "List<" + type.ofType.name + ">";
             case "NON_NULL":
                 return type.ofType.name;
             default:
@@ -257,8 +258,8 @@ public class Program {
         }
     }
 
-    static String getDefaultValue(String returnType){
-        switch (returnType){
+    static String getDefaultValue(String returnType) {
+        switch (returnType) {
             case "int":
                 return "0";
             case "boolean":
@@ -268,13 +269,13 @@ public class Program {
         }
     }
 
-    static StringBuilder getImplementation(List<GraphQLSchemaInterface> interfaces){
+    static StringBuilder getImplementation(List<GraphQLSchemaInterface> interfaces) {
         StringBuilder impl = null;
-        if (interfaces.size() != 0){
+        if (interfaces.size() != 0) {
             impl = new StringBuilder();
             impl.append(" implements ");
             String prefix = "";
-            for (GraphQLSchemaInterface  type : interfaces){
+            for (GraphQLSchemaInterface type : interfaces) {
                 impl.append(prefix);
                 prefix = ",";
                 impl.append(type.name);
@@ -287,7 +288,7 @@ public class Program {
         // Just remap itemType and namespaceId(s) from int to use our enum
         // to make things a little nicer to work with.
         GraphQLSchemaTypeInfo graphQLSchemaTypeInfo = new GraphQLSchemaTypeInfo();
-        if(field.type.name!=null){
+        if (field.type.name != null) {
             switch (field.type.name) {
                 case "Int": {
                     field.type.name = "int";
@@ -297,7 +298,7 @@ public class Program {
                     field.type.name = "boolean";
                     break;
                 }
-                case "Map":{
+                case "Map": {
                     importBuilder.append("import java.util.Map;\n");
                     break;
                 }
@@ -305,8 +306,8 @@ public class Program {
 
         }
 
-        if (field.type.name == null){
-            switch (field.type.ofType.name){
+        if (field.type.name == null) {
+            switch (field.type.ofType.name) {
                 case "Int": {
                     field.type.ofType.name = "int";
                 }
@@ -314,7 +315,7 @@ public class Program {
         }
 
         switch (field.name) {
-            case "namespaceIds":{
+            case "namespaceIds": {
                 GraphQLSchemaTypeInfo ofType = new GraphQLSchemaTypeInfo();
                 ofType.kind = "SCALAR";
                 ofType.name = "Integer";
@@ -328,22 +329,22 @@ public class Program {
                 graphQLSchemaTypeInfo.name = "int";
                 return graphQLSchemaTypeInfo;
             }
-            case "itemType": {
-                graphQLSchemaTypeInfo.kind = "ENUM";
-                graphQLSchemaTypeInfo.name = "ItemType";
-                return graphQLSchemaTypeInfo;
-            }
-            case "id":{
+//            case "itemType": {
+//                graphQLSchemaTypeInfo.kind = "ENUM";
+//                graphQLSchemaTypeInfo.name = "ItemType";
+//                return graphQLSchemaTypeInfo;
+//            }
+            case "id": {
                 graphQLSchemaTypeInfo.kind = "SCALAR";
                 graphQLSchemaTypeInfo.name = "String";
                 return graphQLSchemaTypeInfo;
             }
-            case "data":{
+            case "data": {
                 graphQLSchemaTypeInfo.kind = "SCALAR";
                 graphQLSchemaTypeInfo.name = "Map";
                 return graphQLSchemaTypeInfo;
             }
-            case "publicationIds":{
+            case "publicationIds": {
                 graphQLSchemaTypeInfo.kind = "SCALAR";
                 graphQLSchemaTypeInfo.name = "List<Integer>";
                 return graphQLSchemaTypeInfo;
@@ -353,7 +354,7 @@ public class Program {
         }
     }
 
-    static StringBuilder emitPackage( StringBuilder sb, String ns) {
+    static StringBuilder emitPackage(StringBuilder sb, String ns) {
         Formatter fmt = new Formatter(sb);
         fmt.format("package %s", ns);
         sb.append(";");
@@ -362,31 +363,31 @@ public class Program {
         return sb;
     }
 
-    static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type, String ns){
-        int count = 0, itemtypeCount=0;
-        if (type.fields != null){
-            for (GraphQLSchemaField field : type.fields){
-                if(field.type.kind != null && count<=0){
-                    switch (field.type.kind){
-                        case "LIST":{
+    static StringBuilder emitImport(StringBuilder sb, GraphQLSchemaType type, String ns) {
+        int count = 0, itemtypeCount = 0;
+        if (type.fields != null) {
+            for (GraphQLSchemaField field : type.fields) {
+                if (field.type.kind != null && count <= 0) {
+                    switch (field.type.kind) {
+                        case "LIST": {
                             sb.append("import java.util.List;\n");
                             count++;
                             break;
                         }
                     }
                 }
-                if(field.type.name != null){
-                    switch (field.type.name){
-                        case "Map":{
+                if (field.type.name != null) {
+                    switch (field.type.name) {
+                        case "Map": {
                             sb.append("import java.util.Map;\n");
                             break;
                         }
                     }
                 }
             }
-        }else if(type.inputFields != null) {
+        } else if (type.inputFields != null) {
             for (GraphQLSchemaField field : type.inputFields) {
-                if (field.type.kind != null && count<1) {
+                if (field.type.kind != null && count < 1) {
                     switch (field.type.kind) {
                         case "LIST": {
                             sb.append("import java.util.List;\n");
@@ -399,6 +400,7 @@ public class Program {
         }
         return sb;
     }
+
     public static boolean isNullOrBlank(String param) {
         return param == null || param.trim().length() == 0;
     }

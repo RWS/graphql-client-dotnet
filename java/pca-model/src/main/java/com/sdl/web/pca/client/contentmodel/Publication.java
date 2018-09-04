@@ -10,7 +10,7 @@ public class Publication implements Item {
 		private String id;
 		private String initialPublishDate;
 		private int itemId;
-		private ItemType itemType;
+		private int itemType;
 		private String lastPublishDate;
 		private String multimediaPath;
 		private String multimediaUrl;
@@ -64,10 +64,10 @@ public class Publication implements Item {
 		}
 
 
-		public ItemType getItemType(){
+		public int getItemType(){
 			return itemType;
 		}
-		public void setItemType(ItemType itemType){
+		public void setItemType(int itemType){
 			this.itemType = itemType;
 		}
 
