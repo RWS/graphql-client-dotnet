@@ -1,8 +1,22 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sdl.web.pca.client.contentmodel.*;
-import com.sdl.web.pca.client.contentmodel.enums.*;
+import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
+import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
+import com.sdl.web.pca.client.contentmodel.enums.DcpType;
+import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
+import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.util.CmUri;
 
@@ -18,15 +32,15 @@ public interface PublicContentApi {
 
     BinaryComponent getBinaryComponent(CmUri cmUri, ContextData contextData) throws PublicContentApiException;
 
-    ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+    ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                     ContextData contextData, String customMetaFilter,
                                     boolean renderContent) throws PublicContentApiException;
 
     Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData,
                                String customMetaFilter) throws PublicContentApiException;
 
-    PublicationConnection getPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
-                                          IContextData contextData, String customMetaFilter);
+    PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter,
+                                          ContextData contextData, String customMetaFilter);
 
     String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
 

@@ -1,26 +1,22 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public class Pagination implements IPagination {
-    public int First;
-    public String After;
+public class Pagination {
+    public int first;
+    public String after;
 
-    @Override
     public int getFirst() {
-        return First;
+        return first;
     }
 
-    @Override
     public void setFirst(int first) {
-        First = first;
+        this.first = first;
     }
 
-    @Override
     public String getAfter() {
-        return After;
+        return after;
     }
 
-    @Override
     public void setAfter(String after) {
-        After = after;
+        this.after = after;
     }
 }

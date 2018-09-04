@@ -3,26 +3,25 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel.ClaimValue;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.IContextData;
-import com.sdl.web.pca.client.contentmodel.IPagination;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
-import com.sdl.web.pca.client.contentmodel.InputSortParam;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.ItemType;
-import com.sdl.web.pca.client.contentmodel.Publication;
-import com.sdl.web.pca.client.contentmodel.PublicationConnection;
-import com.sdl.web.pca.client.contentmodel.PublicationMapping;
-import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
+import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
+import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
@@ -31,7 +30,12 @@ import com.sdl.web.pca.client.util.QueryUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -233,7 +237,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+    public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                            ContextData contextData, String customMetaFilter,
                                            boolean renderContent) throws PublicContentApiException {
         //TODO fix: sort, contextData, customMetaFilter is not used in current implementation
@@ -276,7 +280,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public PublicationConnection getPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter, IContextData contextData, String customMetaFilter) {
+    public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter, ContextData contextData, String customMetaFilter) {
         //TODO implement
         return null;
     }

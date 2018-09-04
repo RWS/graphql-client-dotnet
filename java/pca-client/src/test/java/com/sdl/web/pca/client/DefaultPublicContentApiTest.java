@@ -1,11 +1,11 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sdl.web.pca.client.contentmodel.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;

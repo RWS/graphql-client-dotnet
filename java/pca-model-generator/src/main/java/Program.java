@@ -196,8 +196,10 @@ public class Program {
             String returnTypeName = getFieldReturnTypeName(field.type);
             String defaultValue = getDefaultValue(returnTypeName);
 
-            if (field.name.equalsIgnoreCase("abstract"))
-                continue;
+            if (field.name.equalsIgnoreCase("abstract")) {
+                // avoid using keyword
+                field.name = "Abstract";
+            }
 
             sb.append(indentString);
             if (isPublic) {
@@ -211,9 +213,10 @@ public class Program {
         for (GraphQLSchemaField field : fields) {
             field.type = remapFieldType(field);
             String returnTypeName = getFieldReturnTypeName(field.type);
-            if (field.name.equalsIgnoreCase("abstract"))
-                continue;
-
+            if (field.name.equalsIgnoreCase("abstract")) {
+                // avoid using keyword
+                field.name = "Abstract";
+            }
             sb.append("\n\n");
             sb.append(indentString);
 

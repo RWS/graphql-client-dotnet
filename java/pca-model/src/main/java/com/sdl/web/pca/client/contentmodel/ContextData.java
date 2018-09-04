@@ -1,17 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
+import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
+
 import java.util.List;
 
-public class ContextData implements IContextData {
+public class ContextData {
 
     private List<ClaimValue> ClaimValues;
 
-    @Override
     public List<ClaimValue> getClaimValues() {
         return ClaimValues;
     }
 
-    @Override
     public void setClaimValues(List<ClaimValue> claimValues) {
         ClaimValues = claimValues;
     }
