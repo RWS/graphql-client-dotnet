@@ -1,6 +1,5 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a keyword taxonomy item.

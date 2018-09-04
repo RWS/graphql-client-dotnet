@@ -1,6 +1,5 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents an item. The root of all content models.

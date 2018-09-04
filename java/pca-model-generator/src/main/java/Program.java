@@ -366,12 +366,6 @@ public class Program {
         int count = 0, itemtypeCount=0;
         if (type.fields != null){
             for (GraphQLSchemaField field : type.fields){
-
-                if(field.name.equalsIgnoreCase("itemtype") && itemtypeCount==0){
-                    sb.append("import "+ ns +".enums.ItemType;\n");
-                    itemtypeCount++;
-                }
-
                 if(field.type.kind != null && count<=0){
                     switch (field.type.kind){
                         case "LIST":{
