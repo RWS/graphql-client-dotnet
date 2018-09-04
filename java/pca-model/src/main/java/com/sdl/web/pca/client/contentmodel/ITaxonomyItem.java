@@ -1,12 +1,32 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
+/// <summary>
+	/// Represents a taxonomy item.
+	/// </summary>
+	interface ITaxonomyItem
+	{
+		TaxonomyItemConnection children = null;
+		String creationDate = null;
+		CustomMetaConnection customMetas = null;
+		int depth = 0;
+		String id = null;
+		String initialPublishDate = null;
+		int itemId = 0;
+		int itemType = 0;
+		String key = null;
+		String lastPublishDate = null;
+		int namespaceId = 0;
+		int owningPublicationId = 0;
+		ITaxonomyItem parent = null;
+		int publicationId = 0;
+		int taxonomyId = 0;
+		TaxonomyType taxonomyType = null;
+		String title = null;
+		String updatedDate = null;
+		boolean hasChildren = false;
+		boolean Abstract = false;
+		boolean navigable = false;
 
-/**
-*Represents a taxonomy item.
-*/
-public interface TaxonomyItem {
-																																								
 
 		TaxonomyItemConnection getChildren();
 		void setChildren(TaxonomyItemConnection children);
@@ -29,8 +49,8 @@ public interface TaxonomyItem {
 		int getItemId();
 		void setItemId(int itemId);
 
-		ItemType getItemType();
-		void setItemType(ItemType itemType);
+		int getItemType();
+		void setItemType(int itemType);
 
 		String getKey();
 		void setKey(String key);
@@ -44,8 +64,8 @@ public interface TaxonomyItem {
 		int getOwningPublicationId();
 		void setOwningPublicationId(int owningPublicationId);
 
-		TaxonomyItem getParent();
-		void setParent(TaxonomyItem parent);
+		ITaxonomyItem getParent();
+		void setParent(ITaxonomyItem parent);
 
 		int getPublicationId();
 		void setPublicationId(int publicationId);
@@ -62,9 +82,12 @@ public interface TaxonomyItem {
 		String getUpdatedDate();
 		void setUpdatedDate(String updatedDate);
 
-		boolean getHasChildren();
+		boolean isHasChildren();
 		void setHasChildren(boolean hasChildren);
 
-		boolean getNavigable();
-		void setNavigable(boolean navigable);	
-}
+		boolean isAbstract();
+		void setAbstract(boolean anAbstract);
+
+		boolean isNavigable();
+		void setNavigable(boolean navigable);
+	}

@@ -1,6 +1,7 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum ContentFilterQueryType {
-
-		CUSTOM_META	
+/*[JsonConverter(typeof(StringEnumConverter))]*/
+enum ContentFilterQueryType
+{
+    CUSTOM_META
 }

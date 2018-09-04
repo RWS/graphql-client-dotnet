@@ -1,12 +1,24 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
+/// <summary>
+	/// Represents an item. The root of all content models.
+	/// </summary>
+	public interface IItem
+	{
+		String creationDate = null;
+		CustomMetaConnection customMetas = null;
+		String id = null;
+		String initialPublishDate = null;
+		int itemId = 0;
+		int itemType = 0;
+		String lastPublishDate = null;
+		int namespaceId = 0;
+		int owningPublicationId = 0;
+		int publicationId = 0;
+		String title = null;
+		String updatedDate = null;
+		/*String url = null;*/
 
-/**
-*Represents an item. The root of all content models.
-*/
-public interface Item {
-																								
 
 		String getCreationDate();
 		void setCreationDate(String creationDate);
@@ -23,8 +35,8 @@ public interface Item {
 		int getItemId();
 		void setItemId(int itemId);
 
-		ItemType getItemType();
-		void setItemType(ItemType itemType);
+		int getItemType();
+		void setItemType(int itemType);
 
 		String getLastPublishDate();
 		void setLastPublishDate(String lastPublishDate);
@@ -42,5 +54,8 @@ public interface Item {
 		void setTitle(String title);
 
 		String getUpdatedDate();
-		void setUpdatedDate(String updatedDate);	
-}
+		void setUpdatedDate(String updatedDate);
+
+		/*String getUrl();
+		void setUrl(String url);*/
+	}

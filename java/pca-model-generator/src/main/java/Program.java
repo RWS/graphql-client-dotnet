@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sdl.web.pca.client.DefaultGraphQLClient;
 import com.sdl.web.pca.client.GraphQLClient;
-import com.sdl.web.pca.client.contentmodel.ContentQuery;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class Program {
+    private static final Logger LOG = getLogger(Program.class);
     static StringBuilder  importBuilder = new StringBuilder();
 
     public static void main(String[] args) {
@@ -38,22 +41,22 @@ public class Program {
                 }
             }
             if (isNullOrBlank(endpoint)) {
-                System.out.println("Specify GraphQL endpoint address.");
+                LOG.debug("Specify GraphQL endpoint address.");
                 return;
             }
             if (isNullOrBlank(outputFile)) {
-                System.out.println("Specify output file.");
+                LOG.debug("Specify output file.");
                 return;
             }
             if (isNullOrBlank(ns)) {
-                System.out.println("Specify namespace.");
+                LOG.debug("Specify namespace.");
                 return;
             }
 
             GraphQLClient client = new DefaultGraphQLClient(endpoint, null);
 
             try {
-                String query = IOUtils.toString(ContentQuery.class.getClassLoader().getResourceAsStream("queries/IntrospectionQuery.graphql"), "UTF-8");
+                String query = IOUtils.toString(Program.class.getClassLoader().getResourceAsStream("IntrospectionQuery.graphql"), "UTF-8");
                 JsonObject body = new JsonObject();
                 body.addProperty("query", query);
                 String jsonresponse = client.execute(body.toString());
@@ -64,7 +67,7 @@ public class Program {
                 GraphQLSchema schema = objectMapper.readValue(dataObject.toString(), GraphQLSchema.class);
 
                 generateSchemaClasses(schema, ns,outputFile);
-                System.out.println(schema);
+                LOG.debug(schema.toString());
             }
             catch(JsonMappingException e) {
                 e.getStackTrace();
@@ -214,8 +217,6 @@ public class Program {
             if (isPublic) {
                 sb.append("public " + returnTypeName + " get" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "()");
 
-               /* sb.append("\n");
-                sb.append(indentString);*/
                 sb.append("{\n");
                 sb.append(indentString);
                 sb.append("\t");
@@ -227,8 +228,6 @@ public class Program {
 
                 sb.append("public void set" + field.name.substring(0, 1).toUpperCase() + field.name.substring(1) + "(" + returnTypeName + " " + field.name + ")");
 
-               /* sb.append("\n");
-                sb.append(indentString);*/
                 sb.append("{\n");
                 sb.append(indentString);
                 sb.append("\t");

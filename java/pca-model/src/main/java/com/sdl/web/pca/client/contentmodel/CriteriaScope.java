@@ -1,8 +1,17 @@
 package com.sdl.web.pca.client.contentmodel;
 
-public enum CriteriaScope {
+/*[JsonConverter(typeof(StringEnumConverter))]*/
+enum CriteriaScope
+{
+    /// <summary>
+    /// Publication
+    /// </summary>
+    Publication,
 
-		Publication,
-		Item,
-		ItemInPublication	
+    /// <summary>
+    /// Item
+    /// </summary>
+    Item,
+
+    ItemInPublication
 }

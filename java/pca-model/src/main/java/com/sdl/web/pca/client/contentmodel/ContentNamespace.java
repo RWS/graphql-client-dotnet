@@ -3,13 +3,13 @@ package com.sdl.web.pca.client.contentmodel;
 public enum ContentNamespace {
     Sites(1), Docs(2);
 
-    public int namespaceIds;
+    private int nameSpaceValue;
 
-    ContentNamespace(int namespaceIds){
-        this.namespaceIds = namespaceIds;
+    ContentNamespace(int nameSpaceValue){
+        this.nameSpaceValue = nameSpaceValue;
     }
 
     public int getNameSpaceValue(){
-        return namespaceIds;
+        return nameSpaceValue;
     }
 }
