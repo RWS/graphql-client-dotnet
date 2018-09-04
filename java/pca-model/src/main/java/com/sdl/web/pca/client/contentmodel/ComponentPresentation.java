@@ -1,6 +1,5 @@
 package com.sdl.web.pca.client.contentmodel;
 
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a component presentation which has a component associated with a template.

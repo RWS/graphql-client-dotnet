@@ -1,7 +1,6 @@
 package com.sdl.web.pca.client.contentmodel;
 
 import java.util.List;
-import com.sdl.web.pca.client.contentmodel.enums.ItemType;
 
 /**
 *Represents a page.
