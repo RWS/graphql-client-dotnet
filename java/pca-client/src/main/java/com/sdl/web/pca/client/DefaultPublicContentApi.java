@@ -287,29 +287,63 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        String query = getQueryFor("ResolvePageLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("pageId", pageId);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest,"").toString();
     }
 
     @Override
     public String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
                                        Integer excludeComponentTemplateId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        String query = getQueryFor("ResolveComponentLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("targetComponentId", componentId);
+        variables.put("sourcePageId", sourcePageId);
+        variables.put("excludeComponentTemplateId", excludeComponentTemplateId);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest,"").toString();
     }
 
     @Override
     public String ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
                                     String variantId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        String query = getQueryFor("ResolveBinaryLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("binaryId", binaryId);
+        variables.put("variantId", variantId);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+
+        return getJsonResult(graphQLRequest,"").toString();
     }
 
     @Override
     public String ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
                                               int templateId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        String query = getQueryFor("ResolveDynamicComponentLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("targetPageId", pageId);
+        variables.put("targetComponentId", componentId);
+        variables.put("targetTemplateId", templateId);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest,"").toString();
     }
 
     @Override

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
@@ -183,6 +183,30 @@ public class GraphQLClientTest {
     public void executeGetSitemapSubtree() {
         assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
                 2, true, new ContextData()));
+    }
+
+    @Test
+    public void executeResolveBinaryLink() {
+        String result = publicContentApi.ResolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]");
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolvePageLink() {
+        String result = publicContentApi.ResolvePageLink(ContentNamespace.Sites, 8, 4447);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolveComponentLink() {
+        String result = publicContentApi.ResolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolveDynamicComponentLink() {
+        String result = publicContentApi.ResolveDynamicComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        assertNotNull(result);
     }
 
 }
