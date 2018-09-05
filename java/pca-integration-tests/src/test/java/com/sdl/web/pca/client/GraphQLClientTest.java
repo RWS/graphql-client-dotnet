@@ -193,7 +193,7 @@ public class GraphQLClientTest {
 
     @Test
     public void executeResolvePageLink() {
-        String result = publicContentApi.ResolvePageLink(ContentNamespace.Sites, 8, 4447);
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447);
         assertNotNull(result);
     }
 

@@ -42,7 +42,7 @@ public interface PublicContentApi {
     PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter,
                                           ContextData contextData, String customMetaFilter);
 
-    String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
+    String resolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
 
     String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
                                 Integer excludeComponentTemplateId) throws PublicContentApiException;

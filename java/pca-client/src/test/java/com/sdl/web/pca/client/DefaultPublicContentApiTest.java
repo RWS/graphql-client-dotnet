@@ -137,4 +137,14 @@ public class DefaultPublicContentApiTest {
         assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0)
                 .getNode().getDownloadUrl());
     }
+
+    @Test
+    public void resolvePageLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolvePageLink"));
+
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites,8,4447);
+        assertEquals("/system/include/content-tools.html", result);
+    }
+
 }

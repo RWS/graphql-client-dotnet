@@ -286,7 +286,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
+    public String resolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
         String query = getQueryFor("ResolvePageLink");
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -295,7 +295,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("pageId", pageId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"").toString();
+        return getJsonResult(graphQLRequest,"/data/pageLink/url").asText();
     }
 
     @Override
