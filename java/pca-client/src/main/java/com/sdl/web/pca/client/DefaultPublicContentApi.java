@@ -299,7 +299,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
+    public String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
                                        Integer excludeComponentTemplateId) throws PublicContentApiException {
         String query = getQueryFor("ResolveComponentLink");
 
@@ -311,11 +311,11 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("excludeComponentTemplateId", excludeComponentTemplateId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"").toString();
+        return getJsonResult(graphQLRequest,"/data/componentLink/url").asText();
     }
 
     @Override
-    public String ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
+    public String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
                                     String variantId) throws PublicContentApiException {
         String query = getQueryFor("ResolveBinaryLink");
 
@@ -327,11 +327,11 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
 
-        return getJsonResult(graphQLRequest,"").toString();
+        return getJsonResult(graphQLRequest,"/data/binaryLink/url").asText();
     }
 
     @Override
-    public String ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
+    public String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
                                               int templateId) throws PublicContentApiException {
         String query = getQueryFor("ResolveDynamicComponentLink");
 
@@ -343,7 +343,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("targetTemplateId", templateId);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"").toString();
+        return getJsonResult(graphQLRequest,"/data/dynamicComponentLink/url").asText();
     }
 
     @Override

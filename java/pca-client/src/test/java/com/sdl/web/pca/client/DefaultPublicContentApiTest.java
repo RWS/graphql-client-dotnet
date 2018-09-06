@@ -147,4 +147,31 @@ public class DefaultPublicContentApiTest {
         assertEquals("/system/include/content-tools.html", result);
     }
 
+    @Test
+    public void resolveComponentLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveComponentLink"));
+
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        assertEquals("/articles/all-articles.html", result);
+    }
+
+    @Test
+    public void resolveBinaryLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveBinaryLink"));
+
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]");
+        assertEquals("/media/balloons_tcm8-756.jpg", result);
+    }
+
+    @Test
+    public void resolveDynamicComponentLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveDynamicComponentLink"));
+
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        assertEquals("null", result);
+    }
+
 }

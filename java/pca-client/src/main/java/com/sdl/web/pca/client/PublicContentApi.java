@@ -44,13 +44,13 @@ public interface PublicContentApi {
 
     String resolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
 
-    String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
+    String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
                                 Integer excludeComponentTemplateId) throws PublicContentApiException;
 
-    String ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
+    String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
                              String variantId) throws PublicContentApiException;
 
-    String ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
+    String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
                                        int templateId) throws PublicContentApiException;
 
     PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException;
