@@ -12,6 +12,7 @@ import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import org.junit.Before;
@@ -209,4 +210,9 @@ public class GraphQLClientTest {
         assertNotNull(result);
     }
 
+    @Test
+    public void executegetPulbicationMapping() {
+        PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
+        assertNotNull(result);
+    }
 }

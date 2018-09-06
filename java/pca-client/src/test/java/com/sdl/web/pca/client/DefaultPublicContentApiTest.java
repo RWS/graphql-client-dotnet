@@ -5,6 +5,7 @@ import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
@@ -174,4 +175,12 @@ public class DefaultPublicContentApiTest {
         assertEquals("/example-legacy/articles/news/news1.html", result);
     }
 
+    @Test
+    public void getPublicationMapping() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPublicationMapping"));
+
+        PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
+        assertEquals(5, result.getPublicationId());
+    }
 }
