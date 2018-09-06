@@ -348,8 +348,19 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
-        //TODO implement
-        return null;
+
+        String query = getQueryFor("PublicationMapping");
+        query += getFragmentFor("PublicationMappingFields");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("siteUrl", url);
+
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        PublicationMapping result = getResultForRequest(graphQLRequest,PublicationMapping.class,"/data/publicationMapping");
+        return result;
+
     }
 
     private String getQueryFor(String queryName) throws PublicContentApiException {
