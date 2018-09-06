@@ -3,6 +3,7 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
@@ -21,9 +22,11 @@ import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.SitemapItem;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import com.sdl.web.pca.client.util.QueryUtils;
@@ -58,6 +61,10 @@ public class DefaultPublicContentApi implements PublicContentApi {
         this.requestTimeout = requestTimeout;
         this.defaultContextData = new ContextData();
         this.defaultContextData.setClaimValues(Collections.EMPTY_LIST);
+
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(SitemapItem.class, new SitemapDeserializer(SitemapItem.class, MAPPER));
+        MAPPER.registerModule(module);
     }
 
     @Override
