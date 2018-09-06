@@ -25,7 +25,7 @@
 
         <logback.version>1.1.8</logback.version>
         <junit.version>4.12</junit.version>
-        <mockito.version>1.10.19</mockito.version>
+        <mockito.version>1.10.18</mockito.version>
 
         <!-- Maven Plugin Versions -->
         <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
