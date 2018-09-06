@@ -30,17 +30,17 @@ namespace Sdl.Web.PublicContentApi
             InputPublicationFilter filter,
             IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
 
-        Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,
+        Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink,
             CancellationToken cancellationToken);
 
         Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId,
-            int? sourcePageId, int? excludeComponentTemplateId, CancellationToken cancellationToken);
+            int? sourcePageId, int? excludeComponentTemplateId, bool renderRelativeLink, CancellationToken cancellationToken);
 
-        Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId,
+        Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId, bool renderRelativeLink,
             CancellationToken cancellationToken);
 
         Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId,
-            int componentId, int templateId, CancellationToken cancellationToken);
+            int componentId, int templateId, bool renderRelativeLink, CancellationToken cancellationToken);
 
         Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url,
             CancellationToken cancellationToken);
@@ -61,7 +61,7 @@ namespace Sdl.Web.PublicContentApi
         Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+        Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId,
             int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken);
     }

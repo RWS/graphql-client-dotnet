@@ -99,23 +99,23 @@ namespace Sdl.Web.PublicContentApi
             => _client.Execute<ContentQuery>(GraphQLRequests.Publications(ns, pagination, filter, contextData,
                 GlobalContextData, customMetaFilter)).TypedResponseData.Publications;
 
-        public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
-            => _client.Execute<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId))
+        public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink = true)
+            => _client.Execute<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId, renderRelativeLink))
                 .TypedResponseData.PageLink.Url;
 
         public string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
-            int? excludeComponentTemplateId)
+            int? excludeComponentTemplateId, bool renderRelativeLink = true)
             => _client.Execute<ContentQuery>(GraphQLRequests.ResolveComponentLink(ns, publicationId, componentId,
-                sourcePageId, excludeComponentTemplateId)).TypedResponseData.ComponentLink.Url;
+                sourcePageId, excludeComponentTemplateId, renderRelativeLink)).TypedResponseData.ComponentLink.Url;
 
-        public string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId)
-            => _client.Execute<ContentQuery>(GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId))
+        public string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId, bool renderRelativeLink = true)
+            => _client.Execute<ContentQuery>(GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId, renderRelativeLink))
                 .TypedResponseData.BinaryLink.Url;
 
         public string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-            int templateId)
+            int templateId, bool renderRelativeLink = true)
             => _client.Execute<ContentQuery>(GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId,
-                componentId, templateId)).TypedResponseData.DynamicComponentLink.Url;
+                componentId, templateId, renderRelativeLink)).TypedResponseData.DynamicComponentLink.Url;
 
         public PublicationMapping GetPublicationMapping(ContentNamespace ns, string url)
             => _client.Execute<ContentQuery>(GraphQLRequests.PublicationMapping(ns, url))
@@ -194,7 +194,7 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public TaxonomySitemapItem GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+        public List<TaxonomySitemapItem> GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
             int descendantLevels, bool includeAncestors,
             IContextData contextData)
         {
@@ -262,33 +262,33 @@ namespace Sdl.Web.PublicContentApi
                         GlobalContextData, customMetaFilter), cancellationToken)).TypedResponseData.Publications;
 
 
-        public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,
+        public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink = true,
             CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
-                    _client.ExecuteAsync<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId),
+                    _client.ExecuteAsync<ContentQuery>(GraphQLRequests.ResolvePageLink(ns, publicationId, pageId, renderRelativeLink),
                         cancellationToken)).TypedResponseData.PageLink.Url;
 
         public async Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId,
             int? sourcePageId,
-            int? excludeComponentTemplateId, CancellationToken cancellationToken = default(CancellationToken)) => (
+            int? excludeComponentTemplateId, bool renderRelativeLink = true, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ResolveComponentLink(ns, publicationId, componentId, sourcePageId,
-                            excludeComponentTemplateId), cancellationToken)).TypedResponseData.ComponentLink.Url;
+                            excludeComponentTemplateId, renderRelativeLink), cancellationToken)).TypedResponseData.ComponentLink.Url;
 
         public async Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId,
-            string variantId, CancellationToken cancellationToken = default(CancellationToken)) => (
+            string variantId, bool renderRelativeLink = true, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId), cancellationToken))
+                        GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId, renderRelativeLink), cancellationToken))
                 .TypedResponseData.BinaryLink.Url;
 
         public async Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId,
             int componentId,
-            int templateId, CancellationToken cancellationToken = default(CancellationToken)) => (
+            int templateId, bool renderRelativeLink = true, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId, componentId, templateId),
+                        GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId, componentId, templateId, renderRelativeLink),
                         cancellationToken)).TypedResponseData.DynamicComponentLink.Url;
 
         public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url,
@@ -384,7 +384,7 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public async Task<TaxonomySitemapItem> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
+        public async Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
             string taxonomyNodeId, int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {

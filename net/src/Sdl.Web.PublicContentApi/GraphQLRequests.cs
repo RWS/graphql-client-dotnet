@@ -63,7 +63,7 @@ namespace Sdl.Web.PublicContentApi
         public static GraphQLRequest ExecuteItemQuery(InputItemFilter filter, InputSortParam sort,
             IPagination pagination,
             IContextData contextData, IContextData globaContextData, string customMetaFilter, bool renderContent)
-        {           
+        {
             // Dynamically build our item query based on the filter(s) being used.
             string query = Queries.Load("ItemQuery", false);
 
@@ -108,21 +108,23 @@ namespace Sdl.Web.PublicContentApi
                 }
             };
 
-        public static GraphQLRequest Publications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
-           IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
-           {
-               Query = InjectCustomMetaFilter(Queries.Load("Publications", true), customMetaFilter),
-               Variables = new Dictionary<string, object>
-               {
+        public static GraphQLRequest Publications(ContentNamespace ns, IPagination pagination,
+            InputPublicationFilter filter,
+            IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
+            {
+                Query = InjectCustomMetaFilter(Queries.Load("Publications", true), customMetaFilter),
+                Variables = new Dictionary<string, object>
+                {
                     {"namespaceId", ns},
                     {"first", pagination.First},
                     {"after", pagination.After},
                     {"filter", filter},
                     {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
-               }
-           };
+                }
+            };
 
-        public static GraphQLRequest ResolvePageLink(ContentNamespace ns, int publicationId, int pageId)
+        public static GraphQLRequest ResolvePageLink(ContentNamespace ns, int publicationId, int pageId,
+            bool renderRelativeLink)
             => new GraphQLRequest
             {
                 Query = Queries.Load("ResolvePageLink", true),
@@ -130,13 +132,14 @@ namespace Sdl.Web.PublicContentApi
                 {
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
-                    {"pageId", pageId}
+                    {"pageId", pageId},
+                    {"renderRelativeLink", renderRelativeLink}
                 }
             };
 
         public static GraphQLRequest ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId,
             int? sourcePageId,
-            int? excludeComponentTemplateId) => new GraphQLRequest
+            int? excludeComponentTemplateId, bool renderRelativeLink) => new GraphQLRequest
             {
                 Query = Queries.Load("ResolveComponentLink", true),
                 Variables = new Dictionary<string, object>
@@ -145,12 +148,13 @@ namespace Sdl.Web.PublicContentApi
                     {"publicationId", publicationId},
                     {"targetComponentId", componentId},
                     {"sourcePageId", sourcePageId},
-                    {"excludeComponentTemplateId", excludeComponentTemplateId}
+                    {"excludeComponentTemplateId", excludeComponentTemplateId},
+                    {"renderRelativeLink", renderRelativeLink}
                 }
             };
 
         public static GraphQLRequest ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
-            string variantId) => new GraphQLRequest
+            string variantId, bool renderRelativeLink) => new GraphQLRequest
             {
                 Query = Queries.Load("ResolveBinaryLink", true),
                 Variables = new Dictionary<string, object>
@@ -158,13 +162,14 @@ namespace Sdl.Web.PublicContentApi
                     {"namespaceId", ns},
                     {"publicationId", publicationId},
                     {"binaryId", binaryId},
-                    {"variantId", variantId}
+                    {"variantId", variantId},
+                    {"renderRelativeLink", renderRelativeLink}
                 }
             };
 
         public static GraphQLRequest ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId,
             int componentId,
-            int templateId) => new GraphQLRequest
+            int templateId, bool renderRelativeLink) => new GraphQLRequest
             {
                 Query = Queries.Load("ResolveDynamicComponentLink", true),
                 Variables = new Dictionary<string, object>
@@ -173,7 +178,8 @@ namespace Sdl.Web.PublicContentApi
                     {"publicationId", publicationId},
                     {"targetPageId", pageId},
                     {"targetComponentId", componentId},
-                    {"targetTemplateId", templateId}
+                    {"targetTemplateId", templateId},
+                    {"renderRelativeLink", renderRelativeLink}
                 }
             };
 
@@ -187,8 +193,10 @@ namespace Sdl.Web.PublicContentApi
             }
         };
 
-        public static GraphQLRequest PageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, IContextData globalContextData)
+        public static GraphQLRequest PageModelData(ContentNamespace ns, int publicationId, int pageId,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
+            IContextData globalContextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             return new GraphQLRequest
@@ -204,8 +212,10 @@ namespace Sdl.Web.PublicContentApi
             };
         }
 
-        public static GraphQLRequest PageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData, IContextData globalContextData)
+        public static GraphQLRequest PageModelData(ContentNamespace ns, int publicationId, string url,
+            ContentType contentType,
+            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
+            IContextData globalContextData)
         {
             UpdateContextData(ref contextData, contentType, modelType, pageInclusion);
             return new GraphQLRequest
@@ -244,19 +254,19 @@ namespace Sdl.Web.PublicContentApi
 
         public static GraphQLRequest Sitemap(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData, IContextData globalContextData)
-        {           
+        {
             string query = Queries.Load("Sitemap", true);
             QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
             return new GraphQLRequest
             {
                 Query = query,
                 Variables = new Dictionary<string, object>
-                    {
-                        {"namespaceId", ns},
-                        {"publicationId", publicationId},
-                        {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
-                    },
-                Convertors = new List<JsonConverter> { new TaxonomyItemConvertor() }
+                {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+                },
+                Convertors = new List<JsonConverter> {new TaxonomyItemConvertor()}
             };
         }
 
@@ -264,8 +274,17 @@ namespace Sdl.Web.PublicContentApi
             int descendantLevels, bool includeAncestors,
             IContextData contextData, IContextData globalContextData)
         {
-            string query = Queries.Load("SitemapSubtree", true);
-            QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
+            string query;
+            if (descendantLevels == 0)
+            {
+                query = Queries.Load("SitemapSubtreeNoRecurse", true);                
+            }
+            else
+            {
+                query = Queries.Load("SitemapSubtree", true);
+                QueryHelpers.ExpandRecursiveFragment(ref query, null, descendantLevels);
+            }
+
             return new GraphQLRequest
             {
                 Query = query,
@@ -357,7 +376,7 @@ namespace Sdl.Web.PublicContentApi
         private static void UpdateContextData(ref IContextData contextData, ContentType contentType,
             DataModelType dataModelType, DcpType dcpType)
         {
-            if (contextData == null) contextData = new ContextData();            
+            if (contextData == null) contextData = new ContextData();
             contextData.ClaimValues.Add(CreateClaim(contentType));
             contextData.ClaimValues.Add(CreateClaim(dataModelType));
             contextData.ClaimValues.Add(CreateClaim(dcpType));
@@ -366,4 +385,3 @@ namespace Sdl.Web.PublicContentApi
         #endregion
     }
 }
-
