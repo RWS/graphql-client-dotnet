@@ -170,8 +170,8 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("resolveDynamicComponentLink"));
 
-        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
-        assertEquals("null", result);
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195);
+        assertEquals("/example-legacy/articles/news/news1.html", result);
     }
 
 }
