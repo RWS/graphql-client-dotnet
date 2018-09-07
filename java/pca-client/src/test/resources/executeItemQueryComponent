@@ -1,0 +1,208 @@
+{
+	"data": {
+		"items": {
+			"edges": [{
+					"cursor": "MQ==",
+					"node": {
+						"id": "23608389-ffa5-327c-9788-3233ccee8e91",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 8,
+						"title": "Core",
+						"lastPublishDate": "2018-06-25T14:01:37.777+03:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-01-24T09:31:42.397+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "Mg==",
+					"node": {
+						"id": "f294c291-aab4-3839-aab7-6c278886afc1",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 17,
+						"title": "Core",
+						"lastPublishDate": "2018-01-31T15:41:04.03+02:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2018-01-31T15:41:06.737+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "Mw==",
+					"node": {
+						"id": "05d54704-5e0a-358a-820f-3dd0b81563f8",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 1065,
+						"title": "Core",
+						"lastPublishDate": "2018-04-25T13:15:27.04+03:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-03-22T16:09:21.347+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "NA==",
+					"node": {
+						"id": "7b5b4a47-c2d3-3f87-b8d2-c03e574ebef1",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 1078,
+						"title": "Core",
+						"lastPublishDate": "2018-02-12T19:23:51.87+02:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-03-22T16:16:14.823+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "NQ==",
+					"node": {
+						"id": "04a17625-cddf-3b50-8424-5ef36b671a33",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 1081,
+						"title": "Core",
+						"lastPublishDate": "2018-04-24T18:07:59.273+03:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-03-22T16:34:09.5+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "Ng==",
+					"node": {
+						"id": "efeea6ee-95bc-31af-849e-df0173071195",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 1082,
+						"title": "Core",
+						"lastPublishDate": "2018-02-12T20:01:01.663+02:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-03-22T16:23:28.583+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "Nw==",
+					"node": {
+						"id": "0b282895-63a0-3c78-893f-6439a9153c49",
+						"itemId": 43,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 2,
+						"publicationId": 1083,
+						"title": "Core",
+						"lastPublishDate": "2018-02-12T20:18:37.25+02:00",
+						"creationDate": "2014-03-31T14:44:45+03:00",
+						"initialPublishDate": "2017-03-22T16:44:50.293+02:00",
+						"updatedDate": "2017-02-15T10:33:30+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 41,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "OA==",
+					"node": {
+						"id": "39cac2c0-97ca-3c16-a0d4-f242f12c8ef6",
+						"itemId": 755,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 8,
+						"title": "tcd:pub[8]/componentmeta[755]",
+						"lastPublishDate": "2018-06-25T14:01:39.157+03:00",
+						"creationDate": "2017-01-24T09:31:46.053+02:00",
+						"initialPublishDate": "2017-01-24T09:31:46.053+02:00",
+						"updatedDate": "2017-01-24T09:31:46.053+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 0,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "OQ==",
+					"node": {
+						"id": "217e442a-4cb5-3ceb-960d-83e9c25be4c7",
+						"itemId": 755,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1065,
+						"title": "tcd:pub[1065]/componentmeta[755]",
+						"lastPublishDate": "2018-06-14T10:45:45.79+03:00",
+						"creationDate": "2018-06-12T15:51:06.5+03:00",
+						"initialPublishDate": "2018-06-12T15:51:06.5+03:00",
+						"updatedDate": "2018-06-12T15:51:06.5+03:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 0,
+						"multiMedia": true
+					}
+				}, {
+					"cursor": "MTA=",
+					"node": {
+						"id": "dffacb69-7ad3-3028-a3a7-e3299809a13c",
+						"itemId": 755,
+						"itemType": 16,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1078,
+						"title": "tcd:pub[1078]/componentmeta[755]",
+						"lastPublishDate": "2018-06-14T10:49:30.137+03:00",
+						"creationDate": "2017-03-22T16:16:15.723+02:00",
+						"initialPublishDate": "2017-03-22T16:16:15.723+02:00",
+						"updatedDate": "2017-03-22T16:16:15.723+02:00",
+						"customMetas": {
+							"edges": []
+						},
+						"schemaId": 0,
+						"multiMedia": true
+					}
+				}
+			]
+		}
+	}
+}

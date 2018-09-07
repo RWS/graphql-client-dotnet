@@ -16,6 +16,7 @@ import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
+import com.sdl.web.pca.client.contentmodel.generated.Item;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
@@ -24,6 +25,7 @@ import com.sdl.web.pca.client.contentmodel.generated.SitemapItem;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.jsonmapper.ItemDeserializer;
 import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
@@ -70,6 +72,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         SimpleModule module = new SimpleModule();
         module.addDeserializer(SitemapItem.class, new SitemapDeserializer(SitemapItem.class, MAPPER));
+        module.addDeserializer(Item.class, new ItemDeserializer(Item.class, MAPPER));
         MAPPER.registerModule(module);
     }
 
@@ -280,7 +283,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, ItemConnection.class);
+        return getResultForRequest(graphQLRequest, ItemConnection.class, "/data/items");
     }
 
     List<String> mapToFragmentList(InputItemFilter filter) {

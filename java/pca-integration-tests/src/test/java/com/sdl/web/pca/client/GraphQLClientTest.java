@@ -12,10 +12,14 @@ import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.Keyword;
+import com.sdl.web.pca.client.contentmodel.generated.Page;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
+import com.sdl.web.pca.client.util.ItemTypes;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,65 +101,76 @@ public class GraphQLClientTest {
     }
 
     @Test
-    public void executePageItemQuery() throws Exception {
+    public void executeItemQueryPage() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
-
         Pagination pagination = new Pagination();
-        pagination.setFirst(2);
+        pagination.setFirst(10);
 
-        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
-        assertNotNull(contentQuery);
+        assertEquals(10, result.getEdges().size());
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals(Page.class, result.getEdges().get(0).getNode().getClass());
+        assertEquals("Publish Settings", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(ItemTypes.PAGE.getValue(), result.getEdges().get(0).getNode().getItemType());
     }
 
     @Test
-    public void executeComponentItemQuery() throws Exception {
+    public void executeItemQueryComponent() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
-
         Pagination pagination = new Pagination();
-        pagination.setFirst(2);
+        pagination.setFirst(10);
 
-        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
-        assertNotNull(contentQuery);
+
+        //TODO fix and add asserts
+        assertEquals(10, result.getEdges().size());
+        assertNotNull(result);
     }
 
     @Test
-    public void executeKeywordItemQuery() throws Exception {
+    public void executeItemQueryKeyword() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
-
         Pagination pagination = new Pagination();
-        pagination.setFirst(2);
+        pagination.setFirst(10);
 
-        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
+
+        assertEquals(10, result.getEdges().size());
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals(Keyword.class, result.getEdges().get(0).getNode().getClass());
+        assertEquals("001 Top-level Keyword 1", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(ItemTypes.KEYWORD.getValue(), result.getEdges().get(0).getNode().getItemType());
     }
 
     @Test
-    public void executePublicationItemQuery() throws Exception {
+    public void executeItemQueryPublication() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
-
         Pagination pagination = new Pagination();
-        pagination.setFirst(2);
+        pagination.setFirst(10);
 
-        ItemConnection contentQuery = publicContentApi.executeItemQuery(filter, null, pagination, null,
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
+
+        assertEquals(7, result.getEdges().size());
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals(Publication.class, result.getEdges().get(0).getNode().getClass());
+        assertEquals("400 Example Site", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(ItemTypes.PUBLICATION.getValue(), result.getEdges().get(0).getNode().getItemType());
     }
 
     @Test
