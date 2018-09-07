@@ -71,8 +71,8 @@ public interface PublicContentApi {
     TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
                                    ContextData contextData) throws PublicContentApiException;
 
-    TaxonomySitemapItem getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
-                                          int descendantLevels, boolean includeAncestors,
-                                          ContextData contextData) throws PublicContentApiException;
+    TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
+                                            int descendantLevels, boolean includeAncestors,
+                                            ContextData contextData) throws PublicContentApiException;
 
 }

@@ -21,6 +21,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
+
 import static com.sdl.web.pca.client.TestUtils.assertEqualsIgnoreSpaces;
 import static com.sdl.web.pca.client.TestUtils.loadFromResource;
 import static org.junit.Assert.assertEquals;
@@ -92,12 +94,12 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("getSitemapSubtree"));
 
-        TaxonomySitemapItem result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
+        TaxonomySitemapItem[] result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
                 2, true, new ContextData());
 
-        assertEquals("t2680", result.getId());
-        assertEquals(1, result.getItems().size());
-        assertEquals("Used for Taxonomy-based Navigation purposes", result.getDescription());
+        assertEquals("t2680", result[0].getId());
+        assertEquals(1, result[0].getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result[0].getDescription());
     }
 
     @Test

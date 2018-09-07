@@ -13,6 +13,7 @@ import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GraphQLClientTest {
@@ -176,14 +178,23 @@ public class GraphQLClientTest {
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
-                new ContextData()));
+        TaxonomySitemapItem result = publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
+                new ContextData());
+
+        assertEquals("t2680", result.getId());
+        assertEquals(4, result.getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result.getDescription());
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
-                2, true, new ContextData()));
+        TaxonomySitemapItem[] result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8,
+                "t2680-k10019", 2, true, new ContextData());
+
+        assertEquals("t2680", result[0].getId());
+        assertEquals(1, result[0].getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result[0].getDescription());
+
     }
 
     @Test
