@@ -20,8 +20,6 @@ import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.util.CmUri;
 
-import java.util.List;
-
 /**
  * This interface enables java clients to connect to the GraphQL Service
  */
@@ -74,7 +72,7 @@ public interface PublicContentApi {
                                    ContextData contextData) throws PublicContentApiException;
 
     TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
-                                                int descendantLevels, boolean includeAncestors,
-                                                ContextData contextData) throws PublicContentApiException;
+                                            int descendantLevels, boolean includeAncestors,
+                                            ContextData contextData) throws PublicContentApiException;
 
 }
