@@ -283,13 +283,41 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData, String customMetaFilter) throws PublicContentApiException {
         //TODO implement
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        String query = getQueryFor("Publication");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("PublicationFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getResultForRequest(graphQLRequest, Publication.class, "/data/publication");
     }
 
     @Override
     public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter, ContextData contextData, String customMetaFilter) {
         //TODO implement
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, (ContextData) contextData);
+        String query = getQueryFor("Publications");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("PublicationFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("first", pagination.getFirst());
+        variables.put("after", pagination.getAfter());
+        variables.put("filter", filter);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getResultForRequest(graphQLRequest, PublicationConnection.class, "/data/publications");
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
@@ -182,5 +185,34 @@ public class DefaultPublicContentApiTest {
 
         PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
         assertEquals(5, result.getPublicationId());
+    }
+
+    @Test
+    public void getPublication() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class))).thenReturn(loadFromResource("getPublication"));
+
+        Publication result = publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), "");
+        assertNotNull(result);
+
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("400 Example Site", result.getTitle());
+        assertEquals("/", result.getPublicationUrl());
+    }
+
+    @Test
+    public void getPublications() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class))).thenReturn(loadFromResource("getPublications"));
+
+        Pagination pagination = new Pagination();
+        pagination.setFirst(1);
+        PublicationConnection result = publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), "");
+        assertNotNull(result);
+
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getEdges().get(0).getNode().getId());
+        assertEquals(8, result.getEdges().get(0).getNode().getPublicationId());
+        assertEquals("400 Example Site", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(1, result.getEdges().get(0).getNode().getNamespaceId());
+        assertEquals("/", result.getEdges().get(0).getNode().getPublicationUrl());
     }
 }
