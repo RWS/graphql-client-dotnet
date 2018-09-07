@@ -3,8 +3,6 @@ package com.sdl.web.pca.client.util;
 
 import org.slf4j.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
