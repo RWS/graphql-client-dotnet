@@ -215,4 +215,16 @@ public class GraphQLClientTest {
         PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
         assertNotNull(result);
     }
+
+    @Test
+    public void executeGetPublication() {
+        assertNotNull(publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), ""));
+    }
+
+    @Test
+    public void executeGetPublications(){
+        Pagination pagination = new Pagination();
+        pagination.setFirst(1);
+        assertNotNull(publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), ""));
+    }
 }
