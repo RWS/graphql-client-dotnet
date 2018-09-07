@@ -1,0 +1,162 @@
+{
+	"data": {
+		"items": {
+			"edges": [{
+					"cursor": "MQ==",
+					"node": {
+						"id": "dec06688-3c29-36e6-9f91-710c6109aab5",
+						"itemId": 8,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 8,
+						"title": "400 Example Site",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/",
+						"publicationPath": "\\",
+						"multimediaPath": "\\media",
+						"multimediaUrl": "/media/"
+					}
+				}, {
+					"cursor": "Mg==",
+					"node": {
+						"id": "8bc88c06-bd3c-331f-993d-eeafca5ab443",
+						"itemId": 17,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 17,
+						"title": "401 adcevora.com",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/",
+						"publicationPath": "\\",
+						"multimediaPath": "\\media",
+						"multimediaUrl": "/media"
+					}
+				}, {
+					"cursor": "Mw==",
+					"node": {
+						"id": "d77db3d1-593c-3aee-8370-b324c9f1ef8e",
+						"itemId": 1065,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 1065,
+						"title": "401 Automated Test Parent",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/autotest-parent",
+						"publicationPath": "\\",
+						"multimediaPath": "\\Images",
+						"multimediaUrl": "/autotest-parent/Images"
+					}
+				}, {
+					"cursor": "NA==",
+					"node": {
+						"id": "c39cf688-6160-3bfd-bad3-80ad65e8a600",
+						"itemId": 1078,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 1078,
+						"title": "500 Automated Test Child",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/autotest-child",
+						"publicationPath": "\\",
+						"multimediaPath": "\\Images",
+						"multimediaUrl": "/autotest-child/Images"
+					}
+				}, {
+					"cursor": "NQ==",
+					"node": {
+						"id": "b0362468-33e0-3f21-b0d9-4d9466f94df3",
+						"itemId": 1081,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 1081,
+						"title": "500 Automated Test Parent (Legacy)",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/autotest-parent-legacy",
+						"publicationPath": "\\",
+						"multimediaPath": "\\Images",
+						"multimediaUrl": "/autotest-parent-legacy/Images"
+					}
+				}, {
+					"cursor": "Ng==",
+					"node": {
+						"id": "3c0b637c-ccbd-3cfb-9c3c-b029032cdcb0",
+						"itemId": 1082,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 1082,
+						"title": "500 Example Site (Legacy)",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/example-legacy",
+						"publicationPath": "\\",
+						"multimediaPath": "\\media",
+						"multimediaUrl": "/example-legacy/media"
+					}
+				}, {
+					"cursor": "Nw==",
+					"node": {
+						"id": "66958b1f-018c-3ee1-bb8f-3ca7f24d4dff",
+						"itemId": 1083,
+						"itemType": 1,
+						"namespaceId": 1,
+						"owningPublicationId": null,
+						"publicationId": 1083,
+						"title": "600 Automated Test Child (Legacy)",
+						"lastPublishDate": null,
+						"creationDate": null,
+						"initialPublishDate": null,
+						"updatedDate": null,
+						"customMetas": {
+							"edges": []
+						},
+						"publicationUrl": "/autotest-child-legacy",
+						"publicationPath": "\\",
+						"multimediaPath": "\\Images",
+						"multimediaUrl": "/autotest-child-legacy/Images"
+					}
+				}
+			]
+		}
+	}
+}

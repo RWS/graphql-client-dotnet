@@ -1,5 +1,8 @@
 package com.sdl.web.pca.client.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ItemTypes {
     NULL(0),
     IDNULL(-1),
@@ -14,11 +17,20 @@ public enum ItemTypes {
     TARGET_GROUP(256),
     PUBLICATION_TARGET(512),
     KEYWORD(1024),
+    COMPONENT_PRESENTATION(2048),
     TARGET_TYPE(33554432),
     TARGET_DESTINATION(67108864),
     TRANSACTION(66560);
 
     private int value;
+
+    private static final Map<Integer, ItemTypes> itemTypeById = new HashMap<>();
+
+    static {
+        for (ItemTypes itemType : ItemTypes.values()) {
+            itemTypeById.put(itemType.value, itemType);
+        }
+    }
 
     ItemTypes(int value) {
         this.value = value;
@@ -26,5 +38,9 @@ public enum ItemTypes {
 
     public int getValue() {
         return value;
+    }
+
+    public static ItemTypes getById(int id) {
+        return itemTypeById.get(id);
     }
 }

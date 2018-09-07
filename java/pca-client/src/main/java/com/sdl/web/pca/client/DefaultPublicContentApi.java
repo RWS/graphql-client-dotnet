@@ -13,12 +13,11 @@ import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
-import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
+import com.sdl.web.pca.client.contentmodel.generated.Item;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
@@ -26,6 +25,7 @@ import com.sdl.web.pca.client.contentmodel.generated.SitemapItem;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.jsonmapper.ItemDeserializer;
 import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
@@ -39,12 +39,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.regex.Pattern.DOTALL;
+import static java.util.regex.Pattern.MULTILINE;
 
 public class DefaultPublicContentApi implements PublicContentApi {
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final Pattern FRAGMENT_NAMES_FROM_BODY = Pattern.compile("^\\s*[.]{3}(?<fragmentName>\\w*)\\s*$",
+            DOTALL | MULTILINE);
+
 
     private GraphQLClient client;
     private Map<String, String> queries = new HashMap<>();
@@ -64,6 +72,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         SimpleModule module = new SimpleModule();
         module.addDeserializer(SitemapItem.class, new SitemapDeserializer(SitemapItem.class, MAPPER));
+        module.addDeserializer(Item.class, new ItemDeserializer(Item.class, MAPPER));
         MAPPER.registerModule(module);
     }
 
@@ -161,8 +170,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
-                                                 int descendantLevels, boolean includeAncestors,
-                                                 ContextData contextData) throws PublicContentApiException {
+                                                   int descendantLevels, boolean includeAncestors,
+                                                   ContextData contextData) throws PublicContentApiException {
         ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("SitemapSubtree");
         query += getFragmentFor("TaxonomyItemFields");
@@ -247,37 +256,42 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                            ContextData contextData, String customMetaFilter,
                                            boolean renderContent) throws PublicContentApiException {
-        //TODO fix: sort, contextData, customMetaFilter is not used in current implementation
-        customMetaFilter = "";
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("ItemQuery");
-        query += getFragmentFor("ItemFields");
-        query += getFragmentFor("CustomMetaFields");
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
-        if (filter.getItemTypes() != null) {
-            String fragmentList = "";
-            for (ItemType itemType : filter.getItemTypes()) {
-                String fragment = itemType.name().substring(0, 1).toUpperCase()
-                        + itemType.name().substring(1).toLowerCase() + "Fields";
-                query += getFragmentFor(fragment);
-                fragmentList += "..." + fragment + "\n";
-            }
-            // Just a quick and easy way to replace markers in our queries with vars here.
-            query = query.replace("@fragmentList", fragmentList);
-            query = query.replace("@customMetaFilter", "\"" + customMetaFilter + "\"");
-        }
+        if (filter != null && filter.getItemTypes() != null) {
+            List<String> fragments = mapToFragmentList(filter);
+            // generate list of fragments
+            String fragmentList = fragments.stream()
+                    .map(fragment -> "..." + fragment + "\n")
+                    .reduce("", String::concat);
 
-        InputClaimValue[] inputClaimValues = new InputClaimValue[0];
+            query = query.replace("@fragmentList", fragmentList);
+        }
+        query = updateQueryWithFragments(query);
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+        query = QueryUtils.injectRenderContentArgs(query, renderContent);
+
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("first", pagination.getFirst());
         variables.put("after", pagination.getAfter());
         variables.put("filter", filter);
-        variables.put("contextData", inputClaimValues);
+        variables.put("sort", sort);
+        variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, ItemConnection.class);
+        return getResultForRequest(graphQLRequest, ItemConnection.class, "/data/items");
+    }
+
+    List<String> mapToFragmentList(InputItemFilter filter) {
+        return filter.getItemTypes().stream().map(type -> Arrays.stream(type.toString().split("_"))
+                .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase())
+                .reduce("", String::concat)
+                + "Fields"
+        ).collect(Collectors.toList());
     }
 
     @Override
@@ -329,7 +343,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"/data/pageLink/url").asText();
+        return getJsonResult(graphQLRequest, "/data/pageLink/url").asText();
     }
 
     @Override
@@ -346,7 +360,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"/data/componentLink/url").asText();
+        return getJsonResult(graphQLRequest, "/data/componentLink/url").asText();
     }
 
     @Override
@@ -363,7 +377,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
 
-        return getJsonResult(graphQLRequest,"/data/binaryLink/url").asText();
+        return getJsonResult(graphQLRequest, "/data/binaryLink/url").asText();
     }
 
     @Override
@@ -380,7 +394,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getJsonResult(graphQLRequest,"/data/dynamicComponentLink/url").asText();
+        return getJsonResult(graphQLRequest, "/data/dynamicComponentLink/url").asText();
     }
 
     @Override
@@ -395,9 +409,30 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        PublicationMapping result = getResultForRequest(graphQLRequest,PublicationMapping.class,"/data/publicationMapping");
+        PublicationMapping result = getResultForRequest(graphQLRequest, PublicationMapping.class, "/data/publicationMapping");
         return result;
 
+    }
+
+    String updateQueryWithFragments(String query) {
+        Map<String, String> fragments = new HashMap<>();
+        fragments = loadFragmentsRecursively(fragments, query);
+        return fragments.values().stream().reduce(query, String::concat);
+    }
+
+    Map<String, String> loadFragmentsRecursively(Map<String, String> loadedFragments, String queryPart) {
+        Matcher matcher = FRAGMENT_NAMES_FROM_BODY.matcher(queryPart);
+        while (matcher.find()) {
+            String fragmentName = matcher.group("fragmentName");
+            if (!loadedFragments.containsKey(fragmentName)) {
+                String fragmentBody = getFragmentFor(fragmentName);
+                loadedFragments.put(fragmentName, fragmentBody);
+                loadFragmentsRecursively(loadedFragments, fragmentBody);
+            }
+            String fragmentBody = getFragmentFor(fragmentName);
+            loadFragmentsRecursively(loadedFragments, fragmentBody);
+        }
+        return loadedFragments;
     }
 
     private String getQueryFor(String queryName) throws PublicContentApiException {

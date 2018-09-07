@@ -317,8 +317,9 @@ public class CmUri implements Comparable<CmUri> {
         DOCS("ish", 2);
 
         private static final Map<String, Namespace> namespaceByName = new HashMap<>();
+
         static {
-            for(Namespace namespace: Namespace.values()) {
+            for (Namespace namespace : Namespace.values()) {
                 namespaceByName.put(namespace.name, namespace);
             }
         }

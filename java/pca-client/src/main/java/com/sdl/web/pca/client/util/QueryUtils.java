@@ -33,7 +33,7 @@ public class QueryUtils {
 
     public static String injectVariantsArgs(String query, String url) {
         return query.replace("@variantsArgs", isNullOrEmpty(url) ? "" : ("(url: \"" + url + "\")"));
-   }
+    }
 
     public static String injectCustomMetaFilter(String query, String customMetaFilter) {
         return query.replace("@customMetaArgs", isNullOrEmpty(customMetaFilter) ? "" : ("filter: " + customMetaFilter));
@@ -60,7 +60,6 @@ public class QueryUtils {
     private static boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
-
 
 
 }
