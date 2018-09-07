@@ -160,7 +160,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public TaxonomySitemapItem getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
+    public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
                                                  int descendantLevels, boolean includeAncestors,
                                                  ContextData contextData) throws PublicContentApiException {
         ContextData mergedData = mergeContextData(defaultContextData, contextData);
@@ -178,7 +178,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemapSubtree");
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem[].class, "/data/sitemapSubtree");
     }
 
     @Override
@@ -282,7 +282,6 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData, String customMetaFilter) throws PublicContentApiException {
-        //TODO implement
         ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("Publication");
         query += getFragmentFor("ItemFields");
@@ -301,7 +300,6 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter, ContextData contextData, String customMetaFilter) {
-        //TODO implement
         ContextData mergedData = mergeContextData(defaultContextData, (ContextData) contextData);
         String query = getQueryFor("Publications");
         query += getFragmentFor("ItemFields");
