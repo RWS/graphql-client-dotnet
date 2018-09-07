@@ -1,17 +1,19 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.InputClaimValue;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.ItemType;
 import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import org.junit.Before;
@@ -22,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GraphQLClientTest {
@@ -97,7 +100,7 @@ public class GraphQLClientTest {
     public void executePageItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -113,7 +116,7 @@ public class GraphQLClientTest {
     public void executeComponentItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -129,7 +132,7 @@ public class GraphQLClientTest {
     public void executeKeywordItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -144,7 +147,7 @@ public class GraphQLClientTest {
     public void executePublicationItemQuery() throws Exception {
 
         InputItemFilter filter = new InputItemFilter();
-        filter.setNamespaceIds(Collections.singletonList(1));
+        filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
         filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
         InputClaimValue[] inputClaimValues = new InputClaimValue[0];
 
@@ -175,14 +178,64 @@ public class GraphQLClientTest {
 
     @Test
     public void executeGetSitemap() {
-        assertNotNull(publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
-                new ContextData()));
+        TaxonomySitemapItem result = publicContentApi.getSitemap(ContentNamespace.Sites, 8, 2,
+                new ContextData());
+
+        assertEquals("t2680", result.getId());
+        assertEquals(4, result.getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result.getDescription());
     }
 
     @Test
     public void executeGetSitemapSubtree() {
-        assertNotNull(publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
-                2, true, new ContextData()));
+        TaxonomySitemapItem[] result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8,
+                "t2680-k10019", 2, true, new ContextData());
+
+        assertEquals("t2680", result[0].getId());
+        assertEquals(1, result[0].getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result[0].getDescription());
+
     }
 
+    @Test
+    public void executeResolveBinaryLink() {
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]",true);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolvePageLink() {
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447,true);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolveComponentLink() {
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292,true);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeResolveDynamicComponentLink() {
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195,true);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executegetPulbicationMapping() {
+        PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
+        assertNotNull(result);
+    }
+
+    @Test
+    public void executeGetPublication() {
+        assertNotNull(publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), ""));
+    }
+
+    @Test
+    public void executeGetPublications(){
+        Pagination pagination = new Pagination();
+        pagination.setFirst(1);
+        assertNotNull(publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), ""));
+    }
 }

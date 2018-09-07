@@ -1,75 +1,74 @@
 {
 	"data": {
-		"sitemapSubtree": {
-			"id": "t2680",
-			"title": "Sitemap [Navigation]",
-			"originalTitle": "Sitemap [Navigation]",
-			"url": null,
-			"type": "TaxonomyNode",
-			"publishedDate": null,
-			"visible": false,
-			"description": "Used for Taxonomy-based Navigation purposes",
-			"key": "",
-			"abstract": true,
-			"hasChildNodes": true,
-			"classifiedItemsCount": 17,
-			"items": [{
-					"id": "t2680-k10019",
-					"title": "About",
-					"originalTitle": "About",
-					"url": "/about",
-					"type": "TaxonomyNode",
-					"publishedDate": null,
-					"visible": false,
-					"description": "",
-					"key": "",
-					"abstract": false,
-					"hasChildNodes": true,
-					"classifiedItemsCount": 5,
-					"items": [{
-							"id": "t2680-p648",
-							"title": "Company Information",
-							"originalTitle": "000 Company Information",
-							"url": "/about/index",
-							"type": "Page",
-							"publishedDate": "2018-06-25T14:01:17.067+03:00",
-							"visible": true
-						}, {
-							"id": "t2680-p649",
-							"title": "Office Location",
-							"originalTitle": "020 Office Location",
-							"url": "/about/office-location",
-							"type": "Page",
-							"publishedDate": "2018-06-25T14:01:17.097+03:00",
-							"visible": true
-						}, {
-							"id": "t2680-p650",
-							"title": "Contact",
-							"originalTitle": "030 Contact",
-							"url": "/about/contact",
-							"type": "Page",
-							"publishedDate": "2018-06-25T14:01:17.133+03:00",
-							"visible": true
-						}, {
-							"id": "t2680-p651",
-							"title": "Terms of use",
-							"originalTitle": "040 Terms of use",
-							"url": "/about/terms",
-							"type": "Page",
-							"publishedDate": "2018-06-25T14:01:17.157+03:00",
-							"visible": true
-						}, {
-							"id": "t2680-p652",
-							"title": "Privacy Policy",
-							"originalTitle": "050 Privacy Policy",
-							"url": "/about/privacy",
-							"type": "Page",
-							"publishedDate": "2018-06-25T14:01:17.207+03:00",
-							"visible": true
-						}
-					]
-				}
-			]
-		}
+		"sitemapSubtree": [{
+				"id": "t2680",
+				"title": "Sitemap [Navigation]",
+				"originalTitle": "Sitemap [Navigation]",
+				"url": null,
+				"type": "TaxonomyNode",
+				"visible": false,
+				"description": "Used for Taxonomy-based Navigation purposes",
+				"key": "",
+				"abstract": true,
+				"hasChildNodes": true,
+				"classifiedItemsCount": 17,
+				"items": [{
+						"id": "t2680-k10019",
+						"title": "About",
+						"originalTitle": "About",
+						"url": "/about",
+						"type": "TaxonomyNode",
+						"visible": false,
+						"description": "",
+						"key": "",
+						"abstract": false,
+						"hasChildNodes": true,
+						"classifiedItemsCount": 5,
+						"items": [{
+								"id": "t2680-p648",
+								"title": "Company Information",
+								"originalTitle": "000 Company Information",
+								"url": "/about/index",
+								"type": "Page",
+								"publishedDate": "2018-06-25T14:01:17.067+03:00",
+								"visible": true
+							}, {
+								"id": "t2680-p649",
+								"title": "Office Location",
+								"originalTitle": "020 Office Location",
+								"url": "/about/office-location",
+								"type": "Page",
+								"publishedDate": "2018-06-25T14:01:17.097+03:00",
+								"visible": true
+							}, {
+								"id": "t2680-p650",
+								"title": "Contact",
+								"originalTitle": "030 Contact",
+								"url": "/about/contact",
+								"type": "Page",
+								"publishedDate": "2018-06-25T14:01:17.133+03:00",
+								"visible": true
+							}, {
+								"id": "t2680-p651",
+								"title": "Terms of use",
+								"originalTitle": "040 Terms of use",
+								"url": "/about/terms",
+								"type": "Page",
+								"publishedDate": "2018-06-25T14:01:17.157+03:00",
+								"visible": true
+							}, {
+								"id": "t2680-p652",
+								"title": "Privacy Policy",
+								"originalTitle": "050 Privacy Policy",
+								"url": "/about/privacy",
+								"type": "Page",
+								"publishedDate": "2018-06-25T14:01:17.207+03:00",
+								"visible": true
+							}
+						]
+					}
+				]
+			}
+		]
 	}
 }

@@ -1,16 +1,20 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sdl.web.pca.client.contentmodel.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.ItemType;
-import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
+import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.ItemType;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import org.junit.Test;
@@ -93,12 +97,12 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("getSitemapSubtree"));
 
-        TaxonomySitemapItem result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
+        TaxonomySitemapItem[] result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
                 2, true, new ContextData());
 
-        assertEquals("t2680", result.getId());
-        assertEquals(1, result.getItems().size());
-        assertEquals("Used for Taxonomy-based Navigation purposes", result.getDescription());
+        assertEquals("t2680", result[0].getId());
+        assertEquals(1, result[0].getItems().size());
+        assertEquals("Used for Taxonomy-based Navigation purposes", result[0].getDescription());
     }
 
     @Test
@@ -141,6 +145,80 @@ public class DefaultPublicContentApiTest {
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
         assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0)
                 .getNode().getDownloadUrl());
+    }
+
+    @Test
+    public void resolvePageLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolvePageLink"));
+
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447, true);
+        assertEquals("/system/include/content-tools.html", result);
+    }
+
+    @Test
+    public void resolveComponentLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveComponentLink"));
+
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286, 640, 3292, true);
+        assertEquals("/articles/all-articles.html", result);
+    }
+
+    @Test
+    public void resolveBinaryLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveBinaryLink"));
+
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]", true);
+        assertEquals("/media/balloons_tcm8-756.jpg", result);
+    }
+
+    @Test
+    public void resolveDynamicComponentLink() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("resolveDynamicComponentLink"));
+
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569, 4565, 9195, true);
+        assertEquals("/example-legacy/articles/news/news1.html", result);
+    }
+
+    @Test
+    public void getPublicationMapping() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPublicationMapping"));
+
+        PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
+        assertEquals(5, result.getPublicationId());
+    }
+
+    @Test
+    public void getPublication() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class))).thenReturn(loadFromResource("getPublication"));
+
+        Publication result = publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), "");
+        assertNotNull(result);
+
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("400 Example Site", result.getTitle());
+        assertEquals("/", result.getPublicationUrl());
+    }
+
+    @Test
+    public void getPublications() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class))).thenReturn(loadFromResource("getPublications"));
+
+        Pagination pagination = new Pagination();
+        pagination.setFirst(1);
+        PublicationConnection result = publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), "");
+        assertNotNull(result);
+
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getEdges().get(0).getNode().getId());
+        assertEquals(8, result.getEdges().get(0).getNode().getPublicationId());
+        assertEquals("400 Example Site", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(1, result.getEdges().get(0).getNode().getNamespaceId());
+        assertEquals("/", result.getEdges().get(0).getNode().getPublicationUrl());
     }
 
     @Test

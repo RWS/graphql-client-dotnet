@@ -3,26 +3,28 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.BinaryComponent;
-import com.sdl.web.pca.client.contentmodel.ClaimValue;
-import com.sdl.web.pca.client.contentmodel.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.ContentType;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sdl.web.pca.client.contentmodel.ContextData;
-import com.sdl.web.pca.client.contentmodel.IContextData;
-import com.sdl.web.pca.client.contentmodel.IPagination;
-import com.sdl.web.pca.client.contentmodel.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.InputPublicationFilter;
-import com.sdl.web.pca.client.contentmodel.InputSortParam;
-import com.sdl.web.pca.client.contentmodel.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.Publication;
-import com.sdl.web.pca.client.contentmodel.PublicationConnection;
-import com.sdl.web.pca.client.contentmodel.PublicationMapping;
-import com.sdl.web.pca.client.contentmodel.TaxonomySitemapItem;
+import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
+import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
+import com.sdl.web.pca.client.contentmodel.generated.SitemapItem;
+import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import com.sdl.web.pca.client.util.QueryUtils;
@@ -65,6 +67,10 @@ public class DefaultPublicContentApi implements PublicContentApi {
         this.requestTimeout = requestTimeout;
         this.defaultContextData = new ContextData();
         this.defaultContextData.setClaimValues(Collections.EMPTY_LIST);
+
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(SitemapItem.class, new SitemapDeserializer(SitemapItem.class, MAPPER));
+        MAPPER.registerModule(module);
     }
 
     @Override
@@ -160,9 +166,9 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public TaxonomySitemapItem getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
-                                                 int descendantLevels, boolean includeAncestors,
-                                                 ContextData contextData) throws PublicContentApiException {
+    public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
+                                                   int descendantLevels, boolean includeAncestors,
+                                                   ContextData contextData) throws PublicContentApiException {
         ContextData mergedData = mergeContextData(defaultContextData, contextData);
         String query = getQueryFor("SitemapSubtree");
         query += getFragmentFor("TaxonomyItemFields");
@@ -178,7 +184,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("contextData", mergedData.getClaimValues());
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemapSubtree");
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem[].class, "/data/sitemapSubtree");
     }
 
     @Override
@@ -244,7 +250,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
+    public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                            ContextData contextData, String customMetaFilter,
                                            boolean renderContent) throws PublicContentApiException {
         ContextData mergedData = mergeContextData(defaultContextData, contextData);
@@ -287,47 +293,122 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData, String customMetaFilter) throws PublicContentApiException {
-        //TODO implement
-        return null;
+        ContextData mergedData = mergeContextData(defaultContextData, contextData);
+        String query = getQueryFor("Publication");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("PublicationFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getResultForRequest(graphQLRequest, Publication.class, "/data/publication");
     }
 
     @Override
-    public PublicationConnection getPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter, IContextData contextData, String customMetaFilter) {
-        //TODO implement
-        return null;
+    public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter, ContextData contextData, String customMetaFilter) {
+        ContextData mergedData = mergeContextData(defaultContextData, (ContextData) contextData);
+        String query = getQueryFor("Publications");
+        query += getFragmentFor("ItemFields");
+        query += getFragmentFor("PublicationFields");
+        query += getFragmentFor("CustomMetaFields");
+        query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("first", pagination.getFirst());
+        variables.put("after", pagination.getAfter());
+        variables.put("filter", filter);
+        variables.put("contextData", mergedData.getClaimValues());
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getResultForRequest(graphQLRequest, PublicationConnection.class, "/data/publications");
     }
 
     @Override
-    public String ResolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+    public String resolvePageLink(ContentNamespace ns, int publicationId, int pageId, boolean renderRelativeLink) throws PublicContentApiException {
+        String query = getQueryFor("ResolvePageLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("pageId", pageId);
+        variables.put("renderRelativeLink", renderRelativeLink);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest, "/data/pageLink/url").asText();
     }
 
     @Override
-    public String ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
-                                       Integer excludeComponentTemplateId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+    public String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
+                                       Integer excludeComponentTemplateId, boolean renderRelativeLink) throws PublicContentApiException {
+        String query = getQueryFor("ResolveComponentLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("targetComponentId", componentId);
+        variables.put("sourcePageId", sourcePageId);
+        variables.put("excludeComponentTemplateId", excludeComponentTemplateId);
+        variables.put("renderRelativeLink", renderRelativeLink);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest, "/data/componentLink/url").asText();
     }
 
     @Override
-    public String ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
-                                    String variantId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+    public String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
+                                    String variantId, boolean renderRelativeLink) throws PublicContentApiException {
+        String query = getQueryFor("ResolveBinaryLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("binaryId", binaryId);
+        variables.put("variantId", variantId);
+        variables.put("renderRelativeLink", renderRelativeLink);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+
+        return getJsonResult(graphQLRequest, "/data/binaryLink/url").asText();
     }
 
     @Override
-    public String ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-                                              int templateId) throws PublicContentApiException {
-        //TODO implement
-        return null;
+    public String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
+                                              int templateId, boolean renderRelativeLink) throws PublicContentApiException {
+        String query = getQueryFor("ResolveDynamicComponentLink");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("publicationId", publicationId);
+        variables.put("targetPageId", pageId);
+        variables.put("targetComponentId", componentId);
+        variables.put("targetTemplateId", templateId);
+        variables.put("renderRelativeLink", renderRelativeLink);
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        return getJsonResult(graphQLRequest, "/data/dynamicComponentLink/url").asText();
     }
 
     @Override
     public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
-        //TODO implement
-        return null;
+
+        String query = getQueryFor("PublicationMapping");
+        query += getFragmentFor("PublicationMappingFields");
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("namespaceId", ns.getNameSpaceValue());
+        variables.put("siteUrl", url);
+
+
+        GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
+        PublicationMapping result = getResultForRequest(graphQLRequest, PublicationMapping.class, "/data/publicationMapping");
+        return result;
+
     }
 
     String updateQueryWithFragments(String query) {

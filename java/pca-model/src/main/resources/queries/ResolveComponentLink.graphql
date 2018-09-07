@@ -1,5 +1,5 @@
-﻿query componentLink($namespaceId: Int!, $publicationId: Int!, $sourcePageId: Int, $targetComponentId: Int!, $excludeComponentTemplateId: Int) {
-	componentLink(namespaceId: $namespaceId, publicationId: $publicationId, sourcePageId: $sourcePageId, targetComponentId: $targetComponentId, excludeComponentTemplateId: $excludeComponentTemplateId) {
+﻿query componentLink($namespaceId: Int!, $publicationId: Int!, $sourcePageId: Int, $targetComponentId: Int!, $excludeComponentTemplateId: Int, $renderRelativeLink: Boolean) {
+	componentLink(namespaceId: $namespaceId, publicationId: $publicationId, sourcePageId: $sourcePageId, targetComponentId: $targetComponentId, excludeComponentTemplateId: $excludeComponentTemplateId, renderRelativeLink: $renderRelativeLink) {
 		url
 	}
 }
