@@ -9,6 +9,7 @@ import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.Component;
 import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
@@ -187,9 +188,12 @@ public class DefaultPublicContentApiTest {
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
-        assertNotNull(result);
-        //TODO fix and add assertions
 
+        assertEquals(10, result.getEdges().size());
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals(Component.class, result.getEdges().get(0).getNode().getClass());
+        assertEquals("Core", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(ItemTypes.COMPONENT.getValue(), result.getEdges().get(0).getNode().getItemType());
     }
 
     @Test

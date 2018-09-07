@@ -1,14 +1,14 @@
 package com.sdl.web.pca.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
-import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
+import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
-import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.Component;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
@@ -130,9 +130,11 @@ public class GraphQLClientTest {
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
                 null, false);
 
-        //TODO fix and add asserts
         assertEquals(10, result.getEdges().size());
-        assertNotNull(result);
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals(Component.class, result.getEdges().get(0).getNode().getClass());
+        assertEquals("Core", result.getEdges().get(0).getNode().getTitle());
+        assertEquals(ItemTypes.COMPONENT.getValue(), result.getEdges().get(0).getNode().getItemType());
     }
 
     @Test
@@ -214,25 +216,25 @@ public class GraphQLClientTest {
 
     @Test
     public void executeResolveBinaryLink() {
-        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]",true);
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]", true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolvePageLink() {
-        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447,true);
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447, true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolveComponentLink() {
-        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292,true);
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286, 640, 3292, true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolveDynamicComponentLink() {
-        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195,true);
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569, 4565, 9195, true);
         assertNotNull(result);
     }
 
@@ -248,7 +250,7 @@ public class GraphQLClientTest {
     }
 
     @Test
-    public void executeGetPublications(){
+    public void executeGetPublications() {
         Pagination pagination = new Pagination();
         pagination.setFirst(1);
         assertNotNull(publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), ""));

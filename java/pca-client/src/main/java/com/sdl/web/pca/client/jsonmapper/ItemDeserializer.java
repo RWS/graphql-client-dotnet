@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.sdl.web.pca.client.contentmodel.generated.Component;
 import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
 import com.sdl.web.pca.client.contentmodel.generated.Item;
 import com.sdl.web.pca.client.contentmodel.generated.Keyword;
@@ -37,7 +38,7 @@ public class ItemDeserializer extends StdDeserializer<Item> {
             case PUBLICATION:
                 return mapper.treeToValue(node, Publication.class);
             case COMPONENT:
-                return mapper.treeToValue(node, ComponentPresentation.class);
+                return mapper.treeToValue(node, Component.class);
             case PUBLICATION_TARGET:
             case KEYWORD:
                 return mapper.treeToValue(node, Keyword.class);

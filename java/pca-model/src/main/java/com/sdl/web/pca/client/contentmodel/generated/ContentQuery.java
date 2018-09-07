@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.contentmodel.generated;
 
+import java.util.List;
 
 /**
 *The query root for the GraphQL Public Content API.
@@ -22,7 +23,7 @@ public class ContentQuery {
 		private StructureGroup structureGroup;
 		private StructureGroupConnection structureGroups;
 		private TaxonomySitemapItem sitemap;
-		private TaxonomySitemapItem sitemapSubtree;
+		private List<TaxonomySitemapItem> sitemapSubtree;
 
 
 		public BinaryComponent getBinaryComponent(){
@@ -161,10 +162,10 @@ public class ContentQuery {
 		}
 
 
-		public TaxonomySitemapItem getSitemapSubtree(){
+		public List<TaxonomySitemapItem> getSitemapSubtree(){
 			return sitemapSubtree;
 		}
-		public void setSitemapSubtree(TaxonomySitemapItem sitemapSubtree){
+		public void setSitemapSubtree(List<TaxonomySitemapItem> sitemapSubtree){
 			this.sitemapSubtree = sitemapSubtree;
 		}
 	
