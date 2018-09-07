@@ -147,7 +147,7 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("resolvePageLink"));
 
-        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites,8,4447);
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites,8,4447,true);
         assertEquals("/system/include/content-tools.html", result);
     }
 
@@ -156,7 +156,7 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("resolveComponentLink"));
 
-        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292,true);
         assertEquals("/articles/all-articles.html", result);
     }
 
@@ -165,7 +165,7 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("resolveBinaryLink"));
 
-        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]");
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]",true);
         assertEquals("/media/balloons_tcm8-756.jpg", result);
     }
 
@@ -174,7 +174,7 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("resolveDynamicComponentLink"));
 
-        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195);
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195,true);
         assertEquals("/example-legacy/articles/news/news1.html", result);
     }
 

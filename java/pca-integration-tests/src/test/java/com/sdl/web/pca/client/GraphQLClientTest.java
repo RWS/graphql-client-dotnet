@@ -188,25 +188,25 @@ public class GraphQLClientTest {
 
     @Test
     public void executeResolveBinaryLink() {
-        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]");
+        String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]",true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolvePageLink() {
-        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447);
+        String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447,true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolveComponentLink() {
-        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292);
+        String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286,640,3292,true);
         assertNotNull(result);
     }
 
     @Test
     public void executeResolveDynamicComponentLink() {
-        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195);
+        String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569,4565,9195,true);
         assertNotNull(result);
     }
 

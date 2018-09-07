@@ -42,16 +42,16 @@ public interface PublicContentApi {
     PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter,
                                           ContextData contextData, String customMetaFilter);
 
-    String resolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException;
+    String resolvePageLink(ContentNamespace ns, int publicationId, int pageId, boolean renderRelativeLink) throws PublicContentApiException;
 
     String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
-                                Integer excludeComponentTemplateId) throws PublicContentApiException;
+                                Integer excludeComponentTemplateId, boolean renderRelativeLink) throws PublicContentApiException;
 
     String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
-                             String variantId) throws PublicContentApiException;
+                             String variantId, boolean renderRelativeLink) throws PublicContentApiException;
 
     String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-                                       int templateId) throws PublicContentApiException;
+                                       int templateId, boolean renderRelativeLink) throws PublicContentApiException;
 
     PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException;
 

@@ -314,13 +314,14 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public String resolvePageLink(ContentNamespace ns, int publicationId, int pageId) throws PublicContentApiException {
+    public String resolvePageLink(ContentNamespace ns, int publicationId, int pageId, boolean renderRelativeLink) throws PublicContentApiException {
         String query = getQueryFor("ResolvePageLink");
 
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("namespaceId", ns.getNameSpaceValue());
         variables.put("publicationId", publicationId);
         variables.put("pageId", pageId);
+        variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
         return getJsonResult(graphQLRequest,"/data/pageLink/url").asText();
@@ -328,7 +329,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
-                                       Integer excludeComponentTemplateId) throws PublicContentApiException {
+                                       Integer excludeComponentTemplateId, boolean renderRelativeLink) throws PublicContentApiException {
         String query = getQueryFor("ResolveComponentLink");
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -337,6 +338,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("targetComponentId", componentId);
         variables.put("sourcePageId", sourcePageId);
         variables.put("excludeComponentTemplateId", excludeComponentTemplateId);
+        variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
         return getJsonResult(graphQLRequest,"/data/componentLink/url").asText();
@@ -344,7 +346,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
-                                    String variantId) throws PublicContentApiException {
+                                    String variantId, boolean renderRelativeLink) throws PublicContentApiException {
         String query = getQueryFor("ResolveBinaryLink");
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -352,6 +354,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("publicationId", publicationId);
         variables.put("binaryId", binaryId);
         variables.put("variantId", variantId);
+        variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
 
@@ -360,7 +363,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-                                              int templateId) throws PublicContentApiException {
+                                              int templateId, boolean renderRelativeLink) throws PublicContentApiException {
         String query = getQueryFor("ResolveDynamicComponentLink");
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -369,6 +372,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         variables.put("targetPageId", pageId);
         variables.put("targetComponentId", componentId);
         variables.put("targetTemplateId", templateId);
+        variables.put("renderRelativeLink", renderRelativeLink);
 
         GraphQLRequest graphQLRequest = new GraphQLRequest(query, variables, requestTimeout);
         return getJsonResult(graphQLRequest,"/data/dynamicComponentLink/url").asText();
