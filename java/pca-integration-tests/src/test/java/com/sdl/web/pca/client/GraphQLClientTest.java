@@ -8,6 +8,7 @@ import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
@@ -15,6 +16,7 @@ import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Keyword;
 import com.sdl.web.pca.client.contentmodel.generated.Page;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
+import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
@@ -51,22 +53,61 @@ public class GraphQLClientTest {
 
     @Test
     public void getBinaryComponentById() throws Exception {
-        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756,
+        BinaryComponent result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756,
                 null);
-        assertNotNull(result);
+
+        assertEquals(BinaryComponent.class, result.getClass());
+        assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
+        assertEquals(1, result.getNamespaceId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
+        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
+        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
+        assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
+        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
+
     }
 
     @Test
     public void getBinaryComponentByUrl() throws Exception {
-        Object result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
+        BinaryComponent result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
                 "/media/balloons_tcm8-756.jpg", null);
-        assertNotNull(result);
+
+        assertEquals(BinaryComponent.class, result.getClass());
+        assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
+        assertEquals(1, result.getNamespaceId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
+        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
+        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
+        assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
+        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
+
     }
 
     @Test
     public void getBinaryCompoonentByCmUri() throws Exception {
-        Object result = publicContentApi.getBinaryComponent(new CmUri("tcm:8-756-16"), new ContextData());
-        assertNotNull(result);
+        BinaryComponent result = publicContentApi.getBinaryComponent(new CmUri("tcm:8-756-16"), new ContextData());
+
+        assertEquals(BinaryComponent.class, result.getClass());
+        assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
+        assertEquals(756, result.getItemId());
+        assertEquals(1, result.getNamespaceId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
+        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
+        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
+        assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
+        assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
+        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
     }
 
     @Test
@@ -217,42 +258,70 @@ public class GraphQLClientTest {
     @Test
     public void executeResolveBinaryLink() {
         String result = publicContentApi.resolveBinaryLink(ContentNamespace.Sites, 8, 756, "[#def#]", true);
-        assertNotNull(result);
+        assertEquals("/media/balloons_tcm8-756.jpg", result);
     }
 
     @Test
     public void executeResolvePageLink() {
         String result = publicContentApi.resolvePageLink(ContentNamespace.Sites, 8, 4447, true);
-        assertNotNull(result);
+        assertEquals("/system/include/content-tools.html", result);
     }
 
     @Test
     public void executeResolveComponentLink() {
         String result = publicContentApi.resolveComponentLink(ContentNamespace.Sites, 8, 3286, 640, 3292, true);
-        assertNotNull(result);
+        assertEquals("/articles/all-articles.html", result);
     }
 
     @Test
     public void executeResolveDynamicComponentLink() {
         String result = publicContentApi.resolveDynamicComponentLink(ContentNamespace.Sites, 1082, 4569, 4565, 9195, true);
-        assertNotNull(result);
+        assertEquals("/example-legacy/articles/news/news1.html", result);
     }
 
     @Test
     public void executegetPulbicationMapping() {
         PublicationMapping result = publicContentApi.getPublicationMapping(ContentNamespace.Sites, "http://localhost:8882/");
-        assertNotNull(result);
+
+        assertEquals(PublicationMapping.class, result.getClass());
+        assertEquals(5, result.getPublicationId());
+        assertEquals("http", result.getProtocol());
+        assertEquals("localhost", result.getDomain());
+        assertEquals("8882", result.getPort());
+        assertEquals("/", result.getPath());
+        assertEquals(100, result.getPathScanDepth());
     }
 
     @Test
     public void executeGetPublication() {
-        assertNotNull(publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), ""));
+        Publication result = publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), "");
+
+        assertEquals(Publication.class, result.getClass());
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getId());
+        assertEquals(1, result.getNamespaceId());
+        assertEquals(8, result.getPublicationId());
+        assertEquals("400 Example Site", result.getTitle());
+        assertEquals("/", result.getPublicationUrl());
+        assertEquals("\\", result.getPublicationPath());
+        assertEquals("\\media", result.getMultimediaPath());
+        assertEquals("/media/", result.getMultimediaUrl());
     }
 
     @Test
     public void executeGetPublications() {
         Pagination pagination = new Pagination();
         pagination.setFirst(1);
-        assertNotNull(publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), ""));
+        PublicationConnection result = publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), "");
+
+        assertEquals(PublicationConnection.class, result.getClass());
+        assertEquals("MQ==", result.getEdges().get(0).getCursor());
+        assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getEdges().get(0).getNode().getId());
+        assertEquals(8, result.getEdges().get(0).getNode().getPublicationId());
+        assertEquals(1, result.getEdges().get(0).getNode().getNamespaceId());
+        assertEquals("400 Example Site", result.getEdges().get(0).getNode().getTitle());
+        assertEquals("/", result.getEdges().get(0).getNode().getPublicationUrl());
+        assertEquals("\\", result.getEdges().get(0).getNode().getPublicationPath());
+        assertEquals("\\media", result.getEdges().get(0).getNode().getMultimediaPath());
+        assertEquals("/media/", result.getEdges().get(0).getNode().getMultimediaUrl());
     }
 }
