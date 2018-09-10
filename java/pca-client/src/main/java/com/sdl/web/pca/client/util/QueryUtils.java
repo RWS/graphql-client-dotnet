@@ -1,6 +1,7 @@
 package com.sdl.web.pca.client.util;
 
 
+import com.sdl.web.pca.client.exception.PublicContentApiException;
 import org.slf4j.Logger;
 
 import java.util.regex.Matcher;
@@ -44,8 +45,7 @@ public class QueryUtils {
         if (matcher.find()) {
             return matcher.group("fragmentName");
         }
-        LOG.error("Unable to parse name for fragment: {}", fragment);
-        return null;
+        throw new PublicContentApiException("Unable to parse name for fragment: " + fragment);
     }
 
     static String getFragmentBody(String fragment) {
@@ -53,8 +53,7 @@ public class QueryUtils {
         if (matcher.find()) {
             return matcher.group("fragmentBody");
         }
-        LOG.error("Unable to parse body for fragment: {}", fragment);
-        return null;
+        throw new PublicContentApiException("Unable to parse body for fragment: " + fragment);
     }
 
     private static boolean isNullOrEmpty(String str) {

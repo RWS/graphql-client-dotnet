@@ -10,7 +10,6 @@ import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
-import com.sdl.web.pca.client.contentmodel.generated.InputClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;

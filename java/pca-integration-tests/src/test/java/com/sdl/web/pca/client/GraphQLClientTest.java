@@ -61,8 +61,6 @@ public class GraphQLClientTest {
         assertEquals(1, result.getNamespaceId());
         assertEquals(8, result.getPublicationId());
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
-        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
-        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
@@ -81,8 +79,6 @@ public class GraphQLClientTest {
         assertEquals(1, result.getNamespaceId());
         assertEquals(8, result.getPublicationId());
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
-        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
-        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
@@ -101,8 +97,6 @@ public class GraphQLClientTest {
         assertEquals(1, result.getNamespaceId());
         assertEquals(8, result.getPublicationId());
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
-        assertEquals("2018-06-25T14:01:40.007+05:30", result.getLastPublishDate());
-        assertEquals("2017-01-24T09:31:46.643+05:30", result.getCreationDate());
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
