@@ -41,6 +41,10 @@ public enum ItemTypes {
     }
 
     public static ItemTypes getById(int id) {
-        return itemTypeById.get(id);
+        ItemTypes result = itemTypeById.get(id);
+        if (result == null) {
+            throw new IllegalArgumentException("Unable to resolve item type for Id " + id);
+        }
+        return result;
     }
 }

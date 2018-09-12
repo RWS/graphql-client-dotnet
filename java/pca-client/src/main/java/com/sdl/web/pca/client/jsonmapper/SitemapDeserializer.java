@@ -31,7 +31,7 @@ public class SitemapDeserializer extends StdDeserializer<SitemapItem> {
             case "Page":
                 return mapper.treeToValue(node, PageSitemapItem.class);
             default:
-                throw new JsonMappingException(parser, "Unable to deserialize SitemapItem");
+                throw new JsonMappingException(parser, "Unable to deserialize SitemapItem " + type);
         }
     }
 }

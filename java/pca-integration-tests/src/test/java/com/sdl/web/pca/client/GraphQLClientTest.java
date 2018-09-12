@@ -64,7 +64,7 @@ public class GraphQLClientTest {
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
-        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
         assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
 
     }
@@ -82,7 +82,7 @@ public class GraphQLClientTest {
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
-        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
         assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
 
     }
@@ -100,7 +100,7 @@ public class GraphQLClientTest {
         assertEquals(756, result.getVariants().getEdges().get(0).getNode().getBinaryId());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getPath());
         assertEquals("/media/balloons_tcm8-756.jpg", result.getVariants().getEdges().get(0).getNode().getUrl());
-        assertEquals("http://10.100.93.148:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
+        assertEquals("http://localhost:8081/udp/content/binary/1/8/756", result.getVariants().getEdges().get(0).getNode().getDownloadUrl());
         assertEquals("[#def#]", result.getVariants().getEdges().get(0).getNode().getVariantId());
     }
 

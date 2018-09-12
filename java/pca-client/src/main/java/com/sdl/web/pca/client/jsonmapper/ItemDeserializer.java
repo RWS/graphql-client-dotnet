@@ -18,8 +18,6 @@ import com.sdl.web.pca.client.util.ItemTypes;
 
 import java.io.IOException;
 
-import static com.sdl.web.pca.client.util.ItemTypes.*;
-
 public class ItemDeserializer extends StdDeserializer<Item> {
     private ObjectMapper mapper;
 
@@ -51,7 +49,7 @@ public class ItemDeserializer extends StdDeserializer<Item> {
             case COMPONENT_PRESENTATION:
                 return mapper.treeToValue(node, ComponentPresentation.class);
             default:
-                throw new JsonMappingException(parser, "Unable to deserialize Item");
+                throw new JsonMappingException(parser, "Unable to deserialize Item " + type.name());
         }
     }
 }

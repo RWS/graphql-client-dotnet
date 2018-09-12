@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.regex.Pattern.DOTALL;
 import static java.util.regex.Pattern.MULTILINE;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -55,10 +56,4 @@ public class QueryUtils {
         }
         throw new PublicContentApiException("Unable to parse body for fragment: " + fragment);
     }
-
-    private static boolean isNullOrEmpty(String str) {
-        return str == null || str.isEmpty();
-    }
-
-
 }

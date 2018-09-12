@@ -1,5 +1,7 @@
 package com.sdl.web.pca.client.util;
 
+import org.slf4j.Logger;
+
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import static com.sdl.web.pca.client.util.ItemTypes.COMPONENT;
 import static com.sdl.web.pca.client.util.ItemTypes.IDNULL;
 import static com.sdl.web.pca.client.util.ItemTypes.NULL;
 import static java.util.Comparator.comparing;
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * This class represents a CMURI object.
@@ -19,7 +22,10 @@ import static java.util.Comparator.comparing;
 public class CmUri implements Comparable<CmUri> {
 
     private static final String SEPARATOR = "-";
+    private static final String URI_SEPARATOR = ":";
     private static final Namespace DEFAULT_NAMESPACE = Namespace.SITES;
+    private static final Logger LOG = getLogger(CmUri.class);
+
 
     /**
      * Null URI. Defaulting to TCM namespace.
@@ -72,13 +78,14 @@ public class CmUri implements Comparable<CmUri> {
      */
     protected void load(String uriString) throws ParseException {
         if (uriString != null) {
-            if (!uriString.contains(String.valueOf(getUriSeparator()))) {
-                throw new ParseException("URI string " + uriString + " does not start with namespace.", 0);
+            if (!uriString.contains(URI_SEPARATOR)) {
+                throw new ParseException("Separator character in uri [" + uriString +
+                        "] is not found. Cannot determine namespace.", 0);
             }
 
             if (namespace == null) {
                 // in case namespace is not already set by the subclasses
-                this.namespace = Namespace.valueByName(uriString.substring(0, uriString.indexOf(String.valueOf(getUriSeparator()))));
+                this.namespace = Namespace.valueByName(uriString.substring(0, uriString.indexOf(URI_SEPARATOR)));
             }
             int namespacePlusColonLength = namespace.getName().length() + 1;
             int uriStringLength = uriString.length();
@@ -130,7 +137,7 @@ public class CmUri implements Comparable<CmUri> {
      * @return A string representation of this <code>CMURI</code>.
      */
     public String toString() {
-        return this.namespace.getName() + getUriSeparator() + this.pubId + SEPARATOR + this.itemId + SEPARATOR + this.itemType;
+        return this.namespace.getName() + URI_SEPARATOR + this.pubId + SEPARATOR + this.itemId + SEPARATOR + this.itemType;
     }
 
     public void setNamespace(String namespace) {
@@ -183,7 +190,7 @@ public class CmUri implements Comparable<CmUri> {
      */
     public void setItemId(int itemId) {
         if (isNullUri() && itemId != 0) {
-            throw new IllegalStateException("Changing the item id of the NULL_URI is not allowed!!!");
+            throw new IllegalStateException("Changing the item id '" + itemId + "' of the NULL_URI is not allowed!!!");
         }
 
         this.itemId = itemId;
@@ -205,7 +212,7 @@ public class CmUri implements Comparable<CmUri> {
      */
     public void setPublicationId(int thePubId) {
         if (isNullUri() && thePubId != 0) {
-            throw new IllegalStateException("Changing the publication id of the NULL_URI is not allowed!!!");
+            throw new IllegalStateException("Changing the publication id '" + thePubId + "' of the NULL_URI is not allowed!!!");
         }
         this.pubId = thePubId;
     }
@@ -251,6 +258,7 @@ public class CmUri implements Comparable<CmUri> {
         try {
             return this.equals(new CmUri(uri));
         } catch (ParseException e) {
+            LOG.debug("Unable to parse uri: {}. Assuming it doesn't equal to {}", uri, this.toString());
             return false;
         }
     }
@@ -300,14 +308,6 @@ public class CmUri implements Comparable<CmUri> {
                 .thenComparing(CmUri::getItemId).compare(this, other);
     }
 
-    public static char getUriSeparator() {
-        return ':';
-    }
-
-    public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
-    }
-
     public static boolean stringEquals(String str1, String str2) {
         return Objects.isNull(str1) ? Objects.isNull(str2) : str1.equals(str2);
     }
@@ -341,7 +341,11 @@ public class CmUri implements Comparable<CmUri> {
         }
 
         public static Namespace valueByName(String name) {
-            return namespaceByName.get(name);
+            Namespace result = namespaceByName.get(name);
+            if (result == null) {
+                throw new IllegalArgumentException("Unable to resolve namespace " + name);
+            }
+            return result;
         }
     }
 
