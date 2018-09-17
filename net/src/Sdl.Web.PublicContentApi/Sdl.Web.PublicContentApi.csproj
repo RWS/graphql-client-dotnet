@@ -119,6 +119,10 @@
     <EmbeddedResource Include="Queries\ResolveDynamicComponentLink.graphql" />
     <EmbeddedResource Include="Queries\Publications.graphql" />
     <EmbeddedResource Include="Queries\SitemapSubtreeNoRecurse.graphql" />
+    <EmbeddedResource Include="Queries\PageById.graphql" />
+    <EmbeddedResource Include="Queries\PageByUrl.graphql" />
+    <EmbeddedResource Include="Queries\PageByCmUri.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\PageItemFields.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

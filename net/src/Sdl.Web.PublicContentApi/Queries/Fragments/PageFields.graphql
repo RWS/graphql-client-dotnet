@@ -1,5 +1,6 @@
 ﻿fragment PageFields on Page {
 	url
+	...CustomMetaFields
 	rawContent@renderContentArgs {
 		data 
 	}

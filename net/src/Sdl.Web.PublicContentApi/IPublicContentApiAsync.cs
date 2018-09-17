@@ -11,6 +11,12 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public interface IPublicContentApiAsync
     {
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+
         Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData, CancellationToken cancellationToken);
 

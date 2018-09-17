@@ -11,15 +11,21 @@ namespace Sdl.Web.PublicContentApi
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var target = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
             var result = new TaxonomySitemapItem();
-            serializer.Populate(target.CreateReader(), result);
-            switch (result.Type)
+            try
             {
-                case "Page":
-                    PageSitemapItem pageItem = new PageSitemapItem();
-                    serializer.Populate(target.CreateReader(), pageItem);
-                    return pageItem;
+                var target = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+                serializer.Populate(target.CreateReader(), result);
+                switch (result.Type)
+                {
+                    case "Page":
+                        PageSitemapItem pageItem = new PageSitemapItem();
+                        serializer.Populate(target.CreateReader(), pageItem);
+                        return pageItem;
+                }
+            }
+            catch
+            {
             }
             return result;
         }

@@ -11,6 +11,12 @@ namespace Sdl.Web.PublicContentApi
     {
         IContextData GlobalContextData { get; set; }
 
+        Page GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData, string customMetaFilter);
+
+        Page GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData, string customMetaFilter);
+
+        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData, string customMetaFilter);
+
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData);
 

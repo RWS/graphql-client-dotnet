@@ -14,6 +14,48 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public static class GraphQLRequests
     {
+        public static GraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+           IContextData contextData, IContextData globalContextData) => new GraphQLRequest
+           {
+               Query =
+                   InjectRenderContentArgs(InjectCustomMetaFilter(Queries.Load("PageById", true), customMetaFilter), false),
+               Variables = new Dictionary<string, object>
+               {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"pageId", pageId},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+               }
+           };
+
+        public static GraphQLRequest Page(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+          IContextData contextData, IContextData globalContextData) => new GraphQLRequest
+          {
+              Query =
+                  InjectRenderContentArgs(InjectCustomMetaFilter(Queries.Load("PageByUrl", true), customMetaFilter), false),
+              Variables = new Dictionary<string, object>
+              {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"url", url},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+              }
+          };
+
+        public static GraphQLRequest Page(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+         IContextData contextData, IContextData globalContextData) => new GraphQLRequest
+         {
+             Query =
+                 InjectRenderContentArgs(InjectCustomMetaFilter(Queries.Load("PageByCmUri", true), customMetaFilter), false),
+             Variables = new Dictionary<string, object>
+             {
+                    {"namespaceId", ns},
+                    {"publicationId", publicationId},
+                    {"cmUri", cmUri},
+                    {"contextData", MergeContextData(contextData, globalContextData).ClaimValues}
+             }
+         };
+
         public static GraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData, IContextData globalContextData) => new GraphQLRequest
             {
