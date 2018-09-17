@@ -321,7 +321,7 @@ namespace Sdl.Web.PublicContentApi
         private static string InjectCustomMetaFilter(string query, string customMetaFilter)
             =>
                 query.Replace("@customMetaArgs",
-                    string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter})\")");
+                    string.IsNullOrEmpty(customMetaFilter) ? "" : $"(filter: \"{customMetaFilter}\")");
 
         private static string InjectRenderContentArgs(string query, bool renderContent)
             => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
