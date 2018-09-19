@@ -11,11 +11,14 @@ namespace Sdl.Web.PublicContentApi
     {
         IContextData GlobalContextData { get; set; }
 
-        Page GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData, string customMetaFilter);
+        Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+            IContextData contextData);
 
-        Page GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData, string customMetaFilter);
+        Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            IContextData contextData);
 
-        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData, string customMetaFilter);
+        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+            IContextData contextData);
 
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData);
@@ -25,20 +28,22 @@ namespace Sdl.Web.PublicContentApi
         BinaryComponent GetBinaryComponent(CmUri cmUri, IContextData contextData);
 
         ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            IContextData contextData, string customMetaFilter, bool renderContent);
+            string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData);
 
-        Publication GetPublication(ContentNamespace ns, int publicationId, IContextData contextData,
-            string customMetaFilter);
+        Publication GetPublication(ContentNamespace ns, int publicationId, string customMetaFilter,
+            IContextData contextData);
 
         PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination, InputPublicationFilter filter,
-            IContextData contextData, string customMetaFilter);
+            string customMetaFilter,
+            IContextData contextData);
 
         string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink);
 
         string ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId, int? sourcePageId,
             int? excludeComponentTemplateId, bool renderRelativeLink);
 
-        string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId, bool renderRelativeLink);
+        string ResolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, string variantId,
+            bool renderRelativeLink);
 
         string ResolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
             int templateId, bool renderRelativeLink);

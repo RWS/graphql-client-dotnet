@@ -68,18 +68,20 @@ namespace Sdl.Web.PublicContentApi
 
         public IContextData GlobalContextData { get; set; } = new ContextData();
 
-        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData,
-            string customMetaFilter) => _client.Execute<ContentQuery>(
+        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, IContextData contextData) 
+            => _client.Execute<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contextData, GlobalContextData))
                 .TypedResponseData.Page;
 
-        public Page GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData,
-            string customMetaFilter) => _client.Execute<ContentQuery>(
+        public Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            IContextData contextData)
+            => _client.Execute<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contextData, GlobalContextData))
                 .TypedResponseData.Page;
 
-        public Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData,
-            string customMetaFilter) => _client.Execute<ContentQuery>(
+        public Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+            IContextData contextData)
+            => _client.Execute<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contextData, GlobalContextData))
                 .TypedResponseData.Page;
 
@@ -93,26 +95,29 @@ namespace Sdl.Web.PublicContentApi
             => _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(ns, publicationId, url, contextData,
                 GlobalContextData)).TypedResponseData.BinaryComponent;
 
-        public BinaryComponent GetBinaryComponent(CmUri cmUri,
-            IContextData contextData)
+        public BinaryComponent GetBinaryComponent(CmUri cmUri, IContextData contextData)
             => _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(cmUri, contextData, GlobalContextData))
                 .TypedResponseData.BinaryComponent;
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            IContextData contextData, string customMetaFilter, bool renderContent)
-            => _client.Execute<ContentQuery>(GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, contextData,
-                GlobalContextData, customMetaFilter, renderContent)).TypedResponseData.Items;
+            string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData)
+            =>
+                _client.Execute<ContentQuery>(GraphQLRequests.ExecuteItemQuery(filter, sort, pagination,
+                    customMetaFilter, renderContent, includeContainerItems,
+                    contextData, GlobalContextData)).TypedResponseData.Items;
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
-            IContextData contextData, string customMetaFilter)
-            => _client.Execute<ContentQuery>(GraphQLRequests.Publication(ns, publicationId, contextData,
-                GlobalContextData, customMetaFilter)).TypedResponseData.Publication;
+            string customMetaFilter, IContextData contextData)
+            => _client.Execute<ContentQuery>(GraphQLRequests.Publication(ns, publicationId, customMetaFilter,
+                contextData, GlobalContextData)).TypedResponseData.Publication;
 
         public PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination,
-            InputPublicationFilter filter,
-            IContextData contextData, string customMetaFilter)
-            => _client.Execute<ContentQuery>(GraphQLRequests.Publications(ns, pagination, filter, contextData,
-                GlobalContextData, customMetaFilter)).TypedResponseData.Publications;
+            InputPublicationFilter filter, string customMetaFilter,
+            IContextData contextData)
+            =>
+                _client.Execute<ContentQuery>(GraphQLRequests.Publications(ns, pagination, filter, customMetaFilter,
+                    contextData,
+                    GlobalContextData)).TypedResponseData.Publications;
 
         public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink = true)
             =>
@@ -237,22 +242,24 @@ namespace Sdl.Web.PublicContentApi
 
         #region IPublicContentApiAsync
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData,
-            string customMetaFilter, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId,
+            string customMetaFilter, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contextData, GlobalContextData),
                 cancellationToken))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData,
-            string customMetaFilter, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contextData, GlobalContextData),
                 cancellationToken))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData,
-            string customMetaFilter, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri,
+            string customMetaFilter, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contextData, GlobalContextData),
                 cancellationToken))
@@ -277,31 +284,32 @@ namespace Sdl.Web.PublicContentApi
                 .TypedResponseData.BinaryComponent;
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort,
-            IPagination pagination,
-            IContextData contextData, string customMetaFilter, bool renderContent,
+            IPagination pagination, string customMetaFilter, bool renderContent, bool includeContainerItems,
+            IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, contextData, GlobalContextData,
-                            customMetaFilter, renderContent)
+                        GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, customMetaFilter, renderContent,
+                            includeContainerItems,
+                            contextData, GlobalContextData)
                         , cancellationToken)).TypedResponseData.Items;
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
-            IContextData contextData, string customMetaFilter,
-            CancellationToken cancellationToken = default(CancellationToken)) => (
+            string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.Publication(ns, publicationId, contextData, GlobalContextData,
-                            customMetaFilter), cancellationToken)).TypedResponseData.Publication;
+                        GraphQLRequests.Publication(ns, publicationId, customMetaFilter, contextData, GlobalContextData),
+                        cancellationToken)).TypedResponseData.Publication;
 
         public async Task<PublicationConnection> GetPublicationsAsync(ContentNamespace ns, IPagination pagination,
-            InputPublicationFilter filter,
-            IContextData contextData, string customMetaFilter,
+            InputPublicationFilter filter, string customMetaFilter, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             =>
                 (await
-                    _client.ExecuteAsync<ContentQuery>(GraphQLRequests.Publications(ns, pagination, filter, contextData,
-                        GlobalContextData, customMetaFilter), cancellationToken)).TypedResponseData.Publications;
+                    _client.ExecuteAsync<ContentQuery>(
+                        GraphQLRequests.Publications(ns, pagination, filter, customMetaFilter, contextData,
+                            GlobalContextData), cancellationToken)).TypedResponseData.Publications;
 
 
         public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,

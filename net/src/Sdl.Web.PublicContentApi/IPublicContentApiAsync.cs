@@ -11,11 +11,14 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public interface IPublicContentApiAsync
     {
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken);
 
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken);
 
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+        Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken);
 
         Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
             IContextData contextData, CancellationToken cancellationToken);
@@ -27,22 +30,25 @@ namespace Sdl.Web.PublicContentApi
             CancellationToken cancellationToken);
 
         Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            IContextData contextData, string customMetaFilter, bool renderContent, CancellationToken cancellationToken);
+            string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData,
+            CancellationToken cancellationToken);
 
-        Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, IContextData contextData,
-            string customMetaFilter, CancellationToken cancellationToken);
+        Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, string customMetaFilter,
+            IContextData contextData, CancellationToken cancellationToken);
 
         Task<PublicationConnection> GetPublicationsAsync(ContentNamespace ns, IPagination pagination,
-            InputPublicationFilter filter,
-            IContextData contextData, string customMetaFilter, CancellationToken cancellationToken);
+            InputPublicationFilter filter, string customMetaFilter, IContextData contextData,
+            CancellationToken cancellationToken);
 
         Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink,
             CancellationToken cancellationToken);
 
         Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId,
-            int? sourcePageId, int? excludeComponentTemplateId, bool renderRelativeLink, CancellationToken cancellationToken);
+            int? sourcePageId, int? excludeComponentTemplateId, bool renderRelativeLink,
+            CancellationToken cancellationToken);
 
-        Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId, bool renderRelativeLink,
+        Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId, string variantId,
+            bool renderRelativeLink,
             CancellationToken cancellationToken);
 
         Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId,
@@ -67,7 +73,8 @@ namespace Sdl.Web.PublicContentApi
         Task<TaxonomySitemapItem> GetSitemapAsync(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId, string taxonomyNodeId,
+        Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
+            string taxonomyNodeId,
             int descendantLevels, bool includeAncestors,
             IContextData contextData, CancellationToken cancellationToken);
     }

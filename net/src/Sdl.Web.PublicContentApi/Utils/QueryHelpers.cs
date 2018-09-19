@@ -4,6 +4,56 @@ namespace Sdl.Web.PublicContentApi.Utils
 {
     public static class QueryHelpers
     {
+        /// <summary>
+        /// Remove regions from a query based on include parameter given the following query syntax:
+        ///  {regionName}? {
+        ///     query region to exclude/include
+        ///  }
+        /// </summary>
+        /// <param name="query">Query</param>
+        /// <param name="regionName">Region name</param>
+        /// <param name="include">Determine if we should include/exclude</param>
+        /// <returns>Rebuilt query</returns>
+        public static string ParseIncludeRegions(string query, string regionName, bool include)
+        {
+            if (string.IsNullOrEmpty(query)) return query;
+            int index = query.IndexOf($"{regionName}?");
+            if (index == -1) return query;
+            StringBuilder sb = new StringBuilder();
+            int lastIndex = 0;
+            while (index >= 0)
+            {
+                sb.Append(query.Substring(lastIndex, index - lastIndex));
+                int start = query.IndexOf("{", index + regionName.Length) + 1;
+                int n = 1;
+                int end;
+                for (end = start; n > 0; end++)
+                {
+                    switch (query[end])
+                    {
+                        case '{':
+                            n++;
+                            break;
+                        case '}':
+                            n--;
+                            break;
+                    }
+                }
+
+                if (include)
+                {
+                    sb.Append(query.Substring(start, end - start - 1));
+                }
+                lastIndex = end;
+                index = query.IndexOf($"{regionName}?", lastIndex);
+                if (index < 0)
+                {
+                    sb.Append(query.Substring(lastIndex));
+                }
+            }
+            return sb.ToString();
+        }
+
         public static void ExpandRecursiveFragment(ref string query, string fragmentToExpand, int decendentLevel)
         {
             int rFragIndex = query.IndexOf("rfragment");

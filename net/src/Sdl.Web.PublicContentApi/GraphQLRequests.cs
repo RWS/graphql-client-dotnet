@@ -103,8 +103,8 @@ namespace Sdl.Web.PublicContentApi
             };
 
         public static GraphQLRequest ExecuteItemQuery(InputItemFilter filter, InputSortParam sort,
-            IPagination pagination,
-            IContextData contextData, IContextData globaContextData, string customMetaFilter, bool renderContent)
+            IPagination pagination, string customMetaFilter, bool renderContent, bool includeContainerItems,
+            IContextData contextData, IContextData globaContextData)
         {
             // Dynamically build our item query based on the filter(s) being used.
             string query = Queries.Load("ItemQuery", false);
@@ -123,6 +123,7 @@ namespace Sdl.Web.PublicContentApi
 
             query = InjectCustomMetaFilter(query, customMetaFilter);
             query = InjectRenderContentArgs(query, renderContent);
+            query = QueryHelpers.ParseIncludeRegions(query, "includeContainerItems", includeContainerItems);
             return new GraphQLRequest
             {
                 Query = query,
@@ -138,8 +139,8 @@ namespace Sdl.Web.PublicContentApi
             };
         }
 
-        public static GraphQLRequest Publication(ContentNamespace ns, int publicationId,
-            IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
+        public static GraphQLRequest Publication(ContentNamespace ns, int publicationId, string customMetaFilter, 
+            IContextData contextData, IContextData globalContextData) => new GraphQLRequest
             {
                 Query = InjectCustomMetaFilter(Queries.Load("Publication", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
@@ -151,8 +152,8 @@ namespace Sdl.Web.PublicContentApi
             };
 
         public static GraphQLRequest Publications(ContentNamespace ns, IPagination pagination,
-            InputPublicationFilter filter,
-            IContextData contextData, IContextData globalContextData, string customMetaFilter) => new GraphQLRequest
+            InputPublicationFilter filter, string customMetaFilter,
+            IContextData contextData, IContextData globalContextData ) => new GraphQLRequest
             {
                 Query = InjectCustomMetaFilter(Queries.Load("Publications", true), customMetaFilter),
                 Variables = new Dictionary<string, object>
@@ -369,7 +370,7 @@ namespace Sdl.Web.PublicContentApi
             => query.Replace("@renderContentArgs", $"(renderContent: {(renderContent ? "true" : "false")})");
 
         private static string InjectVariantsArgs(string query, string url)
-            => query.Replace("@variantsArgs", !string.IsNullOrEmpty(url) ? $"(url: \"{url}\")" : "");
+            => query.Replace("@variantsArgs", !string.IsNullOrEmpty(url) ? $"(url: \"{url}\")" : "");      
 
         private static LinkType GetLinkType(CmUri cmUri, bool resolveToBinary)
         {

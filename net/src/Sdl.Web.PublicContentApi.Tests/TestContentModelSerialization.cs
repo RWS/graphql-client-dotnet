@@ -42,7 +42,7 @@ namespace Sdl.Web.PublicContentApi.Tests
                 Value = Enum.GetName(typeof(PageInclusion), PageInclusion.INCLUDE)
             });
 
-            ItemConnection query = client.ExecuteItemQuery(filter, null, new Pagination { First = 10 }, null, null, false);
+            ItemConnection query = client.ExecuteItemQuery(filter, null, new Pagination { First = 10 }, null, false, false, null);
             
 
             Assert.AreEqual(query.Edges.Count, 10);
