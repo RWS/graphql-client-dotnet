@@ -114,7 +114,7 @@ namespace Sdl.Web.PublicContentApi
             if (filter.ItemTypes != null)
             {
                 string fragmentList = filter.ItemTypes.Select(itemType
-                    => $"{Enum.GetName(typeof (ContentModel.ItemType), itemType).Capitialize()}Fields")
+                    => $"{Enum.GetName(typeof (ContentModel.FilterItemType), itemType).Capitialize()}Fields")
                     .Aggregate(string.Empty, (current, fragment) => current + $"...{fragment}\n");
                 // Just a quick and easy way to replace markers in our queries with vars here.
                 query = query.Replace("@fragmentList", fragmentList);

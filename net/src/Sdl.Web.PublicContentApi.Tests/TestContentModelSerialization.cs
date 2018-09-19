@@ -16,7 +16,7 @@ namespace Sdl.Web.PublicContentApi.Tests
             var filter = new InputItemFilter
             {
                 NamespaceIds = new List<ContentNamespace> { ContentNamespace.Docs },
-                ItemTypes = new List<ContentModel.ItemType> { ContentModel.ItemType.PAGE }
+                ItemTypes = new List<ContentModel.FilterItemType> { ContentModel.FilterItemType.PAGE }
 
             };
 
