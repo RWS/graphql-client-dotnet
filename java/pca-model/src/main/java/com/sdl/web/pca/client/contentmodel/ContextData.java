@@ -2,17 +2,23 @@ package com.sdl.web.pca.client.contentmodel;
 
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContextData {
-
-    private List<ClaimValue> ClaimValues;
+    private List<ClaimValue> claimValues = new ArrayList<>();
 
     public List<ClaimValue> getClaimValues() {
-        return ClaimValues;
+        return claimValues;
     }
 
-    public void setClaimValues(List<ClaimValue> claimValues) {
-        ClaimValues = claimValues;
+    public void addClaimValule(ClaimValue value) {
+        claimValues.add(value);
+    }
+
+    public void addClaimValues(ContextData values) {
+        if (values != null && values.getClaimValues() != null) {
+            claimValues.addAll(values.getClaimValues());
+        }
     }
 }
