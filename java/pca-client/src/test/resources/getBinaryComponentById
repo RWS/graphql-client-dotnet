@@ -1,0 +1,35 @@
+{
+	"data": {
+		"binaryComponent": {
+			"id": "b4e5c7c4-f04a-3d6d-898f-5886d0f648bd",
+			"itemId": 756,
+			"itemType": 16,
+			"namespaceId": 1,
+			"owningPublicationId": 0,
+			"publicationId": 8,
+			"title": "tcd:pub[8]/componentmeta[756]",
+			"lastPublishDate": "2018-06-25T14:01:40.007+03:00",
+			"creationDate": "2017-01-24T09:31:46.643+02:00",
+			"initialPublishDate": "2017-01-24T09:31:46.643+02:00",
+			"updatedDate": "2017-01-24T09:31:46.643+02:00",
+			"customMetas": {
+				"edges": []
+			},
+			"schemaId": 0,
+			"multiMedia": true,
+			"variants": {
+				"edges": [{
+						"node": {
+							"binaryId": 756,
+							"path": "/media/balloons_tcm8-756.jpg",
+							"url": "/media/balloons_tcm8-756.jpg",
+							"downloadUrl": "http://localhost:8081/udp/content/binary/1/8/756",
+							"description": null,
+							"variantId": "[#def#]"
+						}
+					}
+				]
+			}
+		}
+	}
+}

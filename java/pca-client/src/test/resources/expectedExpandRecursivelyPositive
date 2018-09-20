@@ -1,0 +1,27 @@
+query sitemap($namespaceId: Int!, $publicationId: Int!) {          
+    sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {
+                
+	...TaxonomyItemFields
+    items {
+		...on TaxonomySitemapItem {
+			...TaxonomyItemFields
+			
+	...TaxonomyItemFields
+    items {
+		...on TaxonomySitemapItem {
+			...TaxonomyItemFields
+			
+		}
+		...on PageSitemapItem {
+			...TaxonomyPageFields
+		}
+    }
+
+		}
+		...on PageSitemapItem {
+			...TaxonomyPageFields
+		}
+    }
+
+    }
+}

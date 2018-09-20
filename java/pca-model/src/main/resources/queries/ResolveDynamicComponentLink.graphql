@@ -1,0 +1,5 @@
+﻿query dynamicComponentLink($namespaceId: Int!, $publicationId: Int!, $targetPageId: Int!, $targetComponentId: Int!, $targetTemplateId: Int!, $renderRelativeLink: Boolean) {
+	dynamicComponentLink(namespaceId: $namespaceId, publicationId: $publicationId, targetPageId: $targetPageId, targetComponentId: $targetComponentId, targetTemplateId: $targetTemplateId, renderRelativeLink: $renderRelativeLink) {
+		url
+	}
+}

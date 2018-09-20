@@ -1,0 +1,21 @@
+{
+  "data": {
+    "publication": {
+      "id": "dec06688-3c29-36e6-9f91-710c6109aab5",
+      "itemId": 8,
+      "itemType": 1,
+      "namespaceId": 1,
+      "owningPublicationId": null,
+      "publicationId": 8,
+      "title": "400 Example Site",
+      "lastPublishDate": null,
+      "creationDate": null,
+      "initialPublishDate": null,
+      "updatedDate": null,
+      "customMetas": {
+        "edges": [
+
+        ]
+      },
+      "publicationUrl": "/",
+      "publicationPath": "\\","multimediaPath":"\\media","multimediaUrl":"/media/"}}}

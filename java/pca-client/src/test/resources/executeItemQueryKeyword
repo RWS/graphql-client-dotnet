@@ -1,0 +1,858 @@
+{
+	"data": {
+		"items": {
+			"edges": [{
+					"cursor": "MQ==",
+					"node": {
+						"id": "d28d2900-cfd3-38e2-b03d-af9b668a8253",
+						"itemId": 9991,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1065,
+						"title": "001 Top-level Keyword 1",
+						"lastPublishDate": "2018-04-24T17:20:37.047+03:00",
+						"creationDate": "2018-04-24T17:20:37.047+03:00",
+						"initialPublishDate": "2018-04-24T17:20:37.047+03:00",
+						"updatedDate": "2018-04-24T17:20:37.047+03:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "507c78e5-34b6-3d3d-a4bb-bee0bd22b1ea",
+										"itemId": 9991,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "tcm:1065-9937",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "240fd3f9-6d42-30e4-b8fe-6282c6551cad",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "e800cc8f-841b-3f93-98fe-ac5e01c4211f",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "28-8-2016",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "cb469460-4ce9-3787-a212-b8ca4497e799",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "tcm:1065-9995-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "c6a41559-c4af-3e47-8754-a7de79e7b38d",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "tcm:1065-9994-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "c034d038-b6e9-3437-abdb-a0b00a02c468",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "721a8cbd-6126-3dc6-a0be-eaa046e98ba2",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "666666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "da4ce973-96ca-3fe2-8c6d-381499d0d611",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "This is the first value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "2ff3184e-cc73-3215-a0bf-992793992f3f",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "This is the second value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "Mg==",
+					"node": {
+						"id": "178c2a59-2a0c-3654-9acc-d56ee230f6b4",
+						"itemId": 9991,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1078,
+						"title": "001 Top-level Keyword 1",
+						"lastPublishDate": "2018-02-12T19:23:53.78+02:00",
+						"creationDate": "2018-02-12T19:23:53.78+02:00",
+						"initialPublishDate": "2018-02-12T19:23:53.78+02:00",
+						"updatedDate": "2018-02-12T19:23:53.78+02:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "18b2651f-7d40-35a7-81da-bb9a8ac5a872",
+										"itemId": 9991,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "tcm:1078-9937",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "99d2b2f0-57a7-36e7-8c31-a9e2172f206e",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "d925ac6d-34cb-3012-8d09-d3ebd516c9c3",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "28-8-2016",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "b504e071-269c-387f-b13a-c2e6be5d5425",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "tcm:1078-9995-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "c73fe7b4-6d1a-34e5-a0ff-f870686754b0",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "tcm:1078-9994-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "d8c04ad0-ea43-392b-b092-7d90f5b967a8",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "3d7a36bd-93f0-3b92-9b3d-ae37d8ad97bd",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "666666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "46b285fa-cdac-342f-bbaa-b2356722e810",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "This is the first value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "2ecd3670-cbd6-3da0-98d8-7650bd76e46a",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "This is the second value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "Mw==",
+					"node": {
+						"id": "45fdd6a5-17f7-3809-8359-c6f26ad51a4e",
+						"itemId": 9991,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1081,
+						"title": "001 Top-level Keyword 1",
+						"lastPublishDate": "2018-04-24T18:07:52.49+03:00",
+						"creationDate": "2018-04-24T18:07:52.49+03:00",
+						"initialPublishDate": "2018-04-24T18:07:52.49+03:00",
+						"updatedDate": "2018-04-24T18:07:52.49+03:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "390d8ad4-3f28-3043-bd32-8508899b8465",
+										"itemId": 9991,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "tcm:1081-9937",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "630e14e0-ee3d-3676-bc8b-b3a90d113c7d",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "878a77f9-3641-36a2-aace-6e106acaa626",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "28-8-2016",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "23f5daf9-fee3-35d0-ad78-08f766b1a9d3",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "tcm:1081-9995-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "46d1163c-31bf-3978-96d3-644dc5db10a0",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "tcm:1081-9994-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "8cc46dbe-7ad1-3d76-a160-af50364e1555",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "f888e4fd-cf78-3f31-999a-54a620168ff6",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "666666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "546450c9-6538-3f1f-b576-08a2baa4d541",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "This is the first value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "c09bd703-98e6-3a78-a0ca-677703642c53",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "This is the second value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "NA==",
+					"node": {
+						"id": "d32a478a-86c6-373d-ac63-ea640270a334",
+						"itemId": 9991,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1083,
+						"title": "001 Top-level Keyword 1",
+						"lastPublishDate": "2018-02-12T20:18:24.033+02:00",
+						"creationDate": "2018-02-12T20:18:24.033+02:00",
+						"initialPublishDate": "2018-02-12T20:18:24.033+02:00",
+						"updatedDate": "2018-02-12T20:18:24.033+02:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "4ce1d488-b6ac-3f00-92a9-1c813c45f52f",
+										"itemId": 9991,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "tcm:1083-9937",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "3bc4f62c-817e-3f7c-81a2-217e08b1a634",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "0c6caa32-0d8a-351b-b7be-7c00febb8054",
+										"itemId": 9991,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "28-8-2016",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "938020d1-f3ef-3946-b974-d87d19f9052d",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "tcm:1083-9995-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "b98e3512-bb76-3819-91d9-3150686e2c65",
+										"itemId": 9991,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "tcm:1083-9994-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "fba34fd7-aa6c-35c5-ad9b-e46417a6a68b",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "78fbdf44-6c02-388f-8e52-81433ae167a3",
+										"itemId": 9991,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "666666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "6803a76f-3fce-3f13-9355-f79c6b15275f",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "This is the first value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "83fbddd9-a1a1-3480-a4d7-845f8ab19328",
+										"itemId": 9991,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "This is the second value of TextField in Keyword metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "NQ==",
+					"node": {
+						"id": "7ad07e84-ece1-3341-b62e-5f774f5e8d3e",
+						"itemId": 9993,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1065,
+						"title": "Keyword 1.1",
+						"lastPublishDate": "2018-04-24T17:20:37.047+03:00",
+						"creationDate": "2018-04-24T17:20:37.047+03:00",
+						"initialPublishDate": "2018-04-24T17:20:37.047+03:00",
+						"updatedDate": "2018-04-24T17:20:37.047+03:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "48cf8049-5fbc-3ce9-8621-81bef0ac4a19",
+										"itemId": 9993,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "7c75d13c-61d7-3b9a-b8ef-9462c6240504",
+										"itemId": 9993,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "e3a045a7-5244-3311-87f2-8ecdd7924225",
+										"itemId": 9993,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "Keyword 1.1 metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "Ng==",
+					"node": {
+						"id": "e41495ec-d327-3a80-b860-8846fde36b2d",
+						"itemId": 9993,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1078,
+						"title": "Keyword 1.1",
+						"lastPublishDate": "2018-02-12T19:23:53.777+02:00",
+						"creationDate": "2018-02-12T19:23:53.777+02:00",
+						"initialPublishDate": "2018-02-12T19:23:53.777+02:00",
+						"updatedDate": "2018-02-12T19:23:53.777+02:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "8639ef42-ecad-371d-a053-1d5b699b3feb",
+										"itemId": 9993,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "02b55810-278d-3a88-b08e-ec7fa237179d",
+										"itemId": 9993,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "c0037c78-779d-344c-abfe-2aa15d1f0f1f",
+										"itemId": 9993,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "Keyword 1.1 metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "Nw==",
+					"node": {
+						"id": "9b3c5a70-298a-35ce-895e-f56197266657",
+						"itemId": 9993,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1081,
+						"title": "Keyword 1.1",
+						"lastPublishDate": "2018-04-24T18:07:52.49+03:00",
+						"creationDate": "2018-04-24T18:07:52.49+03:00",
+						"initialPublishDate": "2018-04-24T18:07:52.49+03:00",
+						"updatedDate": "2018-04-24T18:07:52.49+03:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "3ad6465a-a5dc-326b-b664-d079a8e2680d",
+										"itemId": 9993,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "b9a46595-1b10-3874-a9cc-703db36c8ec2",
+										"itemId": 9993,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "7beab909-07e0-3b70-8677-63f1b895c4c2",
+										"itemId": 9993,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1081,
+										"value": "Keyword 1.1 metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "OA==",
+					"node": {
+						"id": "15dd743b-0d70-3b69-b0b8-d634ecaf327f",
+						"itemId": 9993,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1083,
+						"title": "Keyword 1.1",
+						"lastPublishDate": "2018-02-12T20:18:24.033+02:00",
+						"creationDate": "2018-02-12T20:18:24.033+02:00",
+						"initialPublishDate": "2018-02-12T20:18:24.033+02:00",
+						"updatedDate": "2018-02-12T20:18:24.033+02:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "56d19f5e-da41-3a72-acc1-14e3b285002d",
+										"itemId": 9993,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "16-12-1970",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "e40b73ad-0727-3773-a48d-9c9246717962",
+										"itemId": 9993,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "666",
+										"valueType": "NUMBER"
+									}
+								}, {
+									"node": {
+										"id": "64a10f63-92fa-321c-9301-a182414fdf47",
+										"itemId": 9993,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1083,
+										"value": "Keyword 1.1 metadata",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "OQ==",
+					"node": {
+						"id": "360c4c24-e86e-3e4c-85fc-dc40426213e0",
+						"itemId": 10253,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1065,
+						"title": "TSI-2316 Test Keyword",
+						"lastPublishDate": "2018-04-24T17:20:37.063+03:00",
+						"creationDate": "2018-04-24T17:20:37.063+03:00",
+						"initialPublishDate": "2018-04-24T17:20:37.063+03:00",
+						"updatedDate": "2018-04-24T17:20:37.063+03:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "ad949799-910e-31fc-a44c-429a0ef298dc",
+										"itemId": 10253,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "tcm:1065-9712",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "90ab5f11-0489-30f5-b2f4-4278d2ae73a4",
+										"itemId": 10253,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "1970-12-16T12:34:56",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "63948ded-61bd-3b59-b229-8a602bb3aed4",
+										"itemId": 10253,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "tcm:1065-9993-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "f6294fa5-3f0d-3ced-af51-57898a1da748",
+										"itemId": 10253,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "666.666",
+										"valueType": "FLOAT"
+									}
+								}, {
+									"node": {
+										"id": "839314a9-af0c-3eed-941d-c9f703597bb5",
+										"itemId": 10253,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1065,
+										"value": "This is a text field",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}, {
+					"cursor": "MTA=",
+					"node": {
+						"id": "94709021-60a0-3ae2-aef7-d69403d01800",
+						"itemId": 10253,
+						"itemType": 1024,
+						"namespaceId": 1,
+						"owningPublicationId": 0,
+						"publicationId": 1078,
+						"title": "TSI-2316 Test Keyword",
+						"lastPublishDate": "2018-02-12T19:23:53.86+02:00",
+						"creationDate": "2018-02-12T19:23:53.86+02:00",
+						"initialPublishDate": "2018-02-12T19:23:53.86+02:00",
+						"updatedDate": "2018-02-12T19:23:53.86+02:00",
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "1b028982-6a88-3a5d-9257-73371077767a",
+										"itemId": 10253,
+										"key": "CompLinkField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "tcm:1078-9712",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "58aeb4c5-1e59-304e-8c1b-78c4f95ba5c8",
+										"itemId": 10253,
+										"key": "DateField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "1970-12-16T12:34:56",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "66ecc4f7-01db-38dd-85c6-fd14ee84ccd8",
+										"itemId": 10253,
+										"key": "KeywordField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "tcm:1078-9993-1024",
+										"valueType": "STRING"
+									}
+								}, {
+									"node": {
+										"id": "fb0e4327-ad20-3189-bc4d-dea1e5f8a095",
+										"itemId": 10253,
+										"key": "NumberField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "666.666",
+										"valueType": "FLOAT"
+									}
+								}, {
+									"node": {
+										"id": "442e312e-aeb5-3deb-8c5b-ab3a63ea55b2",
+										"itemId": 10253,
+										"key": "TextField",
+										"namespaceId": 1,
+										"publicationId": 1078,
+										"value": "This is a text field",
+										"valueType": "STRING"
+									}
+								}
+							]
+						},
+						"depth": null,
+						"hasChildren": false,
+						"description": null,
+						"key": null,
+						"navigable": null,
+						"abstract": null,
+						"totalRelatedItems": null,
+						"usedForIdentification": null
+					}
+				}
+			]
+		}
+	}
+}

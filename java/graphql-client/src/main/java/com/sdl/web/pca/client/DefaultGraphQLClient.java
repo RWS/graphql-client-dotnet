@@ -1,7 +1,7 @@
 package com.sdl.web.pca.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sdl.web.pca.client.auth.Authentication;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.request.GraphQLRequest;
@@ -25,6 +25,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class DefaultGraphQLClient implements GraphQLClient {
     private static final Logger LOG = getLogger(DefaultGraphQLClient.class);
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private Authentication auth;
     private CloseableHttpClient httpClient;
@@ -51,9 +52,7 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
     @Override
     public String execute(String jsonEntity, int timeout) throws GraphQLClientException {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Requested entity: {}" + jsonEntity);
-        }
+        LOG.debug("Requested entity: {}", jsonEntity);
 
         HttpPost httpPost = new HttpPost(endpoint);
         defaultHeaders.forEach((key, value) -> httpPost.addHeader(key, value));
@@ -82,9 +81,7 @@ public class DefaultGraphQLClient implements GraphQLClient {
                 throw new GraphQLClientException("Unable to retrieve requested entity");
             }
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Returned message: {}", contentString);
-            }
+            LOG.debug("Returned message: {}", contentString);
             return contentString;
         } catch (IOException e) {
             throw new GraphQLClientException("Exception during requesting entity: " + jsonEntity, e);
@@ -93,12 +90,12 @@ public class DefaultGraphQLClient implements GraphQLClient {
 
     @Override
     public String execute(GraphQLRequest request) throws GraphQLClientException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        ObjectNode jsonObject = mapper.createObjectNode();
-        jsonObject.put("query", request.getQuery());
-        jsonObject.set("variables", mapper.valueToTree(request.getVariables()));
-        return execute(jsonObject.toString(), request.getTimeout());
+        try {
+            String stringRequest = MAPPER.writeValueAsString(request);
+            return execute(stringRequest, request.getTimeout());
+        } catch (JsonProcessingException e) {
+            throw new GraphQLClientException("Unable to serialize request: " + request.toString(), e);
+        }
     }
 
     public void setHttpClient(CloseableHttpClient httpClient) {
