@@ -20,12 +20,13 @@ namespace Sdl.Web.PublicContentApi
         Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
             IContextData contextData);
 
-        BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
+        BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, string customMetaFilter,
             IContextData contextData);
 
-        BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url, IContextData contextData);
+        BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            IContextData contextData);
 
-        BinaryComponent GetBinaryComponent(CmUri cmUri, IContextData contextData);
+        BinaryComponent GetBinaryComponent(CmUri cmUri, string customMetaFilter, IContextData contextData);
 
         ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
             string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData);

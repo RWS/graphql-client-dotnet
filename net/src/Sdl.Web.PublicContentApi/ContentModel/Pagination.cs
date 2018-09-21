@@ -8,7 +8,7 @@
         /// <summary>
         /// Return the first n number of results
         /// </summary>
-        public int First { get; set; }
+        public int First { get; set; } = -1;
 
         /// <summary>
         /// Start returning results after the specified cursor. 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Sdl.Web.PublicContentApi.ContentModel;
 using System.Threading;
@@ -68,7 +67,8 @@ namespace Sdl.Web.PublicContentApi
 
         public IContextData GlobalContextData { get; set; } = new ContextData();
 
-        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, IContextData contextData) 
+        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+            IContextData contextData)
             => _client.Execute<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contextData, GlobalContextData))
                 .TypedResponseData.Page;
@@ -86,18 +86,25 @@ namespace Sdl.Web.PublicContentApi
                 .TypedResponseData.Page;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
+            string customMetaFilter,
             IContextData contextData) => _client.Execute<ContentQuery>(
-                GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, contextData, GlobalContextData))
+                GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, customMetaFilter, contextData,
+                    GlobalContextData))
                 .TypedResponseData.BinaryComponent;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url,
+            string customMetaFilter,
             IContextData contextData)
-            => _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(ns, publicationId, url, contextData,
-                GlobalContextData)).TypedResponseData.BinaryComponent;
+            =>
+                _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(ns, publicationId, url, customMetaFilter,
+                    contextData,
+                    GlobalContextData)).TypedResponseData.BinaryComponent;
 
-        public BinaryComponent GetBinaryComponent(CmUri cmUri, IContextData contextData)
-            => _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(cmUri, contextData, GlobalContextData))
-                .TypedResponseData.BinaryComponent;
+        public BinaryComponent GetBinaryComponent(CmUri cmUri, string customMetaFilter, IContextData contextData)
+            =>
+                _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData,
+                    GlobalContextData))
+                    .TypedResponseData.BinaryComponent;
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
             string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData)
@@ -266,21 +273,26 @@ namespace Sdl.Web.PublicContentApi
                 .TypedResponseData.Page;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
+            string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
-                    GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, contextData, GlobalContextData),
+                    GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, customMetaFilter, contextData,
+                        GlobalContextData),
                     cancellationToken)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
+            string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
-                    GraphQLRequests.BinaryComponent(ns, publicationId, url, contextData, GlobalContextData),
+                    GraphQLRequests.BinaryComponent(ns, publicationId, url, customMetaFilter, contextData,
+                        GlobalContextData),
                     cancellationToken)).TypedResponseData.BinaryComponent;
 
-        public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri,
+        public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
-                    GraphQLRequests.BinaryComponent(cmUri, contextData, GlobalContextData), cancellationToken))
+                    GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData, GlobalContextData),
+                    cancellationToken))
                 .TypedResponseData.BinaryComponent;
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort,
@@ -463,23 +475,6 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        #endregion
-
-        #region Helpers
-
-        protected IContextData MergeContextData(IContextData localContextData)
-        {
-            if (localContextData == null)
-                return GlobalContextData;
-
-            if (GlobalContextData == null)
-                return localContextData;
-
-            IContextData merged = new ContextData();
-            merged.ClaimValues = GlobalContextData.ClaimValues.Concat(localContextData.ClaimValues).ToList();
-            return merged;
-        }
-
-        #endregion
+        #endregion    
     }
 }

@@ -113,10 +113,10 @@ namespace Sdl.Web.PublicContentApi.Tests
 
             var client = CreateClient(new MockGraphQLClient(expected));
 
-            client.GetBinaryComponent(ContentNamespace.Sites, 1, "/", claims);
+            client.GetBinaryComponent(ContentNamespace.Sites, 1, "/", null, claims);
 
             client.GlobalContextData = claims;
-            client.GetBinaryComponent(ContentNamespace.Sites, 1, "/", null);
+            client.GetBinaryComponent(ContentNamespace.Sites, 1, "/", null, null);
         }
     }
 }

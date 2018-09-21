@@ -21,12 +21,14 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData, CancellationToken cancellationToken);
 
         Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
+            string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken);
 
         Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
+            string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, IContextData contextData,
+        Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, string customMetaFilter, IContextData contextData,
             CancellationToken cancellationToken);
 
         Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort, IPagination pagination,

@@ -1,5 +1,5 @@
-﻿query items($first: Int, $after: String, $filter: InputItemFilter!, $sort: InputSortParam, $contextData: [InputClaimValue!]) {
-	items(first: $first, after: $after, filter: $filter, sort: $sort, contextData: $contextData) {
+﻿query items($first: Int, $after: String, $inputItemFilter: InputItemFilter!, $inputSortParam: InputSortParam, $contextData: [InputClaimValue!]) {
+	items(first: $first, after: $after, filter: $inputItemFilter, sort: $inputSortParam, contextData: $contextData) {
 		edges {
 			cursor
 			node {
