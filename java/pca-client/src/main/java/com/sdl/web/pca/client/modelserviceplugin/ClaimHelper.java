@@ -1,15 +1,11 @@
 package com.sdl.web.pca.client.modelserviceplugin;
 
-import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValueType;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ClaimHelper {
 
@@ -43,12 +39,5 @@ public class ClaimHelper {
         cValue.setUri(ModelServiceClaimUris.ENTITY_DCP_TYPE);
         cValue.setValue(dcpType.name());
         return cValue;
-    }
-
-    public static ContextData createContextData(ContentType contentType, DataModelType modelType, PageInclusion pageInclusion) {
-        ContextData data = new ContextData();
-        List<ClaimValue> list = Arrays.asList(createClaim(contentType), createClaim(modelType), createClaim(pageInclusion));
-        data.setClaimValues(list);
-        return data;
     }
 }

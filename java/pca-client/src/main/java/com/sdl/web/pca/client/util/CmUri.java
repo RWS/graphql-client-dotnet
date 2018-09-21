@@ -1,5 +1,6 @@
 package com.sdl.web.pca.client.util;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 
@@ -122,57 +123,21 @@ public class CmUri {
         return version.orElse(IDNULL.getValue());
     }
 
-    /**
-     * Compare two URI instances.
-     *
-     * @param uri <code>CMURI</code> to compare to.
-     * @return a boolean indicating if the other URI is equal.
-     */
-    private boolean equals(String uri) {
-        try {
-            return this.equals(new CmUri(uri));
-        } catch (IllegalArgumentException e) {
-            LOG.debug("Unable to parse uri: {}. Assuming it doesn't equal to {}", uri, this.toString());
-            return false;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CmUri cmUri = (CmUri) o;
+        return pubId == cmUri.pubId &&
+                itemId == cmUri.itemId &&
+                itemType == cmUri.itemType &&
+                namespace == cmUri.namespace &&
+                Objects.equal(version, cmUri.version);
     }
 
-    /**
-     * Compare two URI instances.
-     *
-     * @param uri <code>CMURI</code> to compare to.
-     * @return a boolean indicating if the other URI is equal.
-     */
-    private boolean equals(CmUri uri) {
-        return this.getNamespace() == uri.getNamespace()
-                && this.getItemType() == uri.getItemType()
-                && this.getItemId() == uri.getItemId()
-                && this.getPublicationId() == uri.getPublicationId()
-                && this.getVersion() == uri.getVersion();
-    }
-
-    /**
-     * Overridden implementation of <code>equals()</code> method in <code>Object</code>.
-     *
-     * @param object The reference object with which to compare.
-     * @return <code>true</code> if this object is the same as passed <code>Object</code>; <code>false</code> otherwise.
-     */
-    public boolean equals(Object object) {
-        if (object instanceof CmUri) {
-            return this.equals((CmUri) object);
-        } else if (object instanceof String) {
-            return this.equals((String) object);
-        }
-        return false;
-    }
-
-    /**
-     * Overridden implementation of <code>hashCode()</code> in <code>Object</code>.
-     *
-     * @return a hash code value for this object.
-     */
+    @Override
     public int hashCode() {
-        return this.toString().hashCode();
+        return Objects.hashCode(namespace, pubId, itemId, itemType, version);
     }
 
     /**

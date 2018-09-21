@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -15,7 +16,7 @@ public final class GraphQLRequest {
     private final String operationName;
 
     /**
-     * request timeout in milliseconds.
+     * Request timeout in milliseconds.
      */
     @JsonIgnore
     private final int timeout;
@@ -33,7 +34,7 @@ public final class GraphQLRequest {
         this.query = query;
         this.variables = variables;
         this.operationName = operationName;
-        this.timeout = timeout;
+        this.timeout = (int) TimeUnit.MILLISECONDS.toMillis(timeout);
     }
 
     public String getQuery() {
