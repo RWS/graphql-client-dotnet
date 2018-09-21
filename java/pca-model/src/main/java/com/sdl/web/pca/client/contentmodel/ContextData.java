@@ -3,13 +3,14 @@ package com.sdl.web.pca.client.contentmodel;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ContextData {
     private List<ClaimValue> claimValues = new ArrayList<>();
 
     public List<ClaimValue> getClaimValues() {
-        return claimValues;
+        return Collections.unmodifiableList(claimValues);
     }
 
     public void addClaimValule(ClaimValue value) {

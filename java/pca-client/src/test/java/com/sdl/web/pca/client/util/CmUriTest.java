@@ -3,8 +3,6 @@ package com.sdl.web.pca.client.util;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class CmUriTest {
 
@@ -47,13 +45,6 @@ public class CmUriTest {
     @Test(expected = IllegalArgumentException.class)
     public void testIncorrectItemType() {
         new CmUri("ish:12-34-555");
-    }
-
-    @Test
-    public void testEquals() {
-        CmUri uri = new CmUri("ish:12-34-16-v1");
-        assertTrue(uri.equals("ish:12-34-16-v1"));
-        assertFalse(uri.equals("tcm:12-34-16-v2"));
     }
 
     @Test
