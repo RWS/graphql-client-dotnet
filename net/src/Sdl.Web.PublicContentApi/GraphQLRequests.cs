@@ -128,6 +128,7 @@ namespace Sdl.Web.PublicContentApi
             => new QueryBuilder().WithQueryResource("ResolvePageLink", true)
                 .WithNamespace(ns)
                 .WithPublicationId(publicationId)
+                .WithPageId(pageId)
                 .WithRenderRelativeLink(renderRelativeLink).Build();
 
         public static IGraphQLRequest ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId,
