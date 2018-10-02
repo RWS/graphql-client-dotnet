@@ -11,39 +11,41 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public static class GraphQLRequests
     {
-        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageById", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithPageId(pageId)
                     .WithCustomMetaFilter(customMetaFilter)
+                    .WithContentIncludeMode(contentIncludeMode)
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
 
-        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageByUrl", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithUrl(url)
-                    .WithCustomMetaFilter(customMetaFilter)
+                    .WithCustomMetaFilter(customMetaFilter)                    
+                    .WithContentIncludeMode(contentIncludeMode)
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
 
-        public static IGraphQLRequest Page(CmUri cmUri, string customMetaFilter,
+        public static IGraphQLRequest Page(CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageByCmUri", true).WithCmUri(cmUri)
                     .WithCustomMetaFilter(customMetaFilter)
+                    .WithContentIncludeMode(contentIncludeMode)
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
 
         public static IGraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
-            string customMetaFilter,
-            IContextData contextData, IContextData globalContextData) =>
+            string customMetaFilter, IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("BinaryComponentById", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
@@ -74,7 +76,7 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest ExecuteItemQuery(InputItemFilter filter, InputSortParam sort,
-            IPagination pagination, string customMetaFilter, bool renderContent, bool includeContainerItems,
+            IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems,
             IContextData contextData, IContextData globaContextData)
         {
             QueryBuilder builder = new QueryBuilder().WithQueryResource("ItemQuery", false);
@@ -94,7 +96,7 @@ namespace Sdl.Web.PublicContentApi
             return builder.WithIncludeRegion("includeContainerItems", includeContainerItems).
                 WithPagination(pagination).
                 WithCustomMetaFilter(customMetaFilter).
-                WithRenderContent(renderContent).
+                WithContentIncludeMode(contentIncludeMode).
                 WithInputItemFilter(filter).
                 WithInputSortParam(sort).
                 WithContextData(contextData).
@@ -132,13 +134,11 @@ namespace Sdl.Web.PublicContentApi
                 .WithRenderRelativeLink(renderRelativeLink).Build();
 
         public static IGraphQLRequest ResolveComponentLink(ContentNamespace ns, int publicationId, int componentId,
-            int? sourcePageId,
-            int? excludeComponentTemplateId, bool renderRelativeLink) =>
+            int? sourcePageId, int? excludeComponentTemplateId, bool renderRelativeLink) =>
                 new QueryBuilder().WithQueryResource("ResolveComponentLink", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
-                    .
-                    WithRenderRelativeLink(renderRelativeLink)
+                    .WithRenderRelativeLink(renderRelativeLink)
                     .WithVariable("targetComponentId", componentId)
                     .WithVariable("sourcePageId", sourcePageId)
                     .WithVariable("excludeComponentTemplateId", excludeComponentTemplateId)
@@ -149,8 +149,7 @@ namespace Sdl.Web.PublicContentApi
                 new QueryBuilder().WithQueryResource("ResolveBinaryLink", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
-                    .
-                    WithRenderRelativeLink(renderRelativeLink)
+                    .WithRenderRelativeLink(renderRelativeLink)
                     .WithBinaryId(binaryId)
                     .WithVariable("variantId", variantId)
                     .Build();
@@ -161,12 +160,10 @@ namespace Sdl.Web.PublicContentApi
                 new QueryBuilder().WithQueryResource("ResolveDynamicComponentLink", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
-                    .
-                    WithRenderRelativeLink(renderRelativeLink)
+                    .WithRenderRelativeLink(renderRelativeLink)
                     .WithVariable("targetPageId", pageId)
                     .WithVariable("targetComponentId", componentId)
-                    .
-                    WithVariable("targetTemplateId", templateId)
+                    .WithVariable("targetTemplateId", templateId)
                     .Build();
 
         public static IGraphQLRequest PublicationMapping(ContentNamespace ns, string url) =>
@@ -176,14 +173,13 @@ namespace Sdl.Web.PublicContentApi
                 .Build();
 
         public static IGraphQLRequest PageModelData(ContentNamespace ns, int publicationId, int pageId,
-            ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
-            IContextData globalContextData) =>
+            ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, 
+            ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageModelById", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithPageId(pageId)
-                    .WithRenderContent(renderContent)
+                    .WithContentIncludeMode(contentIncludeMode)
                     .WithContextClaim(CreateClaim(contentType))
                     .WithContextClaim(CreateClaim(modelType))
                     .WithContextClaim(CreateClaim(pageInclusion))
@@ -192,15 +188,14 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest PageModelData(ContentNamespace ns, int publicationId, string url,
-            ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData,
-            IContextData globalContextData) =>
+            ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, 
+            IContextData contextData, IContextData globalContextData) =>
 
                 new QueryBuilder().WithQueryResource("PageModelByUrl", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithUrl(url)
-                    .WithRenderContent(renderContent)
+                    .WithContentIncludeMode(contentIncludeMode)
                     .WithContextClaim(CreateClaim(contentType))
                     .WithContextClaim(CreateClaim(modelType))
                     .WithContextClaim(CreateClaim(pageInclusion))
@@ -209,16 +204,14 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest EntityModelData(ContentNamespace ns, int publicationId, int entityId,
-            int templateId, ContentType contentType,
-            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData,
-            IContextData globalContextData) =>
-
+            int templateId, ContentType contentType, DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode, 
+            IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("EntityModelById", true).
                     WithNamespace(ns).
                     WithPublicationId(publicationId).
                     WithVariable("componentId", entityId).
                     WithVariable("templateId", templateId).
-                    WithRenderContent(renderContent).
+                    WithContentIncludeMode(contentIncludeMode).
                     WithContextClaim(CreateClaim(contentType)).
                     WithContextClaim(CreateClaim(modelType)).
                     WithContextClaim(CreateClaim(dcpType)).

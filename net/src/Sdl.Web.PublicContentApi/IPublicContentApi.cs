@@ -11,13 +11,13 @@ namespace Sdl.Web.PublicContentApi
     {
         IContextData GlobalContextData { get; set; }
 
-        Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+        Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
-        Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+        Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
-        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, string customMetaFilter,
@@ -29,7 +29,7 @@ namespace Sdl.Web.PublicContentApi
         BinaryComponent GetBinaryComponent(CmUri cmUri, string customMetaFilter, IContextData contextData);
 
         ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            string customMetaFilter, bool renderContent, bool includeContainerItems, IContextData contextData);
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems, IContextData contextData);
 
         Publication GetPublication(ContentNamespace ns, int publicationId, string customMetaFilter,
             IContextData contextData);
@@ -52,14 +52,14 @@ namespace Sdl.Web.PublicContentApi
         PublicationMapping GetPublicationMapping(ContentNamespace ns, string url);
 
         dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData);
+            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData);
 
         dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, bool renderContent, IContextData contextData);
+            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData);
 
         dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
             ContentType contentType,
-            DataModelType modelType, DcpType dcpType, bool renderContent, IContextData contextData);
+            DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode, IContextData contextData);
 
         TaxonomySitemapItem GetSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
             IContextData contextData);

@@ -21,7 +21,7 @@ namespace Sdl.Web.PublicContentApi
         private string _customMetaFilter;
         private string _operationName;
         private int _descendantLevels;
-        private bool _renderContent;
+        private ContentIncludeMode _contentIncludeMode  = ContentIncludeMode.Exclude;
 
         public QueryBuilder()
         {
@@ -89,11 +89,11 @@ namespace Sdl.Web.PublicContentApi
         public QueryBuilder WithRenderRelativeLink(bool renderRelativeLink)
             => WithVariable("renderRelativeLink", renderRelativeLink);
 
-        public QueryBuilder WithRenderContent(bool renderContent)
+        public QueryBuilder WithContentIncludeMode(ContentIncludeMode contentIncludeMode)
         {
-            _renderContent = renderContent;
+            _contentIncludeMode = contentIncludeMode;
             return this;
-        }       
+        }
 
         public QueryBuilder WithContextClaim(ClaimValue claim)
         {
@@ -147,14 +147,15 @@ namespace Sdl.Web.PublicContentApi
                 string.IsNullOrEmpty(_customMetaFilter) ? "" : $"(filter: \"{_customMetaFilter}\")");
 
             ReplaceTag("renderContentArgs", 
-                $"(renderContent: {(_renderContent ? "true" : "false")})");
+                $"(renderContent: {(_contentIncludeMode == ContentIncludeMode.IncludeAndRender ? "true" : "false")})");
 
             if (_variables != null)
             {
                 ReplaceTag("variantsArgs", _variables.ContainsKey("url") ? $"(url: \"{_variables["url"]}\")" : "");
             }
 
-            string query = _query.ToString();
+            string query = QueryHelpers.ParseIncludeRegions(_query.ToString(), "includeContent", _contentIncludeMode != ContentIncludeMode.Exclude);
+
             QueryHelpers.ExpandRecursiveFragment(ref query, null, _descendantLevels);
             
             if (_contextData != null)
