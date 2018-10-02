@@ -1,5 +1,12 @@
 ﻿namespace Sdl.Web.PublicContentApi
 {
+    public enum ContentIncludeMode
+    {
+        Include,
+        IncludeAndRender,
+        Exclude
+    }
+
     // Strategy of DCP template resolving is template ID is missing in request.
     public enum DcpType
     {
