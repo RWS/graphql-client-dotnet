@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sdl.Web.Core
+namespace Sdl.Web.PublicContentApi.Core
 {
     /// <summary>
     /// Default implementation for logging

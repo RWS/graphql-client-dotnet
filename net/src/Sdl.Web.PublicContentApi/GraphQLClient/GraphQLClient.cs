@@ -9,7 +9,8 @@ using Sdl.Web.GraphQLClient.Exceptions;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.GraphQLClient.Response;
 using Sdl.Web.GraphQLClient.Schema;
-using Sdl.Web.Core;
+using Sdl.Web.PublicContentApi;
+using Sdl.Web.PublicContentApi.Core;
 
 namespace Sdl.Web.GraphQLClient
 {

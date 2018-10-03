@@ -62,14 +62,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj">
-      <Project>{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}</Project>
-      <Name>Sdl.Web.GraphQLClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj">
-      <Project>{9A31AA66-01F4-4BDE-9038-682AD23926FD}</Project>
-      <Name>Sdl.Web.HttpClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sdl.Web.PublicContentApi\Sdl.Web.PublicContentApi.csproj">
       <Project>{c613d305-5f6a-4966-b425-fd35f9027e3b}</Project>
       <Name>Sdl.Web.PublicContentApi</Name>

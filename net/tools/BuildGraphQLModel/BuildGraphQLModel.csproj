@@ -52,13 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj">
-      <Project>{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}</Project>
-      <Name>Sdl.Web.GraphQLClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj">
-      <Project>{9a31aa66-01f4-4bde-9038-682ad23926fd}</Project>
-      <Name>Sdl.Web.HttpClient</Name>
+    <ProjectReference Include="..\..\src\Sdl.Web.PublicContentApi\Sdl.Web.PublicContentApi.csproj">
+      <Project>{c613d305-5f6a-4966-b425-fd35f9027e3b}</Project>
+      <Name>Sdl.Web.PublicContentApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

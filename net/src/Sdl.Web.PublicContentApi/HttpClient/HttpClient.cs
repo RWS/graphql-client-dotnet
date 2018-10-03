@@ -10,7 +10,7 @@ using Sdl.Web.HttpClient.Exceptions;
 using Sdl.Web.HttpClient.Request;
 using Sdl.Web.HttpClient.Response;
 using Newtonsoft.Json;
-using Sdl.Web.Core;
+using Sdl.Web.PublicContentApi.Core;
 using Sdl.Web.HttpClient.Auth;
 
 namespace Sdl.Web.HttpClient

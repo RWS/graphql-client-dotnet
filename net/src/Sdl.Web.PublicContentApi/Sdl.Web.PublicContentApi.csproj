@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,8 +51,92 @@
     <Compile Include="ContentModel\IContextData.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
+    <Compile Include="Core\ILogger.cs" />
+    <Compile Include="Core\NullLogger.cs" />
     <Compile Include="Exceptions\PcaException.cs" />
+    <Compile Include="GraphQLClient\Exceptions\GraphQlClientException.cs" />
+    <Compile Include="GraphQLClient\GraphQLClient.cs" />
+    <Compile Include="GraphQLClient\IGraphQLClient.cs" />
+    <Compile Include="GraphQLClient\QueryResources.cs" />
+    <Compile Include="GraphQLClient\Request\BatchGraphQLRequest.cs" />
+    <Compile Include="GraphQLClient\Request\GraphQLRequest.cs" />
+    <Compile Include="GraphQLClient\Request\IGraphQLRequest.cs" />
+    <Compile Include="GraphQLClient\Response\GraphQLError.cs" />
+    <Compile Include="GraphQLClient\Response\GraphQLErrorLocation.cs" />
+    <Compile Include="GraphQLClient\Response\GraphQLExtensions.cs" />
+    <Compile Include="GraphQLClient\Response\GraphQLResponse.cs" />
+    <Compile Include="GraphQLClient\Response\GraphQLTypedResponse.cs" />
+    <Compile Include="GraphQLClient\Response\IGraphQLResponse.cs" />
+    <Compile Include="GraphQLClient\Response\IGraphQLTypedResponse.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLQueryType.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchema.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchemaEnum.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchemaField.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchemaInterface.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchemaType.cs" />
+    <Compile Include="GraphQLClient\Schema\GraphQLSchemaTypeInfo.cs" />
+    <Compile Include="HttpClient\Auth\BasicHttpAuth.cs" />
+    <Compile Include="HttpClient\Auth\IAuthentication.cs" />
+    <Compile Include="HttpClient\Exceptions\HttpClientException.cs" />
+    <Compile Include="HttpClient\HttpClient.cs" />
+    <Compile Include="HttpClient\HttpHeaders.cs" />
+    <Compile Include="HttpClient\HttpQueryParams.cs" />
+    <Compile Include="HttpClient\IHttpClient.cs" />
+    <Compile Include="HttpClient\Request\HttpClientRequest.cs" />
+    <Compile Include="HttpClient\Request\IHttpClientRequest.cs" />
+    <Compile Include="HttpClient\Response\HttpClientResponse.cs" />
+    <Compile Include="HttpClient\Response\IHttpClientResponse.cs" />
+    <Compile Include="HttpClient\Utils\UriCreator.cs" />
+    <Compile Include="HttpClient\Utils\UrlEncoding.cs" />
     <Compile Include="IPublicContentApiAsync.cs" />
+    <Compile Include="IQClient\API\BooleanOperationType.cs" />
+    <Compile Include="IQClient\API\EntityFieldType.cs" />
+    <Compile Include="IQClient\API\IBooleanOperation.cs" />
+    <Compile Include="IQClient\API\ICriteria.cs" />
+    <Compile Include="IQClient\API\IDefaultQueryResult.cs" />
+    <Compile Include="IQClient\API\IOperation.cs" />
+    <Compile Include="IQClient\API\IQuery.cs" />
+    <Compile Include="IQClient\API\IQueryClient.cs" />
+    <Compile Include="IQClient\API\IQueryFilter.cs" />
+    <Compile Include="IQClient\API\IQueryProvider.cs" />
+    <Compile Include="IQClient\API\IQueryResult.cs" />
+    <Compile Include="IQClient\API\IQueryResultData.cs" />
+    <Compile Include="IQClient\API\IQueryResultTransformer.cs" />
+    <Compile Include="IQClient\API\IResultFilter.cs" />
+    <Compile Include="IQClient\API\ISearcherApi.cs" />
+    <Compile Include="IQClient\API\ITermValue.cs" />
+    <Compile Include="IQClient\API\MatchOperation.cs" />
+    <Compile Include="IQClient\API\QueryException.cs" />
+    <Compile Include="IQClient\API\QueryProviderException.cs" />
+    <Compile Include="IQClient\API\TermTypes.cs" />
+    <Compile Include="IQClient\Client\IQSearchClient.cs" />
+    <Compile Include="IQClient\Model\Compile\CompileException.cs" />
+    <Compile Include="IQClient\Model\Compile\DefaultQueryCompiler.cs" />
+    <Compile Include="IQClient\Model\Compile\IQueryCompiler.cs" />
+    <Compile Include="IQClient\Model\Compile\QueryModelTransfom.cs" />
+    <Compile Include="IQClient\Model\Field\BaseField.cs" />
+    <Compile Include="IQClient\Model\Field\DefaultTermValue.cs" />
+    <Compile Include="IQClient\Model\Field\FieldException.cs" />
+    <Compile Include="IQClient\Model\Field\GroupedField.cs" />
+    <Compile Include="IQClient\Model\Field\IdField.cs" />
+    <Compile Include="IQClient\Model\Field\ItemTypeField.cs" />
+    <Compile Include="IQClient\Model\Field\MultiMatchField.cs" />
+    <Compile Include="IQClient\Model\Field\RangeField.cs" />
+    <Compile Include="IQClient\Model\Field\SingleField.cs" />
+    <Compile Include="IQClient\Model\Operation\AndOperation.cs" />
+    <Compile Include="IQClient\Model\Operation\BaseOperation.cs" />
+    <Compile Include="IQClient\Model\Operation\OrOperation.cs" />
+    <Compile Include="IQClient\Model\Operation\UnitOperation.cs" />
+    <Compile Include="IQClient\Model\QueryConstants.cs" />
+    <Compile Include="IQClient\Model\Result\SearchQueryResult.cs" />
+    <Compile Include="IQClient\Model\Result\SearchQueryResultSet.cs" />
+    <Compile Include="IQClient\Model\Result\SearchResultFilter.cs" />
+    <Compile Include="IQClient\Model\Search\SearchCriteria.cs" />
+    <Compile Include="IQClient\Model\Search\SearchNode.cs" />
+    <Compile Include="IQClient\Model\Search\SearchQuery.cs" />
+    <Compile Include="IQClient\RestClient\IRestQueryClientConfigurationProvider.cs" />
+    <Compile Include="IQClient\RestClient\RestQueryClient.cs" />
+    <Compile Include="IQClient\RestClient\RestQueryClientConfigurationProvider.cs" />
     <Compile Include="ItemConvertor.cs" />
     <Compile Include="ItemTypes.cs" />
     <Compile Include="Enums.cs" />
@@ -69,24 +154,6 @@
     <Compile Include="Utils\StringExt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sdl.Web.Core\Sdl.Web.Core.csproj">
-      <Project>{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}</Project>
-      <Name>Sdl.Web.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj">
-      <Project>{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}</Project>
-      <Name>Sdl.Web.GraphQLClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj">
-      <Project>{9a31aa66-01f4-4bde-9038-682ad23926fd}</Project>
-      <Name>Sdl.Web.HttpClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sdl.Web.IQQuery\Sdl.Web.IQClient.csproj">
-      <Project>{fbb9e872-5a37-4fcc-90a8-6e09554411c3}</Project>
-      <Name>Sdl.Web.IQClient</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Queries\PageModelByUrl.graphql" />
     <EmbeddedResource Include="Queries\PageModelById.graphql" />
     <EmbeddedResource Include="Queries\EntityModelById.graphql" />
@@ -95,6 +162,7 @@
     <EmbeddedResource Include="Queries\Fragments\RecurseItems.graphql" />
     <EmbeddedResource Include="Queries\Fragments\TaxonomyItemFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\TaxonomyPageFields.graphql" />
+    <EmbeddedResource Include="Queries\IntrospectionQuery.graphql" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Queries\Fragments\ItemFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\CustomMetaFieldsFilter.graphql" />

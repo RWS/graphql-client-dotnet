@@ -5,15 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.PublicContentApi", "..\src\Sdl.Web.PublicContentApi\Sdl.Web.PublicContentApi.csproj", "{C613D305-5F6A-4966-B425-FD35F9027E3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.GraphQLClient", "..\src\Sdl.Web.GraphQL\Sdl.Web.GraphQLClient.csproj", "{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.HttpClient", "..\src\Sdl.Web.HttpClient\Sdl.Web.HttpClient.csproj", "{9A31AA66-01F4-4BDE-9038-682AD23926FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.PublicContentApi.Tests", "..\src\Sdl.Web.PublicContentApi.Tests\Sdl.Web.PublicContentApi.Tests.csproj", "{28B0C39E-749E-4AED-87D6-84A78783D47F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.IQClient", "..\src\Sdl.Web.IQQuery\Sdl.Web.IQClient.csproj", "{FBB9E872-5A37-4FCC-90A8-6E09554411C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.Core", "..\src\Sdl.Web.Core\Sdl.Web.Core.csproj", "{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,26 +17,10 @@ Global
 		{C613D305-5F6A-4966-B425-FD35F9027E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C613D305-5F6A-4966-B425-FD35F9027E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C613D305-5F6A-4966-B425-FD35F9027E3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EF823BE-F2A2-42AA-9E90-D27DC6B17B67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A31AA66-01F4-4BDE-9038-682AD23926FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28B0C39E-749E-4AED-87D6-84A78783D47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28B0C39E-749E-4AED-87D6-84A78783D47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B0C39E-749E-4AED-87D6-84A78783D47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B0C39E-749E-4AED-87D6-84A78783D47F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBB9E872-5A37-4FCC-90A8-6E09554411C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A4DB54D-5BDC-47FF-95C5-1B74F9505B88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

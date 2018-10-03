@@ -25,6 +25,6 @@
     </metadata>
     <files>
         <!-- NOTE: We're excluding assemblies which come from dependent packages -->
-        <file src="..\src\Sdl.Web.PublicContentApi.SingleAssembly\bin\Release\*.dll" exclude="**\Newtonsoft.Json.dll" target="lib\net452" />
+        <file src="..\src\Sdl.Web.PublicContentApi\bin\Release\*.dll" exclude="**\Newtonsoft.Json.dll" target="lib\net452" />
     </files>
 </package>
