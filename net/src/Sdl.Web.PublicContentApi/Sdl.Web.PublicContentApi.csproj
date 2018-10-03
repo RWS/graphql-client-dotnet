@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentIncludeMode.cs" />
     <Compile Include="ContentModel\ContentModel.cs" />
     <Compile Include="ContentModel\ContentNamespace.cs" />
     <Compile Include="ContentModel\ContextData.cs" />

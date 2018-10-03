@@ -84,7 +84,13 @@ namespace Sdl.Web.PublicContentApi
 
         public QueryBuilder WithInputSortParam(InputSortParam sort) => WithVariable("inputSortParam", sort);
 
-        public QueryBuilder WithPagination(IPagination pagination) => WithVariable("first", pagination.First).WithVariable("after", pagination.After);
+        public QueryBuilder WithPagination(IPagination pagination)
+        {
+            if (pagination == null) return this;
+            WithVariable("first", pagination.First);
+            WithVariable("after", pagination.After);
+            return this;
+        }
 
         public QueryBuilder WithRenderRelativeLink(bool renderRelativeLink)
             => WithVariable("renderRelativeLink", renderRelativeLink);
