@@ -16,10 +16,10 @@ namespace Sdl.Web.IQQuery.Client
         public string IndexName { get; set; }
         public IResultFilter ResultFilter { get; set; }
 
-        public IQSearchClient(Uri endpoint, IAuthentication auth)
+        public IQSearchClient(Uri endpoint, IAuthentication auth, string indexName = "udp-index")
         {
             // get our query client defaulting to the rest query client
-            _client = new RestQueryClient<T, R>(endpoint, auth);
+            _client = new RestQueryClient<T, R>(endpoint, auth, indexName);
         }
         
         public ISearcherApi<T,R> WithResultFilter(IResultFilter filter)

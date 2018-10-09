@@ -15,13 +15,16 @@ namespace Sdl.Web.PublicContentApi
             try
             {
                 var target = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
-                serializer.Populate(target.CreateReader(), result);
-                switch (result.Type)
+                if (target != null)
                 {
-                    case "Page":
-                        PageSitemapItem pageItem = new PageSitemapItem();
-                        serializer.Populate(target.CreateReader(), pageItem);
-                        return pageItem;
+                    serializer.Populate(target.CreateReader(), result);
+                    switch (result.Type)
+                    {
+                        case "Page":
+                            PageSitemapItem pageItem = new PageSitemapItem();
+                            serializer.Populate(target.CreateReader(), pageItem);
+                            return pageItem;
+                    }
                 }
             }
             catch

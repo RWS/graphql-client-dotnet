@@ -14,34 +14,37 @@ namespace Sdl.Web.PublicContentApi
             JsonSerializer serializer)
         {
             var target = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
-            var expConverter = new ExpandoObjectConverter();
-            dynamic obj = JsonConvert.DeserializeObject<ExpandoObject>(target.ToString(), expConverter);
             IItem item = null;
-            int itemType = (int) obj.itemType;
-            switch (itemType)
+            if (target != null)
             {
-                case (int) ItemType.Publication:
-                    item = new Publication();
-                    break;
-                case (int) ItemType.Component:
-                    item = new Component();
-                    break;
-                case (int) ItemType.Category:
-                case (int)ItemType.Keyword:
-                    item = new Keyword();
-                    break;
-                case (int) ItemType.Page:
-                    item = new Page();
-                    break;
-                case (int) ItemType.StructureGroup:
-                    item = new StructureGroup();
-                    break;
-                case (int) ItemType.ComponentTemplate:
-                    item = new Template();
-                    break;
-                case 2048: // ?? huh?
-                    item = new ComponentPresentation();
-                    break;
+                var expConverter = new ExpandoObjectConverter();
+                dynamic obj = JsonConvert.DeserializeObject<ExpandoObject>(target.ToString(), expConverter);               
+                int itemType = (int) obj.itemType;
+                switch (itemType)
+                {
+                    case (int) ItemType.Publication:
+                        item = new Publication();
+                        break;
+                    case (int) ItemType.Component:
+                        item = new Component();
+                        break;
+                    case (int) ItemType.Category:
+                    case (int) ItemType.Keyword:
+                        item = new Keyword();
+                        break;
+                    case (int) ItemType.Page:
+                        item = new Page();
+                        break;
+                    case (int) ItemType.StructureGroup:
+                        item = new StructureGroup();
+                        break;
+                    case (int) ItemType.ComponentTemplate:
+                        item = new Template();
+                        break;
+                    case 2048: // ?? huh?
+                        item = new ComponentPresentation();
+                        break;
+                }
             }
             if (item == null) return null;
             serializer.Populate(target.CreateReader(), item);
