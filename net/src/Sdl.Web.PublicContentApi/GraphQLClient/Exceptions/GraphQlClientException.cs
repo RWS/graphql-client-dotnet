@@ -19,6 +19,8 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         /// </summary>
         public IHttpClientResponse<IGraphQLResponse> Response { get; }
 
+        public override string Message => GetMessage();
+
         public GraphQLClientException()
         { }
 
@@ -47,6 +49,17 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         {
             StatusCode = statusCode;
             Response = response;
+        }
+
+        private string GetMessage()
+        {
+            var messageBuilder = new System.Text.StringBuilder();
+
+            messageBuilder.AppendLine(base.Message);
+
+            Response?.ResponseData?.Errors?.ForEach(error => messageBuilder.AppendLine($"GraphQLError : {error.Message}") );
+
+            return messageBuilder.ToString();
         }
     }
 }
