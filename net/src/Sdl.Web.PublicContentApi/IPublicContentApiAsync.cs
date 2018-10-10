@@ -77,7 +77,7 @@ namespace Sdl.Web.PublicContentApi
 
         Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
             string taxonomyNodeId,
-            int descendantLevels, bool includeAncestors,
+            int descendantLevels, Ancestor ancestor,
             IContextData contextData, CancellationToken cancellationToken);
     }
 }
