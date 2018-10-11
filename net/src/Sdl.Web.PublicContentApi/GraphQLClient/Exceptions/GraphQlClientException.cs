@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Sdl.Web.GraphQLClient.Response;
 using Sdl.Web.HttpClient.Response;
 
@@ -18,6 +19,8 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         /// Response of request.
         /// </summary>
         public IHttpClientResponse<IGraphQLResponse> Response { get; }
+
+        public override string Message => GetMessage();
 
         public GraphQLClientException()
         { }
@@ -47,6 +50,17 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         {
             StatusCode = statusCode;
             Response = response;
+        }
+
+        private string GetMessage()
+        {
+            var messageBuilder = new System.Text.StringBuilder();
+
+            messageBuilder.AppendLine(base.Message);
+
+            Response?.ResponseData?.Errors?.ForEach(error => messageBuilder.AppendLine($"GraphQLError : {error.Message} at {string.Join(" and at ", error.Locations?.Select(loc=>"Line : "+loc.Line+ " Column :" + loc.Column))}"));
+
+            return messageBuilder.ToString();
         }
     }
 }
