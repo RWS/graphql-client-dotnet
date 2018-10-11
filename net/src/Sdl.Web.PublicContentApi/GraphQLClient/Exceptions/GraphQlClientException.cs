@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Sdl.Web.GraphQLClient.Response;
 using Sdl.Web.HttpClient.Response;
 
@@ -57,7 +58,7 @@ namespace Sdl.Web.GraphQLClient.Exceptions
 
             messageBuilder.AppendLine(base.Message);
 
-            Response?.ResponseData?.Errors?.ForEach(error => messageBuilder.AppendLine($"GraphQLError : {error.Message}") );
+            Response?.ResponseData?.Errors?.ForEach(error => messageBuilder.AppendLine($"GraphQLError : {error.Message} at {string.Join(" and at ", error.Locations?.Select(loc=>"Line : "+loc.Line+ " Column :" + loc.Column))}"));
 
             return messageBuilder.ToString();
         }
