@@ -3,6 +3,7 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentIncludeMode;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
@@ -13,6 +14,7 @@ import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.Page;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
@@ -24,6 +26,17 @@ import com.sdl.web.pca.client.util.CmUri;
  * This interface enables java clients to connect to the GraphQL Service
  */
 public interface PublicContentApi {
+
+
+    Page getPage(ContentNamespace ns, int publicationId, int pageId, String customMetaFilter,
+                 ContentIncludeMode contentIncludeMode, ContextData contextData);
+
+    Page getPage(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
+                 ContentIncludeMode contentIncludeMode, ContextData contextData);
+
+    Page getPage(ContentNamespace ns, int publicationId, CmUri cmUri, String customMetaFilter,
+                 ContentIncludeMode contentIncludeMode, ContextData contextData);
+
     /**
      * Retrieves BinaryComponent by providing publication id and binary id.
      *

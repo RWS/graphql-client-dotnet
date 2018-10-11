@@ -1,6 +1,7 @@
 package com.sdl.web.pca.client.util;
 
 
+import com.google.common.base.Strings;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import org.slf4j.Logger;
 
@@ -39,6 +40,55 @@ public class QueryUtils {
 
     public static String injectCustomMetaFilter(String query, String customMetaFilter) {
         return query.replace("@customMetaArgs", isNullOrEmpty(customMetaFilter) ? "" : ("filter: " + customMetaFilter));
+    }
+
+     /**
+     * Remove regions from a query based on include parameter given the following query syntax:
+     *  {regionName}? {
+     *      query region to exclude/include
+     *  }
+     *
+     * @param query      Query
+     * @param regionName Region name
+     * @param include    Determine if we should include/exclude
+     * @return Rebuilt query
+     */
+    public static String parseIncludeRegions(String query, String regionName, boolean include) {
+        if (Strings.isNullOrEmpty(query)) {
+            return query;
+        }
+        int index = query.indexOf(regionName + "?");
+        if (index == -1) {
+            return query;
+        }
+        StringBuilder sb = new StringBuilder();
+        int lastIndex = 0;
+        while (index >= 0) {
+            sb.append(query.substring(lastIndex, index));
+            int start = query.indexOf("{", index + regionName.length()) + 1;
+            int n = 1;
+            int end;
+            for (end = start; n > 0; end++) {
+                switch (query.charAt(end)) {
+                    case '{':
+                        n++;
+                        break;
+                    case '}':
+                        n--;
+                        break;
+                }
+            }
+
+            if (include) {
+                sb.append(query.substring(start, end - 1));
+            }
+            lastIndex = end;
+            index = query.indexOf(regionName + "?", lastIndex);
+            if (index < 0) {
+                sb.append(query.substring(lastIndex));
+            }
+        }
+        return sb.toString();
     }
 
     static String getFragmentName(String fragment) {

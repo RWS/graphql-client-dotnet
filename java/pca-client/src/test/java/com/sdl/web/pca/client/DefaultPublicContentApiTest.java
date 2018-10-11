@@ -10,6 +10,7 @@ import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
+import com.sdl.web.pca.client.contentmodel.generated.FilterItemType;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
@@ -160,7 +161,7 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.PAGE));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
@@ -181,7 +182,7 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.COMPONENT));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
@@ -202,7 +203,7 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.KEYWORD));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
@@ -223,7 +224,7 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.PUBLICATION));
 
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
@@ -315,9 +316,9 @@ public class DefaultPublicContentApiTest {
     @Test
     public void testMapToFragmentList() {
         InputItemFilter filter = new InputItemFilter();
-        filter.setItemTypes(Arrays.asList(ItemType.CATEGORY, ItemType.COMPONENT_PRESENTATION, ItemType.STRUCTURE_GROUP,
-                ItemType.PAGE));
-        List<String> expected = Arrays.asList("CategoryFields", "ComponentPresentationFields", "StructureGroupFields", "PageFields");
+        filter.setItemTypes(Arrays.asList(FilterItemType.CATEGORY, FilterItemType.COMPONENT_TEMPLATE, FilterItemType.PAGE_TEMPLATE,
+                FilterItemType.PAGE));
+        List<String> expected = Arrays.asList("CategoryFields", "ComponentTemplateFields", "PageTemplateFields", "PageFields");
 
         assertEquals(expected, publicContentApi.mapToFragmentList(filter));
     }
