@@ -51,6 +51,7 @@
     <Compile Include="ContentModel\IContextData.cs" />
     <Compile Include="ContentModel\IPagination.cs" />
     <Compile Include="ContentModel\Pagination.cs" />
+    <Compile Include="ContentModel\Patches\ContentComponent.cs" />
     <Compile Include="Core\ILogger.cs" />
     <Compile Include="Core\NullLogger.cs" />
     <Compile Include="Exceptions\PcaException.cs" />
@@ -192,6 +193,9 @@
     <EmbeddedResource Include="Queries\PageByUrl.graphql" />
     <EmbeddedResource Include="Queries\PageByCmUri.graphql" />
     <EmbeddedResource Include="Queries\Fragments\PageItemFields.graphql" />
+    <EmbeddedResource Include="Queries\ComponentPresentation.graphql" />
+    <EmbeddedResource Include="Queries\ComponentPresentations.graphql" />
+    <EmbeddedResource Include="Queries\PagesByUrl.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

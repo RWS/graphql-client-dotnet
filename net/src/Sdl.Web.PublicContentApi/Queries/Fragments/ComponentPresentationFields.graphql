@@ -1,5 +1,11 @@
 ﻿fragment ComponentPresentationFields on ComponentPresentation {
-    itemType
+	...ItemFields
+	component {
+       ...ComponentFields
+    }
+    componentTemplate {
+       ...TemplateFields
+    }
 	includeContent? {
 		rawContent@renderContentArgs {
 			data 
