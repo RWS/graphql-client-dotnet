@@ -11,6 +11,15 @@ namespace Sdl.Web.PublicContentApi
     {
         IContextData GlobalContextData { get; set; }
 
+        ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
+            int templateId, string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);
+
+        ComponentPresentationConnection GetComponentPresentations(ContentNamespace ns, int publicationId,
+            InputComponentPresentationFilter filter,
+            InputSortParam sort,
+            IPagination pagination,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);
+
         Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
@@ -19,6 +28,9 @@ namespace Sdl.Web.PublicContentApi
 
         Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData);
+
+        PageConnection GetPages(ContentNamespace ns, IPagination pagination, string url,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);
 
         BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, string customMetaFilter,
             IContextData contextData);

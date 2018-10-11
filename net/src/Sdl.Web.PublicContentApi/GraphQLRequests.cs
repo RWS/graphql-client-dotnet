@@ -11,6 +11,36 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public static class GraphQLRequests
     {
+        public static IGraphQLRequest ComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
+             new QueryBuilder().WithQueryResource("ComponentPresentation", true)
+                    .WithNamespace(ns)
+                    .WithPublicationId(publicationId)
+                    .WithVariable("componentId", componentId)
+                    .WithVariable("templateId", templateId)
+                    .WithCustomMetaFilter(customMetaFilter)
+                    .WithContentIncludeMode(contentIncludeMode)
+                    .WithConvertor(new ItemConvertor())
+                    .WithContextData(contextData)
+                    .WithContextData(globalContextData)
+                    .Build();
+
+        public static IGraphQLRequest ComponentPresentations(ContentNamespace ns, int publicationId,
+            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
+              new QueryBuilder().WithQueryResource("ComponentPresentations", true)
+                    .WithNamespace(ns)
+                    .WithPublicationId(publicationId)
+                    .WithInputComponentPresentationFilter(filter)
+                    .WithInputSortParam(sort)
+                    .WithPagination(pagination)
+                    .WithCustomMetaFilter(customMetaFilter)
+                    .WithContentIncludeMode(contentIncludeMode)
+                    .WithContextData(contextData)
+                    .WithContextData(globalContextData)
+                    .WithConvertor(new ItemConvertor())
+                    .Build();
+
         public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageById", true)
@@ -43,6 +73,18 @@ namespace Sdl.Web.PublicContentApi
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
+
+        public static IGraphQLRequest Pages(ContentNamespace ns, IPagination pagination, string url,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
+               new QueryBuilder().WithQueryResource("PagesByUrl", true)
+                   .WithNamespace(ns)
+                   .WithUrl(url)
+                   .WithPagination(pagination)
+                   .WithCustomMetaFilter(customMetaFilter)
+                   .WithContentIncludeMode(contentIncludeMode)
+                   .WithContextData(contextData)
+                   .WithContextData(globalContextData)
+                   .Build();
 
         public static IGraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter, IContextData contextData, IContextData globalContextData) =>
