@@ -231,7 +231,7 @@ namespace Sdl.Web.PublicContentApi
                 .Build();
 
         public static IGraphQLRequest SitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels, bool includeAncestors,
+            int descendantLevels, Ancestor ancestor,
             IContextData contextData, IContextData globalContextData)
         {
             QueryBuilder builder =
@@ -241,7 +241,7 @@ namespace Sdl.Web.PublicContentApi
                 builder.WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithVariable("taxonomyNodeId", taxonomyNodeId)
-                    .WithVariable("includeAncestors", includeAncestors)
+                    .WithVariable("ancestor", ancestor)
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .WithDescendantLevels(descendantLevels)

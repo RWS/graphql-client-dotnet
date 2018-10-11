@@ -227,14 +227,14 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public List<TaxonomySitemapItem> GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels, bool includeAncestors,
+            int descendantLevels, Ancestor ancestor,
             IContextData contextData)
         {
             try
             {
                 var response =
                     _client.Execute<ContentQuery>(GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId,
-                        descendantLevels, includeAncestors, contextData, GlobalContextData));
+                        descendantLevels, ancestor, contextData, GlobalContextData));
                 return response.TypedResponseData.SitemapSubtree;
             }
             catch (RuntimeBinderException e)
@@ -455,7 +455,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public async Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
-            string taxonomyNodeId, int descendantLevels, bool includeAncestors,
+            string taxonomyNodeId, int descendantLevels, Ancestor ancestor,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -464,7 +464,7 @@ namespace Sdl.Web.PublicContentApi
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels,
-                                includeAncestors, contextData, GlobalContextData), cancellationToken);
+                                ancestor, contextData, GlobalContextData), cancellationToken);
                 return response.Data.sitemapSubtree;
             }
             catch (RuntimeBinderException e)
