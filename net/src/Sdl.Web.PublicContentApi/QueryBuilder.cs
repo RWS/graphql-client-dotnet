@@ -78,11 +78,14 @@ namespace Sdl.Web.PublicContentApi
         public QueryBuilder WithNamespace(ContentNamespace ns) => WithVariable("namespaceId", ns);
 
         public QueryBuilder WithInputPublicationFilter(InputPublicationFilter filter)
-            => WithVariable("inputPublicationFilter", filter);
+            => WithVariable("filter", filter);
 
         public QueryBuilder WithInputItemFilter(InputItemFilter filter) => WithVariable("inputItemFilter", filter);
 
         public QueryBuilder WithInputSortParam(InputSortParam sort) => WithVariable("inputSortParam", sort);
+
+        public QueryBuilder WithInputComponentPresentationFilter(InputComponentPresentationFilter filter)
+            => WithVariable("filter", filter);
 
         public QueryBuilder WithPagination(IPagination pagination)
         {
@@ -116,6 +119,7 @@ namespace Sdl.Web.PublicContentApi
 
         public QueryBuilder WithVariable(string name, object value)
         {
+            if (value == null) return this;
             if (_variables == null) _variables = new Dictionary<string, object>();
             _variables.Add(name, value);
             return this;

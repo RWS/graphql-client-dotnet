@@ -29,6 +29,7 @@ namespace Sdl.Web.PublicContentApi
             }
             catch
             {
+                // ignore
             }
             return result;
         }

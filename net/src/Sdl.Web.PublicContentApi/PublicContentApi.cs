@@ -67,6 +67,19 @@ namespace Sdl.Web.PublicContentApi
 
         public IContextData GlobalContextData { get; set; } = new ContextData();
 
+        public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
+            => _client.Execute<ContentQuery>(
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                .TypedResponseData.ComponentPresentation;
+
+        public ComponentPresentationConnection GetComponentPresentations(ContentNamespace ns, int publicationId,
+            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode, IContextData contextData)
+            => _client.Execute<ContentQuery>(
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                .TypedResponseData.ComponentPresentations;
+
         public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
@@ -84,6 +97,12 @@ namespace Sdl.Web.PublicContentApi
             => _client.Execute<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
                 .TypedResponseData.Page;
+
+        public PageConnection GetPages(ContentNamespace ns, IPagination pagination, string url,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
+            => _client.Execute<ContentQuery>(
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                .TypedResponseData.Pages;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter,
@@ -227,14 +246,14 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public List<TaxonomySitemapItem> GetSitemapSubtree(ContentNamespace ns, int publicationId, string taxonomyNodeId,
-            int descendantLevels, bool includeAncestors,
+            int descendantLevels, Ancestor ancestor,
             IContextData contextData)
         {
             try
             {
                 var response =
                     _client.Execute<ContentQuery>(GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId,
-                        descendantLevels, includeAncestors, contextData, GlobalContextData));
+                        descendantLevels, ancestor, contextData, GlobalContextData));
                 return response.TypedResponseData.SitemapSubtree;
             }
             catch (RuntimeBinderException e)
@@ -249,7 +268,23 @@ namespace Sdl.Web.PublicContentApi
 
         #region IPublicContentApiAsync
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId,
+        public async Task<ComponentPresentation> GetComponentPresentationAsync(ContentNamespace ns, int publicationId, int componentId, int templateId,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
+            CancellationToken cancellationToken)
+          => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                cancellationToken))
+                .TypedResponseData.ComponentPresentation;
+
+        public async Task<ComponentPresentationConnection> GetComponentPresentationsAsync(ContentNamespace ns, int publicationId, InputComponentPresentationFilter filter,
+            InputSortParam sort, IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+            IContextData contextData, CancellationToken cancellationToken)
+        => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                cancellationToken))
+                .TypedResponseData.ComponentPresentations;
+
+        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, int pageId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
@@ -257,20 +292,27 @@ namespace Sdl.Web.PublicContentApi
                 cancellationToken))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
                 cancellationToken))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri,
+        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, CmUri cmUri,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
                 cancellationToken))
                 .TypedResponseData.Page;
+
+        public async Task<PageConnection> GetPagesAsync(ContentNamespace ns, IPagination pagination, string url, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
+         => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                cancellationToken))
+                .TypedResponseData.Pages;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter,
@@ -455,7 +497,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public async Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
-            string taxonomyNodeId, int descendantLevels, bool includeAncestors,
+            string taxonomyNodeId, int descendantLevels, Ancestor ancestor,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -464,7 +506,7 @@ namespace Sdl.Web.PublicContentApi
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels,
-                                includeAncestors, contextData, GlobalContextData), cancellationToken);
+                                ancestor, contextData, GlobalContextData), cancellationToken);
                 return response.Data.sitemapSubtree;
             }
             catch (RuntimeBinderException e)

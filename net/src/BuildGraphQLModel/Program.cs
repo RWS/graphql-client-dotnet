@@ -101,7 +101,7 @@ namespace BuildGraphQLModel
         }      
 
         static void GenerateClass(StringBuilder sb, GraphQLSchema schema, GraphQLSchemaType type, int indent)
-        {
+        {           
             if (type.Name.StartsWith("__")) return;
             if (type.Kind.Equals("SCALAR")) return;
             EmitComment(ref sb, type.Description, indent);
@@ -113,7 +113,7 @@ namespace BuildGraphQLModel
             if (type.Interfaces != null && type.Interfaces.Count > 0)
             {
                 sb.Append(" : ");
-                for (int i = 0; i < type.Interfaces.Count - 2; i++)
+                for (int i = 0; i <= type.Interfaces.Count - 2; i++)
                 {
                     sb.Append($"{type.Interfaces[i].TypeName()}, ");
                 }
@@ -196,7 +196,7 @@ namespace BuildGraphQLModel
                     return -1;
                 }
                 GraphQLClient client = new GraphQLClient(endpoint);
-                GraphQLSchema schema = client.Schema;
+                GraphQLSchema schema = client.Schema;             
                 GenerateSchemaClasses(schema, ns, outputFile);
             }
             catch(Exception ex)

@@ -11,14 +11,26 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public interface IPublicContentApiAsync
     {
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        Task<ComponentPresentation> GetComponentPresentationAsync(ContentNamespace ns, int publicationId, int componentId,
+          int templateId, string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<ComponentPresentationConnection> GetComponentPresentationsAsync(ContentNamespace ns, int publicationId,
+            InputComponentPresentationFilter filter,
+            InputSortParam sort,
+            IPagination pagination,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken);
+
+        Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<Page> GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken);
+
+        Task<PageConnection> GetPagesAsync(ContentNamespace ns, IPagination pagination, string url,
+          string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken);
 
         Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter,
@@ -77,7 +89,7 @@ namespace Sdl.Web.PublicContentApi
 
         Task<List<TaxonomySitemapItem>> GetSitemapSubtreeAsync(ContentNamespace ns, int publicationId,
             string taxonomyNodeId,
-            int descendantLevels, bool includeAncestors,
+            int descendantLevels, Ancestor ancestor,
             IContextData contextData, CancellationToken cancellationToken);
     }
 }
