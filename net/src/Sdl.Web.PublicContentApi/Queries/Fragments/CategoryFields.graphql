@@ -1,0 +1,10 @@
+﻿fragment CategoryFields on Keyword {
+	depth
+    hasChildren
+    description
+    key
+    navigable
+    abstract
+    totalRelatedItems
+    usedForIdentification
+}

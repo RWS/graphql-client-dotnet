@@ -1,0 +1,3 @@
+﻿fragment ComponentTemplateFields on Component {
+	...ItemFields
+}
