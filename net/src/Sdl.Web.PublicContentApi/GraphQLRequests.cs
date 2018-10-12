@@ -293,12 +293,26 @@ namespace Sdl.Web.PublicContentApi
         }
 
         #region Query Builder Helpers
-
+     
         public static ClaimValue CreateClaim(TcdlLinkRendering linkRendering) => new ClaimValue
         {
             Uri = ClaimUris.TcdlLinkRendering,
             Type = ClaimValueType.BOOLEAN,
             Value = linkRendering == TcdlLinkRendering.Relative ? "true" : "false"
+        };
+
+        public static ClaimValue CreateClaimTcdlLinkUrlPrefix(string urlPrefix) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlLinkUrlPrefix,
+            Type = ClaimValueType.STRING,
+            Value = urlPrefix
+        };
+
+        public static ClaimValue CreateClaimTcdlBinaryLinkUrlPrefix(string urlPrefix) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlBinaryLinkUrlPrefix,
+            Type = ClaimValueType.STRING,
+            Value = urlPrefix
         };
 
         public static ClaimValue CreateClaim(ContentType contentType) => new ClaimValue

@@ -40,5 +40,15 @@
         /// Claim Uri for controlling how tcdl links get rendered
         /// </summary>
         public static readonly string TcdlLinkRendering = "taf:tcdl:render:link:relative";
+
+        /// <summary>
+        /// Claim Uri for tcdl link url prefix
+        /// </summary>
+        public static readonly string TcdlLinkUrlPrefix = "taf:tcdl:render:link:urlprefix";
+
+        /// <summary>
+        /// Claim Uri for tcdl binary link url prefix
+        /// </summary>
+        public static readonly string TcdlBinaryLinkUrlPrefix = "taf:tcdl:render:link:binaryUrlPrefix";
     }
 }
