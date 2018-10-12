@@ -64,7 +64,7 @@ public class QueryUtils {
         StringBuilder sb = new StringBuilder();
         int lastIndex = 0;
         while (index >= 0) {
-            sb.append(query.substring(lastIndex, index));
+            sb.append(query, lastIndex, index);
             int start = query.indexOf("{", index + regionName.length()) + 1;
             int n = 1;
             int end;
@@ -80,7 +80,7 @@ public class QueryUtils {
             }
 
             if (include) {
-                sb.append(query.substring(start, end - 1));
+                sb.append(query, start, end - 1);
             }
             lastIndex = end;
             index = query.indexOf(regionName + "?", lastIndex);

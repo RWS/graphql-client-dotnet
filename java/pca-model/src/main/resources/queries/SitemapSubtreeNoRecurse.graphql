@@ -1,5 +1,5 @@
-﻿query sitemapSubtree($namespaceId: Int!, $publicationId: Int!, $taxonomyNodeId: String, $includeAncestors: Boolean) {          
-    sitemapSubtree(namespaceId: $namespaceId, publicationId: $publicationId, taxonomyNodeId: $taxonomyNodeId, includeAncestors: $includeAncestors) {
+﻿query sitemapSubtree($namespaceId: Int!, $publicationId: Int!, $taxonomyNodeId: String, $ancestor: Ancestor) {          
+    sitemapSubtree(namespaceId: $namespaceId, publicationId: $publicationId, taxonomyNodeId: $taxonomyNodeId, ancestor: $ancestor) {
 		...TaxonomyItemFields    
     }
 }
