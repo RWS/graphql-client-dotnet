@@ -9,9 +9,28 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public interface IPublicContentApi
     {
+        /// <summary>
+        /// Holds global context data passed on to PCA service. Note that context data passed
+        /// directly to API methods overwrites these values.
+        /// </summary>
         IContextData GlobalContextData { get; set; }
 
+        /// <summary>
+        /// Specify type of content to return from API. When set to RAW no conversion will take
+        /// place otherwise its treated as model data and will go through conversion to type specified
+        /// by DefaultModelType
+        /// </summary>
+        ContentType DefaultContentType { get; set; }
+
+        /// <summary>
+        /// Specify model type to return
+        /// </summary>
         DataModelType DefaultModelType { get; set; }
+
+        /// <summary>
+        /// Specify how tcdl links get rendered
+        /// </summary>
+        TcdlLinkRendering TcdlLinkRenderingType { get; set; }
 
         ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
             int templateId, string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);
