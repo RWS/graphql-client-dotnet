@@ -18,24 +18,34 @@ namespace Sdl.Web.PublicContentApi
         /// <summary>
         /// Specify type of content to return from API. When set to RAW no conversion will take
         /// place otherwise its treated as model data and will go through conversion to type specified
-        /// by DefaultModelType
+        /// by DefaultModelType (default: Model)
         /// </summary>
         ContentType DefaultContentType { get; set; }
 
         /// <summary>
-        /// Specify model type to return
+        /// Specify model type to return (default: R2)
         /// </summary>
         DataModelType DefaultModelType { get; set; }
 
         /// <summary>
-        /// Specify how tcdl links get rendered
+        /// Specify how tcdl links get rendered (default: relative)
         /// </summary>
         TcdlLinkRendering TcdlLinkRenderingType { get; set; }
 
         /// <summary>
-        /// Specify how the model-service plugin renders links
+        /// Specify how the model-service plugin renders links (default: relative)
         /// </summary>
         ModelServiceLinkRendering ModelSericeLinkRenderingType { get; set; }
+
+        /// <summary>
+        /// Specify Url prefix for tcdl links for Absolute rendering type (default: none)
+        /// </summary>
+        string TcdlLinkUrlPrefix { get; set; }
+
+        /// <summary>
+        /// Specify Url prefix for tcdl binary links for Absolute rendering type (default: none)
+        /// </summary>
+        string TcdlBinaryLinkUrlPrefix { get; set; }
 
         ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
             int templateId, string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);

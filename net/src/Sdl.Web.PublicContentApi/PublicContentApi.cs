@@ -61,23 +61,7 @@ namespace Sdl.Web.PublicContentApi
             CancellationToken cancellationToken)
             => await _client.ExecuteAsync<T>(request, cancellationToken);
 
-        #endregion
-
-        private IContextData GlobalContextDataInternal
-        {
-            get
-            {
-                IContextData data = new ContextData(GlobalContextData);
-                // Add a default claim here to control model type returned by default
-                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultModelType));
-                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
-                // Add claim to control how tcdl links are rendered
-                data.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRenderingType));
-                // Add claim to control how model-service plugin renders links
-                data.ClaimValues.Add(GraphQLRequests.CreateClaim(ModelSericeLinkRenderingType));
-                return data;
-            }
-        }
+        #endregion     
 
         #region IPublicContentApi
 
@@ -86,28 +70,38 @@ namespace Sdl.Web.PublicContentApi
         /// directly to API methods overwrites these values.
         /// </summary>
         public IContextData GlobalContextData { get; set; } = new ContextData();
-        
+
         /// <summary>
         /// Specify type of content to return from API. When set to RAW no conversion will take
         /// place otherwise its treated as model data and will go through conversion to type specified
-        /// by DefaultModelType
+        /// by DefaultModelType (default: Model)
         /// </summary>
         public ContentType DefaultContentType { get; set; } = ContentType.MODEL;
 
         /// <summary>
-        /// Specify model type to return
+        /// Specify model type to return (default: R2)
         /// </summary>
         public DataModelType DefaultModelType { get; set; } = DataModelType.R2;
 
         /// <summary>
-        /// Specify how tcdl links get rendered
+        /// Specify how tcdl links get rendered (default: relative)
         /// </summary>
         public TcdlLinkRendering TcdlLinkRenderingType { get; set; } = TcdlLinkRendering.Relative;
 
         /// <summary>
-        /// Specify how the model-service plugin renders links
+        /// Specify how the model-service plugin renders links (default: relative)
         /// </summary>
         public ModelServiceLinkRendering ModelSericeLinkRenderingType { get; set; } = ModelServiceLinkRendering.Relative;
+
+        /// <summary>
+        /// Specify Url prefix for tcdl links for Absolute rendering type (default: none)
+        /// </summary>
+        public string TcdlLinkUrlPrefix { get; set; } = null;
+
+        /// <summary>
+        /// Specify Url prefix for tcdl binary links for Absolute rendering type (default: none)
+        /// </summary>
+        public string TcdlBinaryLinkUrlPrefix { get; set; } = null;
 
         public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
@@ -552,6 +546,34 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        #endregion    
+        #endregion
+
+        #region Private
+        private IContextData GlobalContextDataInternal
+        {
+            get
+            {
+                IContextData data = new ContextData(GlobalContextData);
+                // Add a default claim here to control model type returned by default
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultModelType));
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
+                // Add claim to control how tcdl links are rendered
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRenderingType));
+                // Add claim to control how model-service plugin renders links
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(ModelSericeLinkRenderingType));
+                // Add claim to control prefix urls
+                if (TcdlLinkRenderingType != TcdlLinkRendering.Absolute) return data;
+                if (!string.IsNullOrEmpty(TcdlLinkUrlPrefix))
+                {
+                    data.ClaimValues.Add(GraphQLRequests.CreateClaimTcdlLinkUrlPrefix(TcdlLinkUrlPrefix));
+                }
+                if (!string.IsNullOrEmpty(TcdlBinaryLinkUrlPrefix))
+                {
+                    data.ClaimValues.Add(GraphQLRequests.CreateClaimTcdlBinaryLinkUrlPrefix(TcdlBinaryLinkUrlPrefix));
+                }
+                return data;
+            }
+        }
+        #endregion
     }
 }
