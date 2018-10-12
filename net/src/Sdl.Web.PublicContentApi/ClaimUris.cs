@@ -37,6 +37,11 @@
         public static readonly string EntityDcpType = "dxa:modelservice:model:entity:dcptype";
 
         /// <summary>
+        /// Claim Uri for controlling how the model-service plugin renders links
+        /// </summary>
+        public static readonly string ModelServiceLinkRendering = "dxa:modelservice:model:entity:relativelinks";
+
+        /// <summary>
         /// Claim Uri for controlling how tcdl links get rendered
         /// </summary>
         public static readonly string TcdlLinkRendering = "taf:tcdl:render:link:relative";

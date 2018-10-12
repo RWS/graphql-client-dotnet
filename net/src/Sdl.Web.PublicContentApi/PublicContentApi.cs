@@ -73,6 +73,8 @@ namespace Sdl.Web.PublicContentApi
                 data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
                 // Add claim to control how tcdl links are rendered
                 data.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRenderingType));
+                // Add claim to control how model-service plugin renders links
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(ModelSericeLinkRenderingType));
                 return data;
             }
         }
@@ -101,6 +103,11 @@ namespace Sdl.Web.PublicContentApi
         /// Specify how tcdl links get rendered
         /// </summary>
         public TcdlLinkRendering TcdlLinkRenderingType { get; set; } = TcdlLinkRendering.Relative;
+
+        /// <summary>
+        /// Specify how the model-service plugin renders links
+        /// </summary>
+        public ModelServiceLinkRendering ModelSericeLinkRenderingType { get; set; } = ModelServiceLinkRendering.Relative;
 
         public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)

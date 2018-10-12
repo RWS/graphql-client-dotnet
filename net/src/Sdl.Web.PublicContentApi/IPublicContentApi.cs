@@ -32,6 +32,11 @@ namespace Sdl.Web.PublicContentApi
         /// </summary>
         TcdlLinkRendering TcdlLinkRenderingType { get; set; }
 
+        /// <summary>
+        /// Specify how the model-service plugin renders links
+        /// </summary>
+        ModelServiceLinkRendering ModelSericeLinkRenderingType { get; set; }
+
         ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
             int templateId, string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData);
 

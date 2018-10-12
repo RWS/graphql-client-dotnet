@@ -13,6 +13,12 @@
         Relative
     }
 
+    public enum ModelServiceLinkRendering
+    {
+        Absolute,
+        Relative
+    }
+
     // Strategy of DCP template resolving is template ID is missing in request.
     public enum DcpType
     {

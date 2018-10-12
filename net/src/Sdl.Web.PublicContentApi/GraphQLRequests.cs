@@ -293,7 +293,14 @@ namespace Sdl.Web.PublicContentApi
         }
 
         #region Query Builder Helpers
-     
+
+        public static ClaimValue CreateClaim(ModelServiceLinkRendering linkRendering) => new ClaimValue
+        {
+            Uri = ClaimUris.ModelServiceLinkRendering,
+            Type = ClaimValueType.BOOLEAN,
+            Value = linkRendering == ModelServiceLinkRendering.Relative ? "true" : "false"
+        };
+
         public static ClaimValue CreateClaim(TcdlLinkRendering linkRendering) => new ClaimValue
         {
             Uri = ClaimUris.TcdlLinkRendering,
