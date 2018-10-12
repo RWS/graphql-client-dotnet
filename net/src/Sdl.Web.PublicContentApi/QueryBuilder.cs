@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -194,7 +195,25 @@ namespace Sdl.Web.PublicContentApi
                 return localContextData;
 
             IContextData merged = new ContextData();
-            merged.ClaimValues = globalContextData.ClaimValues.Concat(localContextData.ClaimValues).ToList();
+
+            var set = new HashSet<string>();
+
+            for (int i = 0; i < localContextData.ClaimValues.Count; i++)
+            {
+                string uri = localContextData.ClaimValues[i].Uri;
+                if (set.Contains(uri)) continue;
+                set.Add(uri);
+                merged.ClaimValues.Add(localContextData.ClaimValues[i]);
+            }
+
+            for (int i = 0; i < globalContextData.ClaimValues.Count; i++)
+            {
+                string uri = globalContextData.ClaimValues[i].Uri;
+                if (set.Contains(uri)) continue;
+                set.Add(uri);
+                merged.ClaimValues.Add(globalContextData.ClaimValues[i]);
+            }
+           
             return merged;
         }
     }
