@@ -1,0 +1,3 @@
+﻿fragment PageTemplateFields on Template {
+	...ItemFields
+}

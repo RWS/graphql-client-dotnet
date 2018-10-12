@@ -196,6 +196,9 @@
     <EmbeddedResource Include="Queries\ComponentPresentation.graphql" />
     <EmbeddedResource Include="Queries\ComponentPresentations.graphql" />
     <EmbeddedResource Include="Queries\PagesByUrl.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\CategoryFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\ComponentTemplateFields.graphql" />
+    <EmbeddedResource Include="Queries\Fragments\PageTemplateFields.graphql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
