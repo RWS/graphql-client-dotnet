@@ -71,13 +71,18 @@ namespace Sdl.Web.PublicContentApi
                 // Add a default claim here to control model type returned by default
                 data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultModelType));
                 data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
-               
+                // Add claim to control how tcdl links are rendered
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRenderingType));
                 return data;
             }
         }
 
         #region IPublicContentApi
 
+        /// <summary>
+        /// Holds global context data passed on to PCA service. Note that context data passed
+        /// directly to API methods overwrites these values.
+        /// </summary>
         public IContextData GlobalContextData { get; set; } = new ContextData();
         
         /// <summary>
@@ -91,6 +96,11 @@ namespace Sdl.Web.PublicContentApi
         /// Specify model type to return
         /// </summary>
         public DataModelType DefaultModelType { get; set; } = DataModelType.R2;
+
+        /// <summary>
+        /// Specify how tcdl links get rendered
+        /// </summary>
+        public TcdlLinkRendering TcdlLinkRenderingType { get; set; } = TcdlLinkRendering.Relative;
 
         public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)

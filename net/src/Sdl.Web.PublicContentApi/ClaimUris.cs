@@ -4,7 +4,7 @@
     /// Claim Values for PCA Model Service Plugin
     /// These are used to control the plugin behaviour 
     /// </summary>
-    public static class ModelServiceClaimUris
+    public static class ClaimUris
     {
         /// <summary>
         /// Claim Uri for content type argument.
@@ -34,6 +34,11 @@
         /// <summary>
         /// Claim Uri for strategy of DCP template resolving is template ID is missing.
         /// </summary>
-        public static readonly string EntityDcpType = "dxa:modelservice:model:entity:dcptype";      
+        public static readonly string EntityDcpType = "dxa:modelservice:model:entity:dcptype";
+
+        /// <summary>
+        /// Claim Uri for controlling how tcdl links get rendered
+        /// </summary>
+        public static readonly string TcdlLinkRendering = "taf:tcdl:render:link:relative";
     }
 }

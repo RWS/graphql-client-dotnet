@@ -294,30 +294,37 @@ namespace Sdl.Web.PublicContentApi
 
         #region Query Builder Helpers
 
+        public static ClaimValue CreateClaim(TcdlLinkRendering linkRendering) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlLinkRendering,
+            Type = ClaimValueType.BOOLEAN,
+            Value = linkRendering == TcdlLinkRendering.Relative ? "true" : "false"
+        };
+
         public static ClaimValue CreateClaim(ContentType contentType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.ContentType,
+            Uri = ClaimUris.ContentType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (ContentType), contentType)
         };
 
         public static ClaimValue CreateClaim(DataModelType dataModelType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.ModelType,
+            Uri = ClaimUris.ModelType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (DataModelType), dataModelType)
         };
 
         public static ClaimValue CreateClaim(PageInclusion pageInclusion) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.PageIncludeRegions,
+            Uri = ClaimUris.PageIncludeRegions,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (PageInclusion), pageInclusion)
         };
 
         public static ClaimValue CreateClaim(DcpType dcpType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.EntityDcpType,
+            Uri = ClaimUris.EntityDcpType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (DcpType), dcpType)
         };
