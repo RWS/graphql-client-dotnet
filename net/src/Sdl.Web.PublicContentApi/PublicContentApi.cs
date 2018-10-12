@@ -70,7 +70,8 @@ namespace Sdl.Web.PublicContentApi
                 IContextData data = new ContextData(GlobalContextData);
                 // Add a default claim here to control model type returned by default
                 data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultModelType));
-                data.ClaimValues.Add(GraphQLRequests.CreateClaim(ContentType.MODEL));
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
+               
                 return data;
             }
         }
@@ -78,7 +79,17 @@ namespace Sdl.Web.PublicContentApi
         #region IPublicContentApi
 
         public IContextData GlobalContextData { get; set; } = new ContextData();
-      
+        
+        /// <summary>
+        /// Specify type of content to return from API. When set to RAW no conversion will take
+        /// place otherwise its treated as model data and will go through conversion to type specified
+        /// by DefaultModelType
+        /// </summary>
+        public ContentType DefaultContentType { get; set; } = ContentType.MODEL;
+
+        /// <summary>
+        /// Specify model type to return
+        /// </summary>
         public DataModelType DefaultModelType { get; set; } = DataModelType.R2;
 
         public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
