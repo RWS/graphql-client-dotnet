@@ -2,6 +2,7 @@ package com.sdl.web.pca.client.query;
 
 import com.google.common.base.Strings;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.enums.ContentIncludeMode;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.QueryUtils;
@@ -35,9 +36,9 @@ public class PCARequestBuilder {
     private ContextData contextData = new ContextData();
     private int timeout;
     private QueryHolder queryHolder = QueryHolder.getInstance();
-    private boolean isRenderContent;
     private String variantArgs;
     private String customMetaFilter;
+    private ContentIncludeMode contentIncludeMode = ContentIncludeMode.EXCLUDE;
 
     public PCARequestBuilder() {
     }
@@ -51,46 +52,21 @@ public class PCARequestBuilder {
     public PCARequestBuilder withQuery(String queryName) {
         this.queryName = queryName;
         return this;
-
-//        return withQuery(queryName, false);
     }
 
-//    /**
-//     * Loads query by given query name. Additionally can load all referenced fragments in query body.
-//     *
-//     * @param queryName     query name
-//     * @param loadFragments indicates if needed to load referenced fragments
-//     * @return
-//     */
-//    public PCARequestBuilder withQuery(String queryName, boolean loadFragments) {
-//
-//
-//        query = queryHolder.getQuery(queryName);
-//        if (loadFragments) {
-//            query = updateQueryWithFragments(query);
-//        }
-//        return this;
-//    }
 
-
+    /**
+     * Updates placeholder '@fragmentList' with the given list of fragments.
+     *
+     * @param injectFragments list of fragments
+     * @return
+     */
     public PCARequestBuilder withInjectFragments(List<String> injectFragments) {
         if (injectFragments != null) {
             this.injectFragments.addAll(injectFragments);
         }
         return this;
     }
-
-
-//    /**
-//     * Loads and adds fragment to the query by given fragment name
-//     *
-//     * @param fragment fragment name
-//     * @return
-//     */
-//    public PCARequestBuilder withFragment(String fragment) {
-//        this.query += queryHolder.getFragment(fragment);
-//        return this;
-//    }
 
     /**
      * Loads recurse fragment and applies it to query with given descendant level
@@ -103,10 +79,6 @@ public class PCARequestBuilder {
         this.recurseFragmentName = recurseFragmentName;
         this.descendantLevel = descendantLevel;
         return this;
-
-//        String recurseFragment = queryHolder.getFragment(recurseFragmentName);
-//        this.query = QueryUtils.expandRecursively(query, recurseFragment, descendantLevel);
-//        return this;
     }
 
     /**
@@ -167,25 +139,39 @@ public class PCARequestBuilder {
         return this;
     }
 
-    public PCARequestBuilder withIncludeContent(boolean isInclude) {
-        return withIncludeRegion("includeContent", isInclude);
-
-    }
-
-    public PCARequestBuilder withIncludeRegion(String regionName, boolean isInclude) {
-        this.includeRegions.put(regionName, isInclude);
+    /**
+     * Updates query with content include mode.
+     *
+     * @param contentIncludeMode
+     * @return
+     */
+    public PCARequestBuilder withContentIncludeMode(ContentIncludeMode contentIncludeMode) {
+        if (contentIncludeMode != null) {
+            this.contentIncludeMode = contentIncludeMode;
+        }
         return this;
     }
 
     /**
-     * Updates query with render content parameter.
+     * Includes/excludes region in query based on provided ContentIncludeMode.
      *
-     * @param renderContent render content
+     * @param regionName
+     * @param includeMode
      * @return
      */
-    public PCARequestBuilder withRenderContentArgs(boolean renderContent) {
-        this.isRenderContent = renderContent;
+    public PCARequestBuilder withIncludeRegion(String regionName, ContentIncludeMode includeMode) {
+        return withIncludeRegion(regionName, includeMode != ContentIncludeMode.EXCLUDE);
+    }
 
+    /**
+     * Includes/excludes region in query based on provided boolean value.
+     *
+     * @param regionName
+     * @param isInclude
+     * @return
+     */
+    public PCARequestBuilder withIncludeRegion(String regionName, boolean isInclude) {
+        this.includeRegions.put(regionName, isInclude);
         return this;
     }
 
@@ -211,7 +197,6 @@ public class PCARequestBuilder {
         return this;
     }
 
-
     /**
      * Builds GraphQLRequest instance.
      *
@@ -235,7 +220,7 @@ public class PCARequestBuilder {
         query = updateWithIncludeRegions(query, includeRegions);
 
         //inject variables
-        query = QueryUtils.injectRenderContentArgs(query, isRenderContent);
+        query = QueryUtils.injectRenderContentArgs(query, this.contentIncludeMode == ContentIncludeMode.INCLUDE_AND_RENDER);
         query = QueryUtils.injectVariantsArgs(query, variantArgs);
         query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
 
@@ -262,26 +247,6 @@ public class PCARequestBuilder {
     private String replaceTag(String tagName, String value) {
         return query.replace("@" + tagName, value);
     }
-
-    //    /**
-//     * Loads query by given query name. Additionally puts fragment list in query placeholder @fragmentList and loads them.
-//     *
-//     * @param queryName query name
-//     * @param fragments fragments list
-//     * @return
-//     */
-//    public PCARequestBuilder withQueryAndFragmentList(String queryName, List<String> fragments) {
-//        query = queryHolder.getQuery(queryName);
-//        String fragmentList = fragments.stream()
-//                .map(fragment -> "..." + fragment + "\n")
-//                .reduce("", String::concat);
-//
-//        query = query.replace("@fragmentList", fragmentList);
-//        query = updateQueryWithFragments(query);
-//
-//        return this;
-//    }
-
 
     private String updateQueryWithFragments(String query) {
         Map<String, String> fragments = new HashMap<>();
@@ -315,6 +280,5 @@ public class PCARequestBuilder {
         }
         return result;
     }
-
 
 }

@@ -77,8 +77,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public ComponentPresentationConnection getComponentPresentations(ContentNamespace ns, int publicationId,
-                           InputComponentPresentationFilter filter, InputSortParam sort, Pagination pagination,
-                           String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
+                                                                     InputComponentPresentationFilter filter, InputSortParam sort, Pagination pagination,
+                                                                     String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
         return null;
     }
 
@@ -107,9 +107,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
                                               ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentById", true)
-                .withVariantArgs(null)
-                .withCustomMetaFilter(null)
+                .withQuery("BinaryComponentById")
+                .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withVariable("binaryId", binaryId)
@@ -125,9 +124,9 @@ public class DefaultPublicContentApi implements PublicContentApi {
                                               ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentByUrl", true)
+                .withQuery("BinaryComponentByUrl")
                 .withVariantArgs(url)
-                .withCustomMetaFilter(null)
+                .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withVariable("url", url)
@@ -143,9 +142,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
             throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentByCmUri", true)
-                .withVariantArgs(null)
-                .withCustomMetaFilter(null)
+                .withQuery("BinaryComponentByCmUri")
+                .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", cmUri.getNamespaceId())
                 .withVariable("publicationId", cmUri.getPublicationId())
                 .withVariable("cmUri", cmUri.toString())
@@ -169,16 +167,18 @@ public class DefaultPublicContentApi implements PublicContentApi {
         }
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQueryAndFragmentList("ItemQuery", fragments)
+                .withQuery("ItemQuery")
+                .withInjectFragments(fragments)
+                .withIncludeRegion("includeContainerItems", includeContainerItems)
+                .withContentIncludeMode(contentIncludeMode)
                 .withCustomMetaFilter(customMetaFilter)
-                .withRenderContentArgs(renderContent)
                 .withVariable("first", pagination.getFirst())
                 .withVariable("after", pagination.getAfter())
                 .withVariable("filter", filter)
                 .withVariable("sort", sort)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, ItemConnection.class, "/data/items");
     }
@@ -196,7 +196,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
                                       ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("Publication", true)
+                .withQuery("Publication")
                 .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
@@ -213,7 +213,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
                                                  ContextData contextData) {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("Publications", true)
+                .withQuery("Publications")
                 .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("first", pagination.getFirst())
@@ -301,7 +301,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("PublicationMapping", true)
+                .withQuery("PublicationMapping")
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("siteUrl", url)
                 .withTimeout(requestTimeout)
@@ -316,7 +316,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
                                      ContextData contextData) throws PublicContentApiException {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelByUrl")
-                .withRenderContentArgs(renderContent)
+                .withContentIncludeMode(contentIncludeMode)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withVariable("url", url)
@@ -338,7 +338,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelById")
-                .withRenderContentArgs(renderContent)
+                .withContentIncludeMode(contentIncludeMode)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withVariable("pageId", pageId)
@@ -360,10 +360,10 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("EntityModelById")
-                .withRenderContentArgs(renderContent)
+                .withContentIncludeMode(contentIncludeMode)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
-                .withVariable("componentId", componentId)
+                .withVariable("componentId", entityId)
                 .withVariable("templateId", templateId)
                 .withContextData(defaultContextData, contextData)
                 .withClaim(createClaim(contentType))
@@ -381,14 +381,12 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Sitemap")
-                .withFragment("TaxonomyItemFields")
-                .withFragment("TaxonomyPageFields")
-                .withRecurseFragmentApplied("RecurseItems", descendantLevels)
+                .withRecurseFragment("RecurseItems", descendantLevels)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemap");
     }
@@ -400,16 +398,14 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("SitemapSubtree")
-                .withFragment("TaxonomyItemFields")
-                .withFragment("TaxonomyPageFields")
-                .withRecurseFragmentApplied("RecurseItems", descendantLevels)
+                .withRecurseFragment("RecurseItems", descendantLevels)
                 .withVariable("namespaceId", ns.getNameSpaceValue())
                 .withVariable("publicationId", publicationId)
                 .withVariable("taxonomyNodeId", taxonomyNodeId)
                 .withVariable("ancestor", ancestor)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, TaxonomySitemapItem[].class, "/data/sitemapSubtree");
     }
