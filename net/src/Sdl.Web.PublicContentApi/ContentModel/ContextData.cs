@@ -9,6 +9,15 @@ namespace Sdl.Web.PublicContentApi.ContentModel
     /// </summary>
     public class ContextData : IContextData
     {
+        public ContextData()
+        {
+        }
+
+        public ContextData(IContextData copy)
+        {
+            ClaimValues = new List<ClaimValue>(copy.ClaimValues);    
+        }
+
         /// <summary>
         /// List of claim values to pass to query.
         /// </summary>

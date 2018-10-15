@@ -61,54 +61,90 @@ namespace Sdl.Web.PublicContentApi
             CancellationToken cancellationToken)
             => await _client.ExecuteAsync<T>(request, cancellationToken);
 
-        #endregion
+        #endregion     
 
         #region IPublicContentApi
 
+        /// <summary>
+        /// Holds global context data passed on to PCA service. Note that context data passed
+        /// directly to API methods overwrites these values.
+        /// </summary>
         public IContextData GlobalContextData { get; set; } = new ContextData();
+
+        /// <summary>
+        /// Specify type of content to return from API. When set to RAW no conversion will take
+        /// place otherwise its treated as model data and will go through conversion to type specified
+        /// by DefaultModelType (default: Model)
+        /// </summary>
+        public ContentType DefaultContentType { get; set; } = ContentType.MODEL;
+
+        /// <summary>
+        /// Specify model type to return (default: R2)
+        /// </summary>
+        public DataModelType DefaultModelType { get; set; } = DataModelType.R2;
+
+        /// <summary>
+        /// Specify how tcdl links get rendered (default: relative)
+        /// </summary>
+        public TcdlLinkRendering TcdlLinkRenderingType { get; set; } = TcdlLinkRendering.Relative;
+
+        /// <summary>
+        /// Specify how the model-service plugin renders links (default: relative)
+        /// </summary>
+        public ModelServiceLinkRendering ModelSericeLinkRenderingType { get; set; } = ModelServiceLinkRendering.Relative;
+
+        /// <summary>
+        /// Specify Url prefix for tcdl links for Absolute rendering type (default: none)
+        /// </summary>
+        public string TcdlLinkUrlPrefix { get; set; } = null;
+
+        /// <summary>
+        /// Specify Url prefix for tcdl binary links for Absolute rendering type (default: none)
+        /// </summary>
+        public string TcdlBinaryLinkUrlPrefix { get; set; } = null;
 
         public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.ComponentPresentation;
 
         public ComponentPresentationConnection GetComponentPresentations(ContentNamespace ns, int publicationId,
             InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination, string customMetaFilter,
             ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.ComponentPresentations;
 
         public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
         public Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
         public Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
         public PageConnection GetPages(ContentNamespace ns, IPagination pagination, string url,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData))
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Pages;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter,
             IContextData contextData) => _client.Execute<ContentQuery>(
                 GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, customMetaFilter, contextData,
-                    GlobalContextData))
+                    GlobalContextDataInternal))
                 .TypedResponseData.BinaryComponent;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, string url,
@@ -117,12 +153,12 @@ namespace Sdl.Web.PublicContentApi
             =>
                 _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(ns, publicationId, url, customMetaFilter,
                     contextData,
-                    GlobalContextData)).TypedResponseData.BinaryComponent;
+                    GlobalContextDataInternal)).TypedResponseData.BinaryComponent;
 
         public BinaryComponent GetBinaryComponent(CmUri cmUri, string customMetaFilter, IContextData contextData)
             =>
                 _client.Execute<ContentQuery>(GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData,
-                    GlobalContextData))
+                    GlobalContextDataInternal))
                     .TypedResponseData.BinaryComponent;
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
@@ -130,12 +166,12 @@ namespace Sdl.Web.PublicContentApi
             =>
                 _client.Execute<ContentQuery>(GraphQLRequests.ExecuteItemQuery(filter, sort, pagination,
                     customMetaFilter, contentIncludeMode, includeContainerItems,
-                    contextData, GlobalContextData)).TypedResponseData.Items;
+                    contextData, GlobalContextDataInternal)).TypedResponseData.Items;
 
         public Publication GetPublication(ContentNamespace ns, int publicationId,
             string customMetaFilter, IContextData contextData)
             => _client.Execute<ContentQuery>(GraphQLRequests.Publication(ns, publicationId, customMetaFilter,
-                contextData, GlobalContextData)).TypedResponseData.Publication;
+                contextData, GlobalContextDataInternal)).TypedResponseData.Publication;
 
         public PublicationConnection GetPublications(ContentNamespace ns, IPagination pagination,
             InputPublicationFilter filter, string customMetaFilter,
@@ -143,7 +179,7 @@ namespace Sdl.Web.PublicContentApi
             =>
                 _client.Execute<ContentQuery>(GraphQLRequests.Publications(ns, pagination, filter, customMetaFilter,
                     contextData,
-                    GlobalContextData)).TypedResponseData.Publications;
+                    GlobalContextDataInternal)).TypedResponseData.Publications;
 
         public string ResolvePageLink(ContentNamespace ns, int publicationId, int pageId, bool renderRelativeLink = true)
             =>
@@ -172,14 +208,14 @@ namespace Sdl.Web.PublicContentApi
             => _client.Execute<ContentQuery>(GraphQLRequests.PublicationMapping(ns, url))
                 .TypedResponseData.PublicationMapping;
 
-        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData)
+        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, int pageId,
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData)
         {
             try
             {
                 var response =
-                    _client.Execute(GraphQLRequests.PageModelData(ns, publicationId, pageId, contentType, modelType,
-                        pageInclusion, contentIncludeMode, contextData, GlobalContextData));
+                    _client.Execute(GraphQLRequests.PageModelData(ns, publicationId, pageId,
+                        pageInclusion, contentIncludeMode, contextData, GlobalContextDataInternal));
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -190,14 +226,14 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url, ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData)
+        public dynamic GetPageModelData(ContentNamespace ns, int publicationId, string url,
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData)
         {
             try
             {
                 var response =
-                    _client.Execute(GraphQLRequests.PageModelData(ns, publicationId, url, contentType, modelType,
-                        pageInclusion, contentIncludeMode, contextData, GlobalContextData));
+                    _client.Execute(GraphQLRequests.PageModelData(ns, publicationId, url,
+                        pageInclusion, contentIncludeMode, contextData, GlobalContextDataInternal));
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -208,15 +244,13 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public dynamic GetEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
-            ContentType contentType,
-            DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode, IContextData contextData)
+            ContentIncludeMode contentIncludeMode, IContextData contextData)
         {
             try
             {
                 var response =
-                    _client.Execute(GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId, contentType,
-                        modelType,
-                        dcpType, contentIncludeMode, contextData, GlobalContextData));
+                    _client.Execute(GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,                        
+                        contentIncludeMode, contextData, GlobalContextDataInternal));
                 return response.Data.componentPresentation.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -234,7 +268,7 @@ namespace Sdl.Web.PublicContentApi
             {
                 var response =
                     _client.Execute<ContentQuery>(GraphQLRequests.Sitemap(ns, publicationId, descendantLevels,
-                        contextData, GlobalContextData));
+                        contextData, GlobalContextDataInternal));
                 return response.TypedResponseData.Sitemap;
             }
             catch (RuntimeBinderException e)
@@ -253,7 +287,7 @@ namespace Sdl.Web.PublicContentApi
             {
                 var response =
                     _client.Execute<ContentQuery>(GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId,
-                        descendantLevels, ancestor, contextData, GlobalContextData));
+                        descendantLevels, ancestor, contextData, GlobalContextDataInternal));
                 return response.TypedResponseData.SitemapSubtree;
             }
             catch (RuntimeBinderException e)
@@ -272,7 +306,7 @@ namespace Sdl.Web.PublicContentApi
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken)
           => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.ComponentPresentation;
 
@@ -280,7 +314,7 @@ namespace Sdl.Web.PublicContentApi
             InputSortParam sort, IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken)
         => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.ComponentPresentations;
 
@@ -288,14 +322,14 @@ namespace Sdl.Web.PublicContentApi
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.Page;
 
         public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.Page;
 
@@ -303,14 +337,14 @@ namespace Sdl.Web.PublicContentApi
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.Page;
 
         public async Task<PageConnection> GetPagesAsync(ContentNamespace ns, IPagination pagination, string url, string customMetaFilter,
             ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
          => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextData),
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.Pages;
 
@@ -319,7 +353,7 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
                     GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, customMetaFilter, contextData,
-                        GlobalContextData),
+                        GlobalContextDataInternal),
                     cancellationToken)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
@@ -327,13 +361,13 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
                     GraphQLRequests.BinaryComponent(ns, publicationId, url, customMetaFilter, contextData,
-                        GlobalContextData),
+                        GlobalContextDataInternal),
                     cancellationToken)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
-                    GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData, GlobalContextData),
+                    GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData, GlobalContextDataInternal),
                     cancellationToken))
                 .TypedResponseData.BinaryComponent;
 
@@ -345,7 +379,7 @@ namespace Sdl.Web.PublicContentApi
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, customMetaFilter, contentIncludeMode,
                             includeContainerItems,
-                            contextData, GlobalContextData)
+                            contextData, GlobalContextDataInternal)
                         , cancellationToken)).TypedResponseData.Items;
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
@@ -353,7 +387,7 @@ namespace Sdl.Web.PublicContentApi
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.Publication(ns, publicationId, customMetaFilter, contextData, GlobalContextData),
+                        GraphQLRequests.Publication(ns, publicationId, customMetaFilter, contextData, GlobalContextDataInternal),
                         cancellationToken)).TypedResponseData.Publication;
 
         public async Task<PublicationConnection> GetPublicationsAsync(ContentNamespace ns, IPagination pagination,
@@ -363,7 +397,7 @@ namespace Sdl.Web.PublicContentApi
                 (await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.Publications(ns, pagination, filter, customMetaFilter, contextData,
-                            GlobalContextData), cancellationToken)).TypedResponseData.Publications;
+                            GlobalContextDataInternal), cancellationToken)).TypedResponseData.Publications;
 
 
         public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,
@@ -408,9 +442,8 @@ namespace Sdl.Web.PublicContentApi
                 _client.ExecuteAsync<ContentQuery>(GraphQLRequests.PublicationMapping(ns, url), cancellationToken))
                 .TypedResponseData.PublicationMapping;
 
-        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
-            ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,            
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -418,8 +451,8 @@ namespace Sdl.Web.PublicContentApi
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.PageModelData(ns, publicationId, pageId, contentType, modelType,
-                                pageInclusion, contentIncludeMode, contextData, GlobalContextData), cancellationToken);
+                            GraphQLRequests.PageModelData(ns, publicationId, pageId,
+                                pageInclusion, contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -430,9 +463,8 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
-            ContentType contentType,
-            DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,           
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -440,8 +472,8 @@ namespace Sdl.Web.PublicContentApi
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.PageModelData(ns, publicationId, url, contentType, modelType, pageInclusion,
-                                contentIncludeMode, contextData, GlobalContextData), cancellationToken);
+                            GraphQLRequests.PageModelData(ns, publicationId, url, pageInclusion,
+                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -452,9 +484,7 @@ namespace Sdl.Web.PublicContentApi
         }
 
         public async Task<dynamic> GetEntityModelDataAsync(ContentNamespace ns, int publicationId, int entityId,
-            int templateId,
-            ContentType contentType,
-            DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode, IContextData contextData,
+            int templateId, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -462,9 +492,8 @@ namespace Sdl.Web.PublicContentApi
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId, contentType,
-                                modelType, dcpType,
-                                contentIncludeMode, contextData, GlobalContextData), cancellationToken);
+                            GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,                                
+                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
                 return response.Data.entity.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -484,7 +513,7 @@ namespace Sdl.Web.PublicContentApi
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.Sitemap(ns, publicationId, descendantLevels, contextData, GlobalContextData),
+                            GraphQLRequests.Sitemap(ns, publicationId, descendantLevels, contextData, GlobalContextDataInternal),
                             cancellationToken);
                 return response.Data.sitemap;
             }
@@ -506,7 +535,7 @@ namespace Sdl.Web.PublicContentApi
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels,
-                                ancestor, contextData, GlobalContextData), cancellationToken);
+                                ancestor, contextData, GlobalContextDataInternal), cancellationToken);
                 return response.Data.sitemapSubtree;
             }
             catch (RuntimeBinderException e)
@@ -517,6 +546,34 @@ namespace Sdl.Web.PublicContentApi
             }
         }
 
-        #endregion    
+        #endregion
+
+        #region Private
+        private IContextData GlobalContextDataInternal
+        {
+            get
+            {
+                IContextData data = new ContextData(GlobalContextData);
+                // Add a default claim here to control model type returned by default
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultModelType));
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(DefaultContentType));
+                // Add claim to control how tcdl links are rendered
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRenderingType));
+                // Add claim to control how model-service plugin renders links
+                data.ClaimValues.Add(GraphQLRequests.CreateClaim(ModelSericeLinkRenderingType));
+                // Add claim to control prefix urls
+                if (TcdlLinkRenderingType != TcdlLinkRendering.Absolute) return data;
+                if (!string.IsNullOrEmpty(TcdlLinkUrlPrefix))
+                {
+                    data.ClaimValues.Add(GraphQLRequests.CreateClaimTcdlLinkUrlPrefix(TcdlLinkUrlPrefix));
+                }
+                if (!string.IsNullOrEmpty(TcdlBinaryLinkUrlPrefix))
+                {
+                    data.ClaimValues.Add(GraphQLRequests.CreateClaimTcdlBinaryLinkUrlPrefix(TcdlBinaryLinkUrlPrefix));
+                }
+                return data;
+            }
+        }
+        #endregion
     }
 }

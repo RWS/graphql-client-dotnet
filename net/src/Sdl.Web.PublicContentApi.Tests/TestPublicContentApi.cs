@@ -103,6 +103,12 @@ namespace Sdl.Web.PublicContentApi.Tests
                 }
             };
 
+            // these claims get added by default
+            claims.ClaimValues.Add(GraphQLRequests.CreateClaim(DataModelType.R2));
+            claims.ClaimValues.Add(GraphQLRequests.CreateClaim(ContentType.MODEL));
+            claims.ClaimValues.Add(GraphQLRequests.CreateClaim(TcdlLinkRendering.Relative));
+            claims.ClaimValues.Add(GraphQLRequests.CreateClaim(ModelServiceLinkRendering.Relative));
+
             var expected = new Dictionary<string, object>
             {
                 {"namespaceId", ContentNamespace.Sites },

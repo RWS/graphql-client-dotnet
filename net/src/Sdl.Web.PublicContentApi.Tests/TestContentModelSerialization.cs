@@ -23,21 +23,21 @@ namespace Sdl.Web.PublicContentApi.Tests
             IContextData contextData = new ContextData();
             contextData.ClaimValues.Add(new ClaimValue
             {
-                Uri = ModelServiceClaimUris.ModelType,
+                Uri = ClaimUris.ModelType,
                 Type = ClaimValueType.STRING,
                 Value = Enum.GetName(typeof(ContentType), ContentType.RAW)
             });
 
             contextData.ClaimValues.Add(new ClaimValue
             {
-                Uri = ModelServiceClaimUris.ModelType,
+                Uri = ClaimUris.ModelType,
                 Type = ClaimValueType.STRING,
                 Value = Enum.GetName(typeof(DataModelType), DataModelType.R2)
             });
 
             contextData.ClaimValues.Add(new ClaimValue
             {
-                Uri = ModelServiceClaimUris.PageIncludeRegions,
+                Uri = ClaimUris.PageIncludeRegions,
                 Type = ClaimValueType.STRING,
                 Value = Enum.GetName(typeof(PageInclusion), PageInclusion.INCLUDE)
             });

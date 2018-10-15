@@ -11,9 +11,11 @@ namespace Sdl.Web.PublicContentApi
     /// </summary>
     public static class GraphQLRequests
     {
-        public static IGraphQLRequest ComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
-            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
-             new QueryBuilder().WithQueryResource("ComponentPresentation", true)
+        public static IGraphQLRequest ComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
+            int templateId,
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
+            IContextData globalContextData) =>
+                new QueryBuilder().WithQueryResource("ComponentPresentation", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithVariable("componentId", componentId)
@@ -26,9 +28,10 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest ComponentPresentations(ContentNamespace ns, int publicationId,
-            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination, string customMetaFilter,
+            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination,
+            string customMetaFilter,
             ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
-              new QueryBuilder().WithQueryResource("ComponentPresentations", true)
+                new QueryBuilder().WithQueryResource("ComponentPresentations", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithInputComponentPresentationFilter(filter)
@@ -41,7 +44,8 @@ namespace Sdl.Web.PublicContentApi
                     .WithConvertor(new ItemConvertor())
                     .Build();
 
-        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageById", true)
                     .WithNamespace(ns)
@@ -53,13 +57,14 @@ namespace Sdl.Web.PublicContentApi
                     .WithContextData(globalContextData)
                     .Build();
 
-        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public static IGraphQLRequest Page(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageByUrl", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithUrl(url)
-                    .WithCustomMetaFilter(customMetaFilter)                    
+                    .WithCustomMetaFilter(customMetaFilter)
                     .WithContentIncludeMode(contentIncludeMode)
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
@@ -75,16 +80,17 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest Pages(ContentNamespace ns, IPagination pagination, string url,
-            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
-               new QueryBuilder().WithQueryResource("PagesByUrl", true)
-                   .WithNamespace(ns)
-                   .WithUrl(url)
-                   .WithPagination(pagination)
-                   .WithCustomMetaFilter(customMetaFilter)
-                   .WithContentIncludeMode(contentIncludeMode)
-                   .WithContextData(contextData)
-                   .WithContextData(globalContextData)
-                   .Build();
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
+            IContextData globalContextData) =>
+                new QueryBuilder().WithQueryResource("PagesByUrl", true)
+                    .WithNamespace(ns)
+                    .WithUrl(url)
+                    .WithPagination(pagination)
+                    .WithCustomMetaFilter(customMetaFilter)
+                    .WithContentIncludeMode(contentIncludeMode)
+                    .WithContextData(contextData)
+                    .WithContextData(globalContextData)
+                    .Build();
 
         public static IGraphQLRequest BinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
             string customMetaFilter, IContextData contextData, IContextData globalContextData) =>
@@ -118,7 +124,8 @@ namespace Sdl.Web.PublicContentApi
                     .Build();
 
         public static IGraphQLRequest ExecuteItemQuery(InputItemFilter filter, InputSortParam sort,
-            IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems,
+            IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+            bool includeContainerItems,
             IContextData contextData, IContextData globaContextData)
         {
             QueryBuilder builder = new QueryBuilder().WithQueryResource("ItemQuery", false);
@@ -215,22 +222,20 @@ namespace Sdl.Web.PublicContentApi
                 .Build();
 
         public static IGraphQLRequest PageModelData(ContentNamespace ns, int publicationId, int pageId,
-            ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, 
-            ContentIncludeMode contentIncludeMode, IContextData contextData, IContextData globalContextData) =>
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
+            IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("PageModelById", true)
                     .WithNamespace(ns)
                     .WithPublicationId(publicationId)
                     .WithPageId(pageId)
                     .WithContentIncludeMode(contentIncludeMode)
-                    .WithContextClaim(CreateClaim(contentType))
-                    .WithContextClaim(CreateClaim(modelType))
                     .WithContextClaim(CreateClaim(pageInclusion))
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
 
         public static IGraphQLRequest PageModelData(ContentNamespace ns, int publicationId, string url,
-            ContentType contentType, DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, 
+            PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
 
                 new QueryBuilder().WithQueryResource("PageModelByUrl", true)
@@ -238,15 +243,13 @@ namespace Sdl.Web.PublicContentApi
                     .WithPublicationId(publicationId)
                     .WithUrl(url)
                     .WithContentIncludeMode(contentIncludeMode)
-                    .WithContextClaim(CreateClaim(contentType))
-                    .WithContextClaim(CreateClaim(modelType))
                     .WithContextClaim(CreateClaim(pageInclusion))
                     .WithContextData(contextData)
                     .WithContextData(globalContextData)
                     .Build();
 
         public static IGraphQLRequest EntityModelData(ContentNamespace ns, int publicationId, int entityId,
-            int templateId, ContentType contentType, DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode, 
+            int templateId, ContentIncludeMode contentIncludeMode,
             IContextData contextData, IContextData globalContextData) =>
                 new QueryBuilder().WithQueryResource("EntityModelById", true).
                     WithNamespace(ns).
@@ -254,9 +257,7 @@ namespace Sdl.Web.PublicContentApi
                     WithVariable("componentId", entityId).
                     WithVariable("templateId", templateId).
                     WithContentIncludeMode(contentIncludeMode).
-                    WithContextClaim(CreateClaim(contentType)).
-                    WithContextClaim(CreateClaim(modelType)).
-                    WithContextClaim(CreateClaim(dcpType)).
+                    WithContextClaim(CreateClaim(DcpType.DEFAULT)).
                     WithContextData(contextData).
                     WithContextData(globalContextData).
                     Build();
@@ -293,30 +294,58 @@ namespace Sdl.Web.PublicContentApi
 
         #region Query Builder Helpers
 
+        public static ClaimValue CreateClaim(ModelServiceLinkRendering linkRendering) => new ClaimValue
+        {
+            Uri = ClaimUris.ModelServiceLinkRendering,
+            Type = ClaimValueType.BOOLEAN,
+            Value = linkRendering == ModelServiceLinkRendering.Relative ? "true" : "false"
+        };
+
+        public static ClaimValue CreateClaim(TcdlLinkRendering linkRendering) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlLinkRendering,
+            Type = ClaimValueType.BOOLEAN,
+            Value = linkRendering == TcdlLinkRendering.Relative ? "true" : "false"
+        };
+
+        public static ClaimValue CreateClaimTcdlLinkUrlPrefix(string urlPrefix) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlLinkUrlPrefix,
+            Type = ClaimValueType.STRING,
+            Value = urlPrefix
+        };
+
+        public static ClaimValue CreateClaimTcdlBinaryLinkUrlPrefix(string urlPrefix) => new ClaimValue
+        {
+            Uri = ClaimUris.TcdlBinaryLinkUrlPrefix,
+            Type = ClaimValueType.STRING,
+            Value = urlPrefix
+        };
+
         public static ClaimValue CreateClaim(ContentType contentType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.ContentType,
+            Uri = ClaimUris.ContentType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (ContentType), contentType)
         };
 
         public static ClaimValue CreateClaim(DataModelType dataModelType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.ModelType,
+            Uri = ClaimUris.ModelType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (DataModelType), dataModelType)
         };
 
         public static ClaimValue CreateClaim(PageInclusion pageInclusion) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.PageIncludeRegions,
+            Uri = ClaimUris.PageIncludeRegions,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (PageInclusion), pageInclusion)
         };
 
         public static ClaimValue CreateClaim(DcpType dcpType) => new ClaimValue
         {
-            Uri = ModelServiceClaimUris.EntityDcpType,
+            Uri = ClaimUris.EntityDcpType,
             Type = ClaimValueType.STRING,
             Value = Enum.GetName(typeof (DcpType), dcpType)
         };

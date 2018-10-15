@@ -7,6 +7,18 @@
         Exclude
     }
 
+    public enum TcdlLinkRendering
+    {
+        Absolute,
+        Relative
+    }
+
+    public enum ModelServiceLinkRendering
+    {
+        Absolute,
+        Relative
+    }
+
     // Strategy of DCP template resolving is template ID is missing in request.
     public enum DcpType
     {
@@ -30,5 +42,5 @@
     {
         INCLUDE, // Page regions should be included.        
         EXCLUDE  // Page regions should be excluded.
-    }
+    }  
 }

@@ -142,7 +142,7 @@
     <Compile Include="ItemTypes.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IPublicContentApi.cs" />
-    <Compile Include="ModelServiceClaimUris.cs" />
+    <Compile Include="ClaimUris.cs" />
     <Compile Include="QueryBuilder.cs" />
     <Compile Include="TaxonomyItemConvertor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
