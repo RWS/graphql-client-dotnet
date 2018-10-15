@@ -128,10 +128,10 @@ namespace Sdl.Web.PublicContentApi
                 GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
-        public Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public Page GetPage(CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.Page(cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
         public PageConnection GetPages(ContentNamespace ns, IPagination pagination, string url,
@@ -333,11 +333,11 @@ namespace Sdl.Web.PublicContentApi
                 cancellationToken))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, CmUri cmUri,
+        public async Task<Page> GetPageAsync(CmUri cmUri,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
+                GraphQLRequests.Page(cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
                 cancellationToken))
                 .TypedResponseData.Page;
 

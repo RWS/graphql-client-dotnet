@@ -31,7 +31,7 @@ namespace Sdl.Web.PublicContentApi
             ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken);
 
-        Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+        Task<Page> GetPageAsync(CmUri cmUri, string customMetaFilter,
             ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken);
 
