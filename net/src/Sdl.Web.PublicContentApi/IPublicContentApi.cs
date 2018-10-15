@@ -64,7 +64,7 @@ namespace Sdl.Web.PublicContentApi
             ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
-        Page GetPage(ContentNamespace ns, int publicationId, CmUri cmUri, string customMetaFilter,
+        Page GetPage(CmUri cmUri, string customMetaFilter,
             ContentIncludeMode contentIncludeMode,
             IContextData contextData);
 
