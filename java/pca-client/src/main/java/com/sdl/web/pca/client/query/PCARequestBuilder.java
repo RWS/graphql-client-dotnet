@@ -149,6 +149,7 @@ public class PCARequestBuilder {
         if (contentIncludeMode != null) {
             this.contentIncludeMode = contentIncludeMode;
         }
+        this.includeRegions.put("includeContent", contentIncludeMode != ContentIncludeMode.EXCLUDE);
         return this;
     }
 
@@ -213,11 +214,12 @@ public class PCARequestBuilder {
         //inject fragments
         query = updateWithInjectFragments(injectFragments);
 
-        //load all fragments
-        query = updateQueryWithFragments(query);
-
-        //include content?
+        //include content parameters in query
         query = updateWithIncludeRegions(query, includeRegions);
+
+        //load all fragments taking into account include content parameter at load time
+        query = updateQueryWithFragments(query, includeRegions);
+
 
         //inject variables
         query = QueryUtils.injectRenderContentArgs(query, this.contentIncludeMode == ContentIncludeMode.INCLUDE_AND_RENDER);
@@ -244,27 +246,22 @@ public class PCARequestBuilder {
         return query.replace("@fragmentList", fragmentList);
     }
 
-    private String replaceTag(String tagName, String value) {
-        return query.replace("@" + tagName, value);
-    }
-
-    private String updateQueryWithFragments(String query) {
+    private String updateQueryWithFragments(String query, Map<String, Boolean> includeRegions) {
         Map<String, String> fragments = new HashMap<>();
-        fragments = loadFragmentsRecursively(fragments, query);
+        fragments = loadFragmentsRecursively(fragments, query, includeRegions);
         return fragments.values().stream().reduce(query, String::concat);
     }
 
-    private Map<String, String> loadFragmentsRecursively(Map<String, String> loadedFragments, String queryPart) {
+    private Map<String, String> loadFragmentsRecursively(Map<String, String> loadedFragments, String queryPart, Map<String, Boolean> includeRegions) {
         Matcher matcher = FRAGMENT_NAMES_FROM_BODY.matcher(queryPart);
         while (matcher.find()) {
             String fragmentName = matcher.group("fragmentName");
             if (!loadedFragments.containsKey(fragmentName)) {
                 String fragmentBody = queryHolder.getFragment(fragmentName);
+                fragmentBody = updateWithIncludeRegions(fragmentBody, includeRegions);
                 loadedFragments.put(fragmentName, fragmentBody);
-                loadFragmentsRecursively(loadedFragments, fragmentBody);
+                loadFragmentsRecursively(loadedFragments, fragmentBody, includeRegions);
             }
-            String fragmentBody = queryHolder.getFragment(fragmentName);
-            loadFragmentsRecursively(loadedFragments, fragmentBody);
         }
         return loadedFragments;
     }
@@ -276,7 +273,7 @@ public class PCARequestBuilder {
 
         String result = query;
         for (Map.Entry<String, Boolean> entry : includeRegions.entrySet()) {
-            result = QueryUtils.parseIncludeRegions(query, entry.getKey(), entry.getValue());
+            result = QueryUtils.parseIncludeRegions(result, entry.getKey(), entry.getValue());
         }
         return result;
     }

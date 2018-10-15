@@ -14,6 +14,7 @@ import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
 import com.sdl.web.pca.client.contentmodel.generated.FilterItemType;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
 import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Keyword;
@@ -147,7 +148,7 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
-        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, "",
                 ContentIncludeMode.INCLUDE, false, new ContextData());
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -203,8 +204,8 @@ public class GraphQLClientTest {
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
-        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                ContentIncludeMode.INCLUDE, false, new ContextData());
+        ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, "",
+                ContentIncludeMode.EXCLUDE, false, new ContextData());
 
         assertEquals(7, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());

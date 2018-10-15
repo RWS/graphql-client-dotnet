@@ -174,8 +174,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
                 .withCustomMetaFilter(customMetaFilter)
                 .withVariable("first", pagination.getFirst())
                 .withVariable("after", pagination.getAfter())
-                .withVariable("filter", filter)
-                .withVariable("sort", sort)
+                .withVariable("inputItemFilter", filter)
+                .withVariable("inputSortParam", sort)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
                 .build();
