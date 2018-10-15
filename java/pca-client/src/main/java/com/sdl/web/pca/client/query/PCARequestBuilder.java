@@ -2,9 +2,14 @@ package com.sdl.web.pca.client.query;
 
 import com.google.common.base.Strings;
 import com.sdl.web.pca.client.contentmodel.ContextData;
+import com.sdl.web.pca.client.contentmodel.Pagination;
 import com.sdl.web.pca.client.contentmodel.enums.ContentIncludeMode;
+import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.generated.ClaimValue;
+import com.sdl.web.pca.client.contentmodel.generated.InputComponentPresentationFilter;
+import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
 import com.sdl.web.pca.client.request.GraphQLRequest;
+import com.sdl.web.pca.client.util.CmUri;
 import com.sdl.web.pca.client.util.QueryUtils;
 
 import java.util.HashMap;
@@ -54,6 +59,71 @@ public class PCARequestBuilder {
         return this;
     }
 
+    /**
+     * Adds namespace value to graphql request.
+     *
+     * @param ns
+     * @return
+     */
+    public PCARequestBuilder withNamespace(ContentNamespace ns) {
+        return withVariable("namespaceId", ns.getNameSpaceValue());
+    }
+
+    /**
+     * Adds publication id value to graphql request.
+     *
+     * @param publicationId
+     * @return
+     */
+    public PCARequestBuilder withPublicationId(int publicationId) {
+        return withVariable("publicationId", publicationId);
+    }
+
+    /**
+     * Adds 'filter' variable value to graphql request.
+     *
+     * @param filter filter value
+     * @return
+     */
+    public PCARequestBuilder withInputComponentPresentationFilter(InputComponentPresentationFilter filter) {
+        return withVariable("filter", filter);
+    }
+
+    /**
+     * Adds 'inputSortParam' variable value to graphql request.
+     *
+     * @param sort
+     * @return
+     */
+    public PCARequestBuilder withInputSortParam(InputSortParam sort) {
+        return withVariable("inputSortParam", sort);
+    }
+
+    /**
+     * Adds paginatioin variable values 'first' and 'after' to graphql request.
+     *
+     * @param pagination
+     * @return
+     */
+    public PCARequestBuilder withPagination(Pagination pagination) {
+        if (pagination == null) return this;
+        withVariable("first", pagination.getFirst());
+        withVariable("after", pagination.getAfter());
+        return this;
+    }
+
+    /**
+     * Adds 'cmUri' variable value to graphql request.
+     *
+     * @param cmUri
+     * @return
+     */
+    public PCARequestBuilder withCmUri(CmUri cmUri) {
+        withVariable("cmUri", cmUri.toString());
+        withVariable("namespaceId", cmUri.getNamespaceId());
+        withPublicationId(cmUri.getPublicationId());
+        return this;
+    }
 
     /**
      * Updates placeholder '@fragmentList' with the given list of fragments.

@@ -47,7 +47,7 @@ public interface PublicContentApi {
     Page getPage(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
                  ContentIncludeMode contentIncludeMode, ContextData contextData);
 
-    Page getPage(ContentNamespace ns, int publicationId, CmUri cmUri, String customMetaFilter,
+    Page getPage(CmUri cmUri, String customMetaFilter,
                  ContentIncludeMode contentIncludeMode, ContextData contextData);
 
     PageConnection getPages(ContentNamespace ns, Pagination pagination, String url, String customMetaFilter,

@@ -72,34 +72,99 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public ComponentPresentation getComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
                                                           int templateId, String customMetaFilter,
                                                           ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("ComponentPresentation")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("componentId", componentId)
+                .withVariable("templateId", templateId)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+        return getResultForRequest(graphQLRequest, ComponentPresentation.class, "/data/componentPresentation");
     }
 
     @Override
     public ComponentPresentationConnection getComponentPresentations(ContentNamespace ns, int publicationId,
                                                                      InputComponentPresentationFilter filter, InputSortParam sort, Pagination pagination,
                                                                      String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("ComponentPresentations")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withInputComponentPresentationFilter(filter)
+                .withInputSortParam(sort)
+                .withPagination(pagination)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, ComponentPresentationConnection.class, "/data/componentPresentations");
     }
 
     @Override
     public Page getPage(ContentNamespace ns, int publicationId, int pageId, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageById")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("pageId", pageId)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
     }
 
     @Override
     public Page getPage(ContentNamespace ns, int publicationId, String url, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageByUrl")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("url", url)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
     }
 
     @Override
-    public Page getPage(ContentNamespace ns, int publicationId, CmUri cmUri, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+    public Page getPage(CmUri cmUri, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageByCmUri")
+                .withCmUri(cmUri)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
     }
 
     @Override
     public PageConnection getPages(ContentNamespace ns, Pagination pagination, String url, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
-        return null;
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PagesByUrl")
+                .withNamespace(ns)
+                .withPagination(pagination)
+                .withVariable("url", url)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, PageConnection.class, "/data/pages");
     }
 
     @Override
@@ -109,8 +174,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("BinaryComponentById")
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("binaryId", binaryId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
@@ -127,8 +192,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
                 .withQuery("BinaryComponentByUrl")
                 .withVariantArgs(url)
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("url", url)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
@@ -198,8 +263,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Publication")
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
                 .build();
@@ -215,7 +280,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Publications")
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
+                .withNamespace(ns)
                 .withVariable("first", pagination.getFirst())
                 .withVariable("after", pagination.getAfter())
                 .withVariable("filter", filter)
@@ -232,8 +297,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolvePageLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("pageId", pageId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
                 .withTimeout(requestTimeout)
@@ -249,8 +314,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveComponentLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("targetComponentId", componentId)
                 .withVariable("sourcePageId", sourcePageId)
                 .withVariable("excludeComponentTemplateId", excludeComponentTemplateId)
@@ -267,8 +332,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveBinaryLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("binaryId", binaryId)
                 .withVariable("variantId", variantId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
@@ -285,8 +350,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveDynamicComponentLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("targetPageId", pageId)
                 .withVariable("targetComponentId", componentId)
                 .withVariable("targetTemplateId", templateId)
@@ -302,7 +367,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PublicationMapping")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
+                .withNamespace(ns)
                 .withVariable("siteUrl", url)
                 .withTimeout(requestTimeout)
                 .build();
@@ -317,8 +382,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelByUrl")
                 .withContentIncludeMode(contentIncludeMode)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("url", url)
                 .withContextData(defaultContextData, contextData)
                 .withClaim(createClaim(contentType))
@@ -339,8 +404,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelById")
                 .withContentIncludeMode(contentIncludeMode)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("pageId", pageId)
                 .withContextData(defaultContextData, contextData)
                 .withClaim(createClaim(contentType))
@@ -361,8 +426,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("EntityModelById")
                 .withContentIncludeMode(contentIncludeMode)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("componentId", entityId)
                 .withVariable("templateId", templateId)
                 .withContextData(defaultContextData, contextData)
@@ -382,8 +447,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Sitemap")
                 .withRecurseFragment("RecurseItems", descendantLevels)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
                 .build();
@@ -399,8 +464,8 @@ public class DefaultPublicContentApi implements PublicContentApi {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("SitemapSubtree")
                 .withRecurseFragment("RecurseItems", descendantLevels)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("taxonomyNodeId", taxonomyNodeId)
                 .withVariable("ancestor", ancestor)
                 .withContextData(defaultContextData, contextData)

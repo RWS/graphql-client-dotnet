@@ -12,13 +12,15 @@ import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
 import com.sdl.web.pca.client.contentmodel.generated.Ancestor;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.FilterItemType;
+import com.sdl.web.pca.client.contentmodel.generated.InputComponentPresentationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
-import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Keyword;
 import com.sdl.web.pca.client.contentmodel.generated.Page;
+import com.sdl.web.pca.client.contentmodel.generated.PageConnection;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
@@ -27,6 +29,7 @@ import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import com.sdl.web.pca.client.util.ItemTypes;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -53,6 +56,63 @@ public class GraphQLClientTest {
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
 
         publicContentApi = new DefaultPublicContentApi(client);
+    }
+
+    @Ignore("To be fixed")
+    @Test
+    public void getComponentPresentation() {
+        ComponentPresentation result = publicContentApi.getComponentPresentation(ContentNamespace.Sites, 8, 1458,
+                9195, "", ContentIncludeMode.EXCLUDE, null);
+    }
+
+    @Ignore("To be fixed")
+    @Test
+    public void getComponentPresentations() {
+        ComponentPresentationConnection result = publicContentApi.getComponentPresentations(ContentNamespace.Sites, 8,
+                new InputComponentPresentationFilter(), null, null, "", ContentIncludeMode.EXCLUDE, new ContextData());
+    }
+
+    @Test
+    public void getPageById() {
+        Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, 640,
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPageByUrl() {
+        Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, "/index.html",
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPageByCmUri() {
+        Page result = publicContentApi.getPage(new CmUri("tcm:8-640-64"),
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPages() {
+        PageConnection result = publicContentApi.getPages(ContentNamespace.Sites, new Pagination(), "/index.html", "",
+                ContentIncludeMode.EXCLUDE, null);
+
+        assertEquals(2, result.getEdges().size());
+        assertEquals(640, result.getEdges().get(0).getNode().getItemId());
+        assertEquals(1677, result.getEdges().get(1).getNode().getItemId());
     }
 
     @Test
