@@ -69,6 +69,9 @@ public class QueryUtils {
             int n = 1;
             int end;
             for (end = start; n > 0; end++) {
+                if (end >= query.length()) {
+                    throw new IndexOutOfBoundsException("Query is incorrect. Missing enclosing braces");
+                }
                 switch (query.charAt(end)) {
                     case '{':
                         n++;

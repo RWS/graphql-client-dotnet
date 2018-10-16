@@ -32,24 +32,91 @@ import com.sdl.web.pca.client.util.CmUri;
  */
 public interface PublicContentApi {
 
+    /**
+     * Retrieves ComponentPresentation object by given namespace, publication id, component id and template id.
+     *
+     * @param ns                 namespace
+     * @param publicationId      publication id
+     * @param componentId        component id
+     * @param templateId         template id
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return ComponentPresentation instance
+     */
     ComponentPresentation getComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
                                                    String customMetaFilter, ContentIncludeMode contentIncludeMode,
                                                    ContextData contextData);
 
+    /**
+     * Retrieves ComponentPresentationConnection by given namespace, publication id and component presentation filter.
+     *
+     * @param ns                 namespace
+     * @param publicationId      publication id
+     * @param filter             component presentation filter
+     * @param sort               sorting
+     * @param pagination         pagination
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return ComponentPresentationConnection instance
+     */
     ComponentPresentationConnection getComponentPresentations(ContentNamespace ns, int publicationId,
                                                               InputComponentPresentationFilter filter, InputSortParam sort,
                                                               Pagination pagination, String customMetaFilter,
                                                               ContentIncludeMode contentIncludeMode, ContextData contextData);
 
+    /**
+     * Retrieves Page representation by given namespace, publication id and page id.
+     *
+     * @param ns                 namespace
+     * @param publicationId      publication id
+     * @param pageId             page id
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return Page representation
+     */
     Page getPage(ContentNamespace ns, int publicationId, int pageId, String customMetaFilter,
                  ContentIncludeMode contentIncludeMode, ContextData contextData);
 
+    /**
+     * Retrieves Page representation by given namespace, publication id and URL.
+     *
+     * @param ns                 namespace
+     * @param publicationId      publication id
+     * @param url                page URL
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return Page representation
+     */
     Page getPage(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
                  ContentIncludeMode contentIncludeMode, ContextData contextData);
 
+    /**
+     * Retrieves Page representation by fiven CmUri.
+     *
+     * @param cmUri              CmUri of the page
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return Page representation
+     */
     Page getPage(CmUri cmUri, String customMetaFilter,
                  ContentIncludeMode contentIncludeMode, ContextData contextData);
 
+    /**
+     * Retrieves PageConnection representation by given namespace, pagination and URL
+     *
+     * @param ns                 namespace
+     * @param pagination         pagination parameter
+     * @param url                page URL
+     * @param customMetaFilter   custom meta filter
+     * @param contentIncludeMode content include mode
+     * @param contextData        context data
+     * @return PageConnection representation
+     */
     PageConnection getPages(ContentNamespace ns, Pagination pagination, String url, String customMetaFilter,
                             ContentIncludeMode contentIncludeMode, ContextData contextData);
 
