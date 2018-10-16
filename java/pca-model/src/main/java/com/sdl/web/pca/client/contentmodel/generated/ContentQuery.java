@@ -11,6 +11,7 @@ public class ContentQuery {
 		private KeywordConnection categories;
 		private Link componentLink;
 		private ComponentPresentation componentPresentation;
+		private ComponentPresentationConnection componentPresentations;
 		private Link dynamicComponentLink;
 		private ItemConnection items;
 		private Keyword keyword;
@@ -63,6 +64,14 @@ public class ContentQuery {
 		}
 		public void setComponentPresentation(ComponentPresentation componentPresentation){
 			this.componentPresentation = componentPresentation;
+		}
+
+
+		public ComponentPresentationConnection getComponentPresentations(){
+			return componentPresentations;
+		}
+		public void setComponentPresentations(ComponentPresentationConnection componentPresentations){
+			this.componentPresentations = componentPresentations;
 		}
 
 

@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class QueryUtilsTest {
     private static final String RECURSE_FRAGMENT = loadFromResource("RecurseFragment");
+    private static final String QUERY_WITH_INCLUDE_REGION = loadFromResource("parseIncludeRegionsSource");
     private static final String QUERY = "query sitemap($namespaceId: Int!, $publicationId: Int!) {          \n" +
             "    sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {\n" +
             "                ...RecurseItems\n" +
@@ -48,4 +49,19 @@ public class QueryUtilsTest {
         assertEquals(expected, QueryUtils.getFragmentBody(RECURSE_FRAGMENT));
     }
 
+    @Test
+    public void parseIncludeRegionsIncludeTrue() {
+        String expected = loadFromResource("parseIncludeRegionsTrueResult");
+
+        String result = QueryUtils.parseIncludeRegions(QUERY_WITH_INCLUDE_REGION, "includeContent", true);
+        assertEqualsIgnoreSpaces(expected, result);
+    }
+
+    @Test
+    public void parseIncludeRegionsIncludeFalse() {
+        String expected = loadFromResource("parseIncludeRegionsFalseResult");
+
+        String result = QueryUtils.parseIncludeRegions(QUERY_WITH_INCLUDE_REGION, "includeContent", false);
+        assertEqualsIgnoreSpaces(expected, result);
+    }
 }

@@ -1,8 +1,10 @@
 ﻿query componentPresentation($namespaceId: Int!, $publicationId: Int!, $componentId: Int!, $templateId: Int!, $contextData: [InputClaimValue!]) {
     componentPresentation(namespaceId: $namespaceId, publicationId: $publicationId, componentId: $componentId, templateId: $templateId, contextData: $contextData) {
         itemId            
-        rawContent@renderContentArgs {
-            data
-        }
+		includeContent? {
+			rawContent@renderContentArgs {
+				data
+			}
+		}
     }
 }

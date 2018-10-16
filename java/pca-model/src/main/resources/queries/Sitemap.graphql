@@ -1,6 +1,6 @@
 ﻿query sitemap($namespaceId: Int!, $publicationId: Int!) {          
     sitemap(namespaceId: $namespaceId, publicationId: $publicationId) {
-        ...TaxonomyItemFields
+		...TaxonomyItemFields
 		...RecurseItems
     }
 }

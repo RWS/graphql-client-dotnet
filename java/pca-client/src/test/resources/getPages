@@ -1,0 +1,61 @@
+{
+	"data": {
+		"pages": {
+			"edges": [{
+					"cursor": "MQ==",
+					"node": {
+						"url": "/index.html",
+						"itemId": 640,
+						"title": "000 Home",
+						"itemType": 64,
+						"lastPublishDate": "2018-06-25T14:01:15.377+03:00",
+						"publicationId": 8,
+						"creationDate": "2016-01-19T11:36:05+02:00",
+						"initialPublishDate": "2017-01-24T09:31:40.81+02:00",
+						"updatedDate": "2017-06-01T08:23:38+03:00",
+						"namespaceId": 1,
+						"pageTemplate": {
+							"itemId": 131,
+							"title": null
+						},
+						"customMetas": {
+							"edges": [{
+									"node": {
+										"id": "b1596d74-50bc-33ba-9007-e53d18d0c600",
+										"itemId": 640,
+										"key": "sitemapKeyword",
+										"namespaceId": 1,
+										"publicationId": 8,
+										"value": "000 Home",
+										"valueType": "STRING"
+									}
+								}
+							]
+						}
+					}
+				}, {
+					"cursor": "Mg==",
+					"node": {
+						"url": "/index.html",
+						"itemId": 1677,
+						"title": "000 Home",
+						"itemType": 64,
+						"lastPublishDate": "2018-01-31T15:40:55.563+02:00",
+						"publicationId": 17,
+						"creationDate": "2014-05-27T09:12:43+03:00",
+						"initialPublishDate": "2018-01-31T15:40:55.153+02:00",
+						"updatedDate": "2014-09-18T18:37:09+03:00",
+						"namespaceId": 1,
+						"pageTemplate": {
+							"itemId": 131,
+							"title": null
+						},
+						"customMetas": {
+							"edges": []
+						}
+					}
+				}
+			]
+		}
+	}
+}

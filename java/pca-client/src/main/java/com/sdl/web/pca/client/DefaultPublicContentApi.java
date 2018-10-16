@@ -6,17 +6,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentIncludeMode;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.Ancestor;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.InputComponentPresentationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputSortParam;
 import com.sdl.web.pca.client.contentmodel.generated.Item;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
+import com.sdl.web.pca.client.contentmodel.generated.Page;
+import com.sdl.web.pca.client.contentmodel.generated.PageConnection;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
@@ -42,7 +49,6 @@ import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 public class DefaultPublicContentApi implements PublicContentApi {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-
     private GraphQLClient client;
     private int requestTimeout;
     private ContextData defaultContextData;
@@ -63,165 +69,160 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
-                                     DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
-                                     ContextData contextData) throws PublicContentApiException {
+    public ComponentPresentation getComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
+                                                          int templateId, String customMetaFilter,
+                                                          ContentIncludeMode contentIncludeMode, ContextData contextData) {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("PageModelByUrl")
-                .withRenderContentArgs(renderContent)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
-                .withVariable("url", url)
-                .withContextData(defaultContextData, contextData)
-                .withClaim(createClaim(contentType))
-                .withClaim(createClaim(modelType))
-                .withClaim(createClaim(pageInclusion))
-                .withOperation("page")
-                .withTimeout(requestTimeout)
-                .buildRequest();
-
-        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
-    }
-
-    @Override
-    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
-                                     DataModelType modelType, PageInclusion pageInclusion, boolean renderContent,
-                                     ContextData contextData) throws PublicContentApiException {
-
-        GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("PageModelById")
-                .withRenderContentArgs(renderContent)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
-                .withVariable("pageId", pageId)
-                .withContextData(defaultContextData, contextData)
-                .withClaim(createClaim(contentType))
-                .withClaim(createClaim(modelType))
-                .withClaim(createClaim(pageInclusion))
-                .withTimeout(requestTimeout)
-                .buildRequest();
-
-        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
-    }
-
-    @Override
-    public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int componentId, int templateId,
-                                       ContentType contentType, DataModelType modelType, DcpType dcpType,
-                                       boolean renderContent, ContextData contextData) throws PublicContentApiException {
-
-        GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("EntityModelById")
-                .withRenderContentArgs(renderContent)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withQuery("ComponentPresentation")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("componentId", componentId)
                 .withVariable("templateId", templateId)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
                 .withContextData(defaultContextData, contextData)
-                .withClaim(createClaim(contentType))
-                .withClaim(createClaim(modelType))
-                .withClaim(createClaim(dcpType))
                 .withTimeout(requestTimeout)
-                .buildRequest();
-
-        return getJsonResult(graphQLRequest, "/data/componentPresentation/rawContent/data");
+                .build();
+        return getResultForRequest(graphQLRequest, ComponentPresentation.class, "/data/componentPresentation");
     }
 
     @Override
-    public TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
-                                          ContextData contextData) throws PublicContentApiException {
-
+    public ComponentPresentationConnection getComponentPresentations(ContentNamespace ns, int publicationId,
+                                                                     InputComponentPresentationFilter filter, InputSortParam sort, Pagination pagination,
+                                                                     String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("Sitemap")
-                .withFragment("TaxonomyItemFields")
-                .withFragment("TaxonomyPageFields")
-                .withRecurseFragmentApplied("RecurseItems", descendantLevels)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withQuery("ComponentPresentations")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withInputComponentPresentationFilter(filter)
+                .withInputSortParam(sort)
+                .withPagination(pagination)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemap");
+        return getResultForRequest(graphQLRequest, ComponentPresentationConnection.class, "/data/componentPresentations");
     }
 
     @Override
-    public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
-                                                   int descendantLevels, boolean includeAncestors,
-                                                   ContextData contextData) throws PublicContentApiException {
-
+    public Page getPage(ContentNamespace ns, int publicationId, int pageId, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("SitemapSubtree")
-                .withFragment("TaxonomyItemFields")
-                .withFragment("TaxonomyPageFields")
-                .withRecurseFragmentApplied("RecurseItems", descendantLevels)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
-                .withVariable("taxonomyNodeId", taxonomyNodeId)
-                .withVariable("includeAncestors", includeAncestors)
+                .withQuery("PageById")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("pageId", pageId)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
-
-        return getResultForRequest(graphQLRequest, TaxonomySitemapItem[].class, "/data/sitemapSubtree");
+                .build();
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
     }
 
     @Override
-    public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
+    public Page getPage(ContentNamespace ns, int publicationId, String url, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageByUrl")
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("url", url)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
+    }
+
+    @Override
+    public Page getPage(CmUri cmUri, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageByCmUri")
+                .withCmUri(cmUri)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, Page.class, "/data/page");
+    }
+
+    @Override
+    public PageConnection getPages(ContentNamespace ns, Pagination pagination, String url, String customMetaFilter, ContentIncludeMode contentIncludeMode, ContextData contextData) {
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PagesByUrl")
+                .withNamespace(ns)
+                .withPagination(pagination)
+                .withVariable("url", url)
+                .withCustomMetaFilter(customMetaFilter)
+                .withContentIncludeMode(contentIncludeMode)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, PageConnection.class, "/data/pages");
+    }
+
+    @Override
+    public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, String customMetaFilter,
                                               ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentById", true)
-                .withVariantArgs(null)
-                .withCustomMetaFilter(null)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withQuery("BinaryComponentById")
+                .withCustomMetaFilter(customMetaFilter)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("binaryId", binaryId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
-    public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url,
+    public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
                                               ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentByUrl", true)
+                .withQuery("BinaryComponentByUrl")
                 .withVariantArgs(url)
-                .withCustomMetaFilter(null)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withCustomMetaFilter(customMetaFilter)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("url", url)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
-    public BinaryComponent getBinaryComponent(CmUri cmUri, ContextData contextData) throws PublicContentApiException {
+    public BinaryComponent getBinaryComponent(CmUri cmUri, String customMetaFilter, ContextData contextData)
+            throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("BinaryComponentByCmUri", true)
-                .withVariantArgs(null)
-                .withCustomMetaFilter(null)
+                .withQuery("BinaryComponentByCmUri")
+                .withCustomMetaFilter(customMetaFilter)
                 .withVariable("namespaceId", cmUri.getNamespaceId())
                 .withVariable("publicationId", cmUri.getPublicationId())
                 .withVariable("cmUri", cmUri.toString())
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, BinaryComponent.class, "/data/binaryComponent");
     }
 
     @Override
     public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
-                                           ContextData contextData, String customMetaFilter,
-                                           boolean renderContent) throws PublicContentApiException {
+                                           String customMetaFilter, ContentIncludeMode contentIncludeMode,
+                                           boolean includeContainerItems, ContextData contextData) throws PublicContentApiException {
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
@@ -231,16 +232,18 @@ public class DefaultPublicContentApi implements PublicContentApi {
         }
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQueryAndFragmentList("ItemQuery", fragments)
+                .withQuery("ItemQuery")
+                .withInjectFragments(fragments)
+                .withIncludeRegion("includeContainerItems", includeContainerItems)
+                .withContentIncludeMode(contentIncludeMode)
                 .withCustomMetaFilter(customMetaFilter)
-                .withRenderContentArgs(renderContent)
                 .withVariable("first", pagination.getFirst())
                 .withVariable("after", pagination.getAfter())
-                .withVariable("filter", filter)
-                .withVariable("sort", sort)
+                .withVariable("inputItemFilter", filter)
+                .withVariable("inputSortParam", sort)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, ItemConnection.class, "/data/items");
     }
@@ -254,36 +257,36 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public Publication getPublication(ContentNamespace ns, int publicationId, ContextData contextData,
-                                      String customMetaFilter) throws PublicContentApiException {
+    public Publication getPublication(ContentNamespace ns, int publicationId, String customMetaFilter,
+                                      ContextData contextData) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("Publication", true)
+                .withQuery("Publication")
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, Publication.class, "/data/publication");
     }
 
     @Override
-    public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination,
-                                                 InputPublicationFilter filter, ContextData contextData,
-                                                 String customMetaFilter) {
+    public PublicationConnection getPublications(ContentNamespace ns, Pagination pagination, InputPublicationFilter filter,
+                                                 String customMetaFilter,
+                                                 ContextData contextData) {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("Publications", true)
+                .withQuery("Publications")
                 .withCustomMetaFilter(customMetaFilter)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
+                .withNamespace(ns)
                 .withVariable("first", pagination.getFirst())
                 .withVariable("after", pagination.getAfter())
                 .withVariable("filter", filter)
                 .withContextData(defaultContextData, contextData)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, PublicationConnection.class, "/data/publications");
     }
@@ -294,12 +297,12 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolvePageLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("pageId", pageId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getJsonResult(graphQLRequest, "/data/pageLink/url").asText();
     }
@@ -311,14 +314,14 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveComponentLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("targetComponentId", componentId)
                 .withVariable("sourcePageId", sourcePageId)
                 .withVariable("excludeComponentTemplateId", excludeComponentTemplateId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getJsonResult(graphQLRequest, "/data/componentLink/url").asText();
     }
@@ -329,13 +332,13 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveBinaryLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("binaryId", binaryId)
                 .withVariable("variantId", variantId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getJsonResult(graphQLRequest, "/data/binaryLink/url").asText();
     }
@@ -347,14 +350,14 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveDynamicComponentLink")
-                .withVariable("namespaceId", ns.getNameSpaceValue())
-                .withVariable("publicationId", publicationId)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
                 .withVariable("targetPageId", pageId)
                 .withVariable("targetComponentId", componentId)
                 .withVariable("targetTemplateId", templateId)
                 .withVariable("renderRelativeLink", renderRelativeLink)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getJsonResult(graphQLRequest, "/data/dynamicComponentLink/url").asText();
     }
@@ -363,14 +366,115 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
-                .withQuery("PublicationMapping", true)
-                .withVariable("namespaceId", ns.getNameSpaceValue())
+                .withQuery("PublicationMapping")
+                .withNamespace(ns)
                 .withVariable("siteUrl", url)
                 .withTimeout(requestTimeout)
-                .buildRequest();
+                .build();
 
         return getResultForRequest(graphQLRequest, PublicationMapping.class, "/data/publicationMapping");
     }
+
+    @Override
+    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
+                                     DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
+                                     ContextData contextData) throws PublicContentApiException {
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageModelByUrl")
+                .withContentIncludeMode(contentIncludeMode)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("url", url)
+                .withContextData(defaultContextData, contextData)
+                .withClaim(createClaim(contentType))
+                .withClaim(createClaim(modelType))
+                .withClaim(createClaim(pageInclusion))
+                .withOperation("page")
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
+    }
+
+    @Override
+    public JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
+                                     DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
+                                     ContextData contextData) throws PublicContentApiException {
+
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("PageModelById")
+                .withContentIncludeMode(contentIncludeMode)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("pageId", pageId)
+                .withContextData(defaultContextData, contextData)
+                .withClaim(createClaim(contentType))
+                .withClaim(createClaim(modelType))
+                .withClaim(createClaim(pageInclusion))
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getJsonResult(graphQLRequest, "/data/page/rawContent/data");
+    }
+
+    @Override
+    public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
+                                       ContentType contentType,
+                                       DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode,
+                                       ContextData contextData) throws PublicContentApiException {
+
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("EntityModelById")
+                .withContentIncludeMode(contentIncludeMode)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("componentId", entityId)
+                .withVariable("templateId", templateId)
+                .withContextData(defaultContextData, contextData)
+                .withClaim(createClaim(contentType))
+                .withClaim(createClaim(modelType))
+                .withClaim(createClaim(dcpType))
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getJsonResult(graphQLRequest, "/data/componentPresentation/rawContent/data");
+    }
+
+    @Override
+    public TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
+                                          ContextData contextData) throws PublicContentApiException {
+
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("Sitemap")
+                .withRecurseFragment("RecurseItems", descendantLevels)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem.class, "/data/sitemap");
+    }
+
+    @Override
+    public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
+                                                   int descendantLevels, Ancestor ancestor,
+                                                   ContextData contextData) throws PublicContentApiException {
+
+        GraphQLRequest graphQLRequest = new PCARequestBuilder()
+                .withQuery("SitemapSubtree")
+                .withRecurseFragment("RecurseItems", descendantLevels)
+                .withNamespace(ns)
+                .withPublicationId(publicationId)
+                .withVariable("taxonomyNodeId", taxonomyNodeId)
+                .withVariable("ancestor", ancestor)
+                .withContextData(defaultContextData, contextData)
+                .withTimeout(requestTimeout)
+                .build();
+
+        return getResultForRequest(graphQLRequest, TaxonomySitemapItem[].class, "/data/sitemapSubtree");
+    }
+
 
     private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz, String path) throws PublicContentApiException {
         JsonNode result = getJsonResult(request, path);

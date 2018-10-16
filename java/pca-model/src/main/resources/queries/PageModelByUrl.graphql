@@ -1,8 +1,10 @@
 ﻿query page($namespaceId: Int!, $publicationId: Int!, $url: String, $contextData: [InputClaimValue!]) {
     page(namespaceId: $namespaceId, publicationId: $publicationId, url: $url, contextData: $contextData) {
-        itemId                
-        rawContent@renderContentArgs {
-            data 
-        }
+        itemId    
+		includeContent? {            
+			rawContent@renderContentArgs {
+				data 
+			}
+		}
     }
 }

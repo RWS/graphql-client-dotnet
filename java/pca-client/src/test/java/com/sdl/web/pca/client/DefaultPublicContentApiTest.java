@@ -3,18 +3,24 @@ package com.sdl.web.pca.client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sdl.web.pca.client.contentmodel.ContextData;
 import com.sdl.web.pca.client.contentmodel.Pagination;
+import com.sdl.web.pca.client.contentmodel.enums.ContentIncludeMode;
 import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.generated.Ancestor;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.Component;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
+import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.FilterItemType;
+import com.sdl.web.pca.client.contentmodel.generated.InputComponentPresentationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.ItemConnection;
-import com.sdl.web.pca.client.contentmodel.generated.ItemType;
 import com.sdl.web.pca.client.contentmodel.generated.Keyword;
 import com.sdl.web.pca.client.contentmodel.generated.Page;
+import com.sdl.web.pca.client.contentmodel.generated.PageConnection;
 import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
@@ -22,6 +28,7 @@ import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
 import com.sdl.web.pca.client.util.ItemTypes;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -48,6 +55,77 @@ public class DefaultPublicContentApiTest {
     @InjectMocks
     private DefaultPublicContentApi publicContentApi = new DefaultPublicContentApi(graphQlClient);
 
+
+
+    @Ignore("To be fixed")
+    @Test
+    public void getComponentPresentation() {
+        ComponentPresentation result = publicContentApi.getComponentPresentation(ContentNamespace.Sites, 8, 1458,
+                9195, "", ContentIncludeMode.EXCLUDE, null);
+    }
+
+    @Ignore("To be fixed")
+    @Test
+    public void getComponentPresentations() {
+        ComponentPresentationConnection result = publicContentApi.getComponentPresentations(ContentNamespace.Sites, 8,
+                new InputComponentPresentationFilter(), null, null, "", ContentIncludeMode.EXCLUDE, new ContextData());
+    }
+
+    @Test
+    public void getPageById() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPageById"));
+
+        Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, 640,
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPageByUrl() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPageByUrl"));
+
+        Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, "/index.html",
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPageByCmUri() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPageByCmUri"));
+
+        Page result = publicContentApi.getPage(new CmUri("tcm:8-640-64"),
+                "", ContentIncludeMode.INCLUDE, new ContextData());
+
+        assertEquals(640, result.getItemId());
+        assertEquals(64, result.getItemType());
+        assertEquals("000 Home", result.getTitle());
+        assertEquals("/index.html", result.getUrl());
+    }
+
+    @Test
+    public void getPages() throws Exception {
+        when(graphQlClient.execute(any(GraphQLRequest.class)))
+                .thenReturn(loadFromResource("getPages"));
+
+        PageConnection result = publicContentApi.getPages(ContentNamespace.Sites, new Pagination(), "/index.html", "",
+                ContentIncludeMode.EXCLUDE, null);
+
+        assertEquals(2, result.getEdges().size());
+        assertEquals(640, result.getEdges().get(0).getNode().getItemId());
+        assertEquals(1677, result.getEdges().get(1).getNode().getItemId());
+    }
+
     @Test
     public void getPageModelDataByUrl() throws Exception {
         String expected = loadFromResource("getPageModelDataByUrlExpected");
@@ -56,7 +134,7 @@ public class DefaultPublicContentApiTest {
 
         JsonNode result = publicContentApi.getPageModelData(ContentNamespace.Sites, 1082,
                 "/example-legacy/index.html", ContentType.MODEL, DataModelType.R2, PageInclusion.INCLUDE,
-                false, new ContextData());
+                ContentIncludeMode.EXCLUDE, new ContextData());
 
         assertEqualsIgnoreSpaces(expected, result.toString());
     }
@@ -68,7 +146,7 @@ public class DefaultPublicContentApiTest {
                 .thenReturn(loadFromResource("getPageModelDataById"));
 
         JsonNode result = publicContentApi.getPageModelData(ContentNamespace.Sites, 1082, 640,
-                ContentType.MODEL, DataModelType.DD4T, PageInclusion.INCLUDE, false, new ContextData());
+                ContentType.MODEL, DataModelType.DD4T, PageInclusion.INCLUDE, ContentIncludeMode.EXCLUDE, new ContextData());
 
         assertEqualsIgnoreSpaces(expected, result.toString());
     }
@@ -80,7 +158,7 @@ public class DefaultPublicContentApiTest {
                 .thenReturn(loadFromResource("getEntityModelData"));
 
         JsonNode result = publicContentApi.getEntityModelData(ContentNamespace.Sites, 8, 1458, 9195,
-                ContentType.MODEL, DataModelType.R2, DcpType.DEFAULT, false, new ContextData());
+                ContentType.MODEL, DataModelType.R2, DcpType.DEFAULT, ContentIncludeMode.EXCLUDE, new ContextData());
 
         assertEqualsIgnoreSpaces(expected, result.toString());
     }
@@ -104,7 +182,7 @@ public class DefaultPublicContentApiTest {
                 .thenReturn(loadFromResource("getSitemapSubtree"));
 
         TaxonomySitemapItem[] result = publicContentApi.getSitemapSubtree(ContentNamespace.Sites, 8, "t2680-k10019",
-                2, true, new ContextData());
+                2, Ancestor.INCLUDE, new ContextData());
 
         assertEquals("t2680", result[0].getId());
         assertEquals(1, result[0].getItems().size());
@@ -117,7 +195,7 @@ public class DefaultPublicContentApiTest {
                 .thenReturn(loadFromResource("getBinaryComponentById"));
 
         BinaryComponent result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8, 756,
-                null);
+                null, null);
 
         assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
@@ -131,7 +209,7 @@ public class DefaultPublicContentApiTest {
                 .thenReturn(loadFromResource("getBinaryComponentById"));
 
         BinaryComponent result = publicContentApi.getBinaryComponent(ContentNamespace.Sites, 8,
-                "/media/balloons_tcm8-756.jpg", null);
+                "/media/balloons_tcm8-756.jpg", null, null);
 
         assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
         assertEquals("tcd:pub[8]/componentmeta[756]", result.getTitle());
@@ -144,7 +222,7 @@ public class DefaultPublicContentApiTest {
         when(graphQlClient.execute(any(GraphQLRequest.class)))
                 .thenReturn(loadFromResource("getBinaryComponentCmUri"));
 
-        BinaryComponent result = publicContentApi.getBinaryComponent(new CmUri("tcm:8-756-16"), new ContextData());
+        BinaryComponent result = publicContentApi.getBinaryComponent(new CmUri("tcm:8-756-16"), null, new ContextData());
         assertNotNull(result);
 
         assertEquals("b4e5c7c4-f04a-3d6d-898f-5886d0f648bd", result.getId());
@@ -160,12 +238,12 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.PAGE));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.PAGE));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                null, false);
+                null, false, null);
 
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -181,12 +259,12 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.COMPONENT));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.COMPONENT));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                null, false);
+                null, false, null);
 
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -202,12 +280,12 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.KEYWORD));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.KEYWORD));
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                null, false);
+                null, false, null);
 
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -223,13 +301,13 @@ public class DefaultPublicContentApiTest {
 
         InputItemFilter filter = new InputItemFilter();
         filter.setNamespaceIds(Collections.singletonList(ContentNamespace.Sites.getNameSpaceValue()));
-        filter.setItemTypes(Collections.singletonList(ItemType.PUBLICATION));
+        filter.setItemTypes(Collections.singletonList(FilterItemType.PUBLICATION));
 
         Pagination pagination = new Pagination();
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                null, false);
+                null, false, null);
 
         assertEquals(7, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -287,7 +365,7 @@ public class DefaultPublicContentApiTest {
     public void getPublication() throws Exception {
         when(graphQlClient.execute(any(GraphQLRequest.class))).thenReturn(loadFromResource("getPublication"));
 
-        Publication result = publicContentApi.getPublication(ContentNamespace.Sites, 8, new ContextData(), "");
+        Publication result = publicContentApi.getPublication(ContentNamespace.Sites, 8, "", new ContextData());
         assertNotNull(result);
 
         assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getId());
@@ -302,7 +380,7 @@ public class DefaultPublicContentApiTest {
 
         Pagination pagination = new Pagination();
         pagination.setFirst(1);
-        PublicationConnection result = publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, new ContextData(), "");
+        PublicationConnection result = publicContentApi.getPublications(ContentNamespace.Sites, pagination, null, "", new ContextData());
         assertNotNull(result);
 
         assertEquals("dec06688-3c29-36e6-9f91-710c6109aab5", result.getEdges().get(0).getNode().getId());
@@ -315,9 +393,9 @@ public class DefaultPublicContentApiTest {
     @Test
     public void testMapToFragmentList() {
         InputItemFilter filter = new InputItemFilter();
-        filter.setItemTypes(Arrays.asList(ItemType.CATEGORY, ItemType.COMPONENT_PRESENTATION, ItemType.STRUCTURE_GROUP,
-                ItemType.PAGE));
-        List<String> expected = Arrays.asList("CategoryFields", "ComponentPresentationFields", "StructureGroupFields", "PageFields");
+        filter.setItemTypes(Arrays.asList(FilterItemType.CATEGORY, FilterItemType.COMPONENT_TEMPLATE, FilterItemType.PAGE_TEMPLATE,
+                FilterItemType.PAGE));
+        List<String> expected = Arrays.asList("CategoryFields", "ComponentTemplateFields", "PageTemplateFields", "PageFields");
 
         assertEquals(expected, publicContentApi.mapToFragmentList(filter));
     }

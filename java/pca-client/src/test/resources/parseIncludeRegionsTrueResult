@@ -1,0 +1,11 @@
+query page($namespaceId: Int!, $publicationId: Int!, $cmUri: String, $contextData: [InputClaimValue!]) {
+	page(namespaceId: $namespaceId, publicationId: $publicationId, cmUri: $cmUri, contextData: $contextData) {
+		...PageItemFields
+
+
+			rawContent@renderContentArgs {
+				data
+			}
+
+	}
+}

@@ -8,7 +8,7 @@ import java.util.List;
 public class InputItemFilter {
 		private List<InputItemFilter> and;
 		private InputCustomMetaCriteria customMeta;
-		private List<ItemType> itemTypes;
+		private List<FilterItemType> itemTypes;
 		private InputKeywordCriteria keyword;
 		private List<Integer> namespaceIds;
 		private List<InputItemFilter> or;
@@ -32,10 +32,10 @@ public class InputItemFilter {
 		}
 
 
-		public List<ItemType> getItemTypes(){
+		public List<FilterItemType> getItemTypes(){
 			return itemTypes;
 		}
-		public void setItemTypes(List<ItemType> itemTypes){
+		public void setItemTypes(List<FilterItemType> itemTypes){
 			this.itemTypes = itemTypes;
 		}
 
