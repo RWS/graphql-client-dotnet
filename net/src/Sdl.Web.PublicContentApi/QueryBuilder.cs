@@ -156,14 +156,18 @@ namespace Sdl.Web.PublicContentApi
                 string.IsNullOrEmpty(_customMetaFilter) ? "" : $"(filter: \"{_customMetaFilter}\")");
 
             ReplaceTag("renderContentArgs", 
-                $"(renderContent: {(_contentIncludeMode == ContentIncludeMode.IncludeAndRender ? "true" : "false")})");
+                $"(renderContent: {(_contentIncludeMode == ContentIncludeMode.IncludeDataAndRender || _contentIncludeMode == ContentIncludeMode.IncludeJsonAndRender ? "true" : "false")})");
 
             if (_variables != null)
             {
                 ReplaceTag("variantsArgs", _variables.ContainsKey("url") ? $"(url: \"{_variables["url"]}\")" : "");
             }
 
-            string query = QueryHelpers.ParseIncludeRegions(_query.ToString(), "includeContent", _contentIncludeMode != ContentIncludeMode.Exclude);
+            string query = QueryHelpers.ParseIncludeRegions(_query.ToString(), "includeContent",
+                _contentIncludeMode == ContentIncludeMode.IncludeData || _contentIncludeMode == ContentIncludeMode.IncludeDataAndRender);
+
+            query = QueryHelpers.ParseIncludeRegions(query, "includeJsonContent",
+                _contentIncludeMode == ContentIncludeMode.IncludeJson || _contentIncludeMode == ContentIncludeMode.IncludeJsonAndRender);
 
             QueryHelpers.ExpandRecursiveFragment(ref query, null, _descendantLevels);
             

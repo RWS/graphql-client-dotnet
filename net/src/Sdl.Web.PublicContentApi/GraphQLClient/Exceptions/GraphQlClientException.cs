@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sdl.Web.GraphQLClient.Response;
 using Sdl.Web.HttpClient.Response;
@@ -16,6 +17,11 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         public int StatusCode { get; }
 
         /// <summary>
+        /// GraphQL Response.
+        /// </summary>
+        public IGraphQLResponse GraphQLResponse { get; }
+
+        /// <summary>
         /// Response of request.
         /// </summary>
         public IHttpClientResponse<IGraphQLResponse> Response { get; }
@@ -30,6 +36,11 @@ namespace Sdl.Web.GraphQLClient.Exceptions
 
         public GraphQLClientException(string msg, Exception ex) : base(msg, ex)
         { }
+
+        public GraphQLClientException(IGraphQLResponse response)
+        {
+            GraphQLResponse = response;
+        }
 
         public GraphQLClientException(IHttpClientResponse<IGraphQLResponse> response)
         {
@@ -55,10 +66,20 @@ namespace Sdl.Web.GraphQLClient.Exceptions
         private string GetMessage()
         {
             var messageBuilder = new System.Text.StringBuilder();
-
             messageBuilder.AppendLine(base.Message);
-
-            Response?.ResponseData?.Errors?.ForEach(error => messageBuilder.AppendLine($"GraphQLError : {error.Message} at {string.Join(" and at ", error.Locations?.Select(loc=>"Line : "+loc.Line+ " Column :" + loc.Column))}"));
+            List<GraphQLError> errors = null;
+            if (GraphQLResponse != null)
+            {
+                errors = GraphQLResponse.Errors;
+            }
+            if (Response?.ResponseData != null)
+            {
+                errors = Response.ResponseData.Errors;
+            }
+            errors?.ForEach(
+                error =>
+                    messageBuilder.AppendLine(
+                        $"GraphQLError : {error.Message} at {string.Join(" and at ", error.Locations?.Select(loc => "Line : " + loc.Line + " Column :" + loc.Column))}"));
 
             return messageBuilder.ToString();
         }

@@ -2,8 +2,10 @@
 {
     public enum ContentIncludeMode
     {
-        Include,
-        IncludeAndRender,
+        IncludeData,
+        IncludeDataAndRender,
+        IncludeJson,
+        IncludeJsonAndRender,
         Exclude
     }
 

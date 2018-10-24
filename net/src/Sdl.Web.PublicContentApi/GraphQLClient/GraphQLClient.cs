@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.HttpClient;
@@ -56,6 +57,11 @@ namespace Sdl.Web.GraphQLClient
         }
 
         /// <summary>
+        /// Throw exception on any GraphQL errors.
+        /// </summary>
+        public bool ThrowOnAnyError { get; set; } = true;
+
+        /// <summary>
         /// Get/Sets the timeout (ms) for the requests.
         /// </summary>
         public int Timeout
@@ -82,8 +88,7 @@ namespace Sdl.Web.GraphQLClient
                 var responseData = response.ResponseData;               
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
-                if (responseData.Errors != null && responseData.Errors.Count > 0)
-                    throw new GraphQLClientException(response);
+                HandleErrors(responseData);
                 if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 return responseData;
             }
@@ -111,8 +116,7 @@ namespace Sdl.Web.GraphQLClient
                 var responseData = response.ResponseData;
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
-                if (responseData.Errors != null && responseData.Errors.Count > 0)
-                    throw new GraphQLClientException(response);
+                HandleErrors(responseData);
                 if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 if (responseData.Data == null) throw new GraphQLClientException(response);
                 JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -155,8 +159,7 @@ namespace Sdl.Web.GraphQLClient
                 var responseData = response.ResponseData;
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
-                if (responseData.Errors != null && responseData.Errors.Count > 0)
-                    throw new GraphQLClientException(response);
+                HandleErrors(responseData);
                 if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 return responseData;
             }
@@ -188,8 +191,7 @@ namespace Sdl.Web.GraphQLClient
                 var responseData = response.ResponseData;
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
-                if (responseData.Errors != null && responseData.Errors.Count > 0)
-                    throw new GraphQLClientException(response);
+                HandleErrors(responseData);
                 if (responseData.Data == null) throw new GraphQLClientException(response);
                 if (Logger.IsTracingEnabled) Logger.Trace($"GraphQL Respose: {responseData.Data}");
                 JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -265,6 +267,11 @@ namespace Sdl.Web.GraphQLClient
             }
         }
 
+        /// <summary>
+        /// Returns the last errors that occured during the GraphQL request
+        /// </summary>
+        public List<GraphQLError> LastErrors { get; protected set; }
+
         private IHttpClientRequest CreateHttpRequest(IGraphQLRequest graphQLrequest)
             =>
                 new HttpClientRequest
@@ -276,5 +283,13 @@ namespace Sdl.Web.GraphQLClient
                     Binder = graphQLrequest.Binder,
                     Convertors = graphQLrequest.Convertors
                 };
+
+        private void HandleErrors(IGraphQLResponse response)
+        {
+            LastErrors = response.Errors;
+            if (response.Errors == null || response.Errors.Count <= 0) return;
+            Logger.Warn("Errors were found during the last GraphQL request.");
+            if (ThrowOnAnyError) throw new GraphQLClientException(response);
+        }
     }
 }

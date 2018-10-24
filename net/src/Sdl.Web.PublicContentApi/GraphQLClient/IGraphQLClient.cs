@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Sdl.Web.GraphQLClient.Request;
 using Sdl.Web.GraphQLClient.Response;
@@ -12,6 +13,11 @@ namespace Sdl.Web.GraphQLClient
     /// </summary>
     public interface IGraphQLClient
     {
+        /// <summary>
+        /// Throw exception on any GraphQL errors.
+        /// </summary>
+        bool ThrowOnAnyError { get; set; }
+
         /// <summary>
         /// Get/Sets the timeout (ms) for the requests.
         /// </summary>
@@ -61,5 +67,10 @@ namespace Sdl.Web.GraphQLClient
         /// Gets GraphQL Schema from the GraphQL service (async).
         /// </summary>
         Task<GraphQLSchema> SchemaAsync();
+
+        /// <summary>
+        /// Returns the last errors that occured during the GraphQL request
+        /// </summary>
+        List<GraphQLError> LastErrors { get; }
     }
 }

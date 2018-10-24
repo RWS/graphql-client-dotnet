@@ -14,6 +14,7 @@ namespace Sdl.Web.PublicContentApi.Tests
 {
     public class MockGraphQLClient : IGraphQLClient
     {
+        public bool ThrowOnAnyError { get; set; }
         public int Timeout { get; set; }
         public IHttpClient HttpClient { get; }
         public IGraphQLResponse Execute(IGraphQLRequest request)
@@ -41,5 +42,7 @@ namespace Sdl.Web.PublicContentApi.Tests
         {
             throw new NotImplementedException();
         }
+
+        public List<GraphQLError> LastErrors { get; }
     }
 }

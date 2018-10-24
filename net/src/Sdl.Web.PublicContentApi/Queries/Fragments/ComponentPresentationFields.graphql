@@ -8,8 +8,12 @@
     }
 	includeContent? {
 		rawContent@renderContentArgs {
-			data
-			content
+			data			
+		}
+	}
+	includeJsonContent? {
+		rawContent@renderContentArgs {
+			content			
 		}
 	}
 }

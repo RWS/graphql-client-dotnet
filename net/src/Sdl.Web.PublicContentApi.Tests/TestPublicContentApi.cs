@@ -23,6 +23,7 @@ namespace Sdl.Web.PublicContentApi.Tests
                 _expectedVariables = expectedVariables;
             }
 
+            public bool ThrowOnAnyError { get; set; }
             public int Timeout { get; set; }
             public IHttpClient HttpClient { get; }
             public IGraphQLResponse Execute(IGraphQLRequest request)
@@ -54,6 +55,8 @@ namespace Sdl.Web.PublicContentApi.Tests
             {
                 throw new System.NotImplementedException();
             }
+
+            public List<GraphQLError> LastErrors { get; }
 
             private void ValidateRequest(IGraphQLRequest request)
             {

@@ -33,11 +33,19 @@ namespace Sdl.Web.PublicContentApi
             Logger = logger ?? new NullLogger();
         }
 
+        #region IGraphQLClient
+
         public GraphQLSchema Schema => _client.Schema;
 
         public async Task<GraphQLSchema> SchemaAsync() => await _client.SchemaAsync();
 
-        #region IGraphQLClient
+        public List<GraphQLError> LastErrors => _client.LastErrors;
+
+        public bool ThrowOnAnyError
+        {
+            get { return _client.ThrowOnAnyError; }
+            set { _client.ThrowOnAnyError = value; }
+        }
 
         public int Timeout
         {

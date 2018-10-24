@@ -15,17 +15,17 @@ namespace Sdl.Web.PublicContentApi
             JsonSerializer serializer)
         {
             var target = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
-
-            if (typeof (IContentComponent) == objectType)
-            {
-                var contentComponent = new ContentComponent();
-                serializer.Populate(target.CreateReader(), contentComponent);
-                return contentComponent;
-            }
-
             IItem item = null;
+
             if (target != null)
             {
+                if (typeof (IContentComponent) == objectType)
+                {
+                    var contentComponent = new ContentComponent();
+                    serializer.Populate(target.CreateReader(), contentComponent);
+                    return contentComponent;
+                }
+
                 try
                 {
                     var expConverter = new ExpandoObjectConverter();
