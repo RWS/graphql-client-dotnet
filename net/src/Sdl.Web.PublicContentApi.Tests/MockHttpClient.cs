@@ -20,10 +20,10 @@ namespace Sdl.Web.PublicContentApi.Tests
             _responseData = responseData;
             _contentType = contentType;
         }
-        public Uri BaseUri { get; set; }
-        public int Timeout { get; set; }
-        public string UserAgent { get; set; }
-        public HttpHeaders Headers { get; set; }
+        public new Uri BaseUri { get; set; }
+        public new int Timeout { get; set; }
+        public new string UserAgent { get; set; }
+        public new HttpHeaders Headers { get; set; }
         public override IHttpClientResponse<T> Execute<T>(IHttpClientRequest request)
         {
             T deserialized = Deserialize<T>(_responseData, _contentType, request.Binder, request.Convertors);

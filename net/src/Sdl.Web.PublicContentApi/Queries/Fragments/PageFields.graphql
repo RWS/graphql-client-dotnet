@@ -4,6 +4,7 @@
 	includeContent? {
 		rawContent@renderContentArgs {
 			data 
+			content
 		}
 	}
 	includeContainerItems? {
