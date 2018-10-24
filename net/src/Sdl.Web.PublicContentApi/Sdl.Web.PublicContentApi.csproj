@@ -139,7 +139,6 @@
     <Compile Include="IQClient\Model\Search\SearchQuery.cs" />
     <Compile Include="IQClient\RestClient\IRestQueryClientConfigurationProvider.cs" />
     <Compile Include="IQClient\RestClient\RestQueryClient.cs" />
-    <Compile Include="IQClient\RestClient\RestQueryClientConfigurationProvider.cs" />
     <Compile Include="ItemConvertor.cs" />
     <Compile Include="ItemTypes.cs" />
     <Compile Include="Enums.cs" />
