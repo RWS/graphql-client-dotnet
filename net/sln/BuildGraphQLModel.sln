@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Web.PublicContentApi", "..\src\Sdl.Web.PublicContentApi\Sdl.Web.PublicContentApi.csproj", "{C613D305-5F6A-4966-B425-FD35F9027E3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdl.Tridion.Api.Client", "..\src\Sdl.Tridion.Api.Client\Sdl.Tridion.Api.Client.csproj", "{C613D305-5F6A-4966-B425-FD35F9027E3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildGraphQLModel", "..\src\BuildGraphQLModel\BuildGraphQLModel.csproj", "{EA9B3B05-67D3-4D4D-8C33-06ABC618772C}"
 EndProject

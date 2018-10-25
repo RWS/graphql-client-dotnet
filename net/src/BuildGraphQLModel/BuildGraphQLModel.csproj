@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sdl.Web.PublicContentApi\Sdl.Web.PublicContentApi.csproj">
+    <ProjectReference Include="..\Sdl.Tridion.Api.Client\Sdl.Tridion.Api.Client.csproj">
       <Project>{c613d305-5f6a-4966-b425-fd35f9027e3b}</Project>
-      <Name>Sdl.Web.PublicContentApi</Name>
+      <Name>Sdl.Tridion.Api.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

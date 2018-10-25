@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using BuildGraphQLModel.Extensions;
 using System.IO;
-using Sdl.Web.GraphQLClient;
-using Sdl.Web.GraphQLClient.Schema;
+using Sdl.Tridion.Api.GraphQL.Client;
+using Sdl.Tridion.Api.GraphQL.Client.Schema;
 
 namespace BuildGraphQLModel
 {
@@ -13,10 +13,6 @@ namespace BuildGraphQLModel
     /// 
     /// Example: 
     ///   run with cmdline args: -e http://localhost:8081/udp/content -ns sdl.web -o model.cs
-    /// 
-    /// Notes:
-    ///   Feel free to modify so you can detect the extension of the output (.cs or .java) and
-    ///   adjust the generated code as required so you can generate the model for Java also.
     /// </summary>
     class Program
     {       
@@ -67,7 +63,7 @@ namespace BuildGraphQLModel
                     return new GraphQLSchemaTypeInfo
                     {   
                         Kind = "ENUM",
-                        Name = "Sdl.Web.PublicContentApi.ItemType"
+                        Name = "Sdl.Tridion.Api.Client.ItemType"
                     };
                 default:
                     return field.Type;

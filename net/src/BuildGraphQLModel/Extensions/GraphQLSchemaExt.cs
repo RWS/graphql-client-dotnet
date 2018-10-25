@@ -1,4 +1,4 @@
-﻿using Sdl.Web.GraphQLClient.Schema;
+﻿using Sdl.Tridion.Api.GraphQL.Client.Schema;
 
 namespace BuildGraphQLModel.Extensions
 {

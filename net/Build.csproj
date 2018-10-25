@@ -30,7 +30,7 @@
 	<Message Text="Clearing NuGet cache..." />
     <Exec Command="$(NuGet) locals all -Clear" />
     <Message Text="Restoring NuGet packages ..." />
-    <Exec Command="$(NuGet) restore sln/Sdl.Web.PublicContentApi.sln" />
+    <Exec Command="$(NuGet) restore sln/Sdl.Tridion.Api.Client.sln" />
   	
 	<ItemGroup>
       <AssemblyInfo Include="[assembly: AssemblyVersion(&quot;$(VersionMajor).$(VersionMinor).$(VersionPatch).0&quot;)]" />
@@ -39,13 +39,13 @@
       <AssemblyInfo Include="[assembly: AssemblyCopyright(&quot;Copyright © 2014-$([System.DateTime]::Now.ToString(&quot;yyyy&quot;)) SDL Group&quot;)]" />
     </ItemGroup>
     <Message Text="Updating CommonAssemblyInfo..." />
-    <WriteLinesToFile File="src\Sdl.Web.PublicContentApi\CommonAssemblyInfo.cs" Overwrite="False" Lines="@(AssemblyInfo)" />
+    <WriteLinesToFile File="src\Sdl.Tridion.Api.Client\CommonAssemblyInfo.cs" Overwrite="False" Lines="@(AssemblyInfo)" />
   </Target>
   
   <Target Name="RunBuild">
       <Message Text="Running Build..."/>
 
-	  <MSBuild Projects="sln\Sdl.Web.PublicContentApi.sln" Properties="Configuration=$(BuildConfiguration);Platform=Any CPU;AsmVersion=$(Version);FileVersion=$(Version)" Targets="Build" StopOnFirstFailure="true" />
+	  <MSBuild Projects="sln\Sdl.Tridion.Api.Client.sln" Properties="Configuration=$(BuildConfiguration);Platform=Any CPU;AsmVersion=$(Version);FileVersion=$(Version)" Targets="Build" StopOnFirstFailure="true" />
 	  	 
   </Target>
   
@@ -64,22 +64,22 @@
         <Message Text="Package Version: $(PackageVersion)"/>
        
         <!-- Create nuget package  -->
-        <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.nuspec -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+        <Exec Command="$(NuGet) pack Sdl.Tridion.Api.Client.nuspec -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
         <!-- Create symbols nuget package. Note the use of .symbols in the filename! -->
-        <Exec Command="$(NuGet) pack Sdl.Web.PublicContentApi.symbols.nuspec -Symbols -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+        <Exec Command="$(NuGet) pack Sdl.Tridion.Api.Client.symbols.nuspec -Symbols -Version $(PackageVersion)" WorkingDirectory="$(NuGetPackageDirectory)"/>
     </Target>
 
     <Target Name="PublishPackages" Condition="'$(NuGetRepositoryUrl)' != ''">
         <Message Importance="high" Text="Publishing NuGet packages to '$(NuGetRepositoryUrl)' ..."/>
        
-        <Exec Command="$(NuGet) push Sdl.Web.PublicContentApi.$(PackageVersion).nupkg -Source $(NuGetRepositoryUrl)" WorkingDirectory="$(NuGetPackageDirectory)"/>
+        <Exec Command="$(NuGet) push Sdl.Tridion.Api.Client.$(PackageVersion).nupkg -Source $(NuGetRepositoryUrl)" WorkingDirectory="$(NuGetPackageDirectory)"/>
 
     </Target>
 
     <Target Name="Test" Condition="'$(BuildConfiguration)' == 'Release'">
         <Message Text="Running unit tests..." />
 
-        <Exec Command='sln\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user "-target:$(MsTestExe)" "-targetargs:/testcontainer:src\Sdl.Web.PublicContentApi.Tests\bin\$(BuildConfiguration)\Sdl.Web.PublicContentApi.Tests.dll /resultsfile:TestResults.trx" "-filter:+[Sdl.*]* -[*Test*]*" -output:CoverageReports\Coverage.xml"'/>
+        <Exec Command='sln\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user "-target:$(MsTestExe)" "-targetargs:/testcontainer:src\Sdl.Tridion.Api.Client.Tests\bin\$(BuildConfiguration)\Sdl.Tridion.Api.Client.Tests.dll /resultsfile:TestResults.trx" "-filter:+[Sdl.*]* -[*Test*]*" -output:CoverageReports\Coverage.xml"'/>
 
         <Exec Command='sln\packages\ReportGenerator.2.4.4.0\tools\ReportGenerator.exe "-reports:CoverageReports\Coverage.xml" "-targetdir:CoverageReports"'/>
     </Target>
