@@ -51,7 +51,7 @@ namespace Sdl.Tridion.Api.IQQuery.RestClient
         public virtual async Task<T> SearchWithCriteriaAsync(string index, string criteria, IResultFilter filter, CancellationToken cancellationToken = default(CancellationToken))
         {
             IHttpClientRequest request = CreateRequest(index, "POST", criteria, filter);
-            IHttpClientResponse<T> response = await _client.ExecuteAsync<T>(request, cancellationToken);
+            IHttpClientResponse<T> response = await _client.ExecuteAsync<T>(request, cancellationToken).ConfigureAwait(false);
             return response.ResponseData;
         }
 
@@ -65,7 +65,7 @@ namespace Sdl.Tridion.Api.IQQuery.RestClient
         public virtual async Task<T> SearchWithCriteriaAsync(string index, ICriteria criteria, IResultFilter filter, CancellationToken cancellationToken = default(CancellationToken))
         {
             IHttpClientRequest request = CreateRequest(index, "POST", criteria.RawQuery, filter);
-            IHttpClientResponse<T> response = await _client.ExecuteAsync<T>(request, cancellationToken);
+            IHttpClientResponse<T> response = await _client.ExecuteAsync<T>(request, cancellationToken).ConfigureAwait(false);
             return response.ResponseData;
         }
       

@@ -156,7 +156,7 @@ namespace Sdl.Tridion.Api.GraphQL.Client
             {
                 var response =
                     await
-                        _httpClient.ExecuteAsync<GraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken);
+                        _httpClient.ExecuteAsync<GraphQLResponse>(CreateHttpRequest(graphQLrequest), cancellationToken).ConfigureAwait(false);
                 var responseData = response.ResponseData;
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;
@@ -188,7 +188,7 @@ namespace Sdl.Tridion.Api.GraphQL.Client
                 var response =
                     await
                         _httpClient.ExecuteAsync<GraphQLTypedResponse<T>>(CreateHttpRequest(graphQLrequest),
-                            cancellationToken);
+                            cancellationToken).ConfigureAwait(false);
                 var responseData = response.ResponseData;
                 if (responseData == null) throw new GraphQLClientException(response);
                 responseData.Headers = response.Headers;

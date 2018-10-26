@@ -37,14 +37,14 @@ namespace Sdl.Tridion.Api.IQQuery.Client
         public T Search(ICriteria criteria) 
             => _client.SearchWithCriteria(IndexName, criteria, ResultFilter);
 
-        public async Task<T> SearchAsync(ICriteria criteria, CancellationToken cancellationToken = default(CancellationToken))
-            => await _client.SearchWithCriteriaAsync(IndexName, criteria, ResultFilter, cancellationToken);        
+        public Task<T> SearchAsync(ICriteria criteria, CancellationToken cancellationToken = default(CancellationToken))
+            => _client.SearchWithCriteriaAsync(IndexName, criteria, ResultFilter, cancellationToken);        
 
         public T Search(string query) 
             => _client.SearchWithCriteria(IndexName, query, ResultFilter);
 
-        public async Task<T> SearchAsync(string query, CancellationToken cancellationToken = default(CancellationToken)) 
-            => await _client.SearchWithCriteriaAsync(IndexName, query, ResultFilter, cancellationToken);
+        public Task<T> SearchAsync(string query, CancellationToken cancellationToken = default(CancellationToken)) 
+            => _client.SearchWithCriteriaAsync(IndexName, query, ResultFilter, cancellationToken);
 
         public T SearchById(string index, string id)
             => _client.SearchById(index, id);

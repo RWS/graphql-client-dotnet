@@ -64,14 +64,14 @@ namespace Sdl.Tridion.Api.Client
         public IGraphQLTypedResponse<T> Execute<T>(IGraphQLRequest request)
             => _client.Execute<T>(request);
 
-        public async Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
-            => await _client.ExecuteAsync(request, cancellationToken);
+        public Task<IGraphQLResponse> ExecuteAsync(IGraphQLRequest request, CancellationToken cancellationToken)
+            => _client.ExecuteAsync(request, cancellationToken);
 
-        public async Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request,
+        public Task<IGraphQLTypedResponse<T>> ExecuteAsync<T>(IGraphQLRequest request,
             CancellationToken cancellationToken)
-            => await _client.ExecuteAsync<T>(request, cancellationToken);
+            => _client.ExecuteAsync<T>(request, cancellationToken);
 
-        #endregion     
+        #endregion
 
         #region IApiClient
 
@@ -113,29 +113,37 @@ namespace Sdl.Tridion.Api.Client
         /// </summary>
         public string TcdlBinaryLinkUrlPrefix { get; set; } = null;
 
-        public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId, int templateId,
+        public ComponentPresentation GetComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
+            int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter,
+                    contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.ComponentPresentation;
 
         public ComponentPresentationConnection GetComponentPresentations(ContentNamespace ns, int publicationId,
-            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination, string customMetaFilter,
+            InputComponentPresentationFilter filter, InputSortParam sort, IPagination pagination,
+            string customMetaFilter,
             ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter,
+                    contentIncludeMode, contextData, GlobalContextDataInternal))
                 .TypedResponseData.ComponentPresentations;
 
-        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public Page GetPage(ContentNamespace ns, int publicationId, int pageId, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
-        public Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public Page GetPage(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode,
             IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal))
                 .TypedResponseData.Page;
 
         public Page GetPage(CmUri cmUri, string customMetaFilter, ContentIncludeMode contentIncludeMode,
@@ -147,7 +155,8 @@ namespace Sdl.Tridion.Api.Client
         public PageConnection GetPages(ContentNamespace ns, IPagination pagination, string url,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData)
             => _client.Execute<ContentQuery>(
-                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal))
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal))
                 .TypedResponseData.Pages;
 
         public BinaryComponent GetBinaryComponent(ContentNamespace ns, int publicationId, int binaryId,
@@ -172,7 +181,8 @@ namespace Sdl.Tridion.Api.Client
                     .TypedResponseData.BinaryComponent;
 
         public ItemConnection ExecuteItemQuery(InputItemFilter filter, InputSortParam sort, IPagination pagination,
-            string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems, IContextData contextData)
+            string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems,
+            IContextData contextData)
             =>
                 _client.Execute<ContentQuery>(GraphQLRequests.ExecuteItemQuery(filter, sort, pagination,
                     customMetaFilter, contentIncludeMode, includeContainerItems,
@@ -259,7 +269,7 @@ namespace Sdl.Tridion.Api.Client
             try
             {
                 var response =
-                    _client.Execute(GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,                        
+                    _client.Execute(GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,
                         contentIncludeMode, contextData, GlobalContextDataInternal));
                 return response.Data.componentPresentation.rawContent.data;
             }
@@ -312,35 +322,42 @@ namespace Sdl.Tridion.Api.Client
 
         #region IPublicContentApiAsync
 
-        public async Task<ComponentPresentation> GetComponentPresentationAsync(ContentNamespace ns, int publicationId, int componentId, int templateId,
+        public async Task<ComponentPresentation> GetComponentPresentationAsync(ContentNamespace ns, int publicationId,
+            int componentId, int templateId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken)
-          => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+            => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.ComponentPresentation(ns, publicationId, componentId, templateId, customMetaFilter,
+                    contentIncludeMode, contextData, GlobalContextDataInternal),
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.ComponentPresentation;
 
-        public async Task<ComponentPresentationConnection> GetComponentPresentationsAsync(ContentNamespace ns, int publicationId, InputComponentPresentationFilter filter,
+        public async Task<ComponentPresentationConnection> GetComponentPresentationsAsync(ContentNamespace ns,
+            int publicationId, InputComponentPresentationFilter filter,
             InputSortParam sort, IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken)
-        => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+            => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.ComponentPresentations(ns, publicationId, filter, sort, pagination, customMetaFilter,
+                    contentIncludeMode, contextData, GlobalContextDataInternal),
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.ComponentPresentations;
 
         public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, int pageId,
             string customMetaFilter, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+                GraphQLRequests.Page(ns, publicationId, pageId, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal),
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.Page;
 
-        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, string url, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+        public async Task<Page> GetPageAsync(ContentNamespace ns, int publicationId, string url, string customMetaFilter,
+            ContentIncludeMode contentIncludeMode,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+                GraphQLRequests.Page(ns, publicationId, url, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal),
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.Page;
 
         public async Task<Page> GetPageAsync(CmUri cmUri,
@@ -348,14 +365,17 @@ namespace Sdl.Tridion.Api.Client
             CancellationToken cancellationToken = default(CancellationToken))
             => (await _client.ExecuteAsync<ContentQuery>(
                 GraphQLRequests.Page(cmUri, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.Page;
 
-        public async Task<PageConnection> GetPagesAsync(ContentNamespace ns, IPagination pagination, string url, string customMetaFilter,
-            ContentIncludeMode contentIncludeMode, IContextData contextData, CancellationToken cancellationToken = default(CancellationToken))
-         => (await _client.ExecuteAsync<ContentQuery>(
-                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData, GlobalContextDataInternal),
-                cancellationToken))
+        public async Task<PageConnection> GetPagesAsync(ContentNamespace ns, IPagination pagination, string url,
+            string customMetaFilter,
+            ContentIncludeMode contentIncludeMode, IContextData contextData,
+            CancellationToken cancellationToken = default(CancellationToken))
+            => (await _client.ExecuteAsync<ContentQuery>(
+                GraphQLRequests.Pages(ns, pagination, url, customMetaFilter, contentIncludeMode, contextData,
+                    GlobalContextDataInternal),
+                cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.Pages;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, int binaryId,
@@ -364,7 +384,7 @@ namespace Sdl.Tridion.Api.Client
                 _client.ExecuteAsync<ContentQuery>(
                     GraphQLRequests.BinaryComponent(ns, publicationId, binaryId, customMetaFilter, contextData,
                         GlobalContextDataInternal),
-                    cancellationToken)).TypedResponseData.BinaryComponent;
+                    cancellationToken).ConfigureAwait(false)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(ContentNamespace ns, int publicationId, string url,
             string customMetaFilter,
@@ -372,17 +392,18 @@ namespace Sdl.Tridion.Api.Client
                 _client.ExecuteAsync<ContentQuery>(
                     GraphQLRequests.BinaryComponent(ns, publicationId, url, customMetaFilter, contextData,
                         GlobalContextDataInternal),
-                    cancellationToken)).TypedResponseData.BinaryComponent;
+                    cancellationToken).ConfigureAwait(false)).TypedResponseData.BinaryComponent;
 
         public async Task<BinaryComponent> GetBinaryComponentAsync(CmUri cmUri, string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (await
                 _client.ExecuteAsync<ContentQuery>(
                     GraphQLRequests.BinaryComponent(cmUri, customMetaFilter, contextData, GlobalContextDataInternal),
-                    cancellationToken))
+                    cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.BinaryComponent;
 
         public async Task<ItemConnection> ExecuteItemQueryAsync(InputItemFilter filter, InputSortParam sort,
-            IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode, bool includeContainerItems,
+            IPagination pagination, string customMetaFilter, ContentIncludeMode contentIncludeMode,
+            bool includeContainerItems,
             IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
@@ -390,15 +411,16 @@ namespace Sdl.Tridion.Api.Client
                         GraphQLRequests.ExecuteItemQuery(filter, sort, pagination, customMetaFilter, contentIncludeMode,
                             includeContainerItems,
                             contextData, GlobalContextDataInternal)
-                        , cancellationToken)).TypedResponseData.Items;
+                        , cancellationToken).ConfigureAwait(false)).TypedResponseData.Items;
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
             string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken = default(CancellationToken)) => (
                 await
                     _client.ExecuteAsync<ContentQuery>(
-                        GraphQLRequests.Publication(ns, publicationId, customMetaFilter, contextData, GlobalContextDataInternal),
-                        cancellationToken)).TypedResponseData.Publication;
+                        GraphQLRequests.Publication(ns, publicationId, customMetaFilter, contextData,
+                            GlobalContextDataInternal),
+                        cancellationToken).ConfigureAwait(false)).TypedResponseData.Publication;
 
         public async Task<PublicationConnection> GetPublicationsAsync(ContentNamespace ns, IPagination pagination,
             InputPublicationFilter filter, string customMetaFilter, IContextData contextData,
@@ -407,7 +429,8 @@ namespace Sdl.Tridion.Api.Client
                 (await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.Publications(ns, pagination, filter, customMetaFilter, contextData,
-                            GlobalContextDataInternal), cancellationToken)).TypedResponseData.Publications;
+                            GlobalContextDataInternal), cancellationToken).ConfigureAwait(false)).TypedResponseData
+                    .Publications;
 
 
         public async Task<string> ResolvePageLinkAsync(ContentNamespace ns, int publicationId, int pageId,
@@ -416,7 +439,7 @@ namespace Sdl.Tridion.Api.Client
                 await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ResolvePageLink(ns, publicationId, pageId, renderRelativeLink),
-                        cancellationToken)).TypedResponseData.PageLink.Url;
+                        cancellationToken).ConfigureAwait(false)).TypedResponseData.PageLink.Url;
 
         public async Task<string> ResolveComponentLinkAsync(ContentNamespace ns, int publicationId, int componentId,
             int? sourcePageId,
@@ -425,7 +448,8 @@ namespace Sdl.Tridion.Api.Client
                 await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ResolveComponentLink(ns, publicationId, componentId, sourcePageId,
-                            excludeComponentTemplateId, renderRelativeLink), cancellationToken)).TypedResponseData
+                            excludeComponentTemplateId, renderRelativeLink), cancellationToken).ConfigureAwait(false))
+                .TypedResponseData
                 .ComponentLink.Url;
 
         public async Task<string> ResolveBinaryLinkAsync(ContentNamespace ns, int publicationId, int binaryId,
@@ -434,7 +458,7 @@ namespace Sdl.Tridion.Api.Client
                 await
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ResolveBinaryLink(ns, publicationId, binaryId, variantId, renderRelativeLink),
-                        cancellationToken))
+                        cancellationToken).ConfigureAwait(false))
                 .TypedResponseData.BinaryLink.Url;
 
         public async Task<string> ResolveDynamicComponentLinkAsync(ContentNamespace ns, int publicationId, int pageId,
@@ -445,14 +469,15 @@ namespace Sdl.Tridion.Api.Client
                     _client.ExecuteAsync<ContentQuery>(
                         GraphQLRequests.ResolveDynamicComponentLink(ns, publicationId, pageId, componentId, templateId,
                             renderRelativeLink),
-                        cancellationToken)).TypedResponseData.DynamicComponentLink.Url;
+                        cancellationToken).ConfigureAwait(false)).TypedResponseData.DynamicComponentLink.Url;
 
         public async Task<PublicationMapping> GetPublicationMappingAsync(ContentNamespace ns, string url,
             CancellationToken cancellationToken = default(CancellationToken)) => (await
-                _client.ExecuteAsync<ContentQuery>(GraphQLRequests.PublicationMapping(ns, url), cancellationToken))
+                _client.ExecuteAsync<ContentQuery>(GraphQLRequests.PublicationMapping(ns, url), cancellationToken)
+                    .ConfigureAwait(false))
                 .TypedResponseData.PublicationMapping;
 
-        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,            
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, int pageId,
             PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -462,7 +487,8 @@ namespace Sdl.Tridion.Api.Client
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.PageModelData(ns, publicationId, pageId,
-                                pageInclusion, contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
+                                pageInclusion, contentIncludeMode, contextData, GlobalContextDataInternal),
+                            cancellationToken).ConfigureAwait(false);
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -473,7 +499,7 @@ namespace Sdl.Tridion.Api.Client
             }
         }
 
-        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,           
+        public async Task<dynamic> GetPageModelDataAsync(ContentNamespace ns, int publicationId, string url,
             PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode, IContextData contextData,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -483,7 +509,8 @@ namespace Sdl.Tridion.Api.Client
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.PageModelData(ns, publicationId, url, pageInclusion,
-                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
+                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken)
+                            .ConfigureAwait(false);
                 return response.Data.page.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -502,8 +529,9 @@ namespace Sdl.Tridion.Api.Client
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,                                
-                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken);
+                            GraphQLRequests.EntityModelData(ns, publicationId, entityId, templateId,
+                                contentIncludeMode, contextData, GlobalContextDataInternal), cancellationToken)
+                            .ConfigureAwait(false);
                 return response.Data.entity.rawContent.data;
             }
             catch (RuntimeBinderException e)
@@ -523,8 +551,9 @@ namespace Sdl.Tridion.Api.Client
                 var response =
                     await
                         _client.ExecuteAsync(
-                            GraphQLRequests.Sitemap(ns, publicationId, descendantLevels, contextData, GlobalContextDataInternal),
-                            cancellationToken);
+                            GraphQLRequests.Sitemap(ns, publicationId, descendantLevels, contextData,
+                                GlobalContextDataInternal),
+                            cancellationToken).ConfigureAwait(false);
                 return response.Data.sitemap;
             }
             catch (RuntimeBinderException e)
@@ -545,7 +574,8 @@ namespace Sdl.Tridion.Api.Client
                     await
                         _client.ExecuteAsync(
                             GraphQLRequests.SitemapSubtree(ns, publicationId, taxonomyNodeId, descendantLevels,
-                                ancestor, contextData, GlobalContextDataInternal), cancellationToken);
+                                ancestor, contextData, GlobalContextDataInternal), cancellationToken)
+                            .ConfigureAwait(false);
                 return response.Data.sitemapSubtree;
             }
             catch (RuntimeBinderException e)
@@ -559,6 +589,7 @@ namespace Sdl.Tridion.Api.Client
         #endregion
 
         #region Private
+
         private IContextData GlobalContextDataInternal
         {
             get
@@ -584,6 +615,7 @@ namespace Sdl.Tridion.Api.Client
                 return data;
             }
         }
+
         #endregion
     }
 }

@@ -120,7 +120,7 @@ namespace Sdl.Tridion.Api.Http.Client
             HttpWebRequest request = CreateHttpWebRequest(clientRequest);
             try
             {
-                using (WebResponse response = await request.GetResponseAsync())
+                using (WebResponse response = await request.GetResponseAsync().ConfigureAwait(false))
                 {
                     HttpWebResponse httpWebResponse = (HttpWebResponse)response;
 
@@ -128,11 +128,16 @@ namespace Sdl.Tridion.Api.Http.Client
                     {
                         if (responseStream != null)
                         {
-                            byte[] data = await ReadStreamAsync(responseStream, cancellationToken);
-                            T deserialized = await Task.Factory.StartNew(() => Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors), cancellationToken);
+                            byte[] data = await ReadStreamAsync(responseStream, cancellationToken).ConfigureAwait(false);
+                            T deserialized =
+                                await
+                                    Task.Factory.StartNew(
+                                        () =>
+                                            Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder,
+                                                clientRequest.Convertors), cancellationToken).ConfigureAwait(false);
                             return new HttpClientResponse<T>
                             {
-                                StatusCode = (int)httpWebResponse.StatusCode,
+                                StatusCode = (int) httpWebResponse.StatusCode,
                                 ContentType = httpWebResponse.ContentType,
                                 Headers = new HttpHeaders(httpWebResponse.Headers),
                                 ResponseData = deserialized
@@ -207,7 +212,7 @@ namespace Sdl.Tridion.Api.Http.Client
             using (var outputStream = new MemoryStream())
             {
                 int read;
-                while ((read = await inputStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken)) > 0)
+                while ((read = await inputStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) > 0)
                     outputStream.Write(buffer, 0, read);
                 return outputStream.ToArray();
             }
