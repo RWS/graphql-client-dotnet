@@ -240,7 +240,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get page model data (namespaceId:{ns}, publicationId:{publicationId}, pageId:{pageId}",
                     e);
             }
@@ -258,7 +258,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get page model data (namespaceId:{ns}, publicationId:{publicationId}, url:{url}", e);
             }
         }
@@ -275,7 +275,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get enity model data (namespaceId:{ns}, publicationId:{publicationId}, entityId:{entityId}",
                     e);
             }
@@ -293,7 +293,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get sitemap (namespaceId:{ns}, publicationId:{publicationId}, descendantLevels:{descendantLevels}",
                     e);
             }
@@ -312,7 +312,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get sitemap subtree (namespaceId:{ns}, publicationId:{publicationId}, taxonomyNodeId{taxonomyNodeId}, descendantLevels:{descendantLevels}",
                     e);
             }
@@ -493,7 +493,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get page model data (namespaceId:{ns}, publicationId:{publicationId}, pageId:{pageId}",
                     e);
             }
@@ -515,7 +515,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get page model data (namespaceId:{ns}, publicationId:{publicationId}, url:{url}", e);
             }
         }
@@ -536,7 +536,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get enity model data (namespaceId:{ns}, publicationId:{publicationId}, entityId:{entityId}",
                     e);
             }
@@ -558,7 +558,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get sitemap (namespaceId:{ns}, publicationId:{publicationId}, descendantLevels:{descendantLevels}",
                     e);
             }
@@ -580,7 +580,7 @@ namespace Sdl.Tridion.Api.Client
             }
             catch (RuntimeBinderException e)
             {
-                throw new PcaException(
+                throw new ApiException(
                     $"Failed to get sitemap subtree (namespaceId:{ns}, publicationId:{publicationId}, taxonomyNodeId{taxonomyNodeId}, descendantLevels:{descendantLevels}",
                     e);
             }

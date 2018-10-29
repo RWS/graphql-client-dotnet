@@ -2,13 +2,13 @@
 
 namespace Sdl.Tridion.Api.Client.Exceptions
 {
-    public class PcaException : Exception
+    public class ApiException : Exception
     {
-        public PcaException(string msg) : base(msg)
+        public ApiException(string msg) : base(msg)
         {
         }
 
-        public PcaException(string msg, Exception ex) : base(msg, ex)
+        public ApiException(string msg, Exception ex) : base(msg, ex)
         {
         }
     }
