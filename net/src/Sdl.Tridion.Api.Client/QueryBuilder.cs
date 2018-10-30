@@ -163,14 +163,16 @@ namespace Sdl.Tridion.Api.Client
                 ReplaceTag("variantsArgs", _variables.ContainsKey("url") ? $"(url: \"{_variables["url"]}\")" : "");
             }
 
-            string query = QueryHelpers.ParseIncludeRegions(_query.ToString(), "includeContent",
+            var query = QueryHelpers.ParseIncludeRegions(_query.ToString(), "includeContent",
                 _contentIncludeMode == ContentIncludeMode.IncludeData || _contentIncludeMode == ContentIncludeMode.IncludeDataAndRender);
 
             query = QueryHelpers.ParseIncludeRegions(query, "includeJsonContent",
                 _contentIncludeMode == ContentIncludeMode.IncludeJson || _contentIncludeMode == ContentIncludeMode.IncludeJsonAndRender);
 
             QueryHelpers.ExpandRecursiveFragment(ref query, null, _descendantLevels);
-            
+
+            QueryHelpers.RemoveUnusedFragments(ref query);
+
             if (_contextData != null)
             {
                 WithVariable("contextData", _contextData.ClaimValues);
