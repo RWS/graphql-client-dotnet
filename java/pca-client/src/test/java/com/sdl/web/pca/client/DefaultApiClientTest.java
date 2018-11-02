@@ -47,13 +47,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultPublicContentApiTest {
+public class DefaultApiClientTest {
 
     @Mock
     private GraphQLClient graphQlClient;
 
     @InjectMocks
-    private DefaultPublicContentApi publicContentApi = new DefaultPublicContentApi(graphQlClient);
+    private DefaultApiClient publicContentApi = new DefaultApiClient(graphQlClient);
 
 
 

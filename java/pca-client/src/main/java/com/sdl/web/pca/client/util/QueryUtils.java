@@ -2,7 +2,7 @@ package com.sdl.web.pca.client.util;
 
 
 import com.google.common.base.Strings;
-import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.exception.ApiClientException;
 import org.slf4j.Logger;
 
 import java.util.regex.Matcher;
@@ -99,7 +99,7 @@ public class QueryUtils {
         if (matcher.find()) {
             return matcher.group("fragmentName");
         }
-        throw new PublicContentApiException("Unable to parse name for fragment: " + fragment);
+        throw new ApiClientException("Unable to parse name for fragment: " + fragment);
     }
 
     static String getFragmentBody(String fragment) {
@@ -107,6 +107,6 @@ public class QueryUtils {
         if (matcher.find()) {
             return matcher.group("fragmentBody");
         }
-        throw new PublicContentApiException("Unable to parse body for fragment: " + fragment);
+        throw new ApiClientException("Unable to parse body for fragment: " + fragment);
     }
 }
