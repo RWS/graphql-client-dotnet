@@ -1,6 +1,6 @@
 package com.sdl.web.pca.client.query;
 
-import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.exception.ApiClientException;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -26,12 +26,12 @@ public class QueryHolder {
                 s -> loadQueryFromResourcefile("queries/fragments/" + s));
     }
 
-    private String loadQueryFromResourcefile(String fileName) throws PublicContentApiException {
+    private String loadQueryFromResourcefile(String fileName) throws ApiClientException {
         String path = fileName + ".graphql";
         try {
             return IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream(path), UTF_8);
         } catch (IOException e) {
-            throw new PublicContentApiException("Unable to read resource " + path, e);
+            throw new ApiClientException("Unable to read resource " + path, e);
         }
     }
 

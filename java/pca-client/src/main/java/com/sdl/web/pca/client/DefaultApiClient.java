@@ -31,7 +31,7 @@ import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.SitemapItem;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
 import com.sdl.web.pca.client.exception.GraphQLClientException;
-import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.exception.ApiClientException;
 import com.sdl.web.pca.client.jsonmapper.ItemDeserializer;
 import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
 import com.sdl.web.pca.client.jsonmapper.ContentComponentDeserializer;
@@ -48,18 +48,18 @@ import java.util.stream.Collectors;
 
 import static com.sdl.web.pca.client.modelserviceplugin.ClaimHelper.createClaim;
 
-public class DefaultPublicContentApi implements PublicContentApi {
+public class DefaultApiClient implements ApiClient {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private GraphQLClient client;
     private int requestTimeout;
     private ContextData defaultContextData;
 
-    public DefaultPublicContentApi(GraphQLClient graphQLClient) {
+    public DefaultApiClient(GraphQLClient graphQLClient) {
         this(graphQLClient, 0);
     }
 
-    public DefaultPublicContentApi(GraphQLClient graphQLClient, int requestTimeout) {
+    public DefaultApiClient(GraphQLClient graphQLClient, int requestTimeout) {
         this.client = graphQLClient;
         this.requestTimeout = (int) TimeUnit.MILLISECONDS.toMillis(requestTimeout);
         this.defaultContextData = new ContextData();
@@ -172,7 +172,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, String customMetaFilter,
-                                              ContextData contextData) throws PublicContentApiException {
+                                              ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("BinaryComponentById")
@@ -189,7 +189,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
-                                              ContextData contextData) throws PublicContentApiException {
+                                              ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("BinaryComponentByUrl")
@@ -207,7 +207,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public BinaryComponent getBinaryComponent(CmUri cmUri, String customMetaFilter, ContextData contextData)
-            throws PublicContentApiException {
+            throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("BinaryComponentByCmUri")
@@ -225,7 +225,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                            String customMetaFilter, ContentIncludeMode contentIncludeMode,
-                                           boolean includeContainerItems, ContextData contextData) throws PublicContentApiException {
+                                           boolean includeContainerItems, ContextData contextData) throws ApiClientException {
 
         // We only include the fragments that will be required based on the item types in the
         // input item filter
@@ -261,7 +261,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public Publication getPublication(ContentNamespace ns, int publicationId, String customMetaFilter,
-                                      ContextData contextData) throws PublicContentApiException {
+                                      ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Publication")
@@ -296,7 +296,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String resolvePageLink(ContentNamespace ns, int publicationId, int pageId,
-                                  boolean renderRelativeLink) throws PublicContentApiException {
+                                  boolean renderRelativeLink) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolvePageLink")
@@ -313,7 +313,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
                                        Integer excludeComponentTemplateId,
-                                       boolean renderRelativeLink) throws PublicContentApiException {
+                                       boolean renderRelativeLink) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveComponentLink")
@@ -331,7 +331,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId,
-                                    String variantId, boolean renderRelativeLink) throws PublicContentApiException {
+                                    String variantId, boolean renderRelativeLink) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveBinaryLink")
@@ -349,7 +349,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
                                               int templateId,
-                                              boolean renderRelativeLink) throws PublicContentApiException {
+                                              boolean renderRelativeLink) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("ResolveDynamicComponentLink")
@@ -366,7 +366,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
     @Override
-    public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException {
+    public PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PublicationMapping")
@@ -381,7 +381,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
                                      DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
-                                     ContextData contextData) throws PublicContentApiException {
+                                     ContextData contextData) throws ApiClientException {
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelByUrl")
                 .withContentIncludeMode(contentIncludeMode)
@@ -402,7 +402,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
                                      DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
-                                     ContextData contextData) throws PublicContentApiException {
+                                     ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("PageModelById")
@@ -424,7 +424,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     public JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
                                        ContentType contentType,
                                        DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode,
-                                       ContextData contextData) throws PublicContentApiException {
+                                       ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("EntityModelById")
@@ -445,7 +445,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
     @Override
     public TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
-                                          ContextData contextData) throws PublicContentApiException {
+                                          ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("Sitemap")
@@ -462,7 +462,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
     @Override
     public TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
                                                    int descendantLevels, Ancestor ancestor,
-                                                   ContextData contextData) throws PublicContentApiException {
+                                                   ContextData contextData) throws ApiClientException {
 
         GraphQLRequest graphQLRequest = new PCARequestBuilder()
                 .withQuery("SitemapSubtree")
@@ -479,24 +479,24 @@ public class DefaultPublicContentApi implements PublicContentApi {
     }
 
 
-    private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz, String path) throws PublicContentApiException {
+    private <T> T getResultForRequest(GraphQLRequest request, Class<T> clazz, String path) throws ApiClientException {
         JsonNode result = getJsonResult(request, path);
         try {
             return MAPPER.treeToValue(result, clazz);
         } catch (JsonProcessingException e) {
-            throw new PublicContentApiException("Unable map result to " + clazz.getName() + ": " + result.toString(), e);
+            throw new ApiClientException("Unable map result to " + clazz.getName() + ": " + result.toString(), e);
         }
     }
 
-    private JsonNode getJsonResult(GraphQLRequest request, String path) throws PublicContentApiException {
+    private JsonNode getJsonResult(GraphQLRequest request, String path) throws ApiClientException {
         try {
             String resultString = client.execute(request);
             JsonNode resultJson = MAPPER.readTree(resultString);
             return resultJson.at(path);
         } catch (GraphQLClientException e) {
-            throw new PublicContentApiException("Unable to execute query: " + request, e);
+            throw new ApiClientException("Unable to execute query: " + request, e);
         } catch (IOException e) {
-            throw new PublicContentApiException("Unable to deserialize result for query " + request, e);
+            throw new ApiClientException("Unable to deserialize result for query " + request, e);
         }
     }
 }

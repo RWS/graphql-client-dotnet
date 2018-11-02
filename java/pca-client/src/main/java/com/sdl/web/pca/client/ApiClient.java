@@ -24,13 +24,13 @@ import com.sdl.web.pca.client.contentmodel.generated.Publication;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationConnection;
 import com.sdl.web.pca.client.contentmodel.generated.PublicationMapping;
 import com.sdl.web.pca.client.contentmodel.generated.TaxonomySitemapItem;
-import com.sdl.web.pca.client.exception.PublicContentApiException;
+import com.sdl.web.pca.client.exception.ApiClientException;
 import com.sdl.web.pca.client.util.CmUri;
 
 /**
  * This interface enables java clients to connect to the GraphQL Service
  */
-public interface PublicContentApi {
+public interface ApiClient {
 
     /**
      * Retrieves ComponentPresentation object by given namespace, publication id, component id and template id.
@@ -128,10 +128,10 @@ public interface PublicContentApi {
      * @param binaryId      binary Id
      * @param contextData   context data
      * @return BinaryComponent representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, int binaryId, String customMetaFilter,
-                                       ContextData contextData) throws PublicContentApiException;
+                                       ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves BinaryComponent by providing publication id and url of its binary component.
@@ -141,10 +141,10 @@ public interface PublicContentApi {
      * @param url           binary component url
      * @param contextData   context data
      * @return BinaryComponent representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     BinaryComponent getBinaryComponent(ContentNamespace ns, int publicationId, String url, String customMetaFilter,
-                                       ContextData contextData) throws PublicContentApiException;
+                                       ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves BinaryConponent representation by providing its CMURI.
@@ -152,9 +152,9 @@ public interface PublicContentApi {
      * @param cmUri       CMURI of binary component
      * @param contextData context data
      * @return BinaryComponent representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
-    BinaryComponent getBinaryComponent(CmUri cmUri, String customMetaFilter, ContextData contextData) throws PublicContentApiException;
+    BinaryComponent getBinaryComponent(CmUri cmUri, String customMetaFilter, ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves a data structure which holds list of {@code Item} implementation by providing filtering parameters.
@@ -165,11 +165,11 @@ public interface PublicContentApi {
      * @param contextData      context data
      * @param customMetaFilter custom metadata filter
      * @return ItemConnection object which holds Items
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     ItemConnection executeItemQuery(InputItemFilter filter, InputSortParam sort, Pagination pagination,
                                     String customMetaFilter, ContentIncludeMode contentIncludeMode,
-                                    boolean includeContainerItems, ContextData contextData) throws PublicContentApiException;
+                                    boolean includeContainerItems, ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves Publication by providing publication Id.
@@ -179,10 +179,10 @@ public interface PublicContentApi {
      * @param contextData      context data
      * @param customMetaFilter custom metadata filter
      * @return Publication representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     Publication getPublication(ContentNamespace ns, int publicationId, String customMetaFilter,
-                               ContextData contextData) throws PublicContentApiException;
+                               ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves PublicationConnection object by given filter and pagination parameters.
@@ -206,9 +206,9 @@ public interface PublicContentApi {
      * @param pageId             page id
      * @param renderRelativeLink indicates if it is relative or full link
      * @return page link string
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
-    String resolvePageLink(ContentNamespace ns, int publicationId, int pageId, boolean renderRelativeLink) throws PublicContentApiException;
+    String resolvePageLink(ContentNamespace ns, int publicationId, int pageId, boolean renderRelativeLink) throws ApiClientException;
 
     /**
      * Retrieves link to component by given publication id and component id.
@@ -220,10 +220,10 @@ public interface PublicContentApi {
      * @param excludeComponentTemplateId exclude compoonent template id
      * @param renderRelativeLink         indicates if it is relative or full link
      * @return component link string
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     String resolveComponentLink(ContentNamespace ns, int publicationId, int componentId, Integer sourcePageId,
-                                Integer excludeComponentTemplateId, boolean renderRelativeLink) throws PublicContentApiException;
+                                Integer excludeComponentTemplateId, boolean renderRelativeLink) throws ApiClientException;
 
     /**
      * Retrieves link to binary component by given publication id and binary id.
@@ -234,10 +234,10 @@ public interface PublicContentApi {
      * @param variantId          variant id
      * @param renderRelativeLink indicates if it is relative or full link
      * @return binary link string
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     String resolveBinaryLink(ContentNamespace ns, int publicationId, int binaryId, String variantId,
-                             boolean renderRelativeLink) throws PublicContentApiException;
+                             boolean renderRelativeLink) throws ApiClientException;
 
     /**
      * Retrieves link to dynamic component by given publication, page, component and template ids.
@@ -249,10 +249,10 @@ public interface PublicContentApi {
      * @param templateId         template id
      * @param renderRelativeLink indicates if it is relative or full link
      * @return dynamic component link string
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     String resolveDynamicComponentLink(ContentNamespace ns, int publicationId, int pageId, int componentId,
-                                       int templateId, boolean renderRelativeLink) throws PublicContentApiException;
+                                       int templateId, boolean renderRelativeLink) throws ApiClientException;
 
     /**
      * Retrieves publication mapping by given url.
@@ -260,9 +260,9 @@ public interface PublicContentApi {
      * @param ns  namespace
      * @param url url
      * @return PublicationMapping representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
-    PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws PublicContentApiException;
+    PublicationMapping getPublicationMapping(ContentNamespace ns, String url) throws ApiClientException;
 
     /**
      * Retrieves page model data by given publication id and url.
@@ -275,11 +275,11 @@ public interface PublicContentApi {
      * @param pageInclusion page inclusion
      * @param contextData   context data
      * @return json representation of page model
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     JsonNode getPageModelData(ContentNamespace ns, int publicationId, String url, ContentType contentType,
                               DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
-                              ContextData contextData) throws PublicContentApiException;
+                              ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves page model data by given publication id and page id.
@@ -292,11 +292,11 @@ public interface PublicContentApi {
      * @param pageInclusion page inclusion
      * @param contextData   context data
      * @return json representation of page model
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     JsonNode getPageModelData(ContentNamespace ns, int publicationId, int pageId, ContentType contentType,
                               DataModelType modelType, PageInclusion pageInclusion, ContentIncludeMode contentIncludeMode,
-                              ContextData contextData) throws PublicContentApiException;
+                              ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves entity model data by given publication, entity and template ids.
@@ -310,12 +310,12 @@ public interface PublicContentApi {
      * @param dcpType       dcp type
      * @param contextData   context data
      * @return json representation of entity model
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     JsonNode getEntityModelData(ContentNamespace ns, int publicationId, int entityId, int templateId,
                                 ContentType contentType,
                                 DataModelType modelType, DcpType dcpType, ContentIncludeMode contentIncludeMode,
-                                ContextData contextData) throws PublicContentApiException;
+                                ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves TaxonomySitemapItem by given publication id.
@@ -325,10 +325,10 @@ public interface PublicContentApi {
      * @param descendantLevels descendant level
      * @param contextData      context data
      * @return TaxonomySitemapItem representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     TaxonomySitemapItem getSitemap(ContentNamespace ns, int publicationId, int descendantLevels,
-                                   ContextData contextData) throws PublicContentApiException;
+                                   ContextData contextData) throws ApiClientException;
 
     /**
      * Retrieves TaxonomySitemapItem array subtree by given publication id and parent taxonomy node id.
@@ -339,10 +339,10 @@ public interface PublicContentApi {
      * @param descendantLevels descendant levels
      * @param contextData      context data
      * @return TaxonomySitemapItem array representation
-     * @throws PublicContentApiException
+     * @throws ApiClientException
      */
     TaxonomySitemapItem[] getSitemapSubtree(ContentNamespace ns, int publicationId, String taxonomyNodeId,
                                             int descendantLevels, Ancestor ancestor,
-                                            ContextData contextData) throws PublicContentApiException;
+                                            ContextData contextData) throws ApiClientException;
 
 }

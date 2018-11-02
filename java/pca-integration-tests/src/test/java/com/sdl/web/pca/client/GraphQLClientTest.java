@@ -44,7 +44,7 @@ public class GraphQLClientTest {
 
     private DefaultGraphQLClient client = null;
     private Properties prop = null;
-    private DefaultPublicContentApi publicContentApi;
+    private DefaultApiClient publicContentApi;
 
     @Before
     public void before() throws Exception {
@@ -55,7 +55,7 @@ public class GraphQLClientTest {
         prop.load(inputStream);
         client = new DefaultGraphQLClient(prop.getProperty("GRAPHQL_SERVER_ENDPOINT"), null);
 
-        publicContentApi = new DefaultPublicContentApi(client);
+        publicContentApi = new DefaultApiClient(client);
     }
 
     @Ignore("To be fixed")
