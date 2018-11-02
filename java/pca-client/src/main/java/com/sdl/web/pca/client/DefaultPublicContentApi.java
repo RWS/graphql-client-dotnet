@@ -16,6 +16,7 @@ import com.sdl.web.pca.client.contentmodel.generated.Ancestor;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
 import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentationConnection;
+import com.sdl.web.pca.client.contentmodel.generated.ContentComponent;
 import com.sdl.web.pca.client.contentmodel.generated.InputComponentPresentationFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputItemFilter;
 import com.sdl.web.pca.client.contentmodel.generated.InputPublicationFilter;
@@ -33,6 +34,7 @@ import com.sdl.web.pca.client.exception.GraphQLClientException;
 import com.sdl.web.pca.client.exception.PublicContentApiException;
 import com.sdl.web.pca.client.jsonmapper.ItemDeserializer;
 import com.sdl.web.pca.client.jsonmapper.SitemapDeserializer;
+import com.sdl.web.pca.client.jsonmapper.ContentComponentDeserializer;
 import com.sdl.web.pca.client.query.PCARequestBuilder;
 import com.sdl.web.pca.client.request.GraphQLRequest;
 import com.sdl.web.pca.client.util.CmUri;
@@ -64,6 +66,7 @@ public class DefaultPublicContentApi implements PublicContentApi {
 
         SimpleModule module = new SimpleModule();
         module.addDeserializer(SitemapItem.class, new SitemapDeserializer(SitemapItem.class, MAPPER));
+        module.addDeserializer(ContentComponent.class, new ContentComponentDeserializer(ContentComponent.class, MAPPER));
         module.addDeserializer(Item.class, new ItemDeserializer(Item.class, MAPPER));
         MAPPER.registerModule(module);
     }
