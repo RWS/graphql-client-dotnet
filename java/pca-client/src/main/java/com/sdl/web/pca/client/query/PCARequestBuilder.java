@@ -219,7 +219,10 @@ public class PCARequestBuilder {
         if (contentIncludeMode != null) {
             this.contentIncludeMode = contentIncludeMode;
         }
-        this.includeRegions.put("includeContent", contentIncludeMode != ContentIncludeMode.EXCLUDE);
+        this.includeRegions.put("includeContent", (contentIncludeMode == ContentIncludeMode.INCLUDE_DATA
+                || contentIncludeMode == ContentIncludeMode.INCLUDE_DATA_AND_RENDER));
+        this.includeRegions.put("includeJsonContent", (contentIncludeMode == ContentIncludeMode.INCLUDE_JSON
+                || contentIncludeMode == ContentIncludeMode.INCLUDE_JSON_AND_RENDER));
         return this;
     }
 
@@ -292,7 +295,9 @@ public class PCARequestBuilder {
 
 
         //inject variables
-        query = QueryUtils.injectRenderContentArgs(query, this.contentIncludeMode == ContentIncludeMode.INCLUDE_AND_RENDER);
+        query = QueryUtils.injectRenderContentArgs(query,
+                this.contentIncludeMode == ContentIncludeMode.INCLUDE_JSON_AND_RENDER
+                        || this.contentIncludeMode == ContentIncludeMode.INCLUDE_DATA_AND_RENDER);
         query = QueryUtils.injectVariantsArgs(query, variantArgs);
         query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
 

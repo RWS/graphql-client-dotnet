@@ -8,7 +8,9 @@ import com.sdl.web.pca.client.contentmodel.enums.ContentNamespace;
 import com.sdl.web.pca.client.contentmodel.enums.ContentType;
 import com.sdl.web.pca.client.contentmodel.enums.DataModelType;
 import com.sdl.web.pca.client.contentmodel.enums.DcpType;
+import com.sdl.web.pca.client.contentmodel.enums.ModelServiceLinkRendering;
 import com.sdl.web.pca.client.contentmodel.enums.PageInclusion;
+import com.sdl.web.pca.client.contentmodel.enums.TcdlLinkRendering;
 import com.sdl.web.pca.client.contentmodel.generated.Ancestor;
 import com.sdl.web.pca.client.contentmodel.generated.BinaryComponent;
 import com.sdl.web.pca.client.contentmodel.generated.ComponentPresentation;
@@ -28,9 +30,110 @@ import com.sdl.web.pca.client.exception.ApiClientException;
 import com.sdl.web.pca.client.util.CmUri;
 
 /**
- * This interface enables java clients to connect to the GraphQL Service
+ * This interface enables java clients to connect to the GraphQL Service.
  */
 public interface ApiClient {
+
+    /**
+     * Holds global context data passed on to PCA service. Note that context data passed
+     * directly to API methods overwrites these values.
+     *
+     * @return global context data
+     */
+    ContextData getGlobalContextData();
+
+    /**
+     * Sets global context data.
+     *
+     * @param globalContextData
+     */
+    void setGlobalContextData(ContextData globalContextData);
+
+    /**
+     * Returns default content type.
+     *
+     * @return default content type
+     */
+    ContentType getDefaultContentType();
+
+    /**
+     * Specify type of content to return from API. When set to RAW no conversion will take
+     * place otherwise its treated as model data and will go through conversion to type specified
+     * by DefaultModelType (default: MODEL).
+     *
+     * @param contentType
+     */
+    void setDefaultContentType(ContentType contentType);
+
+    /**
+     * Retrurns default model type.
+     *
+     * @return
+     */
+    DataModelType getDefaultModelType();
+
+    /**
+     * Specify model type to return (default: R2).
+     *
+     * @param dataModelType
+     */
+    void setDefaultModelType(DataModelType dataModelType);
+
+    /**
+     * Returns tcdl link rendering type.
+     *
+     * @return
+     */
+    TcdlLinkRendering getTcdlLinkRenderingType();
+
+    /**
+     * Specify how tcdl links get rendered (default: RELATIVE).
+     *
+     * @param tcdlLinkRenderingType
+     */
+    void setTcdlLinkRenderingType(TcdlLinkRendering tcdlLinkRenderingType);
+
+    /**
+     * Returns model service link rendering type.
+     *
+     * @return
+     */
+    ModelServiceLinkRendering getModelSericeLinkRenderingType();
+
+    /**
+     * Specify how the model-service plugin renders links (default: RELATIVE).
+     *
+     * @param modelSericeLinkRenderingType
+     */
+    void setModelSericeLinkRenderingType(ModelServiceLinkRendering modelSericeLinkRenderingType);
+
+    /**
+     * Returns Url prefix for tcdl links.
+     *
+     * @return
+     */
+    String getTcdlLinkUrlPrefix();
+
+    /**
+     * Specify Url prefix for tcdl links for Absolute rendering type (default: null).
+     *
+     * @param tcdlLinkUrlPrefix
+     */
+    void setTcdlLinkUrlPrefix(String tcdlLinkUrlPrefix);
+
+    /**
+     * Returns Url prefix for tcdl binary links.
+     *
+     * @return
+     */
+    String getTcdlBinaryLinkUrlPrefix();
+
+    /**
+     * Specify Url prefix for tcdl binary links for Absolute rendering type (default: null).
+     *
+     * @param tcdlBinaryLinkUrlPrefix
+     */
+    void setTcdlBinaryLinkUrlPrefix(String tcdlBinaryLinkUrlPrefix);
 
     /**
      * Retrieves ComponentPresentation object by given namespace, publication id, component id and template id.
