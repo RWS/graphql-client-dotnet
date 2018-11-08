@@ -27,6 +27,6 @@
         <!-- NOTE: We're excluding assemblies which come from dependent packages -->
         <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\*.dll" exclude="**\Newtonsoft.Json.dll" target="lib\net462" />
         <!-- Include generated XML docs -->
-        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\Sdl.Tridion.Api.Client.xml" target="lib\Net462" />
+        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\Sdl.Tridion.Api.Client.XML" target="lib\net462" />
     </files>
 </package>
