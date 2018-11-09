@@ -98,6 +98,11 @@ public class DefaultGraphQLClient implements GraphQLClient {
         }
     }
 
+    @Override
+    public void addDefaultHeader(String header, String value) {
+        this.defaultHeaders.put(header, value);
+    }
+
     public void setHttpClient(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
     }

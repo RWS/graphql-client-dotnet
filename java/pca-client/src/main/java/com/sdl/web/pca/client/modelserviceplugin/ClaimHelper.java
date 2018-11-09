@@ -14,7 +14,7 @@ public class ClaimHelper {
     public static ClaimValue createClaim(ModelServiceLinkRendering linkRendering) {
         ClaimValue value = new ClaimValue();
         value.setType(ClaimValueType.BOOLEAN);
-        value.setUri(ModelServiceClaimUris.TCDL_LINK_URL_PREFIX);
+        value.setUri(ModelServiceClaimUris.MODEL_SERVICE_LINK_RENDERING);
         value.setValue(linkRendering == ModelServiceLinkRendering.RELATIVE ? "true" : "false");
         return value;
     }
@@ -22,7 +22,7 @@ public class ClaimHelper {
     public static ClaimValue createClaim(TcdlLinkRendering linkRendering) {
         ClaimValue value = new ClaimValue();
         value.setType(ClaimValueType.BOOLEAN);
-        value.setUri(ModelServiceClaimUris.TCDL_LINK_URL_PREFIX);
+        value.setUri(ModelServiceClaimUris.TCDL_LINK_RENDERING);
         value.setValue(linkRendering == TcdlLinkRendering.RELATIVE ? "true" : "false");
         return value;
     }

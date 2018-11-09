@@ -153,6 +153,11 @@ public class DefaultApiClient implements ApiClient {
     }
 
     @Override
+    public void addDefaultHeader(String header, String value) {
+        this.client.addDefaultHeader(header, value);
+    }
+
+    @Override
     public ComponentPresentation getComponentPresentation(ContentNamespace ns, int publicationId, int componentId,
                                                           int templateId, String customMetaFilter,
                                                           ContentIncludeMode contentIncludeMode, ContextData contextData) {

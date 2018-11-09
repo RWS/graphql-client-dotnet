@@ -136,6 +136,14 @@ public interface ApiClient {
     void setTcdlBinaryLinkUrlPrefix(String tcdlBinaryLinkUrlPrefix);
 
     /**
+     * Adds default header to reqeust.
+     *
+     * @param header
+     * @param value
+     */
+    void addDefaultHeader(String header, String value);
+
+    /**
      * Retrieves ComponentPresentation object by given namespace, publication id, component id and template id.
      *
      * @param ns                 namespace
