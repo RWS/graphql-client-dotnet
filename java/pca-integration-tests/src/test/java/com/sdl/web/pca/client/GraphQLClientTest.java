@@ -75,7 +75,7 @@ public class GraphQLClientTest {
     @Test
     public void getPageById() {
         Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, 640,
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
@@ -86,7 +86,7 @@ public class GraphQLClientTest {
     @Test
     public void getPageByUrl() {
         Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, "/index.html",
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
@@ -97,7 +97,7 @@ public class GraphQLClientTest {
     @Test
     public void getPageByCmUri() {
         Page result = publicContentApi.getPage(new CmUri("tcm:8-640-64"),
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
@@ -209,7 +209,7 @@ public class GraphQLClientTest {
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, "",
-                ContentIncludeMode.INCLUDE, false, new ContextData());
+                ContentIncludeMode.INCLUDE_JSON, false, new ContextData());
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
         assertEquals(Page.class, result.getEdges().get(0).getNode().getClass());
@@ -227,7 +227,7 @@ public class GraphQLClientTest {
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                ContentIncludeMode.INCLUDE, false, new ContextData());
+                ContentIncludeMode.INCLUDE_DATA, false, new ContextData());
 
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());
@@ -246,7 +246,7 @@ public class GraphQLClientTest {
         pagination.setFirst(10);
 
         ItemConnection result = publicContentApi.executeItemQuery(filter, null, pagination, null,
-                ContentIncludeMode.INCLUDE, false, new ContextData());
+                ContentIncludeMode.INCLUDE_DATA, false, new ContextData());
 
         assertEquals(10, result.getEdges().size());
         assertEquals("MQ==", result.getEdges().get(0).getCursor());

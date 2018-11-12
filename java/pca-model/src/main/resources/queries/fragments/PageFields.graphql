@@ -3,7 +3,12 @@
 	...CustomMetaFields
 	includeContent? {
 		rawContent@renderContentArgs {
-			data 
+			data 			
+		}
+	}
+	includeJsonContent? {
+		rawContent@renderContentArgs {
+			content
 		}
 	}
 	includeContainerItems? {

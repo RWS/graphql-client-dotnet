@@ -35,4 +35,11 @@ public interface GraphQLClient {
      * @throws IOException
      */
     String execute(GraphQLRequest request) throws GraphQLClientException;
+
+    /**
+     * Adds default header to request.
+     * @param header
+     * @param value
+     */
+    void addDefaultHeader(String header, String value);
 }
