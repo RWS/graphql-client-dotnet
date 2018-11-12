@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.regex.Pattern.DOTALL;
 import static java.util.regex.Pattern.MULTILINE;
@@ -38,7 +39,7 @@ public class PCARequestBuilder {
     private int descendantLevel = 0;
     private Map<String, Object> variables = new HashMap<>();
     private String operationName;
-    private ContextData contextData = new ContextData();
+    private Map<String, ClaimValue> claimValues = new HashMap<>();
     private int timeout;
     private QueryHolder queryHolder = QueryHolder.getInstance();
     private String variantArgs;
@@ -171,7 +172,8 @@ public class PCARequestBuilder {
      */
     public PCARequestBuilder withContextData(ContextData... data) {
         for (ContextData newData : data) {
-            this.contextData.addClaimValues(newData);
+            if (newData == null) continue;
+            this.claimValues.putAll(newData.getClaimValues().stream().collect(Collectors.toMap(x -> x.getUri(), x -> x, (x, y) -> y)));
         }
         return this;
     }
@@ -183,7 +185,7 @@ public class PCARequestBuilder {
      * @return
      */
     public PCARequestBuilder withClaim(ClaimValue claim) {
-        this.contextData.addClaimValule(claim);
+        this.claimValues.put(claim.getUri(), claim);
         return this;
     }
 
@@ -219,7 +221,10 @@ public class PCARequestBuilder {
         if (contentIncludeMode != null) {
             this.contentIncludeMode = contentIncludeMode;
         }
-        this.includeRegions.put("includeContent", contentIncludeMode != ContentIncludeMode.EXCLUDE);
+        this.includeRegions.put("includeContent", (contentIncludeMode == ContentIncludeMode.INCLUDE_DATA
+                || contentIncludeMode == ContentIncludeMode.INCLUDE_DATA_AND_RENDER));
+        this.includeRegions.put("includeJsonContent", (contentIncludeMode == ContentIncludeMode.INCLUDE_JSON
+                || contentIncludeMode == ContentIncludeMode.INCLUDE_JSON_AND_RENDER));
         return this;
     }
 
@@ -292,10 +297,14 @@ public class PCARequestBuilder {
 
 
         //inject variables
-        query = QueryUtils.injectRenderContentArgs(query, this.contentIncludeMode == ContentIncludeMode.INCLUDE_AND_RENDER);
+        query = QueryUtils.injectRenderContentArgs(query,
+                this.contentIncludeMode == ContentIncludeMode.INCLUDE_JSON_AND_RENDER
+                        || this.contentIncludeMode == ContentIncludeMode.INCLUDE_DATA_AND_RENDER);
         query = QueryUtils.injectVariantsArgs(query, variantArgs);
         query = QueryUtils.injectCustomMetaFilter(query, customMetaFilter);
 
+        ContextData contextData = new ContextData();
+        contextData.addClaimValues(claimValues.values());
         this.variables.put("contextData", contextData.getClaimValues());
         return new GraphQLRequest(query, variables, operationName, timeout);
     }

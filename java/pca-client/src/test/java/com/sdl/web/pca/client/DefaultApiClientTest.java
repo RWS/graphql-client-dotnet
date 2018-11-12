@@ -77,7 +77,7 @@ public class DefaultApiClientTest {
                 .thenReturn(loadFromResource("getPageById"));
 
         Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, 640,
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
@@ -91,7 +91,7 @@ public class DefaultApiClientTest {
                 .thenReturn(loadFromResource("getPageByUrl"));
 
         Page result = publicContentApi.getPage(ContentNamespace.Sites, 8, "/index.html",
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
@@ -105,7 +105,7 @@ public class DefaultApiClientTest {
                 .thenReturn(loadFromResource("getPageByCmUri"));
 
         Page result = publicContentApi.getPage(new CmUri("tcm:8-640-64"),
-                "", ContentIncludeMode.INCLUDE, new ContextData());
+                "", ContentIncludeMode.INCLUDE_DATA, new ContextData());
 
         assertEquals(640, result.getItemId());
         assertEquals(64, result.getItemType());
