@@ -87,7 +87,7 @@ namespace Sdl.Tridion.Api.Http.Client
                         {
                             byte[] data = ReadStream(responseStream);
 
-                            HandleResponse(data);
+                            LogResponse(data);
 
                             T deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors);
 
@@ -134,7 +134,7 @@ namespace Sdl.Tridion.Api.Http.Client
                         {
                             byte[] data = await ReadStreamAsync(responseStream, cancellationToken).ConfigureAwait(false);
 
-                            HandleResponse(data);
+                            LogResponse(data);
 
                             T deserialized =
                                 await
@@ -201,7 +201,7 @@ namespace Sdl.Tridion.Api.Http.Client
             return request;
         }
 
-        private void HandleResponse(byte[] data)
+        private void LogResponse(byte[] data)
         {
             string responseData = string.Empty;
 
