@@ -86,7 +86,11 @@ namespace Sdl.Tridion.Api.Http.Client
                         if (responseStream != null)
                         {
                             byte[] data = ReadStream(responseStream);
+
+                            HandleResponse(data);
+
                             T deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors);
+
                             return new HttpClientResponse<T>
                             {
                                 StatusCode = (int)httpWebResponse.StatusCode,
@@ -104,7 +108,7 @@ namespace Sdl.Tridion.Api.Http.Client
                 byte[] data = ReadStream(e.Response.GetResponseStream());
                 throw new HttpClientException(
                     $"Failed to get http response from '{BaseUri}' with request: {clientRequest}",
-                    e, (int) e.Status, Encoding.UTF8.GetString(data));
+                    e, (int)e.Status, Encoding.UTF8.GetString(data));
             }
             catch (Exception e)
             {
@@ -113,8 +117,8 @@ namespace Sdl.Tridion.Api.Http.Client
 
             throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}");
         }
-     
-        public virtual async Task<IHttpClientResponse<T>> ExecuteAsync<T>(IHttpClientRequest clientRequest, 
+
+        public virtual async Task<IHttpClientResponse<T>> ExecuteAsync<T>(IHttpClientRequest clientRequest,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             HttpWebRequest request = CreateHttpWebRequest(clientRequest);
@@ -129,6 +133,9 @@ namespace Sdl.Tridion.Api.Http.Client
                         if (responseStream != null)
                         {
                             byte[] data = await ReadStreamAsync(responseStream, cancellationToken).ConfigureAwait(false);
+
+                            HandleResponse(data);
+
                             T deserialized =
                                 await
                                     Task.Factory.StartNew(
@@ -137,7 +144,7 @@ namespace Sdl.Tridion.Api.Http.Client
                                                 clientRequest.Convertors), cancellationToken).ConfigureAwait(false);
                             return new HttpClientResponse<T>
                             {
-                                StatusCode = (int) httpWebResponse.StatusCode,
+                                StatusCode = (int)httpWebResponse.StatusCode,
                                 ContentType = httpWebResponse.ContentType,
                                 Headers = new HttpHeaders(httpWebResponse.Headers),
                                 ResponseData = deserialized
@@ -167,7 +174,7 @@ namespace Sdl.Tridion.Api.Http.Client
             IHttpClientRequest requestCopy = new HttpClientRequest(clientRequest);
             requestCopy.Authenticaton = requestCopy.Authenticaton ?? _auth;
             Uri requestUri = requestCopy.BuildRequestUri(this);
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(requestUri);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
             request.Method = requestCopy.Method;
             request.Timeout = Timeout;
             request.ContentType = requestCopy.ContentType;
@@ -194,6 +201,22 @@ namespace Sdl.Tridion.Api.Http.Client
             return request;
         }
 
+        private void HandleResponse(byte[] data)
+        {
+            string responseData = string.Empty;
+
+            try
+            {
+                responseData = Encoding.UTF8.GetString(data);
+            }
+            catch { }
+
+            if (Logger.IsTracingEnabled)
+            {
+                Logger.Trace($"Respose: {responseData}");
+            }
+        }
+
         protected virtual byte[] ReadStream(Stream inputStream)
         {
             byte[] buffer = new byte[16 * 1024];
@@ -218,7 +241,7 @@ namespace Sdl.Tridion.Api.Http.Client
             }
         }
 
-        protected virtual bool IsJsonMimeType(string contentType) 
+        protected virtual bool IsJsonMimeType(string contentType)
             => !string.IsNullOrEmpty(contentType) && contentType.ToLower().Contains("application/json");
 
         protected virtual byte[] Serialize(object data, string contentType)
@@ -243,7 +266,7 @@ namespace Sdl.Tridion.Api.Http.Client
             if (typeof(T) == typeof(byte[]))
                 return (T)(object)data;
 
-            if (typeof (T) == typeof (string))
+            if (typeof(T) == typeof(string))
                 return (T)(object)Encoding.UTF8.GetString(data);
 
             if (!IsJsonMimeType(contentType))
