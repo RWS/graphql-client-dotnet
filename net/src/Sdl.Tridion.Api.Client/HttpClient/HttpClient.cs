@@ -87,7 +87,7 @@ namespace Sdl.Tridion.Api.Http.Client
                         {
                             byte[] data = ReadStream(responseStream);
 
-                            LogResponse(data);
+                            LogErrorResponse(data);
 
                             T deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors);
 
@@ -134,7 +134,7 @@ namespace Sdl.Tridion.Api.Http.Client
                         {
                             byte[] data = await ReadStreamAsync(responseStream, cancellationToken).ConfigureAwait(false);
 
-                            LogResponse(data);
+                            LogErrorResponse(data);
 
                             T deserialized =
                                 await
@@ -201,7 +201,7 @@ namespace Sdl.Tridion.Api.Http.Client
             return request;
         }
 
-        private void LogResponse(byte[] data)
+        private void LogErrorResponse(byte[] data)
         {
             string responseData = string.Empty;
 
@@ -211,9 +211,9 @@ namespace Sdl.Tridion.Api.Http.Client
             }
             catch { }
 
-            if (Logger.IsTracingEnabled)
+            if (Logger.IsTracingEnabled && responseData.Contains("errors")) //not the best way to do it, but couldn't see any other way
             {
-                Logger.Trace($"Respose: {responseData}");
+                Logger.Trace($"Error Respose: {responseData}");
             }
         }
 
