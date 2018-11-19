@@ -1,14 +1,14 @@
 graphql-client
 ===
-SDL Digital Experience Accelerator GraphQL client for .NET and Java DXA Frameworks
+SDL Digital Experience Accelerator GraphQL client for .NET DXA Framework
 
 About
 -----
-The GraphQL client provides a public content API for both the .NET and Java DXA frameworks in order to retrieve content from the new GraphQL endpoint exposed by the content service.
+The GraphQL client provides a public content API for the .NET DXA framework in order to retrieve content from the new GraphQL endpoint exposed by the content service.
 
 We provide a strongly typed model built directly from the GraphQL schema used by the content service and also allow execution of general GraphQL requests.
 
-You can generate a strongly typed model for any GraphQL schema by using the tools provided under the relevant .NET or Java folders. Please see the DXA framework content providers for more information on how this client is used within the DXA framework.
+You can generate a strongly typed model for any GraphQL schema by using the tools provided. Please see the DXA framework content providers for more information on how this client is used within the DXA framework.
 
 
 Support
@@ -34,7 +34,7 @@ The following repositories with source code are available:
  - https://github.com/sdl/dxa-modules - Modules (.NET and Java)
  - https://github.com/sdl/dxa-web-application-dotnet - ASP.NET MVC web application (including framework)
  - https://github.com/sdl/dxa-web-application-java - Java Spring MVC web application (including framework)
- - https://github.com/sdl/graphql-client - GraphQL client (.NET and Java)
+ - https://github.com/sdl/graphql-client-dotnet - GraphQL client (.NET and Java)
 
 Branches and Contributions
 --------------------------

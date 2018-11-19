@@ -1,5 +1,0 @@
-﻿fragment TemplateFields on Template {
-	...ItemFields
-	outputFormat
-	priority
-}
