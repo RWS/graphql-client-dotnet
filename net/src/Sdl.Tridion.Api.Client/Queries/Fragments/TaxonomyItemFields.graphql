@@ -1,0 +1,13 @@
+﻿fragment TaxonomyItemFields on TaxonomySitemapItem {
+    id
+    title
+    originalTitle
+    url
+    type
+    visible
+    description
+    key
+    abstract
+    hasChildNodes
+	classifiedItemsCount
+}

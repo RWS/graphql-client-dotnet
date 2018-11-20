@@ -1,0 +1,21 @@
+﻿fragment PageFields on Page {
+	url
+	...CustomMetaFields
+	includeContent? {
+		rawContent@renderContentArgs {
+			data 			
+		}
+	}
+	includeJsonContent? {
+		rawContent@renderContentArgs {
+			content
+		}
+	}
+	includeContainerItems? {
+		containerItems(types: [COMPONENT_PRESENTATION]) {
+			...on ComponentPresentation {
+				...ComponentPresentationFields
+			}		
+		}
+	}
+}
