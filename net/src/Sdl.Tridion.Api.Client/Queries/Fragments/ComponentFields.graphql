@@ -1,0 +1,16 @@
+﻿fragment ComponentFields on Component {
+	id
+    itemId
+    itemType
+    namespaceId
+    owningPublicationId
+    publicationId
+    title
+    lastPublishDate
+    creationDate
+    initialPublishDate
+    updatedDate   
+	schemaId
+	multiMedia
+    ...CustomMetaFields
+}

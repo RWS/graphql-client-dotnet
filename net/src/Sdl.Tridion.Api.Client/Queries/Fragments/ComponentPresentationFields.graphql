@@ -1,0 +1,19 @@
+﻿fragment ComponentPresentationFields on ComponentPresentation {
+	...ItemFields
+	component {
+       ...ComponentFields
+    }
+    componentTemplate {
+       ...TemplateFields
+    }
+	includeContent? {
+		rawContent@renderContentArgs {
+			data			
+		}
+	}
+	includeJsonContent? {
+		rawContent@renderContentArgs {
+			content			
+		}
+	}
+}

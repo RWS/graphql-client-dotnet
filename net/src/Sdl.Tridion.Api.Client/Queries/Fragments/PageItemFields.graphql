@@ -1,0 +1,17 @@
+﻿fragment PageItemFields on Page {
+	url
+    itemId
+    title
+    itemType
+    lastPublishDate
+	publicationId
+	creationDate
+	initialPublishDate
+	updatedDate
+	namespaceId
+    pageTemplate {
+      itemId
+      title
+    }
+	...CustomMetaFields
+}

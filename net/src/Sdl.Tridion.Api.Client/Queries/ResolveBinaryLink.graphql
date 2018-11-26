@@ -1,0 +1,5 @@
+﻿query binaryLink($namespaceId: Int!, $publicationId: Int!, $binaryId: Int!, $variantId: String, $renderRelativeLink : Boolean) {
+	binaryLink(namespaceId: $namespaceId, publicationId: $publicationId, binaryId: $binaryId, variantId: $variantId, renderRelativeLink: $renderRelativeLink) {
+		url
+	}
+}

@@ -1,0 +1,10 @@
+﻿query componentPresentations($namespaceId: Int!, $publicationId: Int!, $first: Int, $after: String, $filter: InputComponentPresentationFilter!, $sort: InputSortParam, $contextData: [InputClaimValue!]) {
+	componentPresentations(namespaceId: $namespaceId, publicationId: $publicationId, first: $first, after: $after, filter: $filter, sort: $sort, contextData: $contextData) {
+		edges {
+			  cursor
+			  node {
+					...ComponentPresentationFields
+			  }
+		}
+	}
+}
