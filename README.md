@@ -1,6 +1,6 @@
 graphql-client
 ===
-SDL Digital Experience Accelerator GraphQL client for .NET
+SDL Digital Experience Delivery GraphQL client for .NET
 
 About
 -----
@@ -13,8 +13,8 @@ You can generate a strongly typed model for any GraphQL schema by using the tool
 
 Support
 -------
-At SDL we take your investment very seriously, and will do our best to support you throughout this journey. 
-If you encounter any issues with the Digital Experience Accelerator, please reach out to us via one of the following channels:
+At SDL we take your investment in Digital Experience very seriously, and will do our best to support you throughout this journey. 
+If you encounter any issues with the Digital Experience Delivery, please reach out to us via one of the following channels:
 
 - Report issues directly in [this repository](https://github.com/sdl/graphql-client/issues)
 - Ask questions 24/7 on the SDL Web Community at https://tridion.stackexchange.com
