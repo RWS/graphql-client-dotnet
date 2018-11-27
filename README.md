@@ -1,4 +1,4 @@
-graphql-client
+graphql-client-dotnet
 ===
 SDL Digital Experience Delivery GraphQL client for .NET
 
@@ -16,7 +16,7 @@ Support
 At SDL we take your investment in Digital Experience very seriously, and will do our best to support you throughout this journey. 
 If you encounter any issues with the Digital Experience Delivery, please reach out to us via one of the following channels:
 
-- Report issues directly in [this repository](https://github.com/sdl/graphql-client/issues)
+- Report issues directly in [this repository](https://github.com/sdl/graphql-client-dotnet/issues)
 - Ask questions 24/7 on the SDL Web Community at https://tridion.stackexchange.com
 - Contact Technical Support through the SDL Support web portal at https://www.sdl.com/support
 
