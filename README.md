@@ -22,7 +22,7 @@ If you encounter any issues with the Digital Experience Delivery, please reach o
 
 Documentation
 -------------
-Documentation can be found online in the SDL documentation portal: http://docs.sdl.com/
+Documentation can be found online in the SDL documentation portal: https://docs.sdl.com/LiveContent/content/en-US/SDL%20Tridion%20Sites-v1/GUID-7CE1DB91-B63C-4A5F-9307-CE1C6B3A8911
 
 
 Branches and Contributions
