@@ -3,9 +3,9 @@ SDL Dynamic Experience Delivery GraphQL client for .NET
 
 About
 -----
-The GraphQL client provides a public content API for .NET in order to retrieve content from the new GraphQL endpoint exposed by the content service.
+The GraphQL client provides a public content API for .NET in order to retrieve content from the new GraphQL endpoint exposed by the Content Service.
 
-We provide a strongly typed model built directly from the GraphQL schema used by the content service and also allow execution of general GraphQL requests.
+We provide a strongly typed model built directly from the GraphQL schema used by the Content Service and also allow execution of general GraphQL requests.
 
 You can generate a strongly typed model for any GraphQL schema by using the tools provided.
 
