@@ -115,7 +115,7 @@ namespace Sdl.Tridion.Api.Client.Utils
         public static void RemoveUnusedFragments(ref string query)
         {
             if (string.IsNullOrEmpty(query)) return;
-            int index = query.IndexOf("fragment", StringComparison.Ordinal);
+            int index = query.IndexOf("fragment ", StringComparison.Ordinal);
             if (index == -1) return;
             while (index >= 0)
             {
@@ -128,7 +128,7 @@ namespace Sdl.Tridion.Api.Client.Utils
                     if(indices != null)
                         query = query.Substring(0, index) + query.Substring(indices.Item2 + 1);
                 }
-                index = query.IndexOf("fragment", index + 1, StringComparison.Ordinal);
+                index = query.IndexOf("fragment ", index + 1, StringComparison.Ordinal);
             }
         }
     }
