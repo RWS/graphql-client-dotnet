@@ -1,0 +1,8 @@
+﻿query 
+{
+  externalItem(eclUri: "@eclUri"){
+  ...on  @itemType{
+	 @itemFields	
+  }
+}
+}

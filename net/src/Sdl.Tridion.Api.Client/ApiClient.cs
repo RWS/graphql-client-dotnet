@@ -188,6 +188,9 @@ namespace Sdl.Tridion.Api.Client
                     customMetaFilter, contentIncludeMode, includeContainerItems,
                     contextData, GlobalContextDataInternal)).TypedResponseData.Items;
 
+        public T ExecuteExternalItemQuery<T>(string eclUri, string itemType, List<string> itemFields)
+        => _client.Execute<ExternalItemConnection<T>>(GraphQLRequests.BuildExternalItemQuery(eclUri, itemType, itemFields)).TypedResponseData.ExternalItem;
+
         public Publication GetPublication(ContentNamespace ns, int publicationId,
             string customMetaFilter, IContextData contextData)
             => _client.Execute<ContentQuery>(GraphQLRequests.Publication(ns, publicationId, customMetaFilter,
@@ -412,6 +415,13 @@ namespace Sdl.Tridion.Api.Client
                             includeContainerItems,
                             contextData, GlobalContextDataInternal)
                         , cancellationToken).ConfigureAwait(false)).TypedResponseData.Items;
+
+        public async Task<T> ExecuteExternalItemQueryAsync<T>(string eclUri, string itemType, List<string> itemFields, CancellationToken cancellationToken = default(CancellationToken))
+        => (
+                await
+                    _client.ExecuteAsync<ExternalItemConnection<T>>(
+                        GraphQLRequests.BuildExternalItemQuery(eclUri, itemType, itemFields)
+                        , cancellationToken).ConfigureAwait(false)).TypedResponseData.ExternalItem;
 
         public async Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId,
             string customMetaFilter,

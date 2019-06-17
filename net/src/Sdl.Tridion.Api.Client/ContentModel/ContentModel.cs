@@ -1456,10 +1456,22 @@ namespace Sdl.Tridion.Api.Client.ContentModel
 		public List<ItemEdge> Edges { get; set; }
 	}
 
-	/// <summary>
-	/// An edge in a connection
-	/// </summary>
-	public class ItemEdge
+    /// <summary>
+    /// A connection to an external item instance.
+    /// </summary>
+    /// <typeparam name="T">external item type</typeparam>
+    public class ExternalItemConnection<T>
+    {
+        /// <summary>
+        /// External item instance.
+        /// </summary>
+        public T ExternalItem { get; set; }
+    }
+
+    /// <summary>
+    /// An edge in a connection
+    /// </summary>
+    public class ItemEdge
 	{
 		/// <summary>
 		/// The item at the end of the edge

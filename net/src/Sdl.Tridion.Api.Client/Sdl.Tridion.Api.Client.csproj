@@ -201,6 +201,7 @@
     <EmbeddedResource Include="Queries\Fragments\CategoryFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\ComponentTemplateFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\PageTemplateFields.graphql" />
+	<EmbeddedResource Include="Queries\ExternalItemQuery.graphql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

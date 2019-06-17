@@ -55,6 +55,8 @@ namespace Sdl.Tridion.Api.Client
             IContextData contextData,
             CancellationToken cancellationToken);
 
+        Task<T> ExecuteExternalItemQueryAsync<T>(string eclUri, string itemType, List<string> itemFields, CancellationToken cancellationToken);
+
         Task<Publication> GetPublicationAsync(ContentNamespace ns, int publicationId, string customMetaFilter,
             IContextData contextData, CancellationToken cancellationToken);
 
