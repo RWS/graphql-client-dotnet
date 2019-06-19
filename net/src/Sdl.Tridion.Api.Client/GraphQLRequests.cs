@@ -3,6 +3,7 @@ using System.Linq;
 using Sdl.Tridion.Api.GraphQL.Client.Request;
 using Sdl.Tridion.Api.Client.ContentModel;
 using Sdl.Tridion.Api.Client.Utils;
+using System.Collections.Generic;
 
 namespace Sdl.Tridion.Api.Client
 {
@@ -152,6 +153,17 @@ namespace Sdl.Tridion.Api.Client
                 WithContextData(globaContextData).
                 WithConvertor(new ItemConvertor()).
                 Build();
+        }
+
+        public static IGraphQLRequest BuildExternalItemQuery(string eclUri, string itemType, List<string> itemFields)
+        {
+            QueryBuilder builder = new QueryBuilder().WithQueryResource("ExternalItemQuery", false);
+
+            builder.ReplaceTag("eclUri", eclUri);
+            builder.ReplaceTag("itemType", itemType);
+            builder.ReplaceTag("itemFields", string.Join(Environment.NewLine, itemFields));
+
+            return builder.Build();
         }
 
         public static IGraphQLRequest Publication(ContentNamespace ns, int publicationId, string customMetaFilter,
