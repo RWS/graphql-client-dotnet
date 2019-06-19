@@ -197,6 +197,16 @@ namespace Sdl.Tridion.Api.Client
             IContextData contextData);
 
         /// <summary>
+        /// Execute external item query given a filter.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="eclUri"></param>
+        /// <param name="itemType"></param>
+        /// <param name="itemFields"></param>
+        /// <returns></returns>
+        T ExecuteExternalItemQuery<T>(string eclUri, string itemType, List<string> itemFields);
+
+        /// <summary>
         /// Get publication given a publication ID.
         /// </summary>
         /// <param name="ns"></param>
