@@ -1,24 +1,22 @@
-graphql-client-dotnet
+SDL Dynamic Experience Delivery GraphQL client for .NET
 ===
-SDL Digital Experience Delivery GraphQL client for .NET
 
 About
 -----
-The GraphQL client provides a public content API for .NET in order to retrieve content from the new GraphQL endpoint exposed by the content service.
+The GraphQL client provides a public content API for .NET in order to retrieve content from the new GraphQL endpoint exposed by the Content Service.
 
-We provide a strongly typed model built directly from the GraphQL schema used by the content service and also allow execution of general GraphQL requests.
+We provide a strongly typed model built directly from the GraphQL schema used by the Content Service and also allow execution of general GraphQL requests.
 
 You can generate a strongly typed model for any GraphQL schema by using the tools provided.
 
 
 Support
 -------
-At SDL we take your investment in Digital Experience very seriously, and will do our best to support you throughout this journey. 
-If you encounter any issues with the Digital Experience Delivery, please reach out to us via one of the following channels:
+At SDL we take your investment in Digital Experience very seriously, if you encounter any issues with the Digital Experience Accelerator, please use one of the following channels:
 
 - Report issues directly in [this repository](https://github.com/sdl/graphql-client-dotnet/issues)
-- Ask questions 24/7 on the SDL Web Community at https://tridion.stackexchange.com
-- Contact Technical Support through the SDL Support web portal at https://www.sdl.com/support
+- Ask questions 24/7 on the SDL Tridion Community at https://tridion.stackexchange.com
+- Contact SDL Professional Services for DXA release management support packages to accelerate your support requirements https://www.sdl.com/support
 
 Documentation
 -------------
@@ -47,7 +45,7 @@ Of course, it is also possible (and appreciated) to report an issue without asso
 
 License
 -------
-Copyright (c) 2014-2018 SDL Group.
+Copyright (c) 2014-2020 SDL Group.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
