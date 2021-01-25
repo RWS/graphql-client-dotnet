@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Sdl.Tridion.Api.Client.XML</DocumentationFile>
+    <NoWarn>CS1591,CS1570,CS1573,CS1572,CS1587</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Sdl.Tridion.Api.Client.XML</DocumentationFile>
+    <NoWarn>CS1591,CS1570,CS1573,CS1572,CS1587</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -201,7 +203,7 @@
     <EmbeddedResource Include="Queries\Fragments\CategoryFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\ComponentTemplateFields.graphql" />
     <EmbeddedResource Include="Queries\Fragments\PageTemplateFields.graphql" />
-	<EmbeddedResource Include="Queries\ExternalItemQuery.graphql" />
+    <EmbeddedResource Include="Queries\ExternalItemQuery.graphql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
