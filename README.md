@@ -1,5 +1,7 @@
 SDL Dynamic Experience Delivery GraphQL client for .NET
 ===
+- Develop: [![Build Status](https://travis-ci.com/sdl/graphql-client-dotnet.svg?branch=develop)](https://travis-ci.com/sdl/graphql-client-dotnet)
+- 2.2: [![Build Status](https://travis-ci.com/sdl/graphql-client-dotnet.svg?branch=release%2F2.2)](https://travis-ci.com/sdl/graphql-client-dotnet)
 
 About
 -----
