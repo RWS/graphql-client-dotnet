@@ -2,6 +2,12 @@ SDL Dynamic Experience Delivery GraphQL client for .NET
 ===
 - Develop: ![Build Status](https://github.com/sdl/graphql-client-dotnet/workflows/Build/badge.svg?branch=develop)
 
+Prerequisites
+-------------
+For building .NET you must have the following installed:
+- Visual Studio 2019
+- .NET Framework 4.6.2
+
 About
 -----
 The GraphQL client provides a public content API for .NET in order to retrieve content from the new GraphQL endpoint exposed by the Content Service.
