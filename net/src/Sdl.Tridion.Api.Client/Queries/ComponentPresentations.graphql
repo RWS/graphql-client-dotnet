@@ -1,4 +1,4 @@
-﻿query componentPresentations($namespaceId: Int!, $publicationId: Int!, $first: Int, $after: String, $filter: InputComponentPresentationFilter!, $inputSortParam: InputSortParam, $contextData: [InputClaimValue!]) {
+﻿query componentPresentations($namespaceId: Int!, $publicationId: Int!, $first: Int, $after: String, $filter: InputComponentPresentationFilter!, $inputSortParam: InputSortParam, $contextData: [InputClaimValue]) {
 	componentPresentations(namespaceId: $namespaceId, publicationId: $publicationId, first: $first, after: $after, filter: $filter, sort: $inputSortParam, contextData: $contextData) {
 		edges {
 			  cursor

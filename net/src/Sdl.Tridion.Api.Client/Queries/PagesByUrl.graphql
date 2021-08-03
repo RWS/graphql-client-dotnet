@@ -1,4 +1,4 @@
-﻿query pages($namespaceId: Int!, $first: Int, $after: String, $url: String!, $contextData: [InputClaimValue!]) {
+﻿query pages($namespaceId: Int!, $first: Int, $after: String, $url: String!, $contextData: [InputClaimValue]) {
 	pages(namespaceId: $namespaceId, first: $first, after: $after, url: $url, contextData: $contextData) {
 		edges {
 			cursor

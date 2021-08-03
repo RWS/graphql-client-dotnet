@@ -55,6 +55,12 @@ namespace Sdl.Tridion.Api.Client
             set { _client.Timeout = value; }
         }
 
+        public int RetryCount
+        {
+            get { return _client.RetryCount; }
+            set { _client.RetryCount = value; }
+        }
+
         public IHttpClient HttpClient
             => _client.HttpClient;
 

@@ -1,4 +1,4 @@
-﻿query publications($namespaceId: Int!, $first: Int, $after: String, $filter: InputPublicationFilter, $contextData: [InputClaimValue!]) {
+﻿query publications($namespaceId: Int!, $first: Int, $after: String, $filter: InputPublicationFilter, $contextData: [InputClaimValue]) {
 	publications(namespaceId: $namespaceId, first: $first, after: $after, filter: $filter, contextData: $contextData) {
 	   edges {
 		cursor
