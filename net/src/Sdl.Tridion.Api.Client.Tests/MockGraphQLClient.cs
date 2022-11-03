@@ -44,5 +44,6 @@ namespace Sdl.Tridion.Api.Client.Tests
         }
 
         public List<GraphQLError> LastErrors { get; }
+        public int RetryCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
