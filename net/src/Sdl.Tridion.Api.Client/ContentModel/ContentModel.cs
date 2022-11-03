@@ -1375,7 +1375,18 @@ namespace Sdl.Tridion.Api.Client.ContentModel
 		/// The item field used for sorting
 		/// </summary>
 		public SortFieldType SortBy { get; set; }
+
+        public SortKeyType KeyType { get; set; }
+		public string Key { get; set; }
 	}
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SortKeyType
+    {
+        DATE,
+        FLOAT,
+		STRING
+    }
 
 	/// <summary>
 	/// Represents a type of natural sort: descending or ascending
@@ -1442,7 +1453,9 @@ namespace Sdl.Tridion.Api.Client.ContentModel
 		/// </summary>
 		TITLE,
 
-		UPDATED_DATE
+		UPDATED_DATE,
+
+		CUSTOM_META
 	}
 
 	/// <summary>
