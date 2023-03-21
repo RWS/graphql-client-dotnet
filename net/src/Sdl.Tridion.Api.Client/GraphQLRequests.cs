@@ -304,6 +304,19 @@ namespace Sdl.Tridion.Api.Client
                     .Build();
         }
 
+        public static IGraphQLRequest SearchByRawCriteria(string rawCritera, InputResultFilter resultFilter, IPagination pagination)
+        {
+            QueryBuilder builder =
+                new QueryBuilder().WithQueryResource("SearchByRawCriteria", false);
+                    
+            return
+                builder
+                    .WithVariable("rawCriteria", rawCritera)
+                    .WithVariable("inputResultFilter", resultFilter)
+                    .WithPagination(pagination)
+                    .Build();
+        }
+
         #region Query Builder Helpers
 
         public static ClaimValue CreateClaim(ModelServiceLinkRendering linkRendering) => new ClaimValue
