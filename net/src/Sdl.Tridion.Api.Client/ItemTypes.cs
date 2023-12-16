@@ -29,7 +29,7 @@ namespace Sdl.Tridion.Api.Client
         StructureGroup = 0x4,
         Schema = 0x8,
         Component = 0x10,
-        Binary = 0x10,
+        Binary = 0x10, //Search is not handled for "itemType": "binary" pdf indexed data for this responseData.TypedResponseData = responseData.Data.ToObject<T>();
         ComponentTemplate = 0x20,
         Page = 0x40,
         PageTemplate = 0x80,
