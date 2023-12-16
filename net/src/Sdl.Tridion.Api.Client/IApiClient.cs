@@ -360,5 +360,36 @@ namespace Sdl.Tridion.Api.Client
         /// <param name="pagination">Pagination</param>
         /// <returns>Search results</returns>
         FacetedSearchResults SearchByRawCriteria(string rawCriteria, InputResultFilter resultFilter, IPagination pagination);
+
+        /// <summary>
+        /// Search by criteria
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <param name="resultFilter"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        FacetedSearchResults SearchByCriteria(InputCriteria criteria, InputResultFilter resultFilter, IPagination pagination);
+
+        /// <summary>
+        /// Faceted Search by criteria
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <param name="inputFacets"></param>
+        /// <param name="resultFilter"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        FacetedSearchResults FacetedSearch(InputCriteria criteria, InputFacets inputFacets, InputResultFilter resultFilter, IPagination pagination);
+
+        /// <summary>
+        /// Suggest - Filter results to match facets used within your content
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="langauage"></param>
+        /// <param name="fuzzy"></param>
+        /// <param name="used"></param>
+        /// <param name="connectorId"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        ConceptSuggestionConnection Suggest(string label, string langauage, bool fuzzy, bool used, string connectorId, IPagination pagination);
     }
 }

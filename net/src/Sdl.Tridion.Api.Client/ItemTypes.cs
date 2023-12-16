@@ -29,6 +29,7 @@ namespace Sdl.Tridion.Api.Client
         StructureGroup = 0x4,
         Schema = 0x8,
         Component = 0x10,
+        Binary = 0x10,
         ComponentTemplate = 0x20,
         Page = 0x40,
         PageTemplate = 0x80,

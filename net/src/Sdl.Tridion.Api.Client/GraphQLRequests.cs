@@ -317,6 +317,49 @@ namespace Sdl.Tridion.Api.Client
                     .Build();
         }
 
+        public static IGraphQLRequest SearchByCriteria(InputCriteria criteria, InputResultFilter resultFilter, IPagination pagination)
+        {
+            QueryBuilder builder =
+                new QueryBuilder().WithQueryResource("SearchByCriteria", false);
+
+            return
+                builder
+                    .WithVariable("criteria", criteria)
+                    .WithVariable("inputResultFilter", resultFilter)
+                    .WithPagination(pagination)
+                    .Build();
+        }
+
+        public static IGraphQLRequest FacetedSearch(InputCriteria criteria, InputFacets inputFacets, InputResultFilter resultFilter, IPagination pagination)
+        {
+            QueryBuilder builder =
+                new QueryBuilder().WithQueryResource("SearchByFaceted", false);
+
+            return
+                builder
+                    .WithVariable("criteria", criteria)
+                    .WithVariable("facets", inputFacets)
+                    .WithVariable("inputResultFilter", resultFilter)
+                    .WithPagination(pagination)
+                    .Build();
+        }
+
+        public static IGraphQLRequest Suggest(string label, string langauage, bool fuzzy, bool used, string connectorId, IPagination pagination)
+        {
+            QueryBuilder builder =
+                new QueryBuilder().WithQueryResource("Suggest", false);
+
+            return
+                builder
+                    .WithVariable("label", label)
+                    .WithVariable("langauage", langauage)
+                    .WithVariable("fuzzy", fuzzy)
+                    .WithVariable("used", used)
+                    .WithVariable("connectorId", connectorId)
+                    .WithPagination(pagination)
+                    .Build();
+        }
+
         #region Query Builder Helpers
 
         public static ClaimValue CreateClaim(ModelServiceLinkRendering linkRendering) => new ClaimValue
