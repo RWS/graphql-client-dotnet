@@ -1,7 +1,6 @@
 ﻿query search($criteria: InputCriteria, $facets: InputFacets,$inputResultFilter:InputResultFilter,$first: Int, $after: String) {
   search(criteria: $criteria, facets: $facets,resultFilter:$inputResultFilter) {
-    facets(language: "english") {
-      __typename
+    facets@languageArgs {
       ... on ConceptFacet {
         connectorId
         title

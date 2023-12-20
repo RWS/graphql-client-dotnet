@@ -1,5 +1,5 @@
 ﻿query search($first: Int, $after: String, $criteria: InputCriteria, $inputResultFilter: InputResultFilter) {          
-    search(InputCriteria: $rawCriteria, resultFilter: $inputResultFilter ) {
+    search(InputCriteria: $criteria, resultFilter: $inputResultFilter ) {
 		 results(first: $first, after: $after) {
             hits
               edges {

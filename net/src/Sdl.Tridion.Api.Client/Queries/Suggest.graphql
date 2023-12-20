@@ -1,5 +1,5 @@
-﻿query suggest($label: String!, $langauage: String, $fuzzy: Boolean, $first: Int, $used:Boolean, $connectorId: String) {
-  suggest(label: $label, language: $langauage, fuzzy: $fuzzy, first: $first, used:$used,connectorId:$connectorId) {
+﻿query suggest($label: String!, $langauage: String, $fuzzy: Boolean, $first: Int, $after: String, $used:Boolean, $connectorId: String) {
+  suggest(label: $label, language: $langauage, fuzzy: $fuzzy, first: $first, after: $after, used:$used,connectorId:$connectorId) {
     edges {
       cursor
       node {

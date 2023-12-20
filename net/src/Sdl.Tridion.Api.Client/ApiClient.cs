@@ -381,12 +381,12 @@ namespace Sdl.Tridion.Api.Client
         /// <param name="pagination"></param>
         /// <returns></returns>
         /// <exception cref="ApiException"></exception>
-        public FacetedSearchResults FacetedSearch(InputCriteria inputCriteria, InputFacets inputFacets, InputResultFilter resultFilter, IPagination pagination)
+        public FacetedSearchResults FacetedSearch(InputCriteria inputCriteria, InputFacets inputFacets, string language, InputResultFilter resultFilter, IPagination pagination)
         {
             try
             {
                 var response =
-                    _client.Execute<ContentQuery>(GraphQLRequests.FacetedSearch(inputCriteria, inputFacets, resultFilter, pagination));
+                    _client.Execute<ContentQuery>(GraphQLRequests.FacetedSearch(inputCriteria, inputFacets, language, resultFilter, pagination));
                 return response.TypedResponseData.Search;
             }
             catch (RuntimeBinderException e)

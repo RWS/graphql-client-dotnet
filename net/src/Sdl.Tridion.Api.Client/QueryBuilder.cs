@@ -18,6 +18,7 @@ namespace Sdl.Tridion.Api.Client
         private List<JsonConverter> _convertors;
         private IContextData _contextData;
         private string _customMetaFilter;
+        private string _languageFilter;
         private string _operationName;
         private int _descendantLevels;
         private ContentIncludeMode _contentIncludeMode  = ContentIncludeMode.Exclude;
@@ -47,6 +48,11 @@ namespace Sdl.Tridion.Api.Client
         public QueryBuilder WithCustomMetaFilter(string customMetaFilter)
         {
             _customMetaFilter = customMetaFilter;
+            return this;
+        }
+        public QueryBuilder WithLanguageFilter(string languageFilter)
+        {
+            _languageFilter = languageFilter;
             return this;
         }
 
@@ -154,6 +160,9 @@ namespace Sdl.Tridion.Api.Client
             // Replace tags in graphQL query.
             ReplaceTag("customMetaArgs",
                 string.IsNullOrEmpty(_customMetaFilter) ? "" : $"(filter: \"{_customMetaFilter}\")");
+
+            ReplaceTag("languageArgs",
+                string.IsNullOrEmpty(_languageFilter) ? "" : $"(language: \"{_languageFilter}\")");
 
             ReplaceTag("renderContentArgs", 
                 $"(renderContent: {(_contentIncludeMode == ContentIncludeMode.IncludeDataAndRender || _contentIncludeMode == ContentIncludeMode.IncludeJsonAndRender ? "true" : "false")})");

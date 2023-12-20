@@ -378,7 +378,7 @@ namespace Sdl.Tridion.Api.Client
         /// <param name="resultFilter"></param>
         /// <param name="pagination"></param>
         /// <returns></returns>
-        FacetedSearchResults FacetedSearch(InputCriteria criteria, InputFacets inputFacets, InputResultFilter resultFilter, IPagination pagination);
+        FacetedSearchResults FacetedSearch(InputCriteria criteria, InputFacets inputFacets, string language, InputResultFilter resultFilter, IPagination pagination);
 
         /// <summary>
         /// Suggest - Filter results to match facets used within your content

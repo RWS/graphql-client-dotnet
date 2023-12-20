@@ -2915,7 +2915,7 @@ namespace Sdl.Tridion.Api.Client.ContentModel
 		/// <summary>
 		/// Facets.
 		/// </summary>
-		public List<IFacet> Facets { get; set; }
+		public List<ConceptFacet> Facets { get; set; }
 
 		/// <summary>
 		/// Search results.

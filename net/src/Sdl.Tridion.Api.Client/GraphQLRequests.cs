@@ -330,7 +330,7 @@ namespace Sdl.Tridion.Api.Client
                     .Build();
         }
 
-        public static IGraphQLRequest FacetedSearch(InputCriteria criteria, InputFacets inputFacets, InputResultFilter resultFilter, IPagination pagination)
+        public static IGraphQLRequest FacetedSearch(InputCriteria criteria, InputFacets inputFacets, string language, InputResultFilter resultFilter, IPagination pagination)
         {
             QueryBuilder builder =
                 new QueryBuilder().WithQueryResource("SearchByFaceted", false);
@@ -341,6 +341,7 @@ namespace Sdl.Tridion.Api.Client
                     .WithVariable("facets", inputFacets)
                     .WithVariable("inputResultFilter", resultFilter)
                     .WithPagination(pagination)
+                    .WithLanguageFilter(language)
                     .Build();
         }
 
