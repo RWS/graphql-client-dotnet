@@ -349,6 +349,79 @@ namespace Sdl.Tridion.Api.Client
             }
         }
 
+        /// <summary>
+        /// Search by criteria
+        /// </summary>
+        /// <param name="inputCriteria"></param>
+        /// <param name="resultFilter"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        public FacetedSearchResults SearchByCriteria(InputCriteria inputCriteria, InputResultFilter resultFilter, IPagination pagination)
+        {
+            try
+            {
+                var response =
+                    _client.Execute<ContentQuery>(GraphQLRequests.SearchByCriteria(inputCriteria, resultFilter, pagination));
+                return response.TypedResponseData.Search;
+            }
+            catch (RuntimeBinderException e)
+            {
+                throw new ApiException(
+                    $"Failed to get search results (inputCriteria:{inputCriteria})", e);
+            }
+        }
+
+        /// <summary>
+        /// Faceted Search by criteria
+        /// </summary>
+        /// <param name="inputCriteria"></param>
+        /// <param name="inputFacets"></param>
+        /// <param name="resultFilter"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        public FacetedSearchResults FacetedSearch(InputCriteria inputCriteria, InputFacets inputFacets, string language, InputResultFilter resultFilter, IPagination pagination)
+        {
+            try
+            {
+                var response =
+                    _client.Execute<ContentQuery>(GraphQLRequests.FacetedSearch(inputCriteria, inputFacets, language, resultFilter, pagination));
+                return response.TypedResponseData.Search;
+            }
+            catch (RuntimeBinderException e)
+            {
+                throw new ApiException(
+                    $"Failed to get search results (inputCriteria:{inputCriteria})", e);
+            }
+        }
+
+        /// <summary>
+        /// Suggest - Filter results to match facets used within your content
+        /// </summary>
+        /// <param name="connectorId"></param>
+        /// <param name="label"></param>
+        /// <param name="language"></param>
+        /// <param name="fuzzy"></param>
+        /// <param name="used"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
+        public ConceptSuggestionConnection Suggest(string label, string language, bool fuzzy, bool used, string connectorId, IPagination pagination)
+        {
+            try
+            {
+                var response =
+                    _client.Execute<ContentQuery>(GraphQLRequests.Suggest(label, language, fuzzy, used, connectorId, pagination));
+                return response.TypedResponseData.Suggest;
+            }
+            catch (RuntimeBinderException e)
+            {
+                throw new ApiException(
+                    $"Failed to get search results (Suggest:{label})", e);
+            }
+        }
+
         #endregion
 
         #region IPublicContentApiAsync
