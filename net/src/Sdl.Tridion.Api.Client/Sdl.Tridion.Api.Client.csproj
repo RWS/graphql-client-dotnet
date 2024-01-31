@@ -207,6 +207,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Queries\SearchByRawCriteria.graphql" />
+    <EmbeddedResource Include="Queries\SearchByCriteria.graphql" />
+    <EmbeddedResource Include="Queries\SearchByFaceted.graphql" />
+    <EmbeddedResource Include="Queries\Suggest.graphql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

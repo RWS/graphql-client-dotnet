@@ -24,6 +24,11 @@ namespace Sdl.Tridion.Api.GraphQL.Client
         int Timeout { get; set; }
 
         /// <summary>
+        /// Get/Sets the retry count for the requests.
+        /// </summary>
+        int RetryCount { get; set; }
+
+        /// <summary>
         /// HttpClient used for performing the actual request.
         /// </summary>
         IHttpClient HttpClient { get; }

@@ -1,7 +1,12 @@
 SDL Dynamic Experience Delivery GraphQL client for .NET
 ===
 - Develop: ![Build Status](https://github.com/sdl/graphql-client-dotnet/workflows/Build/badge.svg?branch=develop)
-- 2.2: ![Build Status](https://github.com/sdl/graphql-client-dotnet/workflows/Build/badge.svg?branch=release/2.2)
+
+Prerequisites
+-------------
+For building .NET you must have the following installed:
+- Visual Studio 2019
+- .NET Framework 4.6.2
 
 Prerequisites
 -------------
@@ -53,7 +58,7 @@ Of course, it is also possible (and appreciated) to report an issue without asso
 
 License
 -------
-Copyright (c) 2014-2020 SDL Group.
+Copyright (c) 2014-2021 SDL Group.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

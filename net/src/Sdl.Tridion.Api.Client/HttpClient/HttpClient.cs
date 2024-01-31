@@ -22,6 +22,7 @@ namespace Sdl.Tridion.Api.Http.Client
     {
         public Uri BaseUri { get; set; }
         public int Timeout { get; set; } = 30000;
+        public int RetryCount { get; set; } = 5;
         public string UserAgent { get; set; } = "SDL.PCA.NET";
         public HttpHeaders Headers { get; set; } = new HttpHeaders();
         public ILogger Logger { get; } = new NullLogger();
@@ -74,38 +75,36 @@ namespace Sdl.Tridion.Api.Http.Client
 
         public virtual IHttpClientResponse<T> Execute<T>(IHttpClientRequest clientRequest)
         {
-            HttpWebRequest request = CreateHttpWebRequest(clientRequest);
             try
             {
-                using (WebResponse response = request.GetResponse())
+                return RetryBlock<IHttpClientResponse<T>>(() =>
                 {
-                    HttpWebResponse httpWebResponse = (HttpWebResponse)response;
-
-                    using (Stream responseStream = response.GetResponseStream())
+                    var request = CreateHttpWebRequest(clientRequest);
+                    using (var response = request.GetResponse())
                     {
-                        if (responseStream != null)
+                        var httpWebResponse = (HttpWebResponse) response;
+                        using (var responseStream = response.GetResponseStream())
                         {
-                            byte[] data = ReadStream(responseStream);
-
+                            if (responseStream == null) return default(HttpClientResponse<T>);
+                            var data = ReadStream(responseStream);
                             LogErrorResponse(data);
-
-                            T deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder, clientRequest.Convertors);
-
+                            var deserialized = Deserialize<T>(data, httpWebResponse.ContentType, clientRequest.Binder,
+                                clientRequest.Convertors);
                             return new HttpClientResponse<T>
                             {
-                                StatusCode = (int)httpWebResponse.StatusCode,
+                                StatusCode = (int) httpWebResponse.StatusCode,
                                 ContentType = httpWebResponse.ContentType,
                                 Headers = new HttpHeaders(httpWebResponse.Headers),
                                 ResponseData = deserialized
                             };
                         }
                     }
-                }
+                }, RetryCount);
             }
             catch (WebException e)
             {
                 if (e.Response == null) throw new HttpClientException(e.Message, e);
-                byte[] data = ReadStream(e.Response.GetResponseStream());
+                var data = ReadStream(e.Response.GetResponseStream());
                 throw new HttpClientException(
                     $"Failed to get http response from '{BaseUri}' with request: {clientRequest}",
                     e, (int)e.Status, Encoding.UTF8.GetString(data));
@@ -114,16 +113,14 @@ namespace Sdl.Tridion.Api.Http.Client
             {
                 throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}", e);
             }
-
-            throw new HttpClientException($"Failed to get http response from '{BaseUri}' with request: {clientRequest}");
         }
 
         public virtual async Task<IHttpClientResponse<T>> ExecuteAsync<T>(IHttpClientRequest clientRequest,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            HttpWebRequest request = CreateHttpWebRequest(clientRequest);
             try
             {
+                HttpWebRequest request = CreateHttpWebRequest(clientRequest);
                 using (WebResponse response = await request.GetResponseAsync().ConfigureAwait(false))
                 {
                     HttpWebResponse httpWebResponse = (HttpWebResponse)response;
@@ -213,7 +210,7 @@ namespace Sdl.Tridion.Api.Http.Client
 
             if (Logger.IsTracingEnabled && responseData.Contains("errors")) //not the best way to do it, but couldn't see any other way
             {
-                Logger.Trace($"Error Respose: {responseData}");
+                Logger.Trace($"Error Response: {responseData}");
             }
         }
 
@@ -283,6 +280,49 @@ namespace Sdl.Tridion.Api.Http.Client
             foreach (var x in convertors)
                 settings.Converters.Add(x);
             return JsonConvert.DeserializeObject<T>(json, settings);
+        }
+
+        protected T RetryBlock<T>(Func<T> block, int retryCount)
+        {
+            if (retryCount < 0)
+                return default(T);
+
+            int sleepTime = 1000;
+            while (retryCount > 0)
+            {
+                retryCount--;
+                try
+                {
+                    return block();
+                }
+                catch (Exception e)
+                {
+                    WebException webException = e as WebException;
+                    if (webException != null)
+                    {
+                        Logger.Debug($"Received web exception status code = {webException.Status}");
+                    }
+                    if (retryCount <= 0)
+                    {
+                        Logger.Debug("Failed to receive a valid response after exhausting all retry attempts..");
+                        if (webException == null) throw;
+                        if (webException.Response == null) throw;
+                        var responseStream = webException.Response.GetResponseStream();
+                        if (responseStream == null) throw;
+                        var resp = new StreamReader(responseStream).ReadToEnd();
+                        dynamic obj = JsonConvert.DeserializeObject(resp);
+                        var serverResponseMsg = obj.error.message;
+                        Logger.Debug($"Response message from server was {serverResponseMsg}");
+                        throw;
+                    }
+
+                    Logger.Debug($"Sleeping for {sleepTime}ms");
+                    Thread.Sleep(sleepTime);
+                    sleepTime += sleepTime;
+                }
+            }
+
+            return default(T);
         }
     }
 }

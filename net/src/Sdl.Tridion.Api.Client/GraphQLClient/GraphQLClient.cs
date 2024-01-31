@@ -71,6 +71,15 @@ namespace Sdl.Tridion.Api.GraphQL.Client
         }
 
         /// <summary>
+        /// Get/Sets the retry count for any request.
+        /// </summary>
+        public int RetryCount
+        {
+            get { return _httpClient.RetryCount; }
+            set { _httpClient.RetryCount = value; }
+        }
+
+        /// <summary>
         /// HttpClient used for performing the actual request.
         /// </summary>
         public IHttpClient HttpClient => _httpClient;

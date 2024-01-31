@@ -1,4 +1,4 @@
-﻿query sitemap($namespaceId: Int!, $publicationId: Int!, $contextData: [InputClaimValue!]) {          
+﻿query sitemap($namespaceId: Int!, $publicationId: Int!, $contextData: [InputClaimValue]) {          
     sitemap(namespaceId: $namespaceId, publicationId: $publicationId, contextData: $contextData) {
 		...TaxonomyItemFields
 		...RecurseItems

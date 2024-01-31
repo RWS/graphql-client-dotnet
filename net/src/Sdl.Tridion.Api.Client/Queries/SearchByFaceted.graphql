@@ -1,0 +1,58 @@
+﻿query search($criteria: InputCriteria, $facets: InputFacets,$inputResultFilter:InputResultFilter,$first: Int, $after: String) {
+  search(criteria: $criteria, facets: $facets,resultFilter:$inputResultFilter) {
+    facets@languageArgs {
+      ... on ConceptFacet {
+        connectorId
+        title
+        concepts {
+          label
+          id
+          count
+        }
+      }
+    }
+    results(first: $first, after: $after) {
+      hits
+      edges {
+        node {
+          search {
+			id
+			author
+			binaryAuthor
+			binaryContentType
+			binaryCreatedDate
+			binaryFileName
+			binaryLanguage
+			binaryTitle
+			createdDate
+			fields            
+			highlighted
+			itemType
+			locale
+			location
+			mainContentField
+			majorVersion
+			minorVersion
+			modifiedDate
+			namespace
+			publicationId
+			publicationTitle
+			rawLanguageTitle
+			schemaId
+			score
+			url
+			conceptSchemes {
+			  title
+			  connectorId
+			  concepts {
+				id
+				label
+				uri						
+			  }
+			}
+          }
+        }
+      }
+    }
+  }
+}

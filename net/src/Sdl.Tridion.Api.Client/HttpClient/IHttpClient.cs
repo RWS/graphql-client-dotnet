@@ -13,6 +13,7 @@ namespace Sdl.Tridion.Api.Http.Client
     {
         Uri BaseUri { get; set; }
         int Timeout { get; set; }
+        int RetryCount { get; set; }
         string UserAgent { get; set; }
         HttpHeaders Headers { get; set; }
         IHttpClientResponse<T> Execute<T>(IHttpClientRequest request);

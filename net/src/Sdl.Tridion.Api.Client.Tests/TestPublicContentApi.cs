@@ -57,6 +57,7 @@ namespace Sdl.Tridion.Api.Client.Tests
             }
 
             public List<GraphQLError> LastErrors { get; }
+            public int RetryCount { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
             private void ValidateRequest(IGraphQLRequest request)
             {
@@ -121,6 +122,30 @@ namespace Sdl.Tridion.Api.Client.Tests
             };
 
             var client = CreateClient(new MockGraphQLClient(expected));
+
+            InputItemFilter filters = new InputItemFilter
+            {
+                ItemTypes = new List<FilterItemType> {FilterItemType.COMPONENT},
+                Schema = new InputSchemaCriteria { Id = 5309 },
+                PublicationIds = new List<int?> {14}
+            };
+
+            List<InputItemFilter> orList = new List<InputItemFilter>();
+            InputItemFilter inputItemFilterCustomMeta = new InputItemFilter();
+            inputItemFilterCustomMeta.CustomMeta = new InputCustomMetaCriteria { Key = "solutionCategory", Scope = CriteriaScope.Item, Value = "Hello" };
+            orList.Add(inputItemFilterCustomMeta);
+            filters.And = orList;
+
+            InputSortParam sort = new InputSortParam
+            {
+                Order = SortOrderType.Descending,
+                SortBy = SortFieldType.CUSTOM_META,
+                KeyType = SortKeyType.DATE,
+                Key = "dateSort"
+            };
+
+            client.ExecuteItemQuery(filters, sort, new Pagination() {First = 5}, null, ContentIncludeMode.Exclude, false, null);
+
 
             client.GetBinaryComponent(ContentNamespace.Sites, 1, "/", null, claims);
 
