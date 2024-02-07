@@ -5,28 +5,29 @@
         <!-- Version is set by Build.csproj -->
         <version>0.0.0</version>
         <!-- NOTE: Visual Studio's NuGet UI only shows 'id' and 'description' -->
-        <title>SDL Public Content Api</title>
-        <authors>SDL Group</authors>
-        <projectUrl>https://github.com/sdl/dxa-web-application-dotnet</projectUrl>
+        <title>RWS Public Content Api</title>
+        <authors>RWS Group</authors>
+        <projectUrl>https://github.com/rws/dxa-web-application-dotnet</projectUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-        <iconUrl>http://dr0muzwhcp26z.cloudfront.net/static/corporate/SDL-logo-2014.png</iconUrl>
+        <icon>images\rws-logo-128.png</icon>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>SDL Digital eXperience Accelerator Framework for SDL Web 8.</description>
-        <copyright>Copyright 2015-2016 SDL Group</copyright>
-        <tags>SDL DXA Web8 PCA</tags>
+        <description>RWS Digital eXperience Accelerator Framework for RWS Tridion Sites.</description>
+        <copyright>Copyright 2015-2024 RWS Group</copyright>
+        <tags>SDL DXA Web8 Sites10 PCA</tags>
         <references>
             <!-- These assemblies form the DXA public API -->
             <reference file="Sdl.Tridion.Api.Client.dll" />
         </references>
         <dependencies>
             <!-- NOTE: We don't use package dependencies for everything, because we don't want direct references to transitive dependencies and the explicit reference above don't control those.-->
-            <dependency id="Newtonsoft.Json" version="11.0.2" />
+            <dependency id="Newtonsoft.Json" version="13.0.3" />
         </dependencies>
     </metadata>
     <files>
         <!-- NOTE: We're excluding assemblies which come from dependent packages -->
-        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\*.dll" exclude="**\Newtonsoft.Json.dll" target="lib\net462" />
+        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\*.dll" exclude="**\Newtonsoft.Json.dll" target="lib\net48" />
         <!-- Include generated XML docs -->
-        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\Sdl.Tridion.Api.Client.XML" target="lib\net462" />
+        <file src="..\src\Sdl.Tridion.Api.Client\bin\Release\Sdl.Tridion.Api.Client.XML" target="lib\net48" />
+        <file src="..\rws-logo-128.png" target="images\" />
     </files>
 </package>
