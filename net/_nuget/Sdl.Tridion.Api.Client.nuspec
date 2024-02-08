@@ -7,13 +7,13 @@
         <!-- NOTE: Visual Studio's NuGet UI only shows 'id' and 'description' -->
         <title>RWS Public Content Api</title>
         <authors>RWS Group</authors>
-        <projectUrl>https://github.com/rws/dxa-web-application-dotnet</projectUrl>
+        <projectUrl>https://github.com/rws/graphql-client-dotnet</projectUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
         <icon>images\rws-logo-128.png</icon>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>RWS Digital eXperience Accelerator Framework for RWS Tridion Sites.</description>
         <copyright>Copyright 2015-2024 RWS Group</copyright>
-        <tags>SDL DXA Web8 Sites10 PCA</tags>
+		<tags>SDL RWS DXA Sites9.1 Sites9.5 Sites9.6 Sites10 PCA GraphQL</tags>
         <references>
             <!-- These assemblies form the DXA public API -->
             <reference file="Sdl.Tridion.Api.Client.dll" />
