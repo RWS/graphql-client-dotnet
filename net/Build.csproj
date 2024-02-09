@@ -62,7 +62,7 @@
         AssemblyInfoFiles="@(AssemblyInfoFile)"
         AssemblyVersion="$(Version)"
         AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionBuild)"
-        AssemblyCopyright="Copyright &#169; 2014-$(Year) SDL Group"
+        AssemblyCopyright="Copyright &#169; 2014-$(Year) RWS Group"
         SkipVersioning="false"
         />
 
