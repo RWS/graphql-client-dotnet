@@ -1,6 +1,7 @@
 RWS Dynamic Experience Delivery GraphQL client for .NET
 ===
-- Develop: ![Build Status](https://github.com/rws/graphql-client-dotnet/workflows/Build/badge.svg?branch=develop)
+- Develop: ![Build Status](https://github.com/rws/graphql-client-dotnet/actions/workflows/workflow.yml/badge.svg?branch=develop)
+- 2.2: ![Build Status](https://github.com/rws/graphql-client-dotnet/actions/workflows/workflow.yml/badge.svg?branch=release/2.2)
 
 Prerequisites
 -------------
